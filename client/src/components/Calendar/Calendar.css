@@ -1,0 +1,20 @@
+#schedule_game {
+    margin-left: 5%;
+}
+input {
+    text-align: center;
+    color: #DE733A;
+    font-weight: lighter;
+    margin-left: 24%;
+    width: 150%;
+    padding: 3%;
+    border-style: solid;
+    border-color: grey;
+    border-width: 1px;
+    background-color: beige;
+    box-shadow: 3px 4px 8px 0px rgba(0, 0, 0, 0.2);
+}
+#date_submit {
+    margin-top: 5%;
+    margin-left: 70%;    
+}

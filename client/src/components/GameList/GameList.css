@@ -1,0 +1,15 @@
+.show_games {
+    min-width: 50px;
+    text-align: center;
+    overflow: scroll;
+    /* margin-left: 55%; */
+}
+.remove_game {
+    position: relative;
+    font-size: 115%;
+    top: -24px;
+    left: -2%;
+}
+.remove_game:hover {
+    color: red;
+}
