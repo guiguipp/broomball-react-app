@@ -1,3 +1,83 @@
-h2 {
-    font-family: boogaloo;
-    }
+button {
+    box-shadow: 3px 4px 8px 0px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+/* Color themes (=> app.css) */
+/* default */
+.default_color {
+    background: linear-gradient(70deg, #DE733A,#EA8D47);
+    color: white;
+}
+.default_color:active {
+    background: white;
+    color: #DE733A;
+    border-style: solid;
+    border-color: black;
+    border-width: 0.5px;
+}
+/* contrast */
+.contrast_color {
+    background: linear-gradient(70deg, #007bff,#17a2b8);
+    color: white;
+}
+.contrast_color:active {
+    background: white;
+    color: #007bff;
+    border-style: solid;
+    border-color: black;
+    border-width: 0.5px;
+}
+/* darker */
+.darker_color {
+    background: linear-gradient(70deg, #FF5D00,#DE733A);
+    color: white;    
+}
+.darker_color:active {
+    background: white;
+    color: #FF5D00;
+    border-style: solid;
+    border-color: black;
+    border-width: 0.5px;
+}
+/* lighter */
+.lighter_color {
+    background: linear-gradient(70deg, #EA8D47,#ffbe75);
+    color: white;    
+}
+.lighter_color:active {
+    background: white;
+    color: #EA8D47;
+    border-style: solid;
+    border-color: black;
+    border-width: 0.5px;
+}
+/* negative */
+.negative_color {
+    background-color: white;
+    color: #EA8D47;
+    border-style: solid;
+    border-color: #EA8D47;
+    border-width: 1px;
+}
+.negative_color:active {
+    background: #EA8D47;
+    color: white;
+    border-style: solid;
+    border-color: black;
+    border-width: 0.5px;
+}
+/* greys */
+/*.dark_grey:hover {
+    background-color: #7d7e83;
+    border-color: black;
+}
+
+.regular_grey:hover {
+    background-color: #acadb2;
+    border-color: black;
+}
+
+.light_grey:hover {
+    background-color: #dedfe4;
+    border-color: black;
+}*/

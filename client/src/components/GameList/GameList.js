@@ -25,7 +25,6 @@ class GameList extends Component {
                     <i className="fa fa-times-circle remove remove_game"></i>
                 </div>    
                     )}
-
             </div>
             )
         }

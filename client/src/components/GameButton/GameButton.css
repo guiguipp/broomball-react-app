@@ -1,10 +1,4 @@
 .game_button {
-    color: white;
-    text-align: center;
     width: 40%;
-    margin: 2% 0% 6%;
-    border-color: black;
-    /* background-color: #F88833; */
-    background: linear-gradient(70deg, #DE733A,#EA8D47 );
-    box-shadow: 3px 4px 8px 0px rgba(0, 0, 0, 0.2);
+    margin: 2% 0% 6%;    
     }

@@ -41,7 +41,7 @@ class Calendar extends Component {
                         value={this.state.value}
                         />
                     <div className="form-group "> 
-                        <button id="date_submit" className="btn btn-primary regular_grey" name="submit" type="submit">Submit</button>
+                        <button id="date_submit" className="btn contrast_color" name="submit" type="submit">Submit</button>
                     </div>
                 </form>
             </div>
