@@ -2,6 +2,10 @@
 
 # dependencies
 /node_modules
+package-lock.json/
+
+# Mac Thing
+.DS_Store
 
 # testing
 /coverage
