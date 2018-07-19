@@ -4,7 +4,7 @@
 // ******************************************************************************
 // *** Dependencies
 // =============================================================
-const express = require("express");
+const express = require("express" );
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
@@ -24,6 +24,9 @@ const db = mongoose.connection
 // handle mongo errors
 db.on("error", console.error.bind(console,"Connection error"));
 db.once("open", () => console.log("connected to the DB collection 'summit_broomball'") )
+
+
+// db.games.insert({date: 2018-07-20});
 
 // Sets up the Express app to handle data parsing
 // parse application/x-www-form-urlencoded
