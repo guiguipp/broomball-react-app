@@ -10,7 +10,6 @@ const playerSchema = new Schema({
     player_status: { type: String, required: true},
     email: {type: String}
     });
-
-const Player = mongoose.model("Player", playerSchema);
-
+    
+    const Player = mongoose.model("Player", playerSchema);
 module.exports = Player;

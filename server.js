@@ -18,7 +18,7 @@ const morgan = require("morgan");
 app.use(morgan("dev"));
 
 // DB connection
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/summit_broomball")
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/summit_broomball", { autoIndex: false});
 const db = mongoose.connection
 
 // handle mongo errors

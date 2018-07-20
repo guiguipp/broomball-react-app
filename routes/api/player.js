@@ -2,22 +2,28 @@ const player = require("express").Router()
 const db = require("../../models")
 
 player.get("/", function(req, res) {
-    db.Player.find({})
+    db.Player.find({}, null, {sort: {name: 1}})
         .then(function(dbPlayer){
             res.json(dbPlayer)
         })
         .catch(function(err){
             res.json(err)
         })
-})
+    })
 
 player.get("/:id", function(req, res) {
     console.log("req.params in player get route: ", req.params)
-    res.send("Get route for player is here") 
-})
+    db.Player.findById(req.params.id)
+        .then(function(dbPlayer){
+            res.json(dbPlayer)
+        })
+        .catch(function(err){
+            res.json(err)
+        })
+    })
 
 player.post("/", function(req, res) {
-    console.log("req.body in player post route: ", req.body)
+    // console.log("req.body in player post route: ", req.body)
     var NewPlayer = db.Player
     ({
         name: req.body.name,
@@ -31,7 +37,7 @@ player.post("/", function(req, res) {
 
     NewPlayer.save()
     .then(function(dbPlayer){
-        console.log(res)
+        // console.log(res)
         res.json(dbPlayer)
     })
     .catch(function(err){
@@ -40,14 +46,26 @@ player.post("/", function(req, res) {
 })
 
 player.put("/:id", function(req, res) {
-    console.log("req.params in player post route: ", req.params)
-    console.log("req.body in player put route: ", req.body)
-    res.send("Put Route for player is here") 
-})
+    // console.log("req.params.id in player put route: ", req.params.id)
+    // console.log("req.params.body in player put route: ", req.body)
+    db.Player.findByIdAndUpdate(req.params.id, req.body)
+        .then(function(dbPlayer){
+            res.json(dbPlayer)
+            })
+        .catch(function(err){
+            res.json(err)
+            }) 
+    })
 
 player.delete("/:id", function(req, res) {
-    console.log("req.id in player put route: ", req.body)
-    res.send("Delete Route for player is here") 
-})
+    console.log("req.params.id in player put route: ", req.params.id)
+    db.Player.findByIdAndDelete(req.params.id)
+    .then(function(dbPlayer){
+        res.json(dbPlayer)
+        })
+    .catch(function(err){
+        res.json(err)
+        }) 
+    })
 
 module.exports = player;
