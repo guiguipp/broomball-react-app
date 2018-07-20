@@ -35,7 +35,7 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
-package-lock.json/
+package-lock.json
 
 # Mac Thing
 .DS_Store
