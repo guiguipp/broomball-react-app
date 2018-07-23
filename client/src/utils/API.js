@@ -11,5 +11,12 @@ export default {
         console.log("After Ternary: ", currentURL)
         // Querying our API
         return axios.get(currentURL + "/api/game/")
+    },
+    createNewGame: (date) => {
+        // const gameDate = [{date}];
+        const url = currentURL + "/api/game/"
+        return axios.post(url, {
+            game_date: date
+        })
     }
 }
