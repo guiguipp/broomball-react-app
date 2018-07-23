@@ -4,10 +4,10 @@ const db = require("../../models")
 player.get("/", function(req, res) {
     db.Player.find({}, null, {sort: {name: 1}})
         .then(function(dbPlayer){
-            res.json(dbPlayer)
+            res.send(dbPlayer)
         })
         .catch(function(err){
-            res.json(err)
+            res.send(err)
         })
     })
 
@@ -15,10 +15,10 @@ player.get("/:id", function(req, res) {
     console.log("req.params in player get route: ", req.params)
     db.Player.findById(req.params.id)
         .then(function(dbPlayer){
-            res.json(dbPlayer)
+            res.send(dbPlayer)
         })
         .catch(function(err){
-            res.json(err)
+            res.send(err)
         })
     })
 
@@ -38,10 +38,10 @@ player.post("/", function(req, res) {
     NewPlayer.save()
     .then(function(dbPlayer){
         // console.log(res)
-        res.json(dbPlayer)
+        res.send(dbPlayer)
     })
     .catch(function(err){
-        res.json(err)
+        res.send(err)
     })
 })
 
@@ -50,10 +50,10 @@ player.put("/:id", function(req, res) {
     // console.log("req.params.body in player put route: ", req.body)
     db.Player.findByIdAndUpdate(req.params.id, req.body)
         .then(function(dbPlayer){
-            res.json(dbPlayer)
+            res.send(dbPlayer)
             })
         .catch(function(err){
-            res.json(err)
+            res.send(err)
             }) 
     })
 
@@ -61,10 +61,10 @@ player.delete("/:id", function(req, res) {
     console.log("req.params.id in player put route: ", req.params.id)
     db.Player.findByIdAndDelete(req.params.id)
     .then(function(dbPlayer){
-        res.json(dbPlayer)
+        res.send(dbPlayer)
         })
     .catch(function(err){
-        res.json(err)
+        res.send(err)
         }) 
     })
 

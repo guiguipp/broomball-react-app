@@ -11,7 +11,7 @@ const mongoose = require("mongoose");
 // Sets up the Express App
 // =============================================================
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 8080;
 
 // logging the requests
 const morgan = require("morgan");
@@ -45,5 +45,5 @@ const routes = require("./routes")
 app.use(routes);
 
 app.listen(PORT, function() {
-    console.log("App listening on: http://localhost:" + PORT);
+    console.log("Server.js listening on: http://localhost:" + PORT);
 });
