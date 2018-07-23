@@ -1,44 +1,15 @@
 const game = require("express").Router()
 const db = require("../../models")
 
-game.get("/:date/:span", function(req, res) {
-    let date = req.params.date;
-    let span = req.params.span;
-    if (span === "past") {
-        db.Game.find({
-            game_date: {$lte: date}
-        }, null, {sort: {game_date: 1}})
-            .then(function(dbGame){
-                res.send(dbGame)
-            })
-            .catch(function(err){
-                res.send(err)
-            })    
-        }
-    else {
-        db.Game.find({
-            game_date: {$gte: date}
-        }, null, {sort: {game_date: 1}})
-            .then(function(dbGame){
-                res.send(dbGame)
-            })
-            .catch(function(err){
-                res.send(err)
-            })    
-        }    
-    });
-
-
-    /*db.Game.find({
-        game_date: 
-    }, null, {sort: {game_date: 1}})
-        .then(function(dbGame){
+game.get("/", function(req, res) {
+    db.Game.find({}, null, {sort: {game_date: 1}})
+        .then(dbGame => {
             res.send(dbGame)
         })
-        .catch(function(err){
-            res.send(err)
-        })
-    })*/
+        .catch(err => {
+            res.send(err.response)
+        })     
+    });
 
 game.get("/:id", function(req, res) {
     // console.log("req.params in game get route: ", req.params)

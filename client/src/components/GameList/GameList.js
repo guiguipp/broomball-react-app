@@ -22,7 +22,7 @@ class GameList extends Component {
     componentDidMount() {
         let today = moment().format("YYYY-MM-DD")
         console.log("today: ", today )
-        API.getFutureGames(today)
+        API.getGames()
             .then(res => {
                 if(res.status !== 200) {
                     throw new Error(res.statusText)
@@ -38,9 +38,14 @@ class GameList extends Component {
         return (
             <div className="show_games">
             <h2>{this.state.dateHeader}</h2>
-                {this.state.gameList.map(game => 
-                    <GameButton key={game._id} id={game._id}/> 
-                    )}
+                    {this.state.gameList
+                        .filter(game => {
+                            let today = moment().format("YYYY-MM-DD")
+                            let gameDay = moment(game.game_date).format("YYYY-MM-DD")
+                            return today < gameDay
+                            })
+                        .map(game => <GameButton key={game._id} id={game._id}/>)  
+                    }
             </div>
             )
         }
