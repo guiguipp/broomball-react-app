@@ -1,8 +1,6 @@
 .show_games {
     min-width: 50px;
     text-align: center;
-    overflow: scroll;
-    /* margin-left: 55%; */
 }
 .remove_game {
     position: relative;
@@ -12,4 +10,7 @@
 }
 .remove_game:hover {
     color: red;
+}
+.list-management {
+    overflow: scroll;
 }

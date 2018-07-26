@@ -31,7 +31,7 @@ class Calendar extends Component {
                 }
                 else {
                     console.log("res.data: ", res.data)
-                    // this.setState({...this.state, gameList: res.data})
+                    
                 }
             })
     }

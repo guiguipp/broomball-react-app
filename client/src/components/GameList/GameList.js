@@ -30,24 +30,40 @@ class GameList extends Component {
                     throw new Error(res.statusText)
                 }
                 else {
-                    // console.log("res.data: ", res.data)
+                    console.log("res.data: ", res.data)
                     this.setState({...this.state, gameList: res.data})
                 }
             })
+    }
+
+    deleteGame = (gameId) => {
+        console.log("Click registered")
+        API.deleteGame(gameId)
+        .then(res => {
+            if(res.status !== 200) {
+                throw new Error(res.statusText)
+            }
+            else {
+                console.log("res.data: ", res.data)
+            }
+        })
     }
 
     render() {
         return (
             <div className="show_games">
             <h2>{this.state.dateHeader}</h2>
+                <div className="list-management">
                     {this.state.gameList
                         .filter(game => {
                             // let today = moment().format("YYYY-MM-DD")
                             let gameDay = moment(game.game_date).format("YYYY-MM-DD")
-                            return this.state.today < gameDay
+                            return this.state.today <= gameDay
                             })
-                        .map(game => <GameButton key={game._id} id={game._id}/>)  
+                        .map(game => <div key={game._id}><GameButton id={game._id}/> <i className="fa fa-times-circle remove remove_game" id={game._id} onClick={() => this.deleteGame(game._id)}> </i></div>)  
                     }
+                    {/* {() => this.deleteGame(game._id)} */}
+                </div>
             </div>
             )
         }

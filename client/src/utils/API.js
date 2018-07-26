@@ -18,5 +18,8 @@ export default {
         return axios.post(url, {
             game_date: date
         })
+    },
+    deleteGame: (id) => {
+        return axios.delete(currentURL + "/api/game/" + id)
+        }
     }
-}
