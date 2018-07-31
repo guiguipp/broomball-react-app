@@ -4,12 +4,19 @@ import DatePicker from "react-datepicker";
 import API from "../../utils/API"
 import "react-datepicker/dist/react-datepicker.css"
 import "./Calendar.css";
+
+// import { store, addGame } from "../../js";
+
+
+
+
 const moment = require("moment");
 class Calendar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            date: ""
+            date: "",
+            games: []
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -30,8 +37,17 @@ class Calendar extends Component {
                     throw new Error(res.statusText)
                 }
                 else {
-                    console.log("res.data: ", res.data)
-                    
+                    newGame = res.data
+                    let currentGames = this.state.games;
+                    if(newGame.name !== "MongoError")
+                    {
+                        console.log("Trying to add a game...")
+                        // store.dispatch( addGame({newGame}))
+
+                    }
+                    else {
+                        console.log("Error Message: the app encounted an error creating this game in the database")
+                    }
                 }
             })
     }

@@ -13,6 +13,10 @@ const mongoose = require("mongoose");
 const app = express();
 const PORT = process.env.PORT || 8080;
 
+// CORS issues
+const cors = require('cors')
+app.use(cors())
+
 // logging the requests
 const morgan = require("morgan");
 app.use(morgan("dev"));

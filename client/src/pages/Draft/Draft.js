@@ -1,8 +1,9 @@
 import React from "react";
 import "./Draft.css";
 import GameList from "../../components/GameList";
-import Logo from "../../components/images/logo.jpg"
-import Calendar from "../../components/Calendar"
+import Logo from "../../components/images/logo.jpg";
+import Calendar from "../../components/Calendar";
+
 const Draft = () => (
     <div>
         <img src={Logo} alt="logo"/>

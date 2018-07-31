@@ -13,4 +13,5 @@
 }
 .list-management {
     overflow: scroll;
+    max-height: 200px;
 }
