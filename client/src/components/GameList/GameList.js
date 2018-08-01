@@ -4,13 +4,12 @@ import React, { Component } from "react";
 
 import { connect } from 'react-redux';
 import { fetchGames } from '../../js/actions/gameActions'
+import { deleteGame } from '../../js/actions/gameActions'
 
 import "./GameList.css";
 import Button from "../Button";
-import API from "../../utils/API";
 
 const moment = require("moment");
-
 
 class GameList extends Component {
     constructor(props) {
@@ -24,20 +23,11 @@ class GameList extends Component {
     }
     
     componentDidMount() {
-        console.log("logging the props: ", this.props)
         this.props.fetchGames();
     }
 
-    deleteGame = (gameId) => {
-        API.deleteGame(gameId)
-        .then(res => {
-            if(res.status !== 200) {
-                throw new Error(res.statusText)
-            }
-            else {
-                console.log("res.data: ", res.data)
-            }
-        })
+    deleteGameFunc = (gameId) => {
+        this.props.deleteGame(gameId);
     }
 
     render() {
@@ -45,7 +35,7 @@ class GameList extends Component {
             <div className="show_games">
             <h2>{this.state.dateHeader}</h2>
                 <div className="list-management">
-                    {this.props.games.games
+                    {this.props.games
                         .filter(game => {
                             // let today = moment().format("YYYY-MM-DD")
                             let gameDay = moment(game.game_date).format("YYYY-MM-DD")
@@ -53,7 +43,7 @@ class GameList extends Component {
                             })
                         .map(game => 
                             <div key={game._id}>
-                                <Button className="btn game_button default_color" id={game._id}/> <i className="fa fa-times-circle remove remove_game" id={game._id} onClick={() => this.deleteGame(game._id)}> </i>
+                                <Button className="btn game_button default_color" id={game._id}/> <i className="fa fa-times-circle remove remove_game" id={game._id} onClick={() => this.deleteGameFunc(game._id)}> </i>
                             </div>)  
                     }
                 </div>
@@ -69,8 +59,8 @@ Games.propTypes = {
 */
 
 const mapStateToProps = state => ({
-    games: state.games
+    games: state.games.games
 })
 
 // export default GameList;
-export default connect(mapStateToProps, { fetchGames }) (GameList)
+export default connect(mapStateToProps, { fetchGames, deleteGame }) (GameList)

@@ -1,13 +1,13 @@
 import React, { Component } from "react";
+
+import { connect } from 'react-redux';
+import { addGame } from '../../js/actions/gameActions'
+
 // see doc: https://www.npmjs.com/package/react-datepicker
 import DatePicker from "react-datepicker";
-import API from "../../utils/API"
+
 import "react-datepicker/dist/react-datepicker.css"
 import "./Calendar.css";
-
-// import { store, addGame } from "../../js";
-
-
 
 
 const moment = require("moment");
@@ -15,8 +15,7 @@ class Calendar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            date: "",
-            games: []
+            date: ""
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -30,26 +29,9 @@ class Calendar extends Component {
 
     handleSubmit(event) {
         event.preventDefault()
-        let newGame = moment(this.state.dateSelected).format("YYYY-MM-DD")
-        API.createNewGame(newGame)
-            .then(res => {
-                if(res.status !== 200) {
-                    throw new Error(res.statusText)
-                }
-                else {
-                    newGame = res.data
-                    let currentGames = this.state.games;
-                    if(newGame.name !== "MongoError")
-                    {
-                        console.log("Trying to add a game...")
-                        // store.dispatch( addGame({newGame}))
-
-                    }
-                    else {
-                        console.log("Error Message: the app encounted an error creating this game in the database")
-                    }
-                }
-            })
+        console.log("Creating a game")
+        let dateOfGame = moment(this.state.dateSelected).format("YYYY-MM-DD")
+        this.props.addGame(dateOfGame)
     }
 
 
@@ -79,4 +61,12 @@ class Calendar extends Component {
             )
         }
     }
-export default Calendar;
+
+
+const mapStateToProps = state => ({
+    game: state.game
+    })
+
+
+export default connect(mapStateToProps, { addGame }) (Calendar)
+    
