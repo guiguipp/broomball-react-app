@@ -1,4 +1,5 @@
 import { FETCH_GAMES, NEW_GAME, DELETE_GAME } from '../actions/types';
+import _ from "underscore"
 
 const initialState = {
     games: [],
@@ -15,10 +16,9 @@ export default function(state = initialState, action) {
         }
         
         case NEW_GAME:
-        console.log("%cGames in the gameReducer still need be sorted by id : ", "color: red", state)
         return {
             newGame: action.payload,
-            games: [...state.games, action.payload]
+            games: _.sortBy([...state.games, action.payload], "game_date")
         }
 
         case DELETE_GAME:

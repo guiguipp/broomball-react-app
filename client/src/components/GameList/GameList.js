@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 
-// import PropTypes from "prop-types";
-
 import { connect } from 'react-redux';
 import { fetchGames } from '../../js/actions/gameActions'
 import { deleteGame } from '../../js/actions/gameActions'
@@ -12,16 +10,7 @@ import Button from "../Button";
 const moment = require("moment");
 
 class GameList extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            dateHeader: "Upcoming Games",
-            buttonMsg: "Past Games",
-            status: "upcoming",
-            today: moment().format("YYYY-MM-DD"),
-        }
-    }
-    
+
     componentDidMount() {
         this.props.fetchGames();
     }
@@ -33,19 +22,36 @@ class GameList extends Component {
     render() {
         return (
             <div className="show_games">
-            <h2>{this.state.dateHeader}</h2>
+            <h2>{this.props.dateHeader}</h2>
                 <div className="list-management">
+                    
                     {this.props.games
-                        .filter(game => {
-                            // let today = moment().format("YYYY-MM-DD")
+                        .filter(game => {    
                             let gameDay = moment(game.game_date).format("YYYY-MM-DD")
-                            return this.state.today <= gameDay
+                            console.log("Filter func executing")
+                            // let today = moment().format("YYYY-MM-DD")
+                            return this.props.today >= gameDay
+                            // return this.props.today <= gameDay
                             })
                         .map(game => 
-                            <div key={game._id}>
+                            <div key={game._id} className={this.props.past_visibility}>
                                 <Button className="btn game_button default_color" id={game._id}/> <i className="fa fa-times-circle remove remove_game" id={game._id} onClick={() => this.deleteGameFunc(game._id)}> </i>
-                            </div>)  
+                            </div>)
                     }
+                    {this.props.games
+                        .filter(game => {    
+                            let gameDay = moment(game.game_date).format("YYYY-MM-DD")
+                            // let today = moment().format("YYYY-MM-DD")
+                            return this.props.today <= gameDay
+                            // return this.props.today <= gameDay
+                            
+                            })
+                        .map(game => 
+                            <div key={game._id} className={this.props.upcoming_visibility}>
+                                <Button className="btn game_button default_color " id={game._id}/> <i className="fa fa-times-circle remove remove_game" id={game._id} onClick={() => this.deleteGameFunc(game._id)}> </i>
+                            </div>)
+                    }
+                
                 </div>
             </div>
             )
@@ -59,7 +65,12 @@ Games.propTypes = {
 */
 
 const mapStateToProps = state => ({
-    games: state.games.games
+    games: state.games.games,
+    dateHeader: state.display.dateHeader,
+    today: state.display.today,
+    buttonMsg: state.display.buttonMsg,
+    upcoming_visibility: state.display.upcoming_visibility,
+    past_visibility: state.display.past_visibility
 })
 
 // export default GameList;
