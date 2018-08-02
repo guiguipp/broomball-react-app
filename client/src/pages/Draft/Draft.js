@@ -21,15 +21,15 @@ toggleGamesFunc(currentlyShowing) {
 render() {
     return (
     <div>
-        <img src={Logo} alt="logo"/>
-        <div className="main"> 
-            <h1>Summit Broomball</h1>
+        <img className="logo_img" src={Logo} alt="logo"/>
+        <div className="main_main"> 
+            <h1 className="h1_main">Summit Broomball</h1>
             <div className= "row">
                 <div className="col"><Calendar/></div>
                 <div className="col"><GameList/></div>
             </div>
             <div className="row">
-                <button className="change_list_display" onClick={() => this.toggleGamesFunc(this.props.showing)}> {this.props.buttonMsg} </button>
+                <button className="btn contrast_color change_list_display" onClick={() => this.toggleGamesFunc(this.props.showing)}> {this.props.buttonMsg} </button>
             </div>
         </div>
     </div>

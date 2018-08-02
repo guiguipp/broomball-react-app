@@ -39,7 +39,7 @@ class Calendar extends Component {
         return (
             <div id="schedule_game">
                 <div>
-                    <h2>Create a new game</h2>
+                    <h2 className="h2_main">Schedule a game</h2>
                 </div>
 
                 <div>

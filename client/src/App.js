@@ -4,6 +4,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Draft from "./pages/Draft";
+import Player from "./pages/Player";
 // Redux 
 import { Provider } from 'react-redux'
 import store from "./js/store"
@@ -17,6 +18,7 @@ const App = () => (
       <div>
         <Route exact path="/" component={Home} />
         <Route path="/Draft" component={Draft} />
+        <Route path="/Player" component={Player} />
       </div>
     </Router>
   </Provider>

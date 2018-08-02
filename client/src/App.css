@@ -66,6 +66,13 @@ button {
     border-color: black;
     border-width: 0.5px;
 }
+
+.logo_img {
+    width: 16%;
+    margin-top: 3%;
+    margin-left: 70%;
+    margin-bottom: 3%;
+}
 /* greys */
 /*.dark_grey:hover {
     background-color: #7d7e83;
@@ -81,3 +88,37 @@ button {
     background-color: #dedfe4;
     border-color: black;
 }*/
+.main_main {
+    background: #FFFFFF;
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+    width: 70%;
+    min-width: 300px;
+    margin-left: 15%;
+    padding: 5% 0;
+    /* for testing purposes (this is in draft.css) */
+    margin-bottom: 200px;
+}
+.h1_main {
+    color: black;
+    text-shadow: 
+        -0.5px -0.5px 0 #EA8D47, 
+        0.5px -0.5px 0 #EA8D47, 
+        -0.5px 0.5px 0 #EA8D47, 
+        0.5px 0.5px 0 #EA8D47;
+    
+    font-family: 'Yellowtail', cursive;
+    text-align: center;
+    font-size: 312%;
+    position: relative;
+    margin-bottom: 6%;
+}
+
+.h2_main {
+    font-family: boogaloo;
+    font-size: 150%;
+    margin-bottom: 10%;
+    text-align: center;
+    /* margin-left: -5%; */
+}

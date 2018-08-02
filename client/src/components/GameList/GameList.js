@@ -5,7 +5,6 @@ import { fetchGames } from '../../js/actions/gameActions'
 import { deleteGame } from '../../js/actions/gameActions'
 
 import "./GameList.css";
-import Button from "../Button";
 
 const moment = require("moment");
 
@@ -22,41 +21,35 @@ class GameList extends Component {
     render() {
         return (
             <div className="show_games">
-            <h2>{this.props.dateHeader}</h2>
+            <h2 className="h2_main">{this.props.dateHeader}</h2>
                 <div className="list-management">
-                    
                     {this.props.games
                         .filter(game => {    
                             let gameDay = moment(game.game_date).format("YYYY-MM-DD")
-                            console.log("Filter func executing")
-                            // let today = moment().format("YYYY-MM-DD")
                             return this.props.today >= gameDay
-                            // return this.props.today <= gameDay
                             })
                         .map(game => 
                             <div key={game._id} className={this.props.past_visibility}>
-                                <Button className="btn game_button default_color" id={game._id}/> <i className="fa fa-times-circle remove remove_game" id={game._id} onClick={() => this.deleteGameFunc(game._id)}> </i>
+                                <button className="btn game_button default_color" id={game._id}> {game._id} </button> 
+                                <i className="fa fa-times-circle remove remove_game" id={game._id} onClick={() => this.deleteGameFunc(game._id)}> </i>
                             </div>)
-                    }
+                        }
                     {this.props.games
                         .filter(game => {    
                             let gameDay = moment(game.game_date).format("YYYY-MM-DD")
-                            // let today = moment().format("YYYY-MM-DD")
-                            return this.props.today <= gameDay
-                            // return this.props.today <= gameDay
-                            
+                            return this.props.today <= gameDay                
                             })
                         .map(game => 
                             <div key={game._id} className={this.props.upcoming_visibility}>
-                                <Button className="btn game_button default_color " id={game._id}/> <i className="fa fa-times-circle remove remove_game" id={game._id} onClick={() => this.deleteGameFunc(game._id)}> </i>
+                                <button className="btn game_button default_color " id={game._id}> {game._id} </button> 
+                                <i className="fa fa-times-circle remove remove_game" id={game._id} onClick={() => this.deleteGameFunc(game._id)}> </i>
                             </div>)
-                    }
-                
+                        }
+                    </div>
                 </div>
-            </div>
-            )
+                )
+            }
         }
-    }
 /*
 Games.propTypes = {
     fetchGames: PropTypes.func.isRequired,
