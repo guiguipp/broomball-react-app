@@ -32,13 +32,9 @@ class Form extends Component {
         const target = event.target;
         const value = target.value;
         const name = target.name;
-        console.log("Value: ", value)
-        console.log("Name: ", name)
         this.setState(
             {...this.state, [name]: value})
-        
-        // console.log("this.props: ", )
-    }
+        }
     
     handleUpdate(form) {
         
@@ -47,17 +43,17 @@ class Form extends Component {
     handleSubmit(event) {
         event.preventDefault();
         console.log("State: ", this.state)
-        /*
+        
         let newPlayer = {
-            "name": this.state.name,
-            "fullName": this.state.fullName,
-            "playerLevel": this.state.playerLevel,
-            "preferredPosition": this.state.name,
-            "membershipStatus": this.state.membershipStatus,
-            "email": this.state.email
-        }
-        */
-        API.addPlayer(this.state)
+            name: this.state.name,
+            fullName: this.state.fullName,
+            playerLevel: this.state.playerLevel,
+            preferredPosition: this.state.name,
+            membershipStatus: this.state.membershipStatus,
+            email: this.state.email
+            }
+        
+        API.addPlayer(newPlayer)
             .then(res => {
                 if(res.status !== 200) {
                     throw new Error(res.statusText)
@@ -70,7 +66,7 @@ class Form extends Component {
     }
 
     render() {
-            return (
+        return (
             <div className="container">
                 <div className="row">
                     <form onChange={this.handleChange} onSubmit={this.handleSubmit}>

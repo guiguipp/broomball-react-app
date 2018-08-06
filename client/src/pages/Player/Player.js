@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import Logo from "../../components/images/logo.jpg";
 import Form from "../../components/Form"
+import PlayerList  from "../../components/PlayerList"
 
 import "./Player.css";
 
@@ -15,7 +16,8 @@ render() {
         <div className="main_alternate"> 
             <h1 className="h1_alternate">Summit Broomball</h1>
             <div className= "row">
-                <Form /> 
+                <Form />
+                <PlayerList />
                 
             </div>
         </div>
