@@ -5,14 +5,13 @@ moment().format();
 
 const playerSchema = new Schema({
     name: { type: String, unique: true, required: true },
-    first_name: { type: String, required: false },
-    last_name: { type: String, required: false },
-    player_level: { type: String, required: false},
-    preferred_position: { type: String, required: false},
-    player_status: { type: String, required: true, default: "ten_bucker"},
+    fullName: { type: String, required: false },
+    preferredPosition: { type: String, required: false},
+    membershipStatus: { type: String, required: true, default: "ten_bucker"},
+    playerLevel: { type: String, required: false},
+    email: {type: String, required: false},
     created: {type: Date, required: true, default: moment()},
-    updated: {type: Date, required: true, default: moment()},
-    email: {type: String, required: false}
+    updated: {type: Date, required: true, default: moment()}
     });
     
     const Player = mongoose.model("Player", playerSchema);

@@ -6,8 +6,6 @@ import { deleteGame } from '../../js/actions/gameActions'
 
 import "./GameList.css";
 
-const moment = require("moment");
-
 class GameList extends Component {
 
     componentDidMount() {
@@ -25,8 +23,7 @@ class GameList extends Component {
                 <div className="list-management">
                     {this.props.games
                         .filter(game => {    
-                            let gameDay = moment(game.game_date).format("YYYY-MM-DD")
-                            return this.props.today >= gameDay
+                            return this.props.today >= game._id
                             })
                         .map(game => 
                             <div key={game._id} className={this.props.past_visibility}>
@@ -36,8 +33,7 @@ class GameList extends Component {
                         }
                     {this.props.games
                         .filter(game => {    
-                            let gameDay = moment(game.game_date).format("YYYY-MM-DD")
-                            return this.props.today <= gameDay                
+                            return this.props.today <= game._id                
                             })
                         .map(game => 
                             <div key={game._id} className={this.props.upcoming_visibility}>

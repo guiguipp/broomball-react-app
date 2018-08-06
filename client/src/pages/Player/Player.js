@@ -1,22 +1,23 @@
 import React, { Component } from "react";
-// Redux
-import { connect } from 'react-redux';
 
 import Logo from "../../components/images/logo.jpg";
-import Calendar from "../../components/Calendar";
+import Form from "../../components/Form"
 
 import "./Player.css";
 
 class Player extends Component { 
-
-
-
+    
+        
 render() {
     return (
     <div>
         <img className="logo_img" src={Logo} alt="logo"/>
-        <div>
-            <p>Here go the players</p>
+        <div className="main_alternate"> 
+            <h1 className="h1_alternate">Summit Broomball</h1>
+            <div className= "row">
+                <Form /> 
+                
+            </div>
         </div>
     </div>
     )

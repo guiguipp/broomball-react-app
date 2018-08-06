@@ -23,28 +23,45 @@ player.get("/:id", function(req, res) {
     })
 
 player.post("/", function(req, res) {
-    // console.log("req.body in player post route: ", req.body)
-    var NewPlayer = db.Player
+    console.log("req.body in player post route: ", req.body)
+    var newPlayer = db.Player
     ({
-        name: req.body.name,
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        player_level: req.body.player_level,
-        preferred_position: req.body.preferred_position,
-        player_status: req.body.player_status,
-        email: req.body.email
+        name: req.body.data.name,
+        fullName: req.body.data.fullName,
+        playerLevel: req.body.data.playerLevel,
+        preferredPosition: req.body.data.preferredPosition,
+        membershipStatus: req.body.data.membershipStatus,
+        email: req.body.data.email
     })
+    /*
+    newPlayer.save(function (err,res) {
+        if (err) return handleError(err);
+        else {res.send(res)}
+    })*/
+    newPlayer.save()
+        .then(function(dbPlayer){
+            // console.log(res)
+            res.send(dbPlayer)
+        })
+        .catch(function(err){
+            res.send(err)
+        })
 
-    NewPlayer.save()
-    .then(function(dbPlayer){
-        // console.log(res)
-        res.send(dbPlayer)
     })
-    .catch(function(err){
-        res.send(err)
-    })
-})
+    /* 
+    NewPlayer.save(function(err, res) {
+    if (err) {
+            console.log(err);
+            res.send({
+                message: "Something went wrong"
+            });
+            } else {
+            res.send({
+                message: "Saved"
+            })
+            }
 
+        }) */
 player.put("/:id", function(req, res) {
     // console.log("req.params.id in player put route: ", req.params.id)
     // console.log("req.params.body in player put route: ", req.body)

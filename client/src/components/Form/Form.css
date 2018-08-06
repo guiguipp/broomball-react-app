@@ -1,0 +1,14 @@
+label {
+    color: whitesmoke;
+    text-shadow: -0.5px -0.5px 0 black, 0.5px -0.5px 0 black, -0.5px 0.5px 0 black, 0.5px 0.5px 0 black;
+    display: inline-block;
+    margin-bottom: .5rem;
+}
+.container {
+    width: 100%;
+    margin: auto;
+    padding: 0 20%;
+}
+.field {
+    margin: 2% 0% 5%;
+}
