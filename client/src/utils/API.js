@@ -24,5 +24,9 @@ export default {
     getPlayers: () => {
         const url = currentURL + "/api/player/"
         return axios.get(url)
-        }
+        },
+    deletePlayer: (id) => {
+        const url = currentURL + "/api/player/" + id
+        return axios.delete(url)
+        },
     }
