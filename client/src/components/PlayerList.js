@@ -1,44 +1,24 @@
 import React, {Component} from 'react';
 
-import API from "../utils/API"
+import { connect } from 'react-redux';
+import { fetchPlayers } from '../js/actions/playerActions'
+import { deletePlayer } from '../js/actions/playerActions'
+
 class PlayerList extends Component {
-    constructor(props) {
-        super(props);
-        this.state= {
-            players: [],
-            player: {}
-        }
-    }
 
     componentDidMount() {
-        API.getPlayers()
-            .then(res => {
-                if(res.status !== 200) {
-                    console.log("Error message: ", res.status)
-                }
-                else {
-                    // console.log(res.data)
-                    this.setState({...this.state, players: res.data})
-                }
-            })
+        this.props.fetchPlayers()
         }
-        deletePlayer(id){
-            API.deletePlayer(id)
-                .then(res => {
-                    if(res.status !== 200) {
-                        console.log("Erros message: ", res.status)
-                    }
-                    else {
-                        console.log("Need to substract res.data from this.state.players")
-                    }
-                })
-        }
+    
+    deletePlayer(id){
+        this.props.deletePlayer(id)
+    }
 
     render() {
         return (
             <div>
                 <ul>
-                {this.state.players.map(player => {
+                {this.props.players.map(player => {
                     return (
                     <li key={player._id} >{player.name} ({player._id})
                         <button onClick={()=> this.deletePlayer(player._id)}>Delete</button> 
@@ -52,4 +32,9 @@ class PlayerList extends Component {
     }
 }
 
-export default PlayerList;
+const mapStateToProps = state => ({
+    players: state.players.players,
+    player: state.players.player    
+})
+
+export default connect(mapStateToProps, { fetchPlayers, deletePlayer }) (PlayerList)

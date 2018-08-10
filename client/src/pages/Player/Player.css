@@ -6,14 +6,14 @@
 }
 
 .tab {
-    width: 25%;
+    width: 50%;
     min-width: 100px;
     height: 10%;
     min-height: 30px;
     padding: 1%;
     text-align: center;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
 }
 
 .show {
@@ -28,6 +28,13 @@
     border-bottom-style: solid;
     border-bottom-width: 1px;
     color: rgb(86,86,86);
+    border-left-color: #EA8D47;
+    border-left-style: solid;
+    border-left-width: 1px;
+    border-right-color: #EA8D47;
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-top-color: #EA8D47;
 }
 .passive_tab {
     border-bottom-style: solid;
@@ -49,4 +56,10 @@
     margin: auto;
     padding: 5% 0;
     margin-bottom: 200px;
+}
+.hidden {
+    visibility: hidden;
+}
+.visible {
+    visibility: visible;
 }

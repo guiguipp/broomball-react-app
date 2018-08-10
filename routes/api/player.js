@@ -58,7 +58,7 @@ player.put("/:id", function(req, res) {
     })
 
 player.delete("/:id", function(req, res) {
-    console.log("req.params.id in player put route: ", req.params.id)
+    console.log("req.params.id in player delete route: ", req.params.id)
     db.Player.findByIdAndDelete(req.params.id)
     .then(function(dbPlayer){
         res.send(dbPlayer)

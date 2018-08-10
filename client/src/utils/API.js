@@ -9,7 +9,7 @@ export default {
         const url = currentURL + "/api/game/"
         return axios.get(url)
         },
-    createNewGame: (date) => {
+    addGame: (date) => {
         const url = currentURL + "/api/game/"
         return axios.post(url, { game_date: date })
         },
@@ -17,16 +17,21 @@ export default {
         const url = currentURL + "/api/game/" + id
         return axios.delete(url)
         },
+    getPlayers: () => {
+        const url = currentURL + "/api/player/"
+        return axios.get(url)
+        },
     addPlayer: (player) => {
         const url = currentURL + "/api/player/"
         return axios.post(url, { player })
         },
-    getPlayers: () => {
-        const url = currentURL + "/api/player/"
-        return axios.get(url)
+    editPlayer: (id, data) => {
+        const url = currentURL + "/api/player/" + id
+        return axios.put(url, { data })
         },
     deletePlayer: (id) => {
         const url = currentURL + "/api/player/" + id
         return axios.delete(url)
         },
+
     }

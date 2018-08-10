@@ -1,45 +1,61 @@
 import React, { Component } from "react";
 
-import API from "../../utils/API"
-/*import { connect } from 'react-redux';
+// import API from "../../utils/API"
+import { connect } from 'react-redux';
 
-import { fetchPlayers } from '../../js/actions/playerActions'
 import { addPlayer } from '../../js/actions/playerActions'
-import { editPlayer } from '../../js/actions/playerActions'
-import { deletePlayer } from '../../js/actions/playerActions'
-*/
+// import { formUpdate } from '../../js/actions/playerActions'
+// import { update } from '../../js/actions/playerActions'
+// import { editPlayer } from '../../js/actions/playerActions'
+
 
 
 import "./Form.css";
 
 class Form extends Component {
+    
     constructor(props) {
         super(props);
         this.state= {
-                name: "",
-                fullName: "",
-                preferredPosition: "Forward",
-                membershipStatus: "Member",
-                email: "",
-                playerLevel: "A+"
+                    name: "",
+                    fullName: "",
+                    preferredPosition: "Forward",
+                    membershipStatus: "Member",
+                    email: "",
+                    playerLevel: "A+"
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-
-
-    handleChange(event) { 
+    
+    
+/*
+    handleChange(name, value) { 
         const target = event.target;
         const value = target.value;
         const name = target.name;
+        console.log("Name: ", name, "\nValue: ", value)
         this.setState(
             {...this.state, [name]: value})
-        }
-    
-    handleUpdate(form) {
+        this.props.handleFormChange(name, value)
+}*/
+    handleUpdate(value) {
         
     }
     
+    handleChange(event) {
+        // console.log("Event: ", event)
+        // this.handleFormChange()
+        const target = event.target;
+        const value = target.value;
+        const name = target.name;
+        console.log("Name: ", name, "\nValue: ", value)
+        this.setState({
+                ...this.state,
+                [name]: value
+                })
+            }
+
     handleSubmit(event) {
         event.preventDefault();
         console.log("State: ", this.state)
@@ -53,29 +69,21 @@ class Form extends Component {
             email: this.state.email
             }
         
-        API.addPlayer(newPlayer)
-            .then(res => {
-                if(res.status !== 200) {
-                    throw new Error(res.statusText)
-                }
-                else {
-                    console.log("res.data: ", res.data)
-                }
-            })
-        
+        this.props.addPlayer(newPlayer)        
     }
 
     render() {
         return (
             <div className="container">
                 <div className="row">
-                    <form onChange={this.handleChange} onSubmit={this.handleSubmit}>
+                    <form onSubmit={this.handleSubmit}>
                         <div className="field">
                             <label>Name: </label>
                             <input 
                                 type="text" 
                                 name="name"
                                 value= {this.state.name}
+                                onChange={(event) => this.handleChange(event)}
                                 />
                         </div>
                         
@@ -85,12 +93,13 @@ class Form extends Component {
                                 type="text" 
                                 name="fullName"
                                 value= {this.state.fullName}
+                                onChange={(event) => this.handleChange(event)}
                                 />
                         </div>
 
                         <div className="field">
                             <label>Preferred Position: </label>
-                            <select name="preferredPosition" onChange={this.handleChange} value={this.state.preferredPosition}>
+                            <select name="preferredPosition" onChange={(event) => this.handleChange(event)} value={this.state.preferredPosition}>
                                 <option defaultValue="Forward">Forward</option>
                                 <option value="Defense">Defense</option>
                                 <option value="Goalie">Goalie</option>
@@ -99,7 +108,7 @@ class Form extends Component {
 
                         <div className="field">
                             <label>Membership Status:</label>
-                            <select name="membershipStatus" onChange={this.handleChange} value= {this.state.membershipStatus}>
+                            <select name="membershipStatus" onChange={(event) => this.handleChange(event)} value= {this.state.membershipStatus}>
                                 <option defaultValue="Member">Member</option>
                                 <option value="Ten Bucker">Ten Bucker</option>
                             </select>
@@ -107,7 +116,7 @@ class Form extends Component {
 
                         <div className="field"> 
                             <label>Level: </label>
-                            <select name="playerLevel" onChange={this.handleChange} value= {this.state.level}>
+                            <select name="playerLevel" onChange={(event) => this.handleChange(event)} value= {this.state.level}>
                                 <option defaultValue="A+">A+</option>
                                 <option value="A">A</option>
                                 <option value="A-">A-</option>
@@ -129,6 +138,7 @@ class Form extends Component {
                                 type="text" 
                                 name="email"
                                 value= {this.state.email}
+                                onChange={(event) => this.handleChange(event)}
                                 />
                         </div>
                         
@@ -151,9 +161,11 @@ Games.propTypes = {
 /*
 const mapStateToProps = state => ({
     players: state.players.players,
-    player: state.players.player
+    player: state.players.player,
+    
 })
 */
 
-export default Form;
-// export default connect(mapStateToProps, { fetchPlayers, addPlayer, editPlayer, deletePlayer }) (Form)
+
+// export default Form;
+export default connect(null, { addPlayer }) (Form)

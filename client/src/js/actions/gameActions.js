@@ -32,7 +32,7 @@ export const deleteGame = (id) => dispatch => {
 }
 
 export const addGame = (date) => dispatch => {
-    API.createNewGame(date)
+    API.addGame(date)
             .then(res => {
                 if(res.status !== 200) {
                     throw new Error(res.statusText)
