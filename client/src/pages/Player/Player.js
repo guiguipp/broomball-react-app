@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 
+import { connect } from 'react-redux';
+import { toggleTab1 } from '../../js/actions/playerActions'
+import { toggleTab2 } from '../../js/actions/playerActions'
+
 import Logo from "../../components/images/logo.jpg";
 import Form from "../../components/Form"
 import PlayerList  from "../../components/PlayerList"
@@ -7,42 +11,17 @@ import PlayerList  from "../../components/PlayerList"
 import "./Player.css";
 
 class Player extends Component { 
-    constructor(props) {
-    super(props);
-        this.state= {
-            tab1: "show",
-            tab2: "hide",
-            panel1: "visible",
-            panel2: "hidden"
-        }
-        this.toggleTab1Status = this.toggleTab1Status.bind(this)
-        this.toggleTab2Status = this.toggleTab2Status.bind(this)
-    }
 
-    toggleTab1Status(tab1Visibility){
-        console.log("Clicked. Tab1Visibility: ", tab1Visibility)
-        if(tab1Visibility === "hide") {
-            this.setState({
-                ...this.state, 
-                tab1: "show", 
-                tab2: "hide",
-                panel1: "visible",
-                panel2: "hidden"
-            })
-            }
-        }    
-    toggleTab2Status(tab2Visibility){
-        console.log("Other click. Tab2Visibility: ", tab2Visibility)
-        if (tab2Visibility === "hide") {            
-            this.setState({
-                ...this.state, 
-                tab1: "hide", 
-                tab2: "show",
-                panel1: "hidden",
-                panel2: "visible"
-            })
-            }
+    toggleStatusTab1(tab1){
+        if (tab1 === "hide") {
+            this.props.toggleTab1(tab1)
         }
+    }
+    toggleStatusTab2(tab2){
+        if (tab2 === "hide") {
+            this.props.toggleTab2(tab2)
+        }
+    }
         
 render() {
     return (
@@ -51,14 +30,14 @@ render() {
         <div className="main_alternate">
                 <h1 className="h1_alternate">Summit Broomball</h1>
                 <div className="row tab_centering">
-                    <span className={"tab " + this.state.tab1} onClick={() => this.toggleTab1Status(this.state.tab1) }> Players</span>
-                    <span className={"tab " + this.state.tab2} onClick={() => this.toggleTab2Status(this.state.tab2) }> Add Player</span>
+                    <span className={"tab " + this.props.tab1} onClick={() => this.toggleStatusTab1(this.props.tab1) }> Players</span>
+                    <span className={"tab " + this.props.tab2} onClick={() => this.toggleStatusTab2(this.props.tab2) }> {this.props.formMode} Player</span>
                     {/* <span className="tab passive_tab"> \_ _ '/ </span>
                     <span className="tab passive_tab">(° - ° ) </span> */}
                 </div>
                 <div className= "row main_for_tab">
-                    <span className={this.state.panel1}> <PlayerList /> </span> 
-                    <span className={this.state.panel2}> <Form /> </span> 
+                    <span className={this.props.panel1}> <PlayerList /> </span> 
+                    <span className={this.props.panel2}> <Form /> </span> 
                 </div>
             </div>
         </div>
@@ -68,4 +47,14 @@ render() {
 }
 
 
-export default Player
+// export default Player
+const mapStateToProps = state => ({
+    tab1: state.players.tab1,
+    tab2: state.players.tab2,
+    panel1: state.players.panel1,
+    panel2: state.players.panel2,
+    formMode: state.players.formMode
+})
+
+// export default GameList;
+export default connect(mapStateToProps, { toggleTab1, toggleTab2 }) (Player)

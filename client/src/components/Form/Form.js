@@ -1,14 +1,10 @@
 import React, { Component } from "react";
 
-// import API from "../../utils/API"
 import { connect } from 'react-redux';
-
 import { addPlayer } from '../../js/actions/playerActions'
-// import { formUpdate } from '../../js/actions/playerActions'
-// import { update } from '../../js/actions/playerActions'
-// import { editPlayer } from '../../js/actions/playerActions'
-
-
+import { editPlayer } from '../../js/actions/playerActions'
+import { toggleTab1 } from '../../js/actions/playerActions'
+import { updateField } from '../../js/actions/playerActions'
 
 import "./Form.css";
 
@@ -16,61 +12,45 @@ class Form extends Component {
     
     constructor(props) {
         super(props);
-        this.state= {
-                    name: "",
-                    fullName: "",
-                    preferredPosition: "Forward",
-                    membershipStatus: "Member",
-                    email: "",
-                    playerLevel: "A+"
-        }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
     }
-    
-    
-/*
-    handleChange(name, value) { 
-        const target = event.target;
-        const value = target.value;
-        const name = target.name;
-        console.log("Name: ", name, "\nValue: ", value)
-        this.setState(
-            {...this.state, [name]: value})
-        this.props.handleFormChange(name, value)
-}*/
-    handleUpdate(value) {
-        
+    handleCancel(event) {
+        event.preventDefault()
+        this.props.toggleTab1(this.props.tab1)
     }
-    
     handleChange(event) {
-        // console.log("Event: ", event)
-        // this.handleFormChange()
         const target = event.target;
         const value = target.value;
         const name = target.name;
-        console.log("Name: ", name, "\nValue: ", value)
-        this.setState({
-                ...this.state,
-                [name]: value
-                })
-            }
+        let editedPlayer = {...this.props.player, [name]: value}
+        this.props.updateField(editedPlayer)
+        }
 
     handleSubmit(event) {
         event.preventDefault();
-        console.log("State: ", this.state)
         
         let newPlayer = {
-            name: this.state.name,
-            fullName: this.state.fullName,
-            playerLevel: this.state.playerLevel,
-            preferredPosition: this.state.name,
-            membershipStatus: this.state.membershipStatus,
-            email: this.state.email
+            name: this.props.player.name,
+            fullName: this.props.player.fullName,
+            playerLevel: this.props.player.playerLevel,
+            preferredPosition: this.props.player.preferredPosition,
+            membershipStatus: this.props.player.membershipStatus,
+            email: this.props.player.email
             }
         
-        this.props.addPlayer(newPlayer)        
-    }
+        if (this.props.formMode === "Add") {
+            this.props.addPlayer(newPlayer)
+            }
+        else {
+            let id = this.props.player._id
+            this.props.editPlayer(id, newPlayer)
+        }
+
+        // go back to tab#1
+        this.props.toggleTab1(this.props.tab1)
+        }
 
     render() {
         return (
@@ -82,7 +62,7 @@ class Form extends Component {
                             <input 
                                 type="text" 
                                 name="name"
-                                value= {this.state.name}
+                                value= {this.props.player.name}
                                 onChange={(event) => this.handleChange(event)}
                                 />
                         </div>
@@ -92,14 +72,14 @@ class Form extends Component {
                             <input 
                                 type="text" 
                                 name="fullName"
-                                value= {this.state.fullName}
+                                value= {this.props.player.fullName}
                                 onChange={(event) => this.handleChange(event)}
                                 />
                         </div>
 
                         <div className="field">
                             <label>Preferred Position: </label>
-                            <select name="preferredPosition" onChange={(event) => this.handleChange(event)} value={this.state.preferredPosition}>
+                            <select name="preferredPosition" onChange={(event) => this.handleChange(event)} value={this.props.player.preferredPosition}>
                                 <option defaultValue="Forward">Forward</option>
                                 <option value="Defense">Defense</option>
                                 <option value="Goalie">Goalie</option>
@@ -108,7 +88,7 @@ class Form extends Component {
 
                         <div className="field">
                             <label>Membership Status:</label>
-                            <select name="membershipStatus" onChange={(event) => this.handleChange(event)} value= {this.state.membershipStatus}>
+                            <select name="membershipStatus" onChange={(event) => this.handleChange(event)} value= {this.props.player.membershipStatus}>
                                 <option defaultValue="Member">Member</option>
                                 <option value="Ten Bucker">Ten Bucker</option>
                             </select>
@@ -116,7 +96,7 @@ class Form extends Component {
 
                         <div className="field"> 
                             <label>Level: </label>
-                            <select name="playerLevel" onChange={(event) => this.handleChange(event)} value= {this.state.level}>
+                            <select name="playerLevel" onChange={(event) => this.handleChange(event)} value= {this.props.player.playerLevel}>
                                 <option defaultValue="A+">A+</option>
                                 <option value="A">A</option>
                                 <option value="A-">A-</option>
@@ -137,14 +117,13 @@ class Form extends Component {
                             <input 
                                 type="text" 
                                 name="email"
-                                value= {this.state.email}
+                                value= {this.props.player.email}
                                 onChange={(event) => this.handleChange(event)}
                                 />
                         </div>
                         
-                        
                         <button type="submit" value="Submit"> Submit </button>
-                        <button type="cancel" value="Cancel"> Cancel </button>
+                        <button type="cancel" value="Cancel" onClick={(event) => this.handleCancel(event)} > Cancel </button>
                     </form>
                 </div>
             </div>
@@ -158,14 +137,20 @@ Games.propTypes = {
     games: PropTypes.array.isRequired
 }
 */
-/*
+
 const mapStateToProps = state => ({
-    players: state.players.players,
+    tab1: state.players.tab1,
+    tab2: state.players.tab2,
+    panel1: state.players.panel1,
+    panel2: state.players.panel2,
+    // the player has to come from display because that's the reducer where the add/edit mode is toogled
     player: state.players.player,
-    
+    formMode: state.players.formMode
 })
-*/
 
+export default connect(mapStateToProps, { addPlayer, editPlayer, toggleTab1, updateField }) (Form)
 
-// export default Form;
-export default connect(null, { addPlayer }) (Form)
+// do it without needing to reset... can it work?
+// reset player when submitted
+// HAVE TO GET RID OF THE TWO "PLAYER" OBJECTS FROM TWO DIFFERENT REDUCERS...
+// Make the list pretty

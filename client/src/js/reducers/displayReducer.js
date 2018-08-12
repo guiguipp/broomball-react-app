@@ -19,7 +19,7 @@ export default function(state = initialState, action) {
             past_visibility: "hidden",
             dateHeader: "Upcoming Games",
             buttonMsg: "Past Games",
-            showing: "future"
+            showing: "future",
         }
         
         case SHOW_PAST:
@@ -31,8 +31,8 @@ export default function(state = initialState, action) {
             buttonMsg: "Upcoming Games",
             showing: "past"
         }
-
-        default: 
+        
+        default:
         return state;
     }
 }

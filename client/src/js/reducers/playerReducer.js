@@ -1,4 +1,4 @@
-import { FETCH_PLAYERS, ADD_PLAYER, DELETE_PLAYER, FORM_UPDATE_VALUE, FORM_RESET } from '../actions/types';
+import { FETCH_PLAYERS, EDIT_PLAYER, ADD_PLAYER, DELETE_PLAYER, SHOW_TAB1, SHOW_TAB2, EDIT_FORM, UPDATE_FIELD } from '../actions/types';
 import _ from "underscore"
 
 const initialState = {
@@ -11,7 +11,11 @@ const initialState = {
         email: "",
         playerLevel: "A+"
         },
-    test: ""
+    tab1: "show",
+    tab2: "hide",
+    panel1: "visible",
+    panel2: "hidden",
+    formMode: "Add"
     }
 
 export default function(state = initialState, action) {
@@ -25,7 +29,7 @@ export default function(state = initialState, action) {
         case ADD_PLAYER:
         return {
             ...state,
-            player: action.payload,
+            player: initialState.player,
             players: _.sortBy([...state.players, action.payload], "name")
         }
 
@@ -35,19 +39,51 @@ export default function(state = initialState, action) {
             deletedPlayer: action.payload,
             players: state.players.filter(player => player._id !== action.payload._id)
         }
-
-        case FORM_UPDATE_VALUE:
-        console.log("Updating happening in the reducer")
+        
+        case EDIT_PLAYER:
         return {
             ...state,
-            player: {
-                    ...state.player,
-                    name: action.payload}
-            }
+            players: _.sortBy([action.payload, ...state.players.filter(player => player._id !== action.payload._id)], "name")
+        }
         
-        case FORM_RESET:
-        return initialState;
-        
+        case SHOW_TAB1:
+        return {
+            ...state,
+            tab1: "show",
+            panel1: "visible",
+            tab2: "hide",
+            panel2: "hidden",
+            formMode: "Add",
+            player: initialState.player,
+        }
+
+        case SHOW_TAB2:
+        return {
+            ...state,
+            tab2: "show",
+            panel2: "visible",
+            tab1: "hide",
+            panel1: "hidden",
+            formMode: "Add"
+        }
+
+        case EDIT_FORM:
+        return {
+            ...state,
+            formMode: "Edit",
+            tab2: "show",
+            panel2: "visible",
+            tab1: "hide",
+            panel1: "hidden",
+            player: action.payload
+        }
+
+        case UPDATE_FIELD:
+        return {
+            ...state,
+            player: action.payload
+        }        
+
         default: 
         return state;
     }

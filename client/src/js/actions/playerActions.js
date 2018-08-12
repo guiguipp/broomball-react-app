@@ -1,4 +1,4 @@
-import { FETCH_PLAYERS, DELETE_PLAYER, ADD_PLAYER, FORM_UPDATE_VALUE, FORM_RESET } from './types';
+import { FETCH_PLAYERS, EDIT_PLAYER, DELETE_PLAYER, ADD_PLAYER, SHOW_TAB1, SHOW_TAB2, EDIT_FORM, UPDATE_FIELD } from './types';
 import API from "../../utils/API"
 
 export const fetchPlayers = () => dispatch => {
@@ -49,46 +49,53 @@ export const addPlayer = (data) => dispatch => {
 
                     }
                 else {
-                    console.log("Error Message: the app encounted an error creating this game in the database")
+                    console.log("Error Message: the app encounted an error creating this player in the database")
                     }
                 }
             })
         }
 
 export const editPlayer = (id, data) => dispatch => {
-    API.deletePlayer(id, data)
+    API.editPlayer(id, data)
     .then(res => {
         if(res.status !== 200) {
             throw new Error(res.statusText)
         }
         else {
             dispatch({
-                type: DELETE_PLAYER,
+                type: EDIT_PLAYER,
                 payload: res.data
             })
         }
     })
 }
 
-export const formUpdate = (data) => {    
-        return {
-        type: FORM_UPDATE_VALUE,
-        payload: data
+export const toggleTab1 = (currentState) => dispatch => {
+    if (currentState === "hide") {
+        dispatch({
+            type: SHOW_TAB1
+            })
+        }
     }
 
-}
-
-export const formReset = () => dispatch => {
-    dispatch({
-        type: FORM_RESET
-    })
-}
-/*
-export function update(name, value) {
-    return function(dispatch) {
+export const toggleTab2 = (currentState) => dispatch => {
+    if (currentState === "hide") {
         dispatch({
-            type: FORM_UPDATE_VALUE,
-            payload: {player: value}
+            type: SHOW_TAB2
+            })
+        }
+    }
+
+export const editForm = (player) => dispatch => {
+    dispatch({
+        type: EDIT_FORM,
+        payload: player
         })
     }
-}*/
+    
+export const updateField = (player) => dispatch => {
+    dispatch({
+        type: UPDATE_FIELD,
+        payload: player 
+        })
+    }

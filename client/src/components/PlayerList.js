@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { fetchPlayers } from '../js/actions/playerActions'
 import { deletePlayer } from '../js/actions/playerActions'
+import { editForm } from '../js/actions/playerActions'
 
 class PlayerList extends Component {
 
@@ -13,6 +14,17 @@ class PlayerList extends Component {
     deletePlayer(id){
         this.props.deletePlayer(id)
     }
+    sendPlayerToEditForm(player){
+        console.log("Info of player to edit: ", player)
+        this.props.editForm(player)
+        /* 
+        - Show add player tab
+        – have it say edit player
+        - feed state from data of player to edit
+        - edit player in db
+        – reinitiate state
+        */
+    }
 
     render() {
         return (
@@ -22,7 +34,7 @@ class PlayerList extends Component {
                     return (
                     <li key={player._id} >{player.name} ({player._id})
                         <button onClick={()=> this.deletePlayer(player._id)}>Delete</button> 
-                        <button>Edit</button>
+                        <button onClick={()=> this.sendPlayerToEditForm(player)}>Edit</button>
                     </li> )
                     })
                 }
@@ -37,4 +49,4 @@ const mapStateToProps = state => ({
     player: state.players.player    
 })
 
-export default connect(mapStateToProps, { fetchPlayers, deletePlayer }) (PlayerList)
+export default connect(mapStateToProps, { fetchPlayers, deletePlayer, editForm }) (PlayerList)
