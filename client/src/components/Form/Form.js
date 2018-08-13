@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { addPlayer } from '../../js/actions/playerActions'
 import { editPlayer } from '../../js/actions/playerActions'
-import { toggleTab1 } from '../../js/actions/playerActions'
+import { resetTabs } from '../../js/actions/playerActions'
 import { updateField } from '../../js/actions/playerActions'
 
 import "./Form.css";
@@ -18,7 +18,7 @@ class Form extends Component {
     }
     handleCancel(event) {
         event.preventDefault()
-        this.props.toggleTab1(this.props.tab1)
+        this.props.resetTabs()
     }
     handleChange(event) {
         const target = event.target;
@@ -49,7 +49,7 @@ class Form extends Component {
         }
 
         // go back to tab#1
-        this.props.toggleTab1(this.props.tab1)
+        this.props.resetTabs()
         }
 
     render() {
@@ -143,12 +143,11 @@ const mapStateToProps = state => ({
     tab2: state.players.tab2,
     panel1: state.players.panel1,
     panel2: state.players.panel2,
-    // the player has to come from display because that's the reducer where the add/edit mode is toogled
     player: state.players.player,
     formMode: state.players.formMode
 })
 
-export default connect(mapStateToProps, { addPlayer, editPlayer, toggleTab1, updateField }) (Form)
+export default connect(mapStateToProps, { addPlayer, editPlayer, resetTabs, updateField }) (Form)
 
 // do it without needing to reset... can it work?
 // reset player when submitted

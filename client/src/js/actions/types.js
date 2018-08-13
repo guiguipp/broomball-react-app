@@ -5,8 +5,8 @@ export const DELETE_GAME = 'DELETE_GAME'
 export const SHOW_FUTURE = "SHOW_FUTURE"
 export const SHOW_PAST = "SHOW_PAST"
 
-export const SHOW_TAB1 = "SHOW_TAB1"
-export const SHOW_TAB2 = "SHOW_TAB2"
+export const SHOW_TAB = "SHOW_TAB"
+export const RESET_TABS = "RESET_TABS"
 
 export const EDIT_FORM = "EDIT_FORM"
 export const UPDATE_FIELD = "UPDATE_FIELD"

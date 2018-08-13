@@ -6,7 +6,7 @@
 }
 
 .tab {
-    width: 50%;
+    width: 33.33%;
     min-width: 100px;
     height: 10%;
     min-height: 30px;
@@ -62,4 +62,5 @@
 }
 .visible {
     visibility: visible;
+    width: 100%;
 }

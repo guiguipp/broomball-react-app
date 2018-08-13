@@ -1,4 +1,4 @@
-import { FETCH_PLAYERS, EDIT_PLAYER, DELETE_PLAYER, ADD_PLAYER, SHOW_TAB1, SHOW_TAB2, EDIT_FORM, UPDATE_FIELD } from './types';
+import { FETCH_PLAYERS, EDIT_PLAYER, DELETE_PLAYER, ADD_PLAYER, SHOW_TAB, RESET_TABS, EDIT_FORM, UPDATE_FIELD } from './types';
 import API from "../../utils/API"
 
 export const fetchPlayers = () => dispatch => {
@@ -70,21 +70,18 @@ export const editPlayer = (id, data) => dispatch => {
     })
 }
 
-export const toggleTab1 = (currentState) => dispatch => {
-    if (currentState === "hide") {
+export const toggleTabStatus = (id) => dispatch => {
         dispatch({
-            type: SHOW_TAB1
-            })
-        }
+            type: SHOW_TAB,
+            payload: id
+        })
     }
 
-export const toggleTab2 = (currentState) => dispatch => {
-    if (currentState === "hide") {
-        dispatch({
-            type: SHOW_TAB2
-            })
-        }
-    }
+export const resetTabs = (id) => dispatch => {
+    dispatch({
+        type: RESET_TABS
+    })
+}
 
 export const editForm = (player) => dispatch => {
     dispatch({

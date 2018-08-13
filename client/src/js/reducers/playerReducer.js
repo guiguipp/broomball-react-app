@@ -1,4 +1,4 @@
-import { FETCH_PLAYERS, EDIT_PLAYER, ADD_PLAYER, DELETE_PLAYER, SHOW_TAB1, SHOW_TAB2, EDIT_FORM, UPDATE_FIELD } from '../actions/types';
+import { FETCH_PLAYERS, EDIT_PLAYER, ADD_PLAYER, DELETE_PLAYER, SHOW_TAB, RESET_TABS, EDIT_FORM, UPDATE_FIELD } from '../actions/types';
 import _ from "underscore"
 
 const initialState = {
@@ -11,10 +11,10 @@ const initialState = {
         email: "",
         playerLevel: "A+"
         },
-    tab1: "show",
-    tab2: "hide",
-    panel1: "visible",
-    panel2: "hidden",
+
+    tabs: ["show","hide","hide"],
+    panels: ["visible", "hidden", "hidden"],
+    
     formMode: "Add"
     }
 
@@ -46,35 +46,26 @@ export default function(state = initialState, action) {
             players: _.sortBy([action.payload, ...state.players.filter(player => player._id !== action.payload._id)], "name")
         }
         
-        case SHOW_TAB1:
+        case SHOW_TAB:
         return {
             ...state,
-            tab1: "show",
-            panel1: "visible",
-            tab2: "hide",
-            panel2: "hidden",
-            formMode: "Add",
-            player: initialState.player,
+            tabs: state.tabs.map((tab, index) => {if(index !== action.payload) {return tab = "hide"} else {return tab = "show"}}),
+            panels: state.panels.map((panel, index) => {if(index !== action.payload) {return panel = "hidden"} else {return panel = "visible"}})
         }
 
-        case SHOW_TAB2:
+        case RESET_TABS:
         return {
             ...state,
-            tab2: "show",
-            panel2: "visible",
-            tab1: "hide",
-            panel1: "hidden",
-            formMode: "Add"
+            tabs: initialState.tabs,
+            panels: initialState.panels,
         }
 
         case EDIT_FORM:
         return {
             ...state,
             formMode: "Edit",
-            tab2: "show",
-            panel2: "visible",
-            tab1: "hide",
-            panel1: "hidden",
+            tabs: ["hide","hide","show"],
+            panels: ["hidden", "hidden", "visible"],
             player: action.payload
         }
 
