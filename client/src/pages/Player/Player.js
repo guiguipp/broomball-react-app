@@ -5,16 +5,17 @@ import { toggleTabStatus } from '../../js/actions/playerActions';
 
 import Logo from "../../components/images/logo.jpg";
 import Form from "../../components/Form";
-// import PlayerList  from "../../components/PlayerList";
-import PlayerList from "../../components/PlayerList/"
+
+import MemberList from "../../components/MemberList/"
+import TenBuckerList from "../../components/TenBuckerList/"
 
 import "./Player.css";
 
 class Player extends Component { 
 
 toggleStatus(id, currentStatus) {
+    // converting the # of the tab to its index
     let tabIndex = parseInt(id, 10) - 1
-    console.log("TabIndex: ",tabIndex, "\ncurrentStatus: ", currentStatus)
     if(currentStatus === "hide") {
         this.props.toggleTabStatus(tabIndex)
     }
@@ -30,12 +31,10 @@ render() {
                     <span id="1" className={"tab " + this.props.tab1} onClick={() => this.toggleStatus("1", this.props.tab1) }> Members </span>
                     <span id="2" className={"tab " + this.props.tab2} onClick={() => this.toggleStatus("2", this.props.tab2) }> Ten Buckers </span>
                     <span id="3" className={"tab " + this.props.tab3} onClick={() => this.toggleStatus("3", this.props.tab3) }> {this.props.formMode} Player </span>
-                    {/* <span className="tab passive_tab"> \_ _ '/ </span>
-                    <span className="tab passive_tab">(° - ° ) </span> */}
                 </div>
                 <div className= "row main_for_tab">
-                    <span className={this.props.panel1}> <PlayerList /> </span> 
-                    <span className={this.props.panel2}> <p>Nothing yet</p> </span> 
+                    <span className={this.props.panel1}> <MemberList /> </span> 
+                    <span className={this.props.panel2}> <TenBuckerList /> </span> 
                     <span className={this.props.panel3}> <Form /> </span> 
                 </div>
             </div>

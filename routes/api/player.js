@@ -11,8 +11,6 @@ player.get("/", function(req, res) {
         })
     })
 
-/*
-// Can it really be structured like that? (with the id as a param, not in the body)
 player.get("/:id", function(req, res) {
     console.log("req.params in player get route: ", req.params)
     db.Player.findById(req.params.id)
@@ -23,7 +21,18 @@ player.get("/:id", function(req, res) {
             res.send(err)
         })
     })
-*/
+
+player.get("/:field/:data", function(req, res) {
+    db.Player.findById(req.params.id)
+        .then(function(dbPlayer){
+            res.send(dbPlayer)
+        })
+        .catch(function(err){
+            res.send(err)
+        })
+    })                      
+
+
 player.post("/", function(req, res) {
     // console.log("req.body in player post route: ", req.body)
     var newPlayer = db.Player
@@ -59,7 +68,6 @@ player.put("/:id", function(req, res) {
     })
 
 player.delete("/:id", function(req, res) {
-    console.log("req.params.id in player delete route: ", req.params.id)
     db.Player.findByIdAndDelete(req.params.id)
     .then(function(dbPlayer){
         res.send(dbPlayer)

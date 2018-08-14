@@ -43,6 +43,7 @@ export default function(state = initialState, action) {
         case EDIT_PLAYER:
         return {
             ...state,
+            player: initialState.player,
             players: _.sortBy([action.payload, ...state.players.filter(player => player._id !== action.payload._id)], "name")
         }
         
@@ -56,6 +57,7 @@ export default function(state = initialState, action) {
         case RESET_TABS:
         return {
             ...state,
+            formMode: "Add",
             tabs: initialState.tabs,
             panels: initialState.panels,
         }
