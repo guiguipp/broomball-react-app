@@ -2,7 +2,8 @@ import React, { Component } from "react";
 
 import { connect } from 'react-redux';
 import { addGame } from '../../js/actions/gameActions'
-
+import { fetchPlayers } from '../../js/actions/playerActions'
+import { addPlayersToRoster } from "../../js/actions/rosterActions"
 // see doc: https://www.npmjs.com/package/react-datepicker
 import DatePicker from "react-datepicker";
 
@@ -20,8 +21,11 @@ class Calendar extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+    componentDidMount() {
+        this.props.fetchPlayers()
+        }
+
     handleChange(date) {
-        console.log("date in handle change: ", moment(date).format("YYYY-MM-DD"))
         this.setState({
             dateSelected: date
         })
@@ -29,9 +33,18 @@ class Calendar extends Component {
 
     handleSubmit(event) {
         event.preventDefault()
-        console.log("Creating a game")
+        let members = this.props.players.filter((player) => player.membershipStatus === "Member")
+        let membersWithGameInfo = members.map((member) => {return {
+            membershipStatus: member.membershipStatus,
+            _id: member._id,
+            name: member.name,
+            playerLevel: member.playerLevel,
+            preferredPosition: member.preferredPosition,
+            gameInfo: this.props.gameInfo
+        }})
         let dateOfGame = moment(this.state.dateSelected).format("YYYY-MM-DD")
-        this.props.addGame(dateOfGame)
+        this.props.addGame(dateOfGame, membersWithGameInfo)
+        // members.forEach((player) => this.props.addPlayersToRoster(dateOfGame, player))
     }
 
 
@@ -55,8 +68,6 @@ class Calendar extends Component {
                         </div>
                     </form>
                 </div>
-
-
             </div>
             )
         }
@@ -64,9 +75,25 @@ class Calendar extends Component {
 
 
 const mapStateToProps = state => ({
-    game: state.game
+    game: state.games.game,
+    players: state.players.players,
+    gameInfo: state.games.gameInfo
     })
 
 
-export default connect(mapStateToProps, { addGame }) (Calendar)
+export default connect(mapStateToProps, { addGame, fetchPlayers, addPlayersToRoster }) (Calendar)
     
+/*
+Upon creating the game, API was called to get all members. Through an object constructor,
+every member was posted to Roster api (with Game Id, name of player, 
+and status [member/ten bucker] + availability set to: "true")
+
+The list of players will only show the available players 
+
+With Mongoose, no need for the constructor: the players can be added via an array.
+Also, no need for an API call: the players are already in the State. 
+
+We might want to store the array of player in Game itself. It looks like we can omit the "Roster" database that way.
+Testing further...
+
+*/

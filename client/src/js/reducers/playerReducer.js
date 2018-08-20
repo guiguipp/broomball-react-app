@@ -57,6 +57,7 @@ export default function(state = initialState, action) {
         case RESET_TABS:
         return {
             ...state,
+            player: initialState.player,
             formMode: "Add",
             tabs: initialState.tabs,
             panels: initialState.panels,

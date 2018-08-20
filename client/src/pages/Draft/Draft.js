@@ -9,7 +9,7 @@ import { showPast } from '../../js/actions/displayActions'
 import GameList from "../../components/GameList";
 import Logo from "../../components/images/logo.jpg";
 import Calendar from "../../components/Calendar";
-// import Button from "../../components/Button"
+import Drafter from "../../components/Drafter"
 
 import "./Draft.css";
 
@@ -31,6 +31,9 @@ render() {
             <div className="row">
                 <button className="btn contrast_color change_list_display" onClick={() => this.toggleGamesFunc(this.props.showing)}> {this.props.buttonMsg} </button>
             </div>
+        </div>
+        <div className="main_main">
+            <Drafter />
         </div>
     </div>
     )

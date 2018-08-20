@@ -37,7 +37,7 @@ player.post("/", function(req, res) {
     // console.log("req.body in player post route: ", req.body)
     var newPlayer = db.Player
     ({
-        name: req.body.player.name,
+        _id: req.body.player.name,
         fullName: req.body.player.fullName,
         playerLevel: req.body.player.playerLevel,
         preferredPosition: req.body.player.preferredPosition,

@@ -11,8 +11,15 @@ const gameSchema = new Schema({
     captain1Picks_ready: { type: Boolean, required: false, default: false},
     captain2Picks_ready: { type: Boolean, required: false, default: false},
     lock_status: { type: Boolean, required: false, default: false},
+    players: { type: Array, required: false },
+    /*
+    players: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: "Player"
+    },
+    */
     created: {type: Date, required: true, default: moment()},
-    updated: {type: Date, required: true, default: moment()},
+    updated: {type: Date, required: true, default: moment()}
     });
     
 const Game = mongoose.model("Game", gameSchema);

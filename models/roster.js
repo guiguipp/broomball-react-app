@@ -5,18 +5,22 @@ moment().format();
 
 const rosterSchema = new Schema({
     _id: {type: String, required: true },
-    date: {
+    /*game_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Game"
+    },*/
+    game: { type: String, required: true },
+    player: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Player"
     },
-    game_date: {type: String, required: true},
     player_name: { type: String, required: true },
-    goals: { type: Number, required: false, default: 0 },
-    assists: { type: Number, required: false, default: 0 },
-    win: { type: Boolean, required: false},
+    goals: { type: Number, required: true, default: 0 },
+    assists: { type: Number, required: true, default: 0 },
+    win: { type: Boolean, required: true, default: false},
     pickOrderCap1: { type: Number, required: false},
     pickOrderCap2: { type: Number, required: false},
-    availability:{ type: Boolean, required: false, default: true},
+    available: { type: Boolean, required: true, default: true},
     team: { type: String, enumValue: ["Dark", "White", "None"], required: true, default: "None"},  
     lock_status: { type: Boolean, required: true, default: false},
     created: {type: Date, required: true, default: moment()},

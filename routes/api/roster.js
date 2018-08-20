@@ -14,6 +14,8 @@ roster.get("/", function(req, res) {
 roster.get("/:id", function(req, res) {
     // console.log("req.params in roster get route: ", req.params)
     db.Roster.findById(req.params.id)
+    .populate("game")
+    .populate("player")
         .then(function(dbRoster){
             res.send(dbRoster)
         })
@@ -24,50 +26,26 @@ roster.get("/:id", function(req, res) {
 
 roster.post("/", function(req, res) {
     // console.log("req.body in Roster post route: ", req.body)
-    let id = req.body.game_date + "_" + req.body.player_name
+    console.log("req.body.game in Roster post route: ", req.body.game)
+    console.log("req.body.player.name in Roster post route: ", req.body.player.name)
+    let id = req.body.game + "_" + req.body.player.name
     let NewRoster = db.Roster
-    /*game: {type: String, required: true},
-    player: { type: String, required: true }, */
-
-    /*
-    // Route for getting all Articles from the db
-    app.get("/articles", function(req, res) {
-    db.Article.find({})
-        .then(function(dbArticle){
-        res.send(dbArticle);
-        })
-        .catch(function(err){
-        res.send(err);
-        })
-    });
-
-    // Route for grabbing a specific Article by id, populate it with it's note
-    app.get("/articles/:id", function(req, res) {
-    db.Article.findOne({_id: req.params.id})
-        .populate("note")  
-        .then(function(Article){
-            res.send(Article);
-        })
-        .catch(function(err){
-            res.send(err);
-        })
-    });
-
-    */
-
     ({
         _id: id,
-        game_date: req.body.game_date,
-        player_name: req.body.player_name
+        game: req.body.game,
+        // game_id: req.body.game,
+        player: req.body.player,
+        player_name: req.body.player.name
     })
     NewRoster.save()
     .then(function(dbRoster){
-        // console.log(res)
+        // console.log(dbRoster)
         res.send(dbRoster)
     })
     .catch(function(err){
         res.send(err)
     })
+    
 })
 
 roster.put("/:id", function(req, res) {
@@ -84,7 +62,7 @@ roster.put("/:id", function(req, res) {
 
 roster.delete("/:id", function(req, res) {
     // console.log("req.params.id in roster put route: ", req.params.id)
-    db.Roster.findByIdAndDelete(req.params.id)
+    db.Roster.remove({game: req.params.id})
     .then(function(dbRoster){
         res.send(dbRoster)
         })
@@ -93,5 +71,17 @@ roster.delete("/:id", function(req, res) {
         }) 
     })
 
+roster.delete("/", function(req, res) {
+    // console.log("req.params.id in roster put route: ", req.params.id)
+    console.log("req.body in roster delete route: ", req.body)
+    console.log("req.body.game in roster delete route: ", req.body.game)
+    db.Roster.remove({game: req.body.game})
+    .then(function(dbRoster){
+        res.send(dbRoster)
+        })
+    .catch(function(err){
+        res.send(err)
+        }) 
+    })
 
 module.exports = roster;

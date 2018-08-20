@@ -25,7 +25,7 @@ class TenBuckerList extends Component {
             <div>
                 <table>
                     <tbody>
-                    {this.props.players.filter(player => player.membershipStatus === "Ten Bucker").map(player => {
+                    {this.props.players.filter(player => player.membershipStatus !== "Member").map(player => {
                             return (
                                 <tr key={player._id}> 
                                     <td className="player_table">{player.name}</td>

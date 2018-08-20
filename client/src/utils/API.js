@@ -9,14 +9,23 @@ export default {
         const url = currentURL + "/api/game/"
         return axios.get(url)
         },
-    addGame: (date) => {
+    getGame: (id) => {
+        const url = currentURL + "/api/game/" + id
+        return axios.get(url)
+    },
+    addGame: (date, players) => {
         const url = currentURL + "/api/game/"
-        return axios.post(url, { game_date: date })
+        return axios.post(url, { game_date: date, players: players})
         },
     deleteGame: (id) => {
         const url = currentURL + "/api/game/" + id
         return axios.delete(url)
         },
+    editGame: (gameId, data) => {
+        const url = currentURL + "/api/game/" + gameId
+        return axios.put(url, { data })
+        },
+
     getPlayers: () => {
         const url = currentURL + "/api/player/"
         return axios.get(url)
@@ -32,6 +41,15 @@ export default {
     deletePlayer: (id) => {
         const url = currentURL + "/api/player/" + id
         return axios.delete(url)
+    }/*,
+
+    createRoster: (gameDate, player) => {
+        const url = currentURL + "/api/roster/"
+        return axios.post(url, { game: gameDate, player: player})
         },
+    deleteRoster: (game) => {
+        const url = currentURL + "/api/roster/" + game
+        return axios.delete(url)
+        },*/
 
     }
