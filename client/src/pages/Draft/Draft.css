@@ -1,3 +1,9 @@
 .change_list_display {
     margin: 7% auto -3% auto;
 }
+.game_options {
+    height: 25px;
+    height: 45px;
+    min-width: 150px;
+    width: 75%;
+}

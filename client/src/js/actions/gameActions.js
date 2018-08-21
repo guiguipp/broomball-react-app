@@ -1,5 +1,6 @@
-import { FETCH_GAMES, NEW_GAME, GET_GAME, DELETE_GAME, EDIT_GAME_INFO } from './types';
+import { FETCH_GAMES, NEW_GAME, GET_GAME, DELETE_GAME, EDIT_GAME_INFO, SHOW_UNAVAILABLE_MEMBERS, SHOW_NON_MEMBERS, ADD_NON_MEMBER } from './types';
 import API from "../../utils/API"
+import _ from "underscore"
 
 export const fetchGames = () => dispatch => {
     API.getGames()
@@ -78,10 +79,41 @@ export const editGameInfo = (game, data) => dispatch => {
             throw new Error(res.statusText)
         }
         else {
-            console.log("Response from API: ", res.data)
             dispatch({
                 type: EDIT_GAME_INFO,
-                payload: res.data
+                payload: {
+                        player: data.player,
+                        game: res.data
+                        }
+            })
+        }
+    })
+}
+
+export const showUnavailable = () => dispatch => {
+    dispatch({
+        type: SHOW_UNAVAILABLE_MEMBERS
+    })
+}
+
+export const showNonMembers = (players) => dispatch => {
+    dispatch({
+        type: SHOW_NON_MEMBERS,
+        payload: players
+    })
+}
+
+export const addNonMember = (game, newPlayer, existingPlayers) => dispatch => {
+    let newRoster = _.sortBy([...existingPlayers, newPlayer], "name")
+    API.editGame(game, newRoster)
+    .then(res => {
+        if(res.status !== 200) {
+            throw new Error(res.statusText)
+        }
+        else {
+            dispatch({
+                type: ADD_NON_MEMBER,
+                payload: {players: res.data, player: newPlayer}
             })
         }
     })

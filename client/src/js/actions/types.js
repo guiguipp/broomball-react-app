@@ -4,6 +4,10 @@ export const GET_GAME = 'GET_GAME'
 export const DELETE_GAME = 'DELETE_GAME'
 export const EDIT_GAME_INFO = 'EDIT_GAME_INFO'
 
+export const SHOW_UNAVAILABLE_MEMBERS = 'SHOW_UNAVAILABLE_MEMBERS'
+export const SHOW_NON_MEMBERS = 'SHOW_NON_MEMBERS'
+export const ADD_NON_MEMBER = 'ADD_NON_MEMBER'
+
 export const SHOW_FUTURE = "SHOW_FUTURE"
 export const SHOW_PAST = "SHOW_PAST"
 

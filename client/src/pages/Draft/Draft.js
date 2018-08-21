@@ -10,6 +10,8 @@ import GameList from "../../components/GameList";
 import Logo from "../../components/images/logo.jpg";
 import Calendar from "../../components/Calendar";
 import Drafter from "../../components/Drafter"
+import GameOptionsBottom from "../../components/GameOptionsBottom"
+import GameOptionsTop from "../../components/GameOptionsTop"
 
 import "./Draft.css";
 
@@ -32,8 +34,14 @@ render() {
                 <button className="btn contrast_color change_list_display" onClick={() => this.toggleGamesFunc(this.props.showing)}> {this.props.buttonMsg} </button>
             </div>
         </div>
-        <div className="main_main">
+        <div className={"main_main " + this.props.visibility}>
+            <GameOptionsTop />
+        </div>
+        <div className={"main_main " + this.props.visibility}>
             <Drafter />
+        </div>
+        <div className={"main_main " + this.props.visibility}>
+            <GameOptionsBottom />
         </div>
     </div>
     )
@@ -45,7 +53,8 @@ const mapStateToProps = state => ({
     showing: state.display.showing,
     dateHeader: state.display.dateHeader,
     today: state.display.today,
-    buttonMsg: state.display.buttonMsg
+    buttonMsg: state.display.buttonMsg,
+    visibility: state.games.visibility
     })
 
 // export default Draft;
