@@ -19,6 +19,7 @@ const initialState = {
     draft: {},
     unavailableMembers: [],
     nonMembers: [],
+    playingTenBuckers: []
 }
 
 export default function(state = initialState, action) {
@@ -39,10 +40,12 @@ export default function(state = initialState, action) {
         case GET_GAME:
         return {
             ...state,
-            unavailableMembers: initialState.unavailableMembers,
             visibility: "visible",
             gameDate: action.payload._id,
-            draft: action.payload
+            draft: action.payload,
+            unavailableMembers: initialState.unavailableMembers,
+            nonMembers: initialState.nonMembers,
+            playingTenBuckers: action.payload.players.filter(player => player.membershipStatus !== "Member")
         }
 
         case EDIT_GAME_INFO:
@@ -56,6 +59,7 @@ export default function(state = initialState, action) {
         return {
             ...state,
             deletedGame: action.payload,
+            visibility: initialState.visibility,
             games: state.games.filter(game => game._id !== action.payload._id)
             }
 
@@ -68,10 +72,8 @@ export default function(state = initialState, action) {
         case SHOW_NON_MEMBERS:
         return {
             ...state,
-            nonMembers: action.payload
+            nonMembers: action.payload.filter(player => player._id !== state.playingTenBuckers._id)
         }
-        // still need a way to not show ten_buckers in the list of possible players to add if they are already 
-        // in the list of players for a given game (aka: not based on the state, but on the data from DB)
 
         // also, when a ten_bucker has been added, and then removed, it's showing in the list of unavailable players 
         // (which is unintented, but might not be a bad thing...?)
@@ -81,7 +83,9 @@ export default function(state = initialState, action) {
             ...state,
             draft: action.payload.players,
             nonMembers: state.nonMembers.filter(player => player._id !== action.payload.player._id),
+            playingTenBuckers: [action.payload.player, ...state.playingTenBuckers]
         }
+
         default: 
         return state;
     }

@@ -75,6 +75,18 @@ button {
     margin-left: 70%;
     margin-bottom: 3%;
 }
+.leaning_right_color {
+    background: linear-gradient(70deg, #DE733A,#EA8D47);
+    color: white;
+}
+.leaning_left_color {
+    background: linear-gradient(70deg, #EA8D47, #DE733A);
+    color: white;
+}
+.plain_color{
+    background: linear-gradient(0deg, #EA8D47, #DE733A);
+    color: white;
+}
 /* greys */
 /*.dark_grey:hover {
     background-color: #7d7e83;
@@ -160,4 +172,15 @@ button {
     margin-bottom: 10%;
     text-align: center;
     /* margin-left: -5%; */
+}
+
+.hidden{
+    visibility: hidden;
+    height: 0px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.visible {
+    visibility: visible;
 }

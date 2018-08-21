@@ -3,10 +3,11 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { editGameInfo } from '../../js/actions/gameActions'
 import { addNonMember } from '../../js/actions/gameActions'
+// import { provisionNonMember } from '../../js/actions/gameActions'
 import "./Drafter.css";
 
 class Drafter extends Component {
-
+    
     setUnavailable(playerID) {
         let gameId = this.props.draft._id
         this.props.editGameInfo(gameId, {player: playerID, gameInfo: {available: false}})    
@@ -48,7 +49,7 @@ class Drafter extends Component {
                             .map(player => {
                                 return (
                                     <div className="player_div" key={player._id}>
-                                        <button className="player_button default_color">{player.name}</button>
+                                        <button className="player_button leaning_right_color">{player.name}</button>
                                         <i className="fa fa-times-circle remove remove_player" id={player._id} onClick={() => this.setUnavailable(player._id)}> </i>
                                         <i className="fa fa-arrow-circle-o-right right arrows" id={player._id} onClick={() => this.assignTeam(player._id, "N/A")}></i>
                                     </div>
@@ -65,7 +66,7 @@ class Drafter extends Component {
                             return (
                                 <div className="player_div" key={player._id}>
                                     <i className="fa fa-arrow-circle-left left arrows" id={player._id} onClick={() => this.assignTeam(player._id, "White")}></i>
-                                    <button className="player_button default_color">{player.name}</button>
+                                    <button className="player_button plain_color">{player.name}</button>
                                     <i className="fa fa-times-circle remove remove_player" id={player._id} onClick={() => this.setUnavailable(player._id)}> </i>
                                     <i className="fa fa-arrow-circle-o-right right arrows" id={player._id} onClick={() => this.assignTeam(player._id, "Dark")}></i>
                                 </div>
@@ -107,7 +108,7 @@ class Drafter extends Component {
                                     return (
                                         <div className="player_div" key={player._id}>
                                             <i className="fa fa-arrow-circle-left left arrows" id={player._id} onClick={() => this.assignTeam(player._id, "N/A")}></i>
-                                            <button className="player_button default_color">{player.name}</button>
+                                            <button className="player_button leaning_left_color">{player.name}</button>
                                             <i className="fa fa-times-circle remove remove_player" id={player._id} onClick={() => this.setUnavailable(player._id, player.gameInfo.available)}> </i>
                                         </div>
                                         )

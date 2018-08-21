@@ -20,10 +20,3 @@
     overflow: scroll;
     max-height: 200px;
 }
-.hidden{
-    visibility: hidden;
-    height: 0px;
-}
-.visible {
-    visibility: visible;
-}
