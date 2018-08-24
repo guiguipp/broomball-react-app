@@ -1,4 +1,16 @@
-import { FETCH_GAMES, NEW_GAME, DELETE_GAME, GET_GAME, EDIT_GAME_INFO, SHOW_UNAVAILABLE_MEMBERS, SHOW_NON_MEMBERS, ADD_NON_MEMBER } from '../actions/types';
+import { 
+    FETCH_GAMES, 
+    NEW_GAME, 
+    DELETE_GAME, 
+    GET_GAME, 
+    EDIT_GAME_INFO, 
+    SHOW_UNAVAILABLE_MEMBERS, 
+    SHOW_NON_MEMBERS, 
+    ADD_NON_MEMBER, 
+    LOCK_GAME_INFO,
+    UNLOCK_GAME_INFO
+ } from '../actions/types';
+
 import _ from "underscore"
 
 const initialState = {
@@ -19,7 +31,8 @@ const initialState = {
     draft: {},
     unavailableMembers: [],
     nonMembers: [],
-    playingTenBuckers: []
+    playingTenBuckers: [],
+    lockStatus: "visible"
 }
 
 export default function(state = initialState, action) {
@@ -43,6 +56,7 @@ export default function(state = initialState, action) {
             visibility: "visible",
             gameDate: action.payload._id,
             draft: action.payload,
+            lockStatus: action.payload.lock_status === true ? "hidden" : "visible",
             unavailableMembers: initialState.unavailableMembers,
             nonMembers: initialState.nonMembers,
             playingTenBuckers: action.payload.players.filter(player => player.membershipStatus !== "Member")
@@ -84,6 +98,18 @@ export default function(state = initialState, action) {
             draft: action.payload.players,
             nonMembers: state.nonMembers.filter(player => player._id !== action.payload.player._id),
             playingTenBuckers: [action.payload.player, ...state.playingTenBuckers]
+        }
+
+        case LOCK_GAME_INFO:
+        return {
+            ...state,
+            lockStatus: action.payload === true ? "hidden" : "visible",
+        }
+        
+        case UNLOCK_GAME_INFO:
+        return {
+            ...state,
+            lockStatus: action.payload === true ? "hidden" : "visible",
         }
 
         default: 

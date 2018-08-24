@@ -3,6 +3,9 @@ export const NEW_GAME = 'ADD_GAME'
 export const GET_GAME = 'GET_GAME'
 export const DELETE_GAME = 'DELETE_GAME'
 export const EDIT_GAME_INFO = 'EDIT_GAME_INFO'
+export const LOCK_GAME_INFO = 'LOCK_GAME_INFO'
+export const UNLOCK_GAME_INFO = 'UNLOCK_GAME_INFO'
+
 
 export const SHOW_UNAVAILABLE_MEMBERS = 'SHOW_UNAVAILABLE_MEMBERS'
 export const SHOW_NON_MEMBERS = 'SHOW_NON_MEMBERS'

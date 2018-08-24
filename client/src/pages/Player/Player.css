@@ -62,5 +62,7 @@
 }
 .visible {
     visibility: visible;
+}
+.full_size {
     width: 100%;
 }

@@ -43,15 +43,13 @@ game.post("/", function(req, res) {
 
 game.put("/:id", function(req, res) {
     // console.log("req.params.id in game put route: ", req.params.id)
-    console.log("req.body in game put route: ", req.body)
+    // console.log("req.body in game put route: ", req.body)
     let playerId = req.body.data.player
-    // We get the key/value of the update sent to the API in order to dynamically update the database.
-    // We will probably need to change this syntax once we have queries to update other information not stored in 
-    // gameInfo (in this case, maybe use an if/else: if(req.body.data.gameInfo){ }, otherwise, drop "gameInfo" 
-    // from the declaration 'let keyToUpdate = "players.$.gameInfo." + Object.keys(req.body.data.gameInfo)'
     let update = {}
     let id = {}
-    if(req.body.data.gameInfo) {
+    // There are two main scenarios to handle: updates to the game itself, and (nested) updates to the player
+    // object within the game object. This handles the latter, where there is a player and its "gameInfo" to update 
+    if (req.body.data.gameInfo) {
         let keys = Object.keys(req.body.data.gameInfo) 
         let arrayOfKeys = keys.map((key) => "players.$.gameInfo." + key)
         let arrayOfValues = Object.values(req.body.data.gameInfo)
@@ -62,17 +60,31 @@ game.put("/:id", function(req, res) {
             update[arrayOfKeys[i]] = arrayOfValues[i]
         }
     }
+    // This handles Game updates via switch statement on the key of the update sent. 
     else {
-        /* 
-        This only applies when adding a 10_bucker. There will be other edits, such as adding a goal, an assist, etc.
-        I think the best was to handle that would be a switch statement: getting the key from the req.body.data would
-        tell us which scenario we want to handle.
-
-        That said, here the key is not stated: it will need to be sent each time.
-        */
         console.log("req.body.data sans gameInfo: ", req.body.data)
-        id = {_id: req.params.id}
-        update = {players: req.body.data}
+        id = {_id: req.params.id};
+        update = req.body.data;
+        /* We might need a Switch statement later to handle different scenarios */
+        /*let key = Object.keys(req.body.data)
+        let parsedKey = key[0]
+        
+        switch (parsedKey){
+            case 'lock_status': 
+            console.log("Switch case lock")
+                    id = {_id: req.params.id};
+                    update = req.body.data;
+                    break;
+            
+            case 'players':
+            console.log("Switch case players")
+                    id = {_id: req.params.id},    
+                    update = req.body.data;
+                    break;
+
+            default: 
+            return;
+        }*/
     }
 
     db.Game.findOneAndUpdate(id,update,{new: true})

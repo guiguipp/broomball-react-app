@@ -50,8 +50,8 @@ class Drafter extends Component {
                                 return (
                                     <div className="player_div" key={player._id}>
                                         <button className="player_button leaning_right_color">{player.name}</button>
-                                        <i className="fa fa-times-circle remove remove_player" id={player._id} onClick={() => this.setUnavailable(player._id)}> </i>
-                                        <i className="fa fa-arrow-circle-o-right right arrows" id={player._id} onClick={() => this.assignTeam(player._id, "N/A")}></i>
+                                        <i className={"fa fa-times-circle remove remove_player " + this.props.lockStatus} id={player._id} onClick={() => this.setUnavailable(player._id)}> </i>
+                                        <i className={"fa fa-arrow-circle-o-right right arrows " + this.props.lockStatus} id={player._id} onClick={() => this.assignTeam(player._id, "N/A")}></i>
                                     </div>
                                     )
                                     })
@@ -65,10 +65,10 @@ class Drafter extends Component {
                         .map(player => {
                             return (
                                 <div className="player_div" key={player._id}>
-                                    <i className="fa fa-arrow-circle-left left arrows" id={player._id} onClick={() => this.assignTeam(player._id, "White")}></i>
+                                    <i className={"fa fa-arrow-circle-left left arrows " + this.props.lockStatus} id={player._id} onClick={() => this.assignTeam(player._id, "White")}></i>
                                     <button className="player_button plain_color">{player.name}</button>
-                                    <i className="fa fa-times-circle remove remove_player" id={player._id} onClick={() => this.setUnavailable(player._id)}> </i>
-                                    <i className="fa fa-arrow-circle-o-right right arrows" id={player._id} onClick={() => this.assignTeam(player._id, "Dark")}></i>
+                                    <i className={"fa fa-times-circle remove remove_player " + this.props.lockStatus} id={player._id} onClick={() => this.setUnavailable(player._id)}> </i>
+                                    <i className={"fa fa-arrow-circle-o-right right arrows " + this.props.lockStatus} id={player._id} onClick={() => this.assignTeam(player._id, "Dark")}></i>
                                 </div>
                                 )
                                 })
@@ -107,9 +107,9 @@ class Drafter extends Component {
                                 .map(player => {
                                     return (
                                         <div className="player_div" key={player._id}>
-                                            <i className="fa fa-arrow-circle-left left arrows" id={player._id} onClick={() => this.assignTeam(player._id, "N/A")}></i>
-                                            <button className="player_button leaning_left_color">{player.name}</button>
-                                            <i className="fa fa-times-circle remove remove_player" id={player._id} onClick={() => this.setUnavailable(player._id, player.gameInfo.available)}> </i>
+                                            <i className={"fa fa-arrow-circle-left left arrows " + this.props.lockStatus} id={player._id} onClick={() => this.assignTeam(player._id, "N/A")}></i>
+                                            <button className={"player_button leaning_left_color "}>{player.name}</button>
+                                            <i className={"fa fa-times-circle remove remove_player " + this.props.lockStatus} id={player._id} onClick={() => this.setUnavailable(player._id, player.gameInfo.available)}> </i>
                                         </div>
                                         )
                                         })
@@ -144,7 +144,8 @@ const mapStateToProps = state => ({
     gameDate: state.games.gameDate,
     unavailableMembers: state.games.unavailableMembers,
     nonMembers: state.games.nonMembers,
-    gameInfo: state.games.gameInfo
+    gameInfo: state.games.gameInfo,
+    lockStatus: state.games.lockStatus
 })
 
 export default connect(mapStateToProps, { editGameInfo, addNonMember }) (Drafter)

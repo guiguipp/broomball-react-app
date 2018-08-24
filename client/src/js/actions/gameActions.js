@@ -1,4 +1,16 @@
-import { FETCH_GAMES, NEW_GAME, GET_GAME, DELETE_GAME, EDIT_GAME_INFO, SHOW_UNAVAILABLE_MEMBERS, SHOW_NON_MEMBERS, ADD_NON_MEMBER } from './types';
+import { 
+    FETCH_GAMES, 
+    NEW_GAME, 
+    GET_GAME, 
+    DELETE_GAME, 
+    EDIT_GAME_INFO, 
+    SHOW_UNAVAILABLE_MEMBERS, 
+    SHOW_NON_MEMBERS, 
+    ADD_NON_MEMBER, 
+    LOCK_GAME_INFO, 
+    UNLOCK_GAME_INFO
+ } from './types';
+
 import API from "../../utils/API"
 import _ from "underscore"
 
@@ -105,7 +117,7 @@ export const showNonMembers = (players) => dispatch => {
 
 export const addNonMember = (game, newPlayer, existingPlayers) => dispatch => {
     let newRoster = _.sortBy([...existingPlayers, newPlayer], "name")
-    API.editGame(game, newRoster)
+    API.editGame(game, {players: newRoster})
     .then(res => {
         if(res.status !== 200) {
             throw new Error(res.statusText)
@@ -114,6 +126,38 @@ export const addNonMember = (game, newPlayer, existingPlayers) => dispatch => {
             dispatch({
                 type: ADD_NON_MEMBER,
                 payload: {players: res.data, player: newPlayer}
+            })
+        }
+    })
+}
+
+export const lockGameInfo = (game) => dispatch => {
+    let lock = {lock_status: true}
+    API.editGame(game, lock)
+    .then(res => {
+        if(res.status !== 200) {
+            throw new Error (res.statusText)
+        }
+        else {
+            dispatch({
+                type: LOCK_GAME_INFO,
+                payload: res.data.lock_status,
+            })
+        }
+    })
+}
+
+export const unlockGameInfo = (game) => dispatch => {
+    let lock = {lock_status: false}
+    API.editGame(game, lock)
+    .then(res => {
+        if(res.status !== 200) {
+            throw new Error (res.statusText)
+        }
+        else {
+            dispatch({
+                type: UNLOCK_GAME_INFO,
+                payload: res.data.lock_status,
             })
         }
     })

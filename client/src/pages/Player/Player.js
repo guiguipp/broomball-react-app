@@ -33,9 +33,9 @@ render() {
                     <span id="3" className={"tab " + this.props.tab3} onClick={() => this.toggleStatus("3", this.props.tab3) }> {this.props.formMode} Player </span>
                 </div>
                 <div className= "row main_for_tab">
-                    <span className={this.props.panel1}> <MemberList /> </span> 
-                    <span className={this.props.panel2}> <TenBuckerList /> </span> 
-                    <span className={this.props.panel3}> <Form /> </span> 
+                    <span className={this.props.panel1 + " full_size"}> <MemberList /> </span> 
+                    <span className={this.props.panel2 + " full_size"}> <TenBuckerList /> </span> 
+                    <span className={this.props.panel3 + " full_size"}> <Form /> </span> 
                 </div>
             </div>
         </div>

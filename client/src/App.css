@@ -14,7 +14,7 @@ button {
     background: white;
     color: #DE733A;
     border-style: solid;
-    border-color: black;
+    border-color: #1b0000;
     border-width: 0.5px;
 }
 /* contrast */
@@ -26,7 +26,7 @@ button {
     background: white;
     color: #007bff;
     border-style: solid;
-    border-color: black;
+    border-color: #1b0000;
     border-width: 0.5px;
 }
 /* darker */
@@ -38,7 +38,7 @@ button {
     background: white;
     color: #FF5D00;
     border-style: solid;
-    border-color: black;
+    border-color: #1b0000;
     border-width: 0.5px;
 }
 /* lighter */
@@ -50,7 +50,7 @@ button {
     background: white;
     color: #EA8D47;
     border-style: solid;
-    border-color: black;
+    border-color: #1b0000;
     border-width: 0.5px;
 }
 /* negative */
@@ -65,7 +65,7 @@ button {
     background: #EA8D47;
     color: white;
     border-style: solid;
-    border-color: black;
+    border-color: #1b0000;
     border-width: 0.5px;
 }
 
@@ -116,7 +116,7 @@ button {
     margin-bottom: 3%;
 }
 .h1_main {
-    color: black;
+    color: #1b0000;
     text-shadow: 
         -0.5px -0.5px 0 #EA8D47, 
         0.5px -0.5px 0 #EA8D47, 
@@ -135,6 +135,7 @@ button {
     font-size: 150%;
     margin-bottom: 10%;
     text-align: center;
+    color: #1b0000;
     /* margin-left: -5%; */
 }
 
@@ -154,10 +155,10 @@ button {
 .h1_alternate {
     color: white;
     text-shadow: 
-        -1px -1px 0 black, 
-        1px -1px 0 black, 
-        -1px 1px 0 black, 
-        1px 1px 0 black;
+        -1px -1px 0 #1b0000, 
+        1px -1px 0 #1b0000, 
+        -1px 1px 0 #1b0000, 
+        1px 1px 0 #1b0000;
     font-family: 'Yellowtail', cursive;
     text-align: center;
     font-size: 312%;
@@ -174,7 +175,7 @@ button {
     /* margin-left: -5%; */
 }
 
-.hidden{
+.hidden {
     visibility: hidden;
     height: 0px;
     margin: 0px;
