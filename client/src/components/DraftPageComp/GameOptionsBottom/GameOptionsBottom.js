@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import _ from "underscore"
 import { connect } from 'react-redux';
-import { lockGameInfo } from "../../js/actions/gameActions"
-import { unlockGameInfo } from "../../js/actions/gameActions"
-import { editGameInfo } from '../../js/actions/gameActions'
+import { lockGameInfo } from "../../../js/actions/gameActions"
+import { unlockGameInfo } from "../../../js/actions/gameActions"
+import { editGameInfo } from '../../../js/actions/gameActions'
 
 import "./GameOptionsBottom.css";
 
@@ -33,7 +33,8 @@ class GameOptionsBottom extends Component {
         }})
         membersWithGameInfo = _.sortBy(membersWithGameInfo, "name")
         this.props.editGameInfo(game, {players: membersWithGameInfo})
-        /* We also need to put the Ten Buckers back to their original status API/state */
+        /* We also need to put the Ten Buckers back to their original status API/state. We could do that in the state only
+        but that would create inconsistencies we add a ten_bucker. The best way is to filter anew after calling editGameInfo */
 
         }
     }
@@ -73,7 +74,8 @@ class GameOptionsBottom extends Component {
                 }
                 // For a reason I haven't been able to figure out, each player information is nested 
                 // under "{player: }" which we then need to remove
-                let remappedArray = mixedRosters.map((player) => player.player) 
+                let remappedArray = mixedRosters.map((player) => player.player)
+                remappedArray = _.sortBy(remappedArray, "name") 
                 
             this.props.editGameInfo(game, {players: remappedArray})
             // the only purpose of calling this function is to verify that teams are balanced (level wise)

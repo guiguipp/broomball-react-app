@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-
 import { connect } from 'react-redux';
-import { editGameInfo } from '../../js/actions/gameActions'
-import { addNonMember } from '../../js/actions/gameActions'
-// import { provisionNonMember } from '../../js/actions/gameActions'
+
+import { editGameInfo } from '../../../js/actions/gameActions'
+import { addNonMember } from '../../../js/actions/gameActions'
+
 import "./Drafter.css";
 
 class Drafter extends Component {

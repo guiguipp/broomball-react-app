@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 
 import { connect } from 'react-redux';
-import { addPlayer } from '../../js/actions/playerActions'
-import { editPlayer } from '../../js/actions/playerActions'
-import { resetTabs } from '../../js/actions/playerActions'
-import { updateField } from '../../js/actions/playerActions'
+import { addPlayer } from '../../../js/actions/playerActions'
+import { editPlayer } from '../../../js/actions/playerActions'
+import { resetTabs } from '../../../js/actions/playerActions'
+import { updateField } from '../../../js/actions/playerActions'
 
 import "./Form.css";
 

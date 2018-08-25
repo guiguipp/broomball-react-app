@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 
 import { connect } from 'react-redux';
-import { addGame } from '../../js/actions/gameActions'
-import { fetchPlayers } from '../../js/actions/playerActions'
-import { addPlayersToRoster } from "../../js/actions/rosterActions"
+import { addGame } from '../../../js/actions/gameActions'
+import { fetchPlayers } from '../../../js/actions/playerActions'
+import { addPlayersToRoster } from "../../../js/actions/rosterActions"
 // see doc: https://www.npmjs.com/package/react-datepicker
 import DatePicker from "react-datepicker";
 

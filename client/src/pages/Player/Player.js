@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import { toggleTabStatus } from '../../js/actions/playerActions';
 
 import Logo from "../../components/images/logo.jpg";
-import Form from "../../components/Form";
+import Form from "../../components/PlayerPageComp/Form";
 
-import MemberList from "../../components/MemberList/"
-import TenBuckerList from "../../components/TenBuckerList/"
+import MemberList from "../../components/PlayerPageComp/MemberList/"
+import TenBuckerList from "../../components/PlayerPageComp/TenBuckerList/"
 
 import "./Player.css";
 

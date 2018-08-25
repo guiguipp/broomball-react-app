@@ -6,12 +6,12 @@ import { toggleGames } from "../../js/actions/displayActions"
 import { showFuture } from '../../js/actions/displayActions'
 import { showPast } from '../../js/actions/displayActions'
 */
-import GameList from "../../components/GameList";
 import Logo from "../../components/images/logo.jpg";
-import Calendar from "../../components/Calendar";
-import Drafter from "../../components/Drafter"
-import GameOptionsBottom from "../../components/GameOptionsBottom"
-import GameOptionsTop from "../../components/GameOptionsTop"
+import GameList from "../../components/DraftPageComp/GameList";
+import Calendar from "../../components/DraftPageComp/Calendar";
+import Drafter from "../../components/DraftPageComp/Drafter"
+import GameOptionsBottom from "../../components/DraftPageComp/GameOptionsBottom"
+import GameOptionsTop from "../../components/DraftPageComp/GameOptionsTop"
 
 import "./Draft.css";
 

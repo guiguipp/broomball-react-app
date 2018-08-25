@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 
 import { connect } from 'react-redux';
-import { showUnavailable } from '../../js/actions/gameActions'
-import { showNonMembers } from '../../js/actions/gameActions'
+import { showUnavailable } from '../../../js/actions/gameActions'
+import { showNonMembers } from '../../../js/actions/gameActions'
 
 
 import "./GameOptionsTop.css";
@@ -13,24 +13,14 @@ class GameOptionsTop extends Component {
         this.props.showUnavailable()
     }
     addTenBuckers(){
-        let tenBuckers = this.props.players
-            .filter((player) => player.membershipStatus !== "Member")
+        /* This filters all players in the DB according to their membershipStatus
+        It then gets the id of all ten_buckers already playing (that we set when we fetch the game data in GameList.js
+        via the reducer). We check the former against the latter to see who's left to potentially add */
+        let tenBuckers = this.props.players.filter((player) => player.membershipStatus !== "Member")
         let arrayOfIds = this.props.playingTenBuckers.map(player => player._id)    
-        /*
-        This works, but using "push"
-
-        let newTenBuckers = []
-        tenBuckers.forEach((player) => {
-            if(arrayOfIds.indexOf(player._id) === -1) {
-                newTenBuckers.push(player)
-            }
-        })*/
         let newTenBuckers = tenBuckers.filter((player) => arrayOfIds.indexOf(player._id) === -1)
         this.props.showNonMembers(newTenBuckers)
-        /* 
-        When choosing a new game, it's showing the ten buckers & unavailable players from previous game 
-        (because still in state? if so, just need to reinitiate in the reducer)
-        */
+        
     }
     render() {
         return (

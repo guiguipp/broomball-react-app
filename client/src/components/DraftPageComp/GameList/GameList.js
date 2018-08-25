@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 
 import { connect } from 'react-redux';
-import { fetchGames } from '../../js/actions/gameActions'
-import { getGame } from '../../js/actions/gameActions'
-import { deleteGame } from '../../js/actions/gameActions'
+import { fetchGames } from '../../../js/actions/gameActions'
+import { getGame } from '../../../js/actions/gameActions'
+import { deleteGame } from '../../../js/actions/gameActions'
 
 import "./GameList.css";
 
