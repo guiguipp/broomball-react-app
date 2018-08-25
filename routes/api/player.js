@@ -34,10 +34,12 @@ player.get("/:field/:data", function(req, res) {
 
 
 player.post("/", function(req, res) {
-    // console.log("req.body in player post route: ", req.body)
+    console.log("req.body in player post route: ", req.body)
+    console.log("req.body.player.name in player post route: ", req.body.player.name)
+
     var newPlayer = db.Player
     ({
-        _id: req.body.player.name,
+        name: req.body.player.name,
         fullName: req.body.player.fullName,
         playerLevel: req.body.player.playerLevel,
         preferredPosition: req.body.player.preferredPosition,

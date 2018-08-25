@@ -32,11 +32,15 @@ export const deletePlayer = (id) => dispatch => {
 }
 
 export const addPlayer = (data) => dispatch => {
+    console.log("data received: ", data)
     API.addPlayer(data)
         .then(res => {
             if(res.status !== 200) {
                 throw new Error(res.statusText)
                 }
+            else if (res.data.errors) {
+                console.log(res.data.message)
+            }
             else {
                 let newPlayer = res.data
                 if(newPlayer.name !== "MongoError")
