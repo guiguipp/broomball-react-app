@@ -24,6 +24,10 @@ class Drafter extends Component {
     }
 
     addTenBuckerToDraft(player){
+        if (this.props.lockStatus === "hidden") {
+            console.log("Error message: game is locked")
+            }
+        else {
         let gameId = this.props.draft._id
         let tenBuckerToAdd = {
             membershipStatus: player.membershipStatus,
@@ -34,7 +38,7 @@ class Drafter extends Component {
             gameInfo: this.props.gameInfo
         }
         this.props.addNonMember(gameId, tenBuckerToAdd, this.props.draft.players)
-        // this.props.editGameInfo(gameId, {players: [newPlayer, ...this.props.draft.players]})
+        }
 
     }
 

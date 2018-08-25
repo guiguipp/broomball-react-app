@@ -109,6 +109,7 @@ class Form extends Component {
                                 <option value="D+">D+</option>
                                 <option value="D">D</option>
                                 <option value="D-">D-</option>
+                                <option value="Goalie">Goalie</option>
                             </select>
                         </div>
 

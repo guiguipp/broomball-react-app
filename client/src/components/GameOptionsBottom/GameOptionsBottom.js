@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import _ from "underscore"
 import { connect } from 'react-redux';
 import { lockGameInfo } from "../../js/actions/gameActions"
 import { unlockGameInfo } from "../../js/actions/gameActions"
@@ -17,64 +17,70 @@ class GameOptionsBottom extends Component {
         this.props.unlockGameInfo(game)
     }
 
-    autodraft(game){
-        // need to disable this if lock_status is true
-        // eventually, will end with an API call to API.editGame(gameId, players)
-        // therefore, needs to prepare the array of players to update
-        
-        // Autodraft feature: separates all players by level, randomly assigns them to dark or white team
-        let mixedRosters = [];
-        let arrayOfAvailablePlayers = this.props.players
-        // recreating our array by assigning each player to its level
-        let output = arrayOfAvailablePlayers.reduce((levels,player) => {
-            // console.log("Player in reduce: ", player)
-            levels[player.playerLevel] = levels[player.playerLevel] || [];
-            levels[player.playerLevel].push({
-                player
-            });
-            return levels;
-        },[])
-        // console.log("Output from the reduce:\n", output)
-        // getting the number of levels
-        let numOutput = Object.keys(output).length;
-        // console.log("Num of levels: ", numOutput)
-        
-        for (let i = 0; i < numOutput; i++) {
-            // running the randomize function for each level
-            let playersByLevel = Object.entries(output)[i]
-            
-            // console.log("playersByLevel: ", playersByLevel)
-            // console.log("playersByLevel: ", playersByLevel[1][0])
-            
-            // the "level" is the first argument in the array, the next one is the players: that's how we access them
-            let playersArray = playersByLevel[1]
-            console.log("playersArray: ", playersByLevel)
-            // console.log("players array non randomized: ", playersArray)
-            this.randomize(playersArray, mixedRosters)
+    resetTeams(game){
+        if (this.props.lockStatus === "hidden") {
+            console.log("Error message: game is locked")
             }
-            
-        for (let i = 0; i < mixedRosters.length; i++) {
-            // assigning different team to every other player
-            if (i%2 === 0) {mixedRosters[i].player.gameInfo.team = "Dark";}
-            else {mixedRosters[i].player.gameInfo.team = "White"}
-            }
-            
-            let remappedArray = mixedRosters.map((player) => player.player) 
-            
-            /*
-            function PlayerObj (name,id,team) {
-                this.name = name,
-                this.id = id,
-                this.team = team
-                updateTeam(this)
-                }
-            mixedRosters.forEach((e) => {
-                let newPlayerObj = new PlayerObj (e.shortname,e.id,e.team)
-                })*/
-        // the only purpose of calling this function is to verify that teams are balanced (level wise)
-        // filterTeams(mixedRosters);
-        this.props.editGameInfo(game, {players: remappedArray})
+        else {
+        let members = this.props.players.filter((player) => player.membershipStatus === "Member")
+        let membersWithGameInfo = members.map((member) => {return {
+            membershipStatus: member.membershipStatus,
+            _id: member._id,
+            name: member.name,
+            playerLevel: member.playerLevel,
+            preferredPosition: member.preferredPosition,
+            gameInfo: this.props.gameInfo
+        }})
+        membersWithGameInfo = _.sortBy(membersWithGameInfo, "name")
+        this.props.editGameInfo(game, {players: membersWithGameInfo})
+        /* We also need to put the Ten Buckers back to their original status API/state */
+
         }
+    }
+    autodraft(game){
+        if (this.props.lockStatus === "hidden") {
+            console.log("Error message: game is locked")
+            }
+        else {
+            // Autodraft feature: separates all players by level, randomly assigns them to dark or white team
+            let mixedRosters = [];
+            let arrayOfAvailablePlayers = this.props.players
+            // recreating our array by assigning each player to its level
+            let output = arrayOfAvailablePlayers.reduce((levels,player) => {
+                levels[player.playerLevel] = levels[player.playerLevel] || [];
+                levels[player.playerLevel].push({
+                    player
+                });
+                return levels;
+            },[])
+            
+            let numOutput = Object.keys(output).length;
+            
+            for (let i = 0; i < numOutput; i++) {
+                // running the randomize function for each level
+                let playersByLevel = Object.entries(output)[i]
+                // the "level" is the first argument in the array, the next one is the players: that's how we access them
+                let playersArray = playersByLevel[1]
+                // we randomize via a custom recursive function (could also try underscore, but on such a small array, it
+                // I doubt it makes any difference)
+                this.randomize(playersArray, mixedRosters)
+                }
+                
+            for (let i = 0; i < mixedRosters.length; i++) {
+                // assigning different team to every other player
+                if (i%2 === 0) {mixedRosters[i].player.gameInfo.team = "Dark";}
+                else {mixedRosters[i].player.gameInfo.team = "White"}
+                }
+                // For a reason I haven't been able to figure out, each player information is nested 
+                // under "{player: }" which we then need to remove
+                let remappedArray = mixedRosters.map((player) => player.player) 
+                
+            this.props.editGameInfo(game, {players: remappedArray})
+            // the only purpose of calling this function is to verify that teams are balanced (level wise)
+            this.filterTeams(remappedArray)
+            }
+        }
+
     // helper function to randomize an array (pushes/deletes to another array recursively, until it's empty) 
     // can probably be replace by underscore... 
     randomize = (inputArray, outputArray) => {
@@ -87,7 +93,26 @@ class GameOptionsBottom extends Component {
             }
         }
         
-
+    // function to filter array of player objects into teams used for quick control. 
+    filterTeams = (arrayOfPlayerObjects) => {
+        let rosterTeam2 = [];
+        let rosterTeam1 = [];
+        // filter player objects according to name of the team #1
+        rosterTeam1 = arrayOfPlayerObjects.filter((e) => e.gameInfo.team === "Dark")
+        rosterTeam1 = _.sortBy(rosterTeam1, "playerLevel")
+        console.log(`\n************\nDark:\n************\n`);
+        // display the name of the player for all players of the team
+        rosterTeam1.forEach((e) => {
+            console.log(`${e.name} (${e.playerLevel})`)//\nPicked in position: ${e.gameInfo.captain1Pick})`);
+        })
+        
+        rosterTeam2 = arrayOfPlayerObjects.filter((e) => e.gameInfo.team === "White")
+        rosterTeam2 = _.sortBy(rosterTeam2, "playerLevel")
+        console.log(`\n************\nWhite:\n************\n`);
+        rosterTeam2.forEach((e) => {
+            console.log(`${e.name} (${e.playerLevel})`)//.\nPicked in position: ${e.gameInfo.captain2Pick})`);
+            })
+        }
     
 
     render() {
@@ -102,7 +127,7 @@ class GameOptionsBottom extends Component {
                                 
                             </div>
                             <div className="col text-center">
-                                <button className="btn btn-info navbar-btn light_grey menu_options" id="reset">Reset</button> 
+                                <button className="btn contrast_color" onClick={() => this.resetTeams(this.props.gameDate)}>Reset</button> 
                             </div>
                             <div className="col text-center">
                                 
@@ -150,7 +175,9 @@ Games.propTypes = {
 const mapStateToProps = state => ({
     gameDate: state.games.gameDate,
     visibility: state.games.visibility,
-    players: state.games.draft.players
+    players: state.games.draft.players,
+    lockStatus: state.games.lockStatus,
+    gameInfo: state.games.gameInfo
 })
 
 export default connect(mapStateToProps, { lockGameInfo, unlockGameInfo, editGameInfo }) (GameOptionsBottom)

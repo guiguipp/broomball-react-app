@@ -9,7 +9,7 @@ import {
     ADD_NON_MEMBER, 
     LOCK_GAME_INFO,
     UNLOCK_GAME_INFO
- } from '../actions/types';
+} from '../actions/types';
 
 import _ from "underscore"
 
@@ -74,7 +74,8 @@ export default function(state = initialState, action) {
             ...state,
             deletedGame: action.payload,
             visibility: initialState.visibility,
-            games: state.games.filter(game => game._id !== action.payload._id)
+            games: state.games.filter(game => game._id !== action.payload._id),
+            lockStatus: "hidden"
             }
 
         case SHOW_UNAVAILABLE_MEMBERS:
