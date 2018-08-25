@@ -10,17 +10,32 @@ class Drafter extends Component {
     
     setUnavailable(playerID) {
         let gameId = this.props.draft._id
-        this.props.editGameInfo(gameId, {player: playerID, gameInfo: {available: false}})    
+        if (this.props.lockStatus === "hidden") {
+            console.log("Error message: game is locked")
+            }
+        else {
+        this.props.editGameInfo(gameId, {player: playerID, gameInfo: {available: false}})
+        }    
     }
 
     makeAvailable(playerID) {
-        let gameId = this.props.draft._id
+        let gameId = this.props.draft._id;
+        if (this.props.lockStatus === "hidden") {
+            console.log("Error message: game is locked")
+            }
+        else {
         this.props.editGameInfo(gameId, {player: playerID, gameInfo: {available: true, team: "N/A"}})    
+        }
     }
 
     assignTeam(playerID, team){
+        if (this.props.lockStatus === "hidden") {
+            console.log("Error message: game is locked")
+            }
+        else {
         let gameId = this.props.draft._id
         this.props.editGameInfo(gameId, {player: playerID, gameInfo: {team: team}})
+        }
     }
 
     addTenBuckerToDraft(player){

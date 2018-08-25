@@ -5,11 +5,13 @@ import {
     DELETE_GAME, 
     EDIT_GAME_INFO, 
     SHOW_UNAVAILABLE_MEMBERS, 
+    HIDE_UNAVAILABLE_MEMBERS, 
     SHOW_NON_MEMBERS, 
+    HIDE_NON_MEMBERS,
     ADD_NON_MEMBER, 
     LOCK_GAME_INFO, 
-    UNLOCK_GAME_INFO
- } from './types';
+    UNLOCK_GAME_INFO,
+} from './types';
 
 import API from "../../utils/API"
 import _ from "underscore"
@@ -91,6 +93,10 @@ export const editGameInfo = (game, data) => dispatch => {
             throw new Error(res.statusText)
         }
         else {
+            console.log("res.data in gameAction.js: ", res.data)
+            console.log("data.player in gameAction.js: ", data.player)
+            console.log("data.player is the id of the player that has just been edited (for instance, marked as unavailable")
+
             dispatch({
                 type: EDIT_GAME_INFO,
                 payload: {
@@ -108,10 +114,22 @@ export const showUnavailable = () => dispatch => {
     })
 }
 
+export const hideUnavailable = () => dispatch => {
+    dispatch({
+        type: HIDE_UNAVAILABLE_MEMBERS
+    })
+}
+
 export const showNonMembers = (players) => dispatch => {
     dispatch({
         type: SHOW_NON_MEMBERS,
         payload: players
+    })
+}
+
+export const hideNonMembers = () => dispatch => {
+    dispatch({
+        type: HIDE_NON_MEMBERS
     })
 }
 

@@ -30,11 +30,14 @@ class Form extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        
+        /* If a player is a goalie, their level needs to be set as "Goalie" */
+        let assignedLevel;
+        if ( this.props.player.preferredPosition === "Goalie") {assignedLevel = "Goalie"}
+        else {assignedLevel = this.props.player.preferredPosition}
         let newPlayer = {
             name: this.props.player.name,
             fullName: this.props.player.fullName,
-            playerLevel: this.props.player.playerLevel,
+            playerLevel: assignedLevel,
             preferredPosition: this.props.player.preferredPosition,
             membershipStatus: this.props.player.membershipStatus,
             email: this.props.player.email
@@ -97,10 +100,10 @@ class Form extends Component {
                         <div className="field"> 
                             <label>Level: </label>
                             <select name="playerLevel" onChange={(event) => this.handleChange(event)} value= {this.props.player.playerLevel}>
-                                <option defaultValue="A+">A+</option>
+                                <option value="A+">A+</option>
                                 <option value="A">A</option>
                                 <option value="A-">A-</option>
-                                <option value="B+">B+</option>
+                                <option defaultValue="B+">B+</option>
                                 <option value="B">B</option>
                                 <option value="B-">B-</option>
                                 <option value="C+">C+</option>
@@ -109,7 +112,6 @@ class Form extends Component {
                                 <option value="D+">D+</option>
                                 <option value="D">D</option>
                                 <option value="D-">D-</option>
-                                <option value="Goalie">Goalie</option>
                             </select>
                         </div>
 
