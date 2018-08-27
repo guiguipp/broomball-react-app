@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import { editGameInfo } from '../../../js/actions/gameActions'
 import { addNonMember } from '../../../js/actions/gameActions'
+import { setUnavailable } from '../../../js/actions/gameActions'
+import { setAvailable } from '../../../js/actions/gameActions'
 
 import "./Drafter.css";
 
@@ -14,7 +16,10 @@ class Drafter extends Component {
             console.log("Error message: game is locked")
             }
         else {
-        this.props.editGameInfo(gameId, {player: playerID, gameInfo: {available: false}})
+        // this.props.editGameInfo(gameId, {player: playerID, gameInfo: {available: false}})
+        // instead, should be: this.props.availability()
+        // or should it be: this.props.unavailable() ?
+        this.props.setUnavailable(gameId, {player: playerID, gameInfo: {available: false}})
         }    
     }
 
@@ -24,7 +29,7 @@ class Drafter extends Component {
             console.log("Error message: game is locked")
             }
         else {
-        this.props.editGameInfo(gameId, {player: playerID, gameInfo: {available: true, team: "N/A"}})    
+        this.props.setAvailable(gameId, {player: playerID, gameInfo: {available: true, team: "N/A"}})    
         }
     }
 
@@ -167,4 +172,4 @@ const mapStateToProps = state => ({
     lockStatus: state.games.lockStatus
 })
 
-export default connect(mapStateToProps, { editGameInfo, addNonMember }) (Drafter)
+export default connect(mapStateToProps, { editGameInfo, addNonMember, setUnavailable, setAvailable }) (Drafter)

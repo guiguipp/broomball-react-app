@@ -43,7 +43,7 @@ game.post("/", function(req, res) {
 
 game.put("/:id", function(req, res) {
     // console.log("req.params.id in game put route: ", req.params.id)
-    // console.log("req.body in game put route: ", req.body)
+    console.log("req.body in game put route: ", req.body)
     let playerId = req.body.data.player
     let update = {}
     let id = {}

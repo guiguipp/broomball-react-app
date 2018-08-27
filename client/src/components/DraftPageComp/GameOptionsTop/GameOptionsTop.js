@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { showUnavailable } from '../../../js/actions/gameActions'
 import { hideUnavailable } from '../../../js/actions/gameActions'
 import { showNonMembers } from '../../../js/actions/gameActions'
+// import { getNonMembers } from '../../../js/actions/gameActions'
 import { hideNonMembers } from '../../../js/actions/gameActions'
 
 
@@ -13,6 +14,14 @@ class GameOptionsTop extends Component {
     
     unavailable(action){
         if (action === "Show") {
+            // need to have an array of unavailable members. Hint: will not be in draft! 
+            // maybe compare the array of members from DB and substract the ones that are available?
+            // let unavailableMembers = this.props.players.filter()
+            let members = this.props.players.filter(player => player.membershipStatus === "Member")
+            let playingMembers = this.props.gameParticipants.map(player => player._id)
+            let notPlayingMembers = members.filter(player => playingMembers.indexOf(player._id) === -1)
+            console.log("notPlayingMembers: ", notPlayingMembers)
+            // this.props.showUnavailable(notPlayingMembers)
             this.props.showUnavailable()
         }
         else {
@@ -59,6 +68,7 @@ Games.propTypes = {
 const mapStateToProps = state => ({
     gameDate: state.games.gameDate,
     players: state.players.players,
+    gameParticipants: state.games.draft.players,
     playingTenBuckers: state.games.playingTenBuckers,
     showingTenBuckers: state.games.showingTenBuckers,
     showingUnavailable: state.games.showingUnavailable

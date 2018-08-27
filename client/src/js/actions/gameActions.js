@@ -6,6 +6,8 @@ import {
     EDIT_GAME_INFO, 
     SHOW_UNAVAILABLE_MEMBERS, 
     HIDE_UNAVAILABLE_MEMBERS, 
+    MAKE_UNAVAILABLE, 
+    MAKE_AVAILABLE,
     SHOW_NON_MEMBERS, 
     HIDE_NON_MEMBERS,
     ADD_NON_MEMBER, 
@@ -93,20 +95,55 @@ export const editGameInfo = (game, data) => dispatch => {
             throw new Error(res.statusText)
         }
         else {
-            console.log("res.data in gameAction.js: ", res.data)
-            console.log("data.player in gameAction.js: ", data.player)
-            console.log("data.player is the id of the player that has just been edited (for instance, marked as unavailable")
-
+            // we get full game data from the API's response
+            console.log("res.data: ", res.data)
             dispatch({
                 type: EDIT_GAME_INFO,
-                payload: {
-                        player: data.player,
-                        game: res.data
-                        }
+                payload: res.data
             })
         }
     })
 }
+
+export const setUnavailable = (game, data) => dispatch => {
+    console.log("data.player: ", data.player, "\n(should be id of player to remove)")
+    let idOfRemoved = data.player;
+    API.editGame(game, data)
+    .then(res => {
+        if(res.status !== 200) {
+            throw new Error(res.statusText)
+        }
+        else {
+            // we get the game info
+            console.log("res.data: ", res.data)
+            dispatch({
+                type: MAKE_UNAVAILABLE,
+                player: idOfRemoved,
+                game: res.data,
+            })
+        }
+    })
+}
+export const setAvailable = (game, data) => dispatch => {
+    console.log("data.player: ", data.player, "\n(should be id of player to add)")
+    let idOfAdded = data.player;
+    API.editGame(game, data)
+    .then(res => {
+        if(res.status !== 200) {
+            throw new Error(res.statusText)
+        }
+        else {
+            // we get the game info
+            console.log("res.data: ", res.data)
+            dispatch({
+                type: MAKE_AVAILABLE,
+                player: idOfAdded,
+                game: res.data,
+            })
+        }
+    })
+}
+
 
 export const showUnavailable = () => dispatch => {
     dispatch({

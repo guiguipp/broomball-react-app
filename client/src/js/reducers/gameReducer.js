@@ -6,6 +6,8 @@ import {
     EDIT_GAME_INFO, 
     SHOW_UNAVAILABLE_MEMBERS, 
     HIDE_UNAVAILABLE_MEMBERS, 
+    MAKE_UNAVAILABLE,
+    MAKE_AVAILABLE,
     SHOW_NON_MEMBERS,
     HIDE_NON_MEMBERS, 
     ADD_NON_MEMBER, 
@@ -61,20 +63,52 @@ export default function(state = initialState, action) {
             gameDate: action.payload._id,
             draft: action.payload,
             lockStatus: action.payload.lock_status === true ? "hidden" : "visible",
-            unavailableMembers: initialState.unavailableMembers,
+            unavailableMembers: state.showingUnavailable === "Hide" ? action.payload.players.filter(player => player.membershipStatus === "Member" && player.gameInfo.available === false) : initialState.unavailableMembers,
             nonMembers: initialState.nonMembers,
-            playingTenBuckers: action.payload.players.filter(player => player.membershipStatus !== "Member")
+            playingTenBuckers: action.payload.players.filter(player => player.membershipStatus !== "Member" && player.gameInfo.available === true)
         }
 
         case EDIT_GAME_INFO:
         return {
             ...state,
-            draft: action.payload.game,
-            playingTenBuckers: action.payload.game.players.filter(player => player.membershipStatus !== "Member"),
+            // Does the API only send available players?
+            draft: action.payload,
+            // playingTenBuckers: action.payload.players.filter(player => player.membershipStatus !== "Member"),
             // This handles the scenario where we want to show unavailable members in real time: 
             // for this, we now get the info directly from the API's response
             // then a ternary allows us to only show unavailable players if the option has been triggered
-            unavailableMembers: state.showingUnavailable === "Hide" ? action.payload.game.players.filter(player => player.gameInfo.available === false) : initialState.unavailableMembers
+            // unavailableMembers: state.showingUnavailable === "Hide" ? action.payload.players.filter(player => player.membershipStatus === "Member" && player.gameInfo.available === false) : initialState.unavailableMembers
+        }
+        case MAKE_UNAVAILABLE:
+        return {
+            ...state,
+            // We filter the id of the player which was removed. Since it creates an array, we extract the element by getting the index 0. Then, we add it to the existing array of unavailable members
+            unavailableMembers: state.showingUnavailable === "Hide" ? [...state.unavailableMembers, state.draft.players.filter(player => player.membershipStatus === "Member" && player._id === action.player)[0]] : initialState.unavailableMembers,
+            // We need to handle two scenarios: when a member was removed, and when a ten_bucker was removed
+            // if the player is not a member, needs to be added to "nonMembers" array + needs to be removed from "playingTenBuckers" array
+            nonMembers: state.showingTenBuckers === "Hide" ? [...state.nonMembers, state.draft.players.filter(player => player.membershipStatus !== "Member" && player._id === action.player)[0]] : initialState.nonMembers,
+            playingTenBuckers: state.playingTenBuckers.filter(player => player._id !== action.player),
+            draft: action.game
+        }
+        
+        case MAKE_AVAILABLE:
+        return {
+            ...state,
+            // removing properly from the array of unavailable players
+            unavailableMembers: state.showingUnavailable === "Hide" ? (state.draft.players.filter(player => player.gameInfo.available === false && player.membershipStatus === "Member" && player._id !== action.player)) : initialState.unavailableMembers,
+            // needs to be added to draft
+            draft: action.game,
+            nonMembers: state.showingTenBuckers === "Hide" ? (state.draft.players.filter(player => player.gameInfo.available === false && player.membershipStatus !== "Member" && player._id !== action.player)) : initialState.nonMembers,
+            
+            /*
+            // We filter the id of the player which was added. Since it creates an array, we extract the element by getting the index 0. Then, we add it to the existing array of unavailable members
+            unavailableMembers: state.showingUnavailable === "Hide" ? [...state.unavailableMembers, state.draft.players.filter(player => player.membershipStatus === "Member" && player._id === action.player)[0]] : initialState.unavailableMembers,
+            // We need to handle two scenarios: when a member was removed, and when a ten_bucker was removed
+            // if the player is not a member, needs to be added to "nonMembers" array + needs to be removed from "playingTenBuckers" array
+            nonMembers: state.showingTenBuckers === "Hide" ? [...state.nonMembers, state.draft.players.filter(player => player.membershipStatus !== "Member" && player._id === action.player)[0]] : initialState.nonMembers,
+            playingTenBuckers: state.playingTenBuckers.filter(player => player._id !== action.player),
+            draft: action.game
+            */
         }
 
         case DELETE_GAME:
@@ -89,8 +123,10 @@ export default function(state = initialState, action) {
         case SHOW_UNAVAILABLE_MEMBERS:
         return {
             ...state,
-            unavailableMembers: state.draft.players.filter(player => player.gameInfo.available !== true),
+            // this no longer works: draft only shows available players. So, filtering unavailable doesn't return any result
+            unavailableMembers: state.draft.players.filter(player => player.membershipStatus === "Member" && player.gameInfo.available === false),
             showingUnavailable: "Hide"
+            // looks like showUnavailable is working initially. When call autodraft: the unavailable disappear (no longer showing, no longer in the state)
         }
         
         case HIDE_UNAVAILABLE_MEMBERS:
@@ -99,7 +135,7 @@ export default function(state = initialState, action) {
             unavailableMembers: initialState.unavailableMembers,
             showingUnavailable: "Show"
         }
-        
+
         case SHOW_NON_MEMBERS:
         return {
             ...state,

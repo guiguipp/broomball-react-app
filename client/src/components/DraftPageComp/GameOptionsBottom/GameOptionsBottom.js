@@ -45,7 +45,7 @@ class GameOptionsBottom extends Component {
         else {
             // Autodraft feature: separates all players by level, randomly assigns them to dark or white team
             let mixedRosters = [];
-            let arrayOfAvailablePlayers = this.props.players
+            let arrayOfAvailablePlayers = this.props.players.filter(player => player.gameInfo.available === true)
             // recreating our array by assigning each player to its level
             let output = arrayOfAvailablePlayers.reduce((levels,player) => {
                 levels[player.playerLevel] = levels[player.playerLevel] || [];
@@ -72,14 +72,18 @@ class GameOptionsBottom extends Component {
                 if (i%2 === 0) {mixedRosters[i].player.gameInfo.team = "Dark";}
                 else {mixedRosters[i].player.gameInfo.team = "White"}
                 }
+                
+                let arrayOfUnavailablePlayers = this.props.players.filter(player => player.gameInfo.available !== true)
                 // For a reason I haven't been able to figure out, each player information is nested 
                 // under "{player: }" which we then need to remove
-                let remappedArray = mixedRosters.map((player) => player.player)
-                remappedArray = _.sortBy(remappedArray, "name") 
+                let remappedAvailablePlayers = mixedRosters.map((player) => player.player)
+                // Once this is done, we add the unavailable players since they need to be sent to the API as well (otherwise, they just can't be added back in the draft)
+                let allPlayers = remappedAvailablePlayers.concat(arrayOfUnavailablePlayers)
+                allPlayers = _.sortBy(allPlayers, "name") 
                 
-            this.props.editGameInfo(game, {players: remappedArray})
+            this.props.editGameInfo(game, {players: allPlayers})
             // the only purpose of calling this function is to verify that teams are balanced (level wise)
-            this.filterTeams(remappedArray)
+            this.filterTeams(allPlayers)
             }
         }
 
