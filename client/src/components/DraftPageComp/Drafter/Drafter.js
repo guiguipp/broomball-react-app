@@ -21,13 +21,9 @@ class Drafter extends Component {
             this.props.setMemberUnavailable(gameId, {player: playerID, gameInfo: {available: false, team: "N/A"}})
             }
         else {
-            console.log("Player is not a Member: remove from game data")
             let gameId = this.props.draft._id
             let gameData = {...this.props.draft, players: this.props.draft.players.filter(player => player._id !== playerID)}
-            console.log("gameData: ", gameData)
-            // this.props.editGameInfo(gameId, gameData)
             this.props.setTenBuckerUnavailable(gameId, gameData, playerID)
-        
             }    
         }
     }

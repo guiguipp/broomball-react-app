@@ -8,7 +8,7 @@ import {
     HIDE_UNAVAILABLE_MEMBERS, 
     MAKE_MEMBER_UNAVAILABLE,
     MAKE_TEN_BUCKER_UNAVAILABLE,
-    MAKE_AVAILABLE,
+    MAKE_MEMBER_AVAILABLE,
     SHOW_NON_MEMBERS,
     HIDE_NON_MEMBERS, 
     ADD_NON_MEMBER, 
@@ -67,7 +67,7 @@ export default function(state = initialState, action) {
             lockStatus: action.payload.lock_status === true ? "hidden" : "visible",
             unavailableMembers: state.showingUnavailableMembers === "Hide" ? action.payload.players.filter(player => player.membershipStatus === "Member" && player.gameInfo.available === false) : initialState.unavailableMembers,
             notPlayingNonMembers: initialState.notPlayingNonMembers,
-            playingNonMembers: action.payload.players.filter(player => player.membershipStatus !== "Member" && player.gameInfo.available === true)
+            playingNonMembers: initialState.playingNonMembers,
         }
 
         case EDIT_GAME_INFO:
@@ -85,21 +85,24 @@ export default function(state = initialState, action) {
 
         case MAKE_TEN_BUCKER_UNAVAILABLE:
         return {
+            /* The Ten Buckers are managed outside of the "game" object. If they would just be set as "Unavailable" like Members, duplicates may be created.
+            They need to be removed from the game object altogether. Therefore, their status is handled in the reducer once sent to the state.
+            The allTenBuckers array that populates after a click is making this easier: when a Ten Bucker is set as unavailable, it is filtered 
+            out of the array of playingNonMembers. It is also added to the array of notPlayingNonMembers: their data is checked agains the array of allTenBuckers
+            via a filter. It creates an array of 1 element, that we add to the notPlayingNonMembers array by extracting its index 0 */
             ...state,
             draft: action.payload.gameData,
-            // allTenBuckers: [],
-            notPlayingNonMembers: state.showingNonPlayingTenBuckers === "Hide" ? [...state.notPlayingNonMembers, state.allTenBuckers.filter(player => player._id === action.payload.player)[0]] : initialState.notPlayingNonMembers,
+            notPlayingNonMembers: state.showingNonPlayingTenBuckers === "Hide" ? _.sortBy([...state.notPlayingNonMembers, state.allTenBuckers.filter(player => player._id === action.payload.player)[0]],"name") : initialState.notPlayingNonMembers,
             playingNonMembers: state.playingNonMembers.filter(player => player._id !== action.payload.player),
         }
-        
-        case MAKE_AVAILABLE:
+        // this case only deals with Members as Ten Buckers are handled separately through ADD_NON_MEMBER
+        case MAKE_MEMBER_AVAILABLE:
         return {
             ...state,
             // removing properly from the array of unavailable players
-            unavailableMembers: state.showingUnavailableMembers === "Hide" ? (state.draft.players.filter(player => player.gameInfo.available === false && player.membershipStatus === "Member" && player._id !== action.player)) : initialState.unavailableMembers,
-            // needs to be added to draft
-            draft: action.game,
-            notPlayingNonMembers: state.showingNonPlayingTenBuckers === "Hide" ? (state.draft.players.filter(player => player.gameInfo.available === false && player.membershipStatus !== "Member" && player._id !== action.player)) : initialState.notPlayingNonMembers,
+            unavailableMembers: state.showingUnavailableMembers === "Hide" ? (state.draft.players.filter(player => player.gameInfo.available === false && player.membershipStatus === "Member" && player._id !== action.payload.player)) : initialState.unavailableMembers,
+            draft: action.payload.game,
+            // notPlayingNonMembers: state.showingNonPlayingTenBuckers === "Hide" ? (state.draft.players.filter(player => player.gameInfo.available === false && player.membershipStatus !== "Member" && player._id !== action.payload.player)) : initialState.notPlayingNonMembers,
         }
 
         case DELETE_GAME:
@@ -138,7 +141,7 @@ export default function(state = initialState, action) {
             notPlayingNonMembers: initialState.notPlayingNonMembers,
             showingNonPlayingTenBuckers: "Show"
         }
-
+        
         case ADD_NON_MEMBER:
         return {
             ...state,

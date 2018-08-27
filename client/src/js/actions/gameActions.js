@@ -8,7 +8,7 @@ import {
     HIDE_UNAVAILABLE_MEMBERS, 
     MAKE_MEMBER_UNAVAILABLE,
     MAKE_TEN_BUCKER_UNAVAILABLE, 
-    MAKE_AVAILABLE,
+    MAKE_MEMBER_AVAILABLE,
     SHOW_NON_MEMBERS, 
     HIDE_NON_MEMBERS,
     ADD_NON_MEMBER, 
@@ -114,7 +114,7 @@ export const setMemberUnavailable = (game, data) => dispatch => {
             }
             else {
                 // we get the game info
-                console.log("res.data: ", res.data)
+                // console.log("res.data: ", res.data)
                 dispatch({
                     type: MAKE_MEMBER_UNAVAILABLE,
                     payload: res.data
@@ -130,7 +130,7 @@ export const setTenBuckerUnavailable = (gameId, gameData, playerID) => dispatch 
             }
             else {
                 // we get the game info
-                console.log("res.data: ", res.data)
+                // console.log("res.data: ", res.data)
                 dispatch({
                     type: MAKE_TEN_BUCKER_UNAVAILABLE,
                     payload: {
@@ -152,9 +152,11 @@ export const setAvailable = (game, data) => dispatch => {
             // we get the game info
             // console.log("res.data: ", res.data)
             dispatch({
-                type: MAKE_AVAILABLE,
-                player: data.player,
-                game: res.data,
+                type: MAKE_MEMBER_AVAILABLE,
+                payload: {
+                    player: data.player,
+                    game: res.data
+                    }
             })
         }
     })
@@ -188,7 +190,7 @@ export const hideNonMembers = () => dispatch => {
         type: HIDE_NON_MEMBERS
     })
 }
-
+// Adds a Ten Bucker to the list of players
 export const addNonMember = (game, newPlayer, existingPlayers) => dispatch => {
     let newRoster = _.sortBy([...existingPlayers, newPlayer], "name")
     API.editGame(game, {players: newRoster})
