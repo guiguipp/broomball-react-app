@@ -6,7 +6,8 @@ import {
     EDIT_GAME_INFO, 
     SHOW_UNAVAILABLE_MEMBERS, 
     HIDE_UNAVAILABLE_MEMBERS, 
-    MAKE_UNAVAILABLE,
+    MAKE_MEMBER_UNAVAILABLE,
+    MAKE_TEN_BUCKER_UNAVAILABLE,
     MAKE_AVAILABLE,
     SHOW_NON_MEMBERS,
     HIDE_NON_MEMBERS, 
@@ -34,11 +35,12 @@ const initialState = {
     gameDate: "",
     draft: {},
     unavailableMembers: [],
+    allTenBuckers: [],
     notPlayingNonMembers: [],
     playingNonMembers: [],
     lockStatus: "visible",
-    showingTenBuckers: "Show",
-    showingUnavailable: "Show"
+    showingNonPlayingTenBuckers: "Show",
+    showingUnavailableMembers: "Show"
 }
 
 export default function(state = initialState, action) {
@@ -63,7 +65,7 @@ export default function(state = initialState, action) {
             gameDate: action.payload._id,
             draft: action.payload,
             lockStatus: action.payload.lock_status === true ? "hidden" : "visible",
-            unavailableMembers: state.showingUnavailable === "Hide" ? action.payload.players.filter(player => player.membershipStatus === "Member" && player.gameInfo.available === false) : initialState.unavailableMembers,
+            unavailableMembers: state.showingUnavailableMembers === "Hide" ? action.payload.players.filter(player => player.membershipStatus === "Member" && player.gameInfo.available === false) : initialState.unavailableMembers,
             notPlayingNonMembers: initialState.notPlayingNonMembers,
             playingNonMembers: action.payload.players.filter(player => player.membershipStatus !== "Member" && player.gameInfo.available === true)
         }
@@ -74,26 +76,30 @@ export default function(state = initialState, action) {
             draft: action.payload,
         }
 
-        case MAKE_UNAVAILABLE:
+        case MAKE_MEMBER_UNAVAILABLE:
         return {
             ...state,
-            // We need to handle two scenarios: when a member was removed, and when a ten_bucker was removed
-            // if the player is not a member, needs to be added to "notPlayingNonMembers" array + needs to be removed from "playingNonMembers" array
-            notPlayingNonMembers: action.payload.membershipStatus === "Ten Bucker" ? state.showingTenBuckers === "Hide" ? [...state.notPlayingNonMembers, state.draft.players.filter(player => player.membershipStatus !== "Member" && player._id === action.payload.player)[0]] : initialState.notPlayingNonMembers : state.notPlayingNonMembers,
-            // We filter the id of the player who was removed. Since it creates an array, we extract the element by getting the index 0. Then, we add it to the existing array of unavailable members
-            unavailableMembers: action.payload.membershipStatus === "Member" ? state.showingUnavailable === "Hide" ? _.sortBy([...state.unavailableMembers, state.draft.players.filter(player => player.membershipStatus === "Member" && player._id === action.payload.player)[0]],"name") : initialState.unavailableMembers : state.unavailableMembers,
-            playingNonMembers: state.playingNonMembers.filter(player => player._id !== action.player),
-            draft: action.payload.game
+            unavailableMembers: state.showingUnavailableMembers === "Hide" ? action.payload.players.filter(player => player.membershipStatus === "Member" && player.gameInfo.available === false) : initialState.unavailableMembers,
+            draft: action.payload
+        }
+
+        case MAKE_TEN_BUCKER_UNAVAILABLE:
+        return {
+            ...state,
+            draft: action.payload.gameData,
+            // allTenBuckers: [],
+            notPlayingNonMembers: state.showingNonPlayingTenBuckers === "Hide" ? [...state.notPlayingNonMembers, state.allTenBuckers.filter(player => player._id === action.payload.player)[0]] : initialState.notPlayingNonMembers,
+            playingNonMembers: state.playingNonMembers.filter(player => player._id !== action.payload.player),
         }
         
         case MAKE_AVAILABLE:
         return {
             ...state,
             // removing properly from the array of unavailable players
-            unavailableMembers: state.showingUnavailable === "Hide" ? (state.draft.players.filter(player => player.gameInfo.available === false && player.membershipStatus === "Member" && player._id !== action.player)) : initialState.unavailableMembers,
+            unavailableMembers: state.showingUnavailableMembers === "Hide" ? (state.draft.players.filter(player => player.gameInfo.available === false && player.membershipStatus === "Member" && player._id !== action.player)) : initialState.unavailableMembers,
             // needs to be added to draft
             draft: action.game,
-            notPlayingNonMembers: state.showingTenBuckers === "Hide" ? (state.draft.players.filter(player => player.gameInfo.available === false && player.membershipStatus !== "Member" && player._id !== action.player)) : initialState.notPlayingNonMembers,
+            notPlayingNonMembers: state.showingNonPlayingTenBuckers === "Hide" ? (state.draft.players.filter(player => player.gameInfo.available === false && player.membershipStatus !== "Member" && player._id !== action.player)) : initialState.notPlayingNonMembers,
         }
 
         case DELETE_GAME:
@@ -109,27 +115,28 @@ export default function(state = initialState, action) {
         return {
             ...state,
             unavailableMembers: state.draft.players.filter(player => player.membershipStatus === "Member" && player.gameInfo.available === false),
-            showingUnavailable: "Hide"
+            showingUnavailableMembers: "Hide"
         }
         
         case HIDE_UNAVAILABLE_MEMBERS:
         return {
             ...state,
             unavailableMembers: initialState.unavailableMembers,
-            showingUnavailable: "Show"
+            showingUnavailableMembers: "Show"
         }
 
         case SHOW_NON_MEMBERS:
         return {
             ...state,
-            notPlayingNonMembers: action.payload.filter(player => player._id !== state.playingNonMembers._id),
-            showingTenBuckers: "Hide"
+            allTenBuckers: action.payload.all,
+            notPlayingNonMembers: action.payload.new,
+            showingNonPlayingTenBuckers: "Hide"
         }
         case HIDE_NON_MEMBERS:
         return {
             ...state,
             notPlayingNonMembers: initialState.notPlayingNonMembers,
-            showingTenBuckers: "Show"
+            showingNonPlayingTenBuckers: "Show"
         }
 
         case ADD_NON_MEMBER:

@@ -6,7 +6,8 @@ import {
     EDIT_GAME_INFO, 
     SHOW_UNAVAILABLE_MEMBERS, 
     HIDE_UNAVAILABLE_MEMBERS, 
-    MAKE_UNAVAILABLE, 
+    MAKE_MEMBER_UNAVAILABLE,
+    MAKE_TEN_BUCKER_UNAVAILABLE, 
     MAKE_AVAILABLE,
     SHOW_NON_MEMBERS, 
     HIDE_NON_MEMBERS,
@@ -32,7 +33,7 @@ export const fetchGames = () => dispatch => {
             }
         })
     }
-//
+
 export const deleteGame = (id) => dispatch => {
     API.deleteGame(id)
     .then(res => {
@@ -105,33 +106,43 @@ export const editGameInfo = (game, data) => dispatch => {
     })
 }
 
-export const setUnavailable = (playerStatus, game, data) => dispatch => {
-    console.log("data.player: ", data.player, "\n(should be id of player to remove)")
-    console.log("playerStatus: ", playerStatus, "\n(should be Member/Ten Bucker)")
-    let idOfRemoved = data.player;
-    API.editGame(game, data)
-    .then(res => {
-        if(res.status !== 200) {
-            throw new Error(res.statusText)
-        }
-        else {
-            // we get the game info
-            console.log("res.data: ", res.data)
-            dispatch({
-                type: MAKE_UNAVAILABLE,
-                payload:   
-                    {
-                    player: idOfRemoved,
-                    membershipStatus: playerStatus,
-                    game: res.data
-                    }
+export const setMemberUnavailable = (game, data) => dispatch => {
+        API.editGame(game, data)
+        .then(res => {
+            if(res.status !== 200) {
+                throw new Error(res.statusText)
+            }
+            else {
+                // we get the game info
+                console.log("res.data: ", res.data)
+                dispatch({
+                    type: MAKE_MEMBER_UNAVAILABLE,
+                    payload: res.data
+                    })
+                }
+            })
+    }
+export const setTenBuckerUnavailable = (gameId, gameData, playerID) => dispatch => {
+    API.editGame(gameId, gameData)
+        .then(res => {
+            if(res.status !== 200) {
+                throw new Error(res.statusText)
+            }
+            else {
+                // we get the game info
+                console.log("res.data: ", res.data)
+                dispatch({
+                    type: MAKE_TEN_BUCKER_UNAVAILABLE,
+                    payload: {
+                        gameData: res.data,
+                        player: playerID
+                        }
+                    })
+                }
             })
         }
-    })
-}
 export const setAvailable = (game, data) => dispatch => {
-    console.log("data.player: ", data.player, "\n(should be id of player to add)")
-    let idOfAdded = data.player;
+    // console.log("data.player: ", data.player, "\n(is the id of player to add)")
     API.editGame(game, data)
     .then(res => {
         if(res.status !== 200) {
@@ -139,10 +150,10 @@ export const setAvailable = (game, data) => dispatch => {
         }
         else {
             // we get the game info
-            console.log("res.data: ", res.data)
+            // console.log("res.data: ", res.data)
             dispatch({
                 type: MAKE_AVAILABLE,
-                player: idOfAdded,
+                player: data.player,
                 game: res.data,
             })
         }
@@ -162,10 +173,13 @@ export const hideUnavailable = () => dispatch => {
     })
 }
 
-export const showNonMembers = (players) => dispatch => {
+export const showNonMembers = (allTenBuckers, notPlayingTenBuckers) => dispatch => {
     dispatch({
         type: SHOW_NON_MEMBERS,
-        payload: players
+        payload: {
+            all: allTenBuckers,
+            new: notPlayingTenBuckers
+                }
     })
 }
 

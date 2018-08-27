@@ -101,10 +101,8 @@ class GameOptionsBottom extends Component {
         
     // function to filter array of player objects into teams used for quick control. 
     filterTeams = (arrayOfPlayerObjects) => {
-        let rosterTeam2 = [];
-        let rosterTeam1 = [];
         // filter player objects according to name of the team #1
-        rosterTeam1 = arrayOfPlayerObjects.filter((e) => e.gameInfo.team === "Dark")
+        let rosterTeam1 = arrayOfPlayerObjects.filter((e) => e.gameInfo.team === "Dark")
         rosterTeam1 = _.sortBy(rosterTeam1, "playerLevel")
         console.log(`\n************\nDark:\n************\n`);
         // display the name of the player for all players of the team
@@ -112,10 +110,17 @@ class GameOptionsBottom extends Component {
             console.log(`${e.name} (${e.playerLevel})`)//\nPicked in position: ${e.gameInfo.captain1Pick})`);
         })
         
-        rosterTeam2 = arrayOfPlayerObjects.filter((e) => e.gameInfo.team === "White")
+        let rosterTeam2 = arrayOfPlayerObjects.filter((e) => e.gameInfo.team === "White")
         rosterTeam2 = _.sortBy(rosterTeam2, "playerLevel")
         console.log(`\n************\nWhite:\n************\n`);
         rosterTeam2.forEach((e) => {
+            console.log(`${e.name} (${e.playerLevel})`)//.\nPicked in position: ${e.gameInfo.captain2Pick})`);
+            })
+        
+        let unavailable = arrayOfPlayerObjects.filter((e) => e.gameInfo.team === "N/A")
+        unavailable = _.sortBy(unavailable, "playerLevel")
+        console.log(`\n************\nUnavailable:\n************\n`);
+        unavailable.forEach((e) => {
             console.log(`${e.name} (${e.playerLevel})`)//.\nPicked in position: ${e.gameInfo.captain2Pick})`);
             })
         }
