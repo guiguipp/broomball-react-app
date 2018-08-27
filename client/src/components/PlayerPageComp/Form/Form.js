@@ -33,7 +33,8 @@ class Form extends Component {
         /* If a player is a goalie, their level needs to be set as "Goalie" */
         let assignedLevel;
         if ( this.props.player.preferredPosition === "Goalie") {assignedLevel = "Goalie"}
-        else {assignedLevel = this.props.player.preferredPosition}
+        else {assignedLevel = this.props.player.playerLevel}
+        console.log("assignedLevel: ", assignedLevel)
         let newPlayer = {
             name: this.props.player.name,
             fullName: this.props.player.fullName,

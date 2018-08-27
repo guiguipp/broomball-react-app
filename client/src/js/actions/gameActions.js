@@ -105,8 +105,9 @@ export const editGameInfo = (game, data) => dispatch => {
     })
 }
 
-export const setUnavailable = (game, data) => dispatch => {
+export const setUnavailable = (playerStatus, game, data) => dispatch => {
     console.log("data.player: ", data.player, "\n(should be id of player to remove)")
+    console.log("playerStatus: ", playerStatus, "\n(should be Member/Ten Bucker)")
     let idOfRemoved = data.player;
     API.editGame(game, data)
     .then(res => {
@@ -118,8 +119,12 @@ export const setUnavailable = (game, data) => dispatch => {
             console.log("res.data: ", res.data)
             dispatch({
                 type: MAKE_UNAVAILABLE,
-                player: idOfRemoved,
-                game: res.data,
+                payload:   
+                    {
+                    player: idOfRemoved,
+                    membershipStatus: playerStatus,
+                    game: res.data
+                    }
             })
         }
     })

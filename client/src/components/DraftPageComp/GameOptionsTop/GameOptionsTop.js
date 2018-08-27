@@ -34,7 +34,7 @@ class GameOptionsTop extends Component {
         via the reducer). We check the former against the latter to see who's left to potentially add */
         if (action === "Show") {
             let tenBuckers = this.props.players.filter((player) => player.membershipStatus !== "Member")
-            let arrayOfIds = this.props.playingTenBuckers.map(player => player._id)    
+            let arrayOfIds = this.props.playingNonMembers.map(player => player._id)    
             let newTenBuckers = tenBuckers.filter((player) => arrayOfIds.indexOf(player._id) === -1)
             this.props.showNonMembers(newTenBuckers)
         }
@@ -69,7 +69,7 @@ const mapStateToProps = state => ({
     gameDate: state.games.gameDate,
     players: state.players.players,
     gameParticipants: state.games.draft.players,
-    playingTenBuckers: state.games.playingTenBuckers,
+    playingNonMembers: state.games.playingNonMembers,
     showingTenBuckers: state.games.showingTenBuckers,
     showingUnavailable: state.games.showingUnavailable
 })
