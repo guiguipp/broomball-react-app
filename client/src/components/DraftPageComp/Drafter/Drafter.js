@@ -6,6 +6,7 @@ import { addNonMember } from '../../../js/actions/gameActions'
 import { setMemberUnavailable } from '../../../js/actions/gameActions'
 import { setTenBuckerUnavailable } from '../../../js/actions/gameActions'
 import { setAvailable } from '../../../js/actions/gameActions'
+import { setPick } from '../../../js/actions/gameActions'
 
 import "./Drafter.css";
 
@@ -67,8 +68,21 @@ class Drafter extends Component {
 
     }
 
-    setPick(team, playerID){
-        console.log("Click recorded")
+    setPick(team, playerID, operation){
+        let gameId = this.props.draft._id
+        switch (team){
+            case "Dark":
+            if(operation === "add"){
+            this.props.setPick(team, gameId, {player: playerID, gameInfo: {darkPickNum: this.props.picksDark + 1}})
+            }
+            else {
+                this.props.setPick(team, gameId, {player: playerID, gameInfo: {darkPickNum: 0}})
+            }
+            break;
+
+            default:
+            return
+        }
     }
 
     render() {
@@ -160,12 +174,12 @@ class Drafter extends Component {
                         {/* Mapping the unranked Players */}
                         {this.props.draft.players ? (this.props.draft.players
                             // mapping the unranked available players
-                            .filter(player => player.gameInfo.pickDark === 0 && player.gameInfo.available === true)
+                            .filter(player => player.gameInfo.darkPickNum === 0 && player.gameInfo.available === true)
                             .map(player => {
                                 return (
                                     <div className="player_div" key={player._id}>
                                         <button className="player_button lighter_color">{player.name}</button>
-                                        <i className="fa fa-arrow-circle-o-right pick_arrow arrows" onClick={() => this.setPick(this.props.draftMode, player._id)}></i>
+                                        <i className="fa fa-arrow-circle-o-right pick_arrow arrows" onClick={() => this.setPick(this.props.draftMode, player._id, "add")}></i>
                                     </div>
                                 )
                             } )
@@ -177,12 +191,12 @@ class Drafter extends Component {
                         
                         {this.props.draft.players ? (this.props.draft.players
                             // mapping the ranked available players
-                            .filter(player => player.gameInfo.pickDark !== 0 && player.gameInfo.available === true)
+                            .filter(player => player.gameInfo.darkPickNum !== 0 && player.gameInfo.available === true)
                             .map(player => {
                                 return (
                                     <div className="player_div" key={player._id}>
-                                        <button className="player_button lighter_color">{player.name}</button>
-                                        <i className="fa fa-arrow-circle-o-right pick_arrow arrows" onClick={() => this.setPick(this.props.draftMode, player._id)}></i>
+                                        <button className="player_button darker_color">{player.name}</button>
+                                        <i className="fa fa-minus-circle pick_arrow arrows" onClick={() => this.setPick(this.props.draftMode, player._id, "substract")}></i>
                                     </div>
                                 )
                             } )
@@ -210,7 +224,9 @@ const mapStateToProps = state => ({
     notPlayingNonMembers: state.games.notPlayingNonMembers,
     gameInfo: state.games.gameInfo,
     lockStatus: state.games.lockStatus,
-    draftMode: state.games.draftMode
+    draftMode: state.games.draftMode,
+    picksDark: state.games.picksDark,
+    picksWhite: state.games.picksWhite
 })
 
-export default connect(mapStateToProps, { editGameInfo, addNonMember, setMemberUnavailable, setTenBuckerUnavailable, setAvailable }) (Drafter)
+export default connect(mapStateToProps, { editGameInfo, addNonMember, setMemberUnavailable, setTenBuckerUnavailable, setAvailable, setPick }) (Drafter)

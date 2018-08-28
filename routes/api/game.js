@@ -43,7 +43,7 @@ game.post("/", function(req, res) {
 
 game.put("/:id", function(req, res) {
     // console.log("req.params.id in game put route: ", req.params.id)
-    console.log("req.body in game put route: ", req.body)
+    // console.log("req.body in game put route: ", req.body)
     let playerId = req.body.data.player
     let update = {}
     let id = {}
@@ -62,7 +62,7 @@ game.put("/:id", function(req, res) {
     }
     // This handles Game updates via switch statement on the key of the update sent. 
     else {
-        console.log("req.body.data sans gameInfo: ", req.body.data)
+        // console.log("req.body.data sans gameInfo: ", req.body.data)
         id = {_id: req.params.id};
         update = req.body.data;
         /* We might need a Switch statement later to handle different scenarios */

@@ -15,7 +15,8 @@ import {
     LOCK_GAME_INFO,
     UNLOCK_GAME_INFO,
     TRIGGER_PICK_MODE,
-    TRIGGER_DRAFT_MODE
+    TRIGGER_DRAFT_MODE,
+    SET_PICK_DARK
 } from '../actions/types';
 
 import _ from "underscore"
@@ -28,8 +29,8 @@ const initialState = {
         goals: 0,
         assists: 0,
         win: false,
-        pickDark: 0,
-        pickWhite: 0,
+        darkPickNum: 0,
+        whitePickNum: 0,
         available: true,
         team: "N/A"
     },
@@ -43,7 +44,7 @@ const initialState = {
     lockStatus: "visible",
     showingNonPlayingTenBuckers: "Show",
     showingUnavailableMembers: "Show",
-    draftMode: "Dark",
+    draftMode: "Draft",
     pickButtons: {
         right: "Set Dark Picks",
         left: "Set White Picks"
@@ -75,6 +76,8 @@ export default function(state = initialState, action) {
             unavailableMembers: state.showingUnavailableMembers === "Hide" ? action.payload.players.filter(player => player.membershipStatus === "Member" && player.gameInfo.available === false) : initialState.unavailableMembers,
             notPlayingNonMembers: initialState.notPlayingNonMembers,
             playingNonMembers: initialState.playingNonMembers,
+            picksDark: action.payload.players.filter(player => player.gameInfo.darkPickNum !== 0).length,
+            picksWhite: action.payload.players.filter(player => player.gameInfo.whitePickNum !== 0).length,
         }
 
         case EDIT_GAME_INFO:
@@ -173,7 +176,8 @@ export default function(state = initialState, action) {
         return {
             ...state,
             draftMode: action.payload.team,
-            pickButtons: action.payload.buttons
+            pickButtons: action.payload.buttons,
+            draft: {...state.draft, players: _.sortBy(state.draft.players, (obj) => obj.gameInfo.darkPickNum)}
         }
 
         case TRIGGER_DRAFT_MODE:
@@ -183,6 +187,12 @@ export default function(state = initialState, action) {
             pickButtons: initialState.pickButtons
         }
 
+        case SET_PICK_DARK:
+        return {
+            ...state,
+            draft: {...state.draft, players: _.sortBy(action.payload.players, (obj) => obj.gameInfo.darkPickNum)},
+            picksDark: action.payload.players.filter(player => player.gameInfo.darkPickNum !== 0).length,
+        }
         default: 
         return state;
     }

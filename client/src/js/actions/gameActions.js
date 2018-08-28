@@ -15,7 +15,8 @@ import {
     LOCK_GAME_INFO, 
     UNLOCK_GAME_INFO,
     TRIGGER_PICK_MODE,
-    TRIGGER_DRAFT_MODE
+    TRIGGER_DRAFT_MODE,
+    SET_PICK_DARK
 } from './types';
 
 import API from "../../utils/API"
@@ -276,3 +277,27 @@ export const triggerDraftMode = () => dispatch => {
         type: TRIGGER_DRAFT_MODE
         })
 }
+
+export const setPick = (team, game, data) => dispatch => {
+    API.editGame(game, data)
+    .then(res => {
+        if(res.status !== 200) {
+            throw new Error(res.statusText)
+        }
+        else {
+            // console.log("res.data in the setPick function: ", res.data)
+            switch (team) {
+                case "Dark":
+                dispatch({
+                    type: SET_PICK_DARK,
+                    payload: res.data
+                    })
+                break;
+
+                default: 
+                return;
+                }
+            }
+        
+    })
+} 
