@@ -41,15 +41,5 @@ export default {
     deletePlayer: (id) => {
         const url = currentURL + "/api/player/" + id
         return axios.delete(url)
-    }/*,
-
-    createRoster: (gameDate, player) => {
-        const url = currentURL + "/api/roster/"
-        return axios.post(url, { game: gameDate, player: player})
-        },
-    deleteRoster: (game) => {
-        const url = currentURL + "/api/roster/" + game
-        return axios.delete(url)
-        },*/
-
+    }
     }

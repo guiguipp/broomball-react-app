@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { addGame } from '../../../js/actions/gameActions'
 import { fetchPlayers } from '../../../js/actions/playerActions'
-import { addPlayersToRoster } from "../../../js/actions/rosterActions"
 // see doc: https://www.npmjs.com/package/react-datepicker
 import DatePicker from "react-datepicker";
 
@@ -44,7 +43,6 @@ class Calendar extends Component {
         }})
         let dateOfGame = moment(this.state.dateSelected).format("YYYY-MM-DD")
         this.props.addGame(dateOfGame, membersWithGameInfo)
-        // members.forEach((player) => this.props.addPlayersToRoster(dateOfGame, player))
     }
 
 
@@ -81,19 +79,5 @@ const mapStateToProps = state => ({
     })
 
 
-export default connect(mapStateToProps, { addGame, fetchPlayers, addPlayersToRoster }) (Calendar)
+export default connect(mapStateToProps, { addGame, fetchPlayers }) (Calendar)
     
-/*
-Upon creating the game, API was called to get all members. Through an object constructor,
-every member was posted to Roster api (with Game Id, name of player, 
-and status [member/ten bucker] + availability set to: "true")
-
-The list of players will only show the available players 
-
-With Mongoose, no need for the constructor: the players can be added via an array.
-Also, no need for an API call: the players are already in the State. 
-
-We might want to store the array of player in Game itself. It looks like we can omit the "Roster" database that way.
-Testing further...
-
-*/
