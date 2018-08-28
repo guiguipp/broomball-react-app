@@ -5,21 +5,30 @@
     position: relative;
     left: -8%;
 }
+
 .player_button {   
     width: 55%;
+    max-width: 250px;
     margin: 10px -8px 10px 8px;
     min-width: 150px;
     height: 2.75em;
 }
+
 .arrows {
     font-size: 200%;
     position: relative;
     top: 0.18em;
     color: #260e04;
 }
-.arrows:hover{
+
+.arrows:hover {
     color:  #007bff
 }
+
+.pick_arrow {
+    margin-left: 50px;
+}
+
 .remove_player {
     position: relative;
     top: -17px;
@@ -27,14 +36,17 @@
     font-size: 130%;
     color: #260e04;
 }
+
 .remove_player:hover {
     color: red;
 }
+
 .unavailable {
     background-color: #ACADB2;
     margin-left: -15px;
     color: white;
 }
+
 .negative_color {
     margin-left: -15px;
 }

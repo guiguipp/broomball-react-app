@@ -45,6 +45,7 @@ button {
 /* lighter */
 .lighter_color {
     background: linear-gradient(70deg, #EA8D47,#ffbe75);
+    border-right-color: #ffbe75;
     color: white;    
 }
 .lighter_color:active {
@@ -131,12 +132,37 @@ button {
     margin-bottom: 6%;
 }
 
+.h1_alternate {
+    color: white;
+    text-shadow: 
+        -1px -1px 0 #260e04, 
+        1px -1px 0 #260e04, 
+        -1px 1px 0 #260e04, 
+        1px 1px 0 #260e04;
+    font-family: 'Yellowtail', cursive;
+    text-align: center;
+    font-size: 312%;
+    position: relative;
+    margin-bottom: 6%;
+}
+.h1_negative {
+    
+}
 .h2_main {
     font-family: boogaloo;
     font-size: 150%;
     margin-bottom: 10%;
     text-align: center;
     color: #260e04;
+    /* margin-left: -5%; */
+}
+
+.h2_alternate {
+    color: white;
+    font-family: boogaloo;
+    font-size: 150%;
+    margin-bottom: 10%;
+    text-align: center;
     /* margin-left: -5%; */
 }
 
@@ -152,28 +178,6 @@ button {
     padding: 5% 0;
     /* for testing purposes (this is in draft.css) */
     margin-bottom: 200px;
-}
-.h1_alternate {
-    color: white;
-    text-shadow: 
-        -1px -1px 0 #260e04, 
-        1px -1px 0 #260e04, 
-        -1px 1px 0 #260e04, 
-        1px 1px 0 #260e04;
-    font-family: 'Yellowtail', cursive;
-    text-align: center;
-    font-size: 312%;
-    position: relative;
-    margin-bottom: 6%;
-}
-
-.h2_alternate {
-    color: white;
-    font-family: boogaloo;
-    font-size: 150%;
-    margin-bottom: 10%;
-    text-align: center;
-    /* margin-left: -5%; */
 }
 
 .hidden {

@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { lockGameInfo } from "../../../js/actions/gameActions"
 import { unlockGameInfo } from "../../../js/actions/gameActions"
 import { editGameInfo } from '../../../js/actions/gameActions'
+import { triggerPickMode } from '../../../js/actions/gameActions'
+import { triggerDraftMode } from '../../../js/actions/gameActions'
 
 import "./GameOptionsBottom.css";
 
@@ -88,7 +90,6 @@ class GameOptionsBottom extends Component {
         }
 
     // helper function to randomize an array (pushes/deletes to another array recursively, until it's empty) 
-    // can probably be replace by underscore... 
     randomize = (inputArray, outputArray) => {
         if(inputArray.length > 0) {
             let randomPlayer = inputArray[Math.floor(Math.random()*inputArray.length)];
@@ -125,6 +126,15 @@ class GameOptionsBottom extends Component {
             })
         }
     
+    toggleMode(currentMode, team){
+        if (currentMode === "Draft") {
+            this.props.triggerPickMode(team)
+        }
+
+        else {
+            this.props.triggerDraftMode()
+        }
+    }
 
     render() {
         return (
@@ -132,7 +142,7 @@ class GameOptionsBottom extends Component {
                 <div className={"container " + this.props.visibility}>
                         <div className="row">
                             <div className="col text-center">
-                                <button className="btn btn-info navbar-btn regular_grey computer_draft menu_options" id="picks_dark">Set Dark Picks</button> 
+                                <button className="btn lighter_color" onClick={() => this.toggleMode(this.props.draftMode, "Dark")}>{this.props.pickButtons.right}</button> 
                             </div>
                             <div className="col text-center">
                                 
@@ -188,7 +198,13 @@ const mapStateToProps = state => ({
     visibility: state.games.visibility,
     players: state.games.draft.players,
     lockStatus: state.games.lockStatus,
-    gameInfo: state.games.gameInfo
+    gameInfo: state.games.gameInfo,
+    draftMode: state.games.draftMode,
+    pickButtons: state.games.pickButtons
+    /*{
+        right: "Set Dark Picks",
+        left: "Set White Picks"
+    }*/
 })
 
-export default connect(mapStateToProps, { lockGameInfo, unlockGameInfo, editGameInfo }) (GameOptionsBottom)
+export default connect(mapStateToProps, { lockGameInfo, unlockGameInfo, editGameInfo, triggerPickMode, triggerDraftMode }) (GameOptionsBottom)

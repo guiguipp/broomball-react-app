@@ -14,6 +14,8 @@ import {
     ADD_NON_MEMBER, 
     LOCK_GAME_INFO, 
     UNLOCK_GAME_INFO,
+    TRIGGER_PICK_MODE,
+    TRIGGER_DRAFT_MODE
 } from './types';
 
 import API from "../../utils/API"
@@ -97,7 +99,7 @@ export const editGameInfo = (game, data) => dispatch => {
         }
         else {
             // we get full game data from the API's response
-            console.log("res.data: ", res.data)
+            // console.log("res.data: ", res.data)
             dispatch({
                 type: EDIT_GAME_INFO,
                 payload: res.data
@@ -237,4 +239,40 @@ export const unlockGameInfo = (game) => dispatch => {
             })
         }
     })
+}
+
+export const triggerPickMode = (team) => dispatch => {
+    switch (team) {
+        case "Dark":
+        dispatch({
+                type: TRIGGER_PICK_MODE,
+                payload: 
+                    { 
+                        team: team,
+                        buttons: 
+                        {
+                        right: "Exit",
+                        left: "Set White Picks"
+                        }
+                    }
+                })
+                break;
+        case "White":
+        dispatch({
+                type: TRIGGER_PICK_MODE,
+                payload: {
+                    right: "Set Dark Picks",
+                    left: "Exit"
+                    }
+                })
+                break;
+        default:
+            console.log("There was an error in the dispatcher")
+    }
+    }
+
+export const triggerDraftMode = () => dispatch => {
+    dispatch({
+        type: TRIGGER_DRAFT_MODE
+        })
 }

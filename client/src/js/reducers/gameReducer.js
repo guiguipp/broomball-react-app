@@ -13,7 +13,9 @@ import {
     HIDE_NON_MEMBERS, 
     ADD_NON_MEMBER, 
     LOCK_GAME_INFO,
-    UNLOCK_GAME_INFO
+    UNLOCK_GAME_INFO,
+    TRIGGER_PICK_MODE,
+    TRIGGER_DRAFT_MODE
 } from '../actions/types';
 
 import _ from "underscore"
@@ -26,8 +28,8 @@ const initialState = {
         goals: 0,
         assists: 0,
         win: false,
-        pickCaptain1: 0,
-        pickCaptain2: 0,
+        pickDark: 0,
+        pickWhite: 0,
         available: true,
         team: "N/A"
     },
@@ -40,7 +42,12 @@ const initialState = {
     playingNonMembers: [],
     lockStatus: "visible",
     showingNonPlayingTenBuckers: "Show",
-    showingUnavailableMembers: "Show"
+    showingUnavailableMembers: "Show",
+    draftMode: "Dark",
+    pickButtons: {
+        right: "Set Dark Picks",
+        left: "Set White Picks"
+    }
 }
 
 export default function(state = initialState, action) {
@@ -102,7 +109,6 @@ export default function(state = initialState, action) {
             // removing properly from the array of unavailable players
             unavailableMembers: state.showingUnavailableMembers === "Hide" ? (state.draft.players.filter(player => player.gameInfo.available === false && player.membershipStatus === "Member" && player._id !== action.payload.player)) : initialState.unavailableMembers,
             draft: action.payload.game,
-            // notPlayingNonMembers: state.showingNonPlayingTenBuckers === "Hide" ? (state.draft.players.filter(player => player.gameInfo.available === false && player.membershipStatus !== "Member" && player._id !== action.payload.player)) : initialState.notPlayingNonMembers,
         }
 
         case DELETE_GAME:
@@ -135,6 +141,7 @@ export default function(state = initialState, action) {
             notPlayingNonMembers: action.payload.new,
             showingNonPlayingTenBuckers: "Hide"
         }
+
         case HIDE_NON_MEMBERS:
         return {
             ...state,
@@ -160,6 +167,20 @@ export default function(state = initialState, action) {
         return {
             ...state,
             lockStatus: action.payload === true ? "hidden" : "visible",
+        }
+
+        case TRIGGER_PICK_MODE:
+        return {
+            ...state,
+            draftMode: action.payload.team,
+            pickButtons: action.payload.buttons
+        }
+
+        case TRIGGER_DRAFT_MODE:
+        return {
+            ...state,
+            draftMode: "Draft",
+            pickButtons: initialState.pickButtons
         }
 
         default: 
