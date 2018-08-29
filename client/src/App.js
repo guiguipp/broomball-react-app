@@ -13,9 +13,9 @@ import store from "./js/store"
 // Font-Awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faArrowAltCircleRight } from '@fortawesome/free-regular-svg-icons'
-import { faChevronUp, faChevronDown, faMinusCircle, faTimesCircle, faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons'
+import { faChevronUp, faChevronDown, faMinusCircle, faTimesCircle, faArrowCircleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
 
-library.add(/*fab,*/ faChevronUp, faChevronDown, faMinusCircle, faTimesCircle, faArrowAltCircleRight, faArrowCircleLeft)
+library.add(/*fab,*/ faChevronUp, faChevronDown, faMinusCircle, faTimesCircle, faArrowAltCircleRight, faArrowCircleLeft, faAngleRight)
 
 
 

@@ -25,10 +25,6 @@
     color:  #007bff
 }
 
-.pick_arrow {
-    margin-left: 50px;
-}
-
 .remove_player {
     position: relative;
     top: -17px;
@@ -53,4 +49,59 @@
 
 .sorter {
     display: inline-block;
+}
+
+.player_picking {   
+    width: 55%;
+    max-width: 250px;
+    margin: 10px 0% 10px 8px;
+    min-width: 150px;
+    height: 2.75em;
+}
+
+.player_picking:hover{
+    margin-right: 5%;
+    margin-left: 6%;
+}
+
+.pick_arrow {
+    position: relative;
+    right: -4%;
+}
+
+.remove_pick {
+    position: relative;
+    top: -20px;
+    right: 5px;
+}
+
+.up_arrow {
+    color: #17a2b8;
+    position: relative;
+    left: 5px;
+    top: -10px;
+}
+
+.up_arrow:hover {
+    color:#ffbe75;
+}
+
+.down_arrow:hover {
+    color:#ffbe75;
+}
+
+.down_arrow {
+    color:#17a2b8;
+    position: relative;
+    left: -23px;
+    top: 22px;
+}
+
+.player_picking_div {
+    text-align: center;
+    width: 120%;
+    min-width: 200px;
+    position: relative;
+    left: -8%;
+    margin-top: 2%
 }

@@ -16,7 +16,8 @@ import {
     UNLOCK_GAME_INFO,
     TRIGGER_PICK_MODE,
     TRIGGER_DRAFT_MODE,
-    SET_PICK_DARK
+    SET_PICK_DARK,
+    SET_PICKS_DARK
 } from '../actions/types';
 
 import _ from "underscore"
@@ -76,8 +77,10 @@ export default function(state = initialState, action) {
             unavailableMembers: state.showingUnavailableMembers === "Hide" ? action.payload.players.filter(player => player.membershipStatus === "Member" && player.gameInfo.available === false) : initialState.unavailableMembers,
             notPlayingNonMembers: initialState.notPlayingNonMembers,
             playingNonMembers: initialState.playingNonMembers,
-            picksDark: action.payload.players.filter(player => player.gameInfo.darkPickNum !== 0).length,
-            picksWhite: action.payload.players.filter(player => player.gameInfo.whitePickNum !== 0).length,
+            darkPicked: _.sortBy(action.payload.players.filter(player => player.gameInfo.darkPickNum !== 0),(obj) => obj.gameInfo.darkPickNum),
+            darkUnpicked: action.payload.players.filter(player => player.gameInfo.darkPickNum === 0),
+            whitePicked: _.sortBy(action.payload.players.filter(player => player.gameInfo.whitePickNum !== 0),(obj) => obj.gameInfo.whitePickNum),
+            whiteUnpicked: action.payload.players.filter(player => player.gameInfo.whitePickNum === 0),
         }
 
         case EDIT_GAME_INFO:
@@ -177,7 +180,6 @@ export default function(state = initialState, action) {
             ...state,
             draftMode: action.payload.team,
             pickButtons: action.payload.buttons,
-            draft: {...state.draft, players: _.sortBy(state.draft.players, (obj) => obj.gameInfo.darkPickNum)}
         }
 
         case TRIGGER_DRAFT_MODE:
@@ -190,9 +192,19 @@ export default function(state = initialState, action) {
         case SET_PICK_DARK:
         return {
             ...state,
-            draft: {...state.draft, players: _.sortBy(action.payload.players, (obj) => obj.gameInfo.darkPickNum)},
-            picksDark: action.payload.players.filter(player => player.gameInfo.darkPickNum !== 0).length,
+            // draft: {...state.draft, players: _.sortBy(action.payload.players, (obj) => obj.gameInfo.darkPickNum)},
+            draft: action.payload
+            // darkUnpicked: action.payload.players.filter(player => player.gameInfo.darkPickNum === 0),
         }
+        /*
+        case SET_PICKS_DARK:
+        return {
+            ...state,
+            // draft: {...state.draft, players: _.sortBy(action.payload.players, (obj) => obj.gameInfo.darkPickNum)},
+            darkPicked: action.payload.players.filter(player => player.gameInfo.darkPickNum !== 0),
+            darkUnpicked: action.payload.players.filter(player => player.gameInfo.darkPickNum === 0),
+        }*/
+
         default: 
         return state;
     }
