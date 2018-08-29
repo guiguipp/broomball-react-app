@@ -8,6 +8,8 @@ import { setTenBuckerUnavailable } from '../../../js/actions/gameActions'
 import { setAvailable } from '../../../js/actions/gameActions'
 import { setPick } from '../../../js/actions/gameActions'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowAltCircleRight } from '@fortawesome/free-regular-svg-icons'
 import "./Drafter.css";
 
 class Drafter extends Component {
@@ -98,8 +100,8 @@ class Drafter extends Component {
                                     return (
                                         <div className="player_div" key={player._id}>
                                             <button className="player_button leaning_right_color">{player.name}</button>
-                                            <i className={"fa fa-times-circle remove remove_player " + this.props.lockStatus} onClick={() => this.setUnavailable(player._id, player.membershipStatus)}> </i>
-                                            <i className={"fa fa-arrow-circle-o-right arrows " + this.props.lockStatus} onClick={() => this.assignTeam(player._id, "N/A")}></i>
+                                            <FontAwesomeIcon icon="times-circle" className={"remove remove_player " + this.props.lockStatus} onClick={() => this.setUnavailable(player._id, player.membershipStatus)} />
+                                            <FontAwesomeIcon icon={faArrowAltCircleRight} className={"arrows " + this.props.lockStatus} size="2x" onClick={() => this.assignTeam(player._id, "N/A")} />
                                         </div>
                                         )
                                         })
@@ -113,10 +115,10 @@ class Drafter extends Component {
                             .map(player => {
                                 return (
                                     <div className="player_div" key={player._id}>
-                                        <i className={"fa fa-arrow-circle-left arrows " + this.props.lockStatus} onClick={() => this.assignTeam(player._id, "Dark")}></i>
+                                        <FontAwesomeIcon icon="arrow-circle-left" className={"arrows " + this.props.lockStatus} size="2x" onClick={() => this.assignTeam(player._id, "Dark")} />
                                         <button className="player_button plain_color">{player.name}</button>
-                                        <i className={"fa fa-times-circle remove remove_player " + this.props.lockStatus} onClick={() => this.setUnavailable(player._id, player.membershipStatus)}> </i>
-                                        <i className={"fa fa-arrow-circle-o-right arrows " + this.props.lockStatus} onClick={() => this.assignTeam(player._id, "White")}></i>
+                                        <FontAwesomeIcon icon="times-circle" className={"remove remove_player " + this.props.lockStatus} onClick={() => this.setUnavailable(player._id, player.membershipStatus)} />
+                                        <FontAwesomeIcon icon={faArrowAltCircleRight} className={"arrows " + this.props.lockStatus} size="2x" onClick={() => this.assignTeam(player._id, "White")} />
                                     </div>
                                     )
                                     })
@@ -155,9 +157,9 @@ class Drafter extends Component {
                                     .map(player => {
                                         return (
                                             <div className="player_div" key={player._id}>
-                                                <i className={"fa fa-arrow-circle-left arrows " + this.props.lockStatus} onClick={() => this.assignTeam(player._id, "N/A")}></i>
+                                                <FontAwesomeIcon icon="arrow-circle-left" className={"arrows " + this.props.lockStatus} size="2x" onClick={() => this.assignTeam(player._id, "N/A")} />
                                                 <button className={"player_button leaning_left_color "}>{player.name}</button>
-                                                <i className={"fa fa-times-circle remove remove_player " + this.props.lockStatus} onClick={() => this.setUnavailable(player._id, player.membershipStatus)}> </i>
+                                                <FontAwesomeIcon icon="times-circle" className={"remove remove_player " + this.props.lockStatus} onClick={() => this.setUnavailable(player._id, player.membershipStatus)} />
                                             </div>
                                             )
                                             })
@@ -179,7 +181,7 @@ class Drafter extends Component {
                                 return (
                                     <div className="player_div" key={player._id}>
                                         <button className="player_button lighter_color">{player.name}</button>
-                                        <i className="fa fa-arrow-circle-o-right pick_arrow arrows" onClick={() => this.setPick(this.props.draftMode, player._id, "add")}></i>
+                                        <FontAwesomeIcon icon={faArrowAltCircleRight} className="pick_arrow arrows" size="2x" onClick={() => this.setPick(this.props.draftMode, player._id, "add")} />
                                     </div>
                                 )
                             } )
@@ -196,7 +198,11 @@ class Drafter extends Component {
                                 return (
                                     <div className="player_div" key={player._id}>
                                         <button className="player_button darker_color">{player.name}</button>
-                                        <i className="fa fa-minus-circle pick_arrow arrows" onClick={() => this.setPick(this.props.draftMode, player._id, "substract")}></i>
+                                        <FontAwesomeIcon icon="minus-circle" className="pick_arrow arrows" size="2x" onClick={() => this.setPick(this.props.draftMode, player._id, "substract")} />
+                                        <div className="sorter"> 
+                                            <FontAwesomeIcon icon="chevron-up" size="lg"/>
+                                            <FontAwesomeIcon icon="chevron-down" size="lg"/>
+                                        </div>
                                     </div>
                                 )
                             } )

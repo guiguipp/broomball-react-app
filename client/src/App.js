@@ -5,11 +5,18 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Draft from "./pages/Draft";
 import Player from "./pages/Player";
+import './App.css';
+
 // Redux 
 import { Provider } from 'react-redux'
 import store from "./js/store"
+// Font-Awesome
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faArrowAltCircleRight } from '@fortawesome/free-regular-svg-icons'
+import { faChevronUp, faChevronDown, faMinusCircle, faTimesCircle, faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons'
 
-import './App.css';
+library.add(/*fab,*/ faChevronUp, faChevronDown, faMinusCircle, faTimesCircle, faArrowAltCircleRight, faArrowCircleLeft)
+
 
 
 const App = () => (

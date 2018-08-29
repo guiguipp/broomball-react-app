@@ -44,7 +44,7 @@ const initialState = {
     lockStatus: "visible",
     showingNonPlayingTenBuckers: "Show",
     showingUnavailableMembers: "Show",
-    draftMode: "Draft",
+    draftMode: "Dark",
     pickButtons: {
         right: "Set Dark Picks",
         left: "Set White Picks"

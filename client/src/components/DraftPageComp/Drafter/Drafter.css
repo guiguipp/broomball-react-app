@@ -17,7 +17,7 @@
 .arrows {
     font-size: 200%;
     position: relative;
-    top: 0.18em;
+    top: 0.2em;
     color: #260e04;
 }
 
@@ -49,4 +49,8 @@
 
 .negative_color {
     margin-left: -15px;
+}
+
+.sorter {
+    display: inline-block;
 }
