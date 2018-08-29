@@ -77,10 +77,10 @@ export default function(state = initialState, action) {
             unavailableMembers: state.showingUnavailableMembers === "Hide" ? action.payload.players.filter(player => player.membershipStatus === "Member" && player.gameInfo.available === false) : initialState.unavailableMembers,
             notPlayingNonMembers: initialState.notPlayingNonMembers,
             playingNonMembers: initialState.playingNonMembers,
-            darkPicked: _.sortBy(action.payload.players.filter(player => player.gameInfo.darkPickNum !== 0),(obj) => obj.gameInfo.darkPickNum),
-            darkUnpicked: action.payload.players.filter(player => player.gameInfo.darkPickNum === 0),
-            whitePicked: _.sortBy(action.payload.players.filter(player => player.gameInfo.whitePickNum !== 0),(obj) => obj.gameInfo.whitePickNum),
-            whiteUnpicked: action.payload.players.filter(player => player.gameInfo.whitePickNum === 0),
+            // darkPicked: _.sortBy(action.payload.players.filter(player => player.gameInfo.darkPickNum !== 0),(obj) => obj.gameInfo.darkPickNum),
+            // darkUnpicked: action.payload.players.filter(player => player.gameInfo.darkPickNum === 0),
+            // whitePicked: _.sortBy(action.payload.players.filter(player => player.gameInfo.whitePickNum !== 0),(obj) => obj.gameInfo.whitePickNum),
+            // whiteUnpicked: action.payload.players.filter(player => player.gameInfo.whitePickNum === 0),
         }
 
         case EDIT_GAME_INFO:

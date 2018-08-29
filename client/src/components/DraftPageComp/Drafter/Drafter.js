@@ -88,10 +88,6 @@ class Drafter extends Component {
         }
     }
 
-    getIndex(player) {
-        console.log(this.props.darkPicked.indexOf(player))
-    }
-
     removePick(player) {
         let indexOfPlayerToRemove = this.props.darkPicked.indexOf(player)
         this.props.darkPicked.splice(indexOfPlayerToRemove,1)
@@ -104,6 +100,29 @@ class Drafter extends Component {
         // we then re-add the newly ranked players, the unranked players + the player initially selected (who isn't among the unranked yet)
         this.props.editGameInfo(this.props.draft._id, {players: [player, ...this.props.darkPicked, ...this.props.darkUnpicked]})
     }
+
+    rankOneUp(player) {
+        let indexOfPlayerToEdit = this.props.darkPicked.indexOf(player)
+        if (indexOfPlayerToEdit > 0) {
+            // we adjust the rank of the player ranked immediately above
+            this.props.darkPicked[indexOfPlayerToEdit - 1].gameInfo.darkPickNum = indexOfPlayerToEdit + 1;
+            // we adjust the rank of the player we rank up
+            player.gameInfo.darkPickNum = indexOfPlayerToEdit
+            this.props.editGameInfo(this.props.draft._id, {players: this.props.darkPicked.concat(this.props.darkUnpicked)})
+        }
+    }
+
+    rankOneDown(player) {
+        let indexOfPlayerToEdit = this.props.darkPicked.indexOf(player)
+        if (indexOfPlayerToEdit < this.props.darkPicked.length - 1) {
+            // we adjust the rank of the player ranked immediately above
+            this.props.darkPicked[indexOfPlayerToEdit + 1].gameInfo.darkPickNum = indexOfPlayerToEdit + 1;
+            // we adjust the rank of the player we rank up
+            player.gameInfo.darkPickNum = indexOfPlayerToEdit + 2
+            this.props.editGameInfo(this.props.draft._id, {players: this.props.darkPicked.concat(this.props.darkUnpicked)})
+        }
+    }
+
     render() {
         return (
             <div>
@@ -214,10 +233,10 @@ class Drafter extends Component {
                                     
                                     <div className="player_picking_div" key={player._id}>
                                         <button className="player_button darker_color">{player.name}</button>
-                                        <FontAwesomeIcon icon="minus-circle" className="remove remove_pick" size="lg" onClick={/*() => this.setPick(this.props.draftMode, player._id, "substract")*/ /*() => this.getIndex(player)}*/ () => this.removePick(player)} />
+                                        <FontAwesomeIcon icon="minus-circle" className="remove remove_pick" size="lg" onClick={() => this.removePick(player)} />
                                         <div className="sorter"> 
-                                            <FontAwesomeIcon icon="chevron-up" size="2x" className="up_arrow"/>
-                                            <FontAwesomeIcon icon="chevron-down" size="2x" className="down_arrow"/>
+                                            <FontAwesomeIcon icon="chevron-up" size="2x" className="up_arrow" onClick={() => this.rankOneUp(player)}/>
+                                            <FontAwesomeIcon icon="chevron-down" size="2x" className="down_arrow" onClick={() => this.rankOneDown(player)}/>
                                         </div>
                                     </div>
                                 )
