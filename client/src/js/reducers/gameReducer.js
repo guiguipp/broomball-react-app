@@ -4,6 +4,7 @@ import {
     DELETE_GAME, 
     GET_GAME, 
     EDIT_GAME_INFO, 
+    RESET,
     SHOW_UNAVAILABLE_MEMBERS, 
     HIDE_UNAVAILABLE_MEMBERS, 
     MAKE_MEMBER_UNAVAILABLE,
@@ -43,8 +44,8 @@ const initialState = {
     notPlayingNonMembers: [],
     playingNonMembers: [],
     lockStatus: "visible",
-    showingNonPlayingTenBuckers: "Show",
-    showingUnavailableMembers: "Show",
+    showingNonPlayingTenBuckers: "Show",    // which means this section is hidden
+    showingUnavailableMembers: "Show",      // which means this section is hidden
     draftMode: "Dark",
     pickButtons: {
         right: "Set Dark Picks",
@@ -87,6 +88,19 @@ export default function(state = initialState, action) {
         return {
             ...state,
             draft: action.payload,
+            notPlayingNonMembers: initialState.notPlayingNonMembers,
+            playingNonMembers: initialState.playingNonMembers,
+            showingNonPlayingTenBuckers: "Show",
+            showingUnavailableMembers: "Show",
+        }
+        
+        case RESET:
+        return {
+            ...state,
+            draft: action.payload,
+            unavailableMembers: initialState.unavailableMembers,
+            notPlayingNonMembers: initialState.notPlayingNonMembers,
+            playingNonMembers: initialState.playingNonMembers,
         }
 
         case MAKE_MEMBER_UNAVAILABLE:

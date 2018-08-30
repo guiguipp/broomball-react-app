@@ -14,6 +14,7 @@ import {
     ADD_NON_MEMBER, 
     LOCK_GAME_INFO, 
     UNLOCK_GAME_INFO,
+    RESET,
     TRIGGER_PICK_MODE,
     TRIGGER_DRAFT_MODE,
     SET_PICK_DARK,
@@ -320,3 +321,19 @@ export const setPicks = (game, data) => dispatch => {
         
     
 } 
+
+export const reset = (game, data) => dispatch => {
+    API.editGame(game, data)
+    .then(res => {
+        if(res.status !== 200) {
+            throw new Error(res.statusText)
+        }
+        else {
+            console.log("res.data in the reset gameAction.js function: ", res.data)
+            dispatch({
+                type: RESET,
+                payload: res.data
+            })
+            }
+    })
+}
