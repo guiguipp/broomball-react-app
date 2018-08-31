@@ -28,7 +28,7 @@ render() {
                 <div className="col"><GameList/></div>
             </div>
             <div className="row">
-                <button className="btn contrast_color change_list_display" onClick={() => this.toggleGamesFunc(this.props.showing)}> {this.props.buttonMsg} </button>
+                <button className="btn contrast_color change_list_display" onClick={() => this.toggleGamesFunc(this.props.showing)}> {this.props.buttonMsg} Games</button>
             </div>
         </div>
         <div className={"main_main " + this.props.visibility.top}>

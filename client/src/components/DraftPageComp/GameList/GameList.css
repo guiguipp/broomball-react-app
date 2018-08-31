@@ -20,3 +20,16 @@
     overflow: scroll;
     max-height: 200px;
 }
+.no_game {
+    border-style: solid;
+    padding: 4% 2% 2% 2%;
+    text-align: center;
+    border-width: 1px;
+    border-color: #ffbe75;
+    opacity: 0.7;
+    color: #ffbe75;
+    font-family: boogaloo;
+    font-size: 150%;
+    margin: 0px 10% 0% 10%;
+    padding: 3% 2% 3% 2%;
+}

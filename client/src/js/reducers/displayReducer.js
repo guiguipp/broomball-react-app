@@ -5,8 +5,8 @@ const initialState = {
     showing: "future",
     upcoming_visibility: "visible",
     past_visibility: "hidden",
-    dateHeader: "Upcoming Games",
-    buttonMsg: "Past Games",
+    dateHeader: "Upcoming",
+    buttonMsg: "Past",
     today: moment().format("YYYY-MM-DD")    
     }
 
@@ -17,8 +17,8 @@ export default function(state = initialState, action) {
             ...state,
             upcoming_visibility: "visible",
             past_visibility: "hidden",
-            dateHeader: "Upcoming Games",
-            buttonMsg: "Past Games",
+            dateHeader: "Upcoming",
+            buttonMsg: "Past",
             showing: "future",
         }
         
@@ -27,8 +27,8 @@ export default function(state = initialState, action) {
             ...state,
             upcoming_visibility: "hidden",
             past_visibility: "visible",
-            dateHeader: "Past Games",
-            buttonMsg: "Upcoming Games",
+            dateHeader: "Past",
+            buttonMsg: "Upcoming",
             showing: "past"
         }
         

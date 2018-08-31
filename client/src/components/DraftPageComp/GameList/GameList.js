@@ -24,9 +24,37 @@ class GameList extends Component {
     render() {
         return (
             <div className="show_games">
-            <h2 className="h2_main">{this.props.dateHeader}</h2>
+            <h2 className="h2_main">{this.props.dateHeader} Games</h2>
                 <div className="list-management">
-                    {this.props.games.length < 1 ? (
+                    {/* showing the upcoming games when mode has been  */}
+                    {this.props.dateHeader === "Upcoming" ? (
+                        // need case for when there is no game scheduled
+                        this.props.upcomingGames.length > 0 ?
+                        this.props.upcomingGames
+                            .map(game =>
+                                <div key={game._id}>
+                                    <button className="btn game_button default_color " onClick={() =>this.getGameInfo(game._id)}> {game._id} </button> 
+                                    <FontAwesomeIcon icon="times-circle" className={"remove remove_game"} onClick={() => this.deleteGameFunc(game._id)} />
+                                </div>
+                                )
+                            :
+                            <p className="no_game">There is currently no game to display for the selected time span.<br />
+                            Create a game to start drafting teams!</p>
+                    ) : 
+                    (
+                        this.props.pastGames.length > 0 ?
+                        this.props.pastGames
+                            .map(game => 
+                                <div key={game._id}>
+                                    <button className="btn game_button default_color" onClick={() =>this.getGameInfo(game._id)}> {game._id} </button> 
+                                </div>
+                                )
+                            :
+                            <p className="no_game">There is currently no game to display for the selected time span.<br />
+                            Create a game to start drafting teams!</p>
+
+                    )}
+                    {/* {this.props.games.length < 1 ? (
                         <p className="no_game_message">There is currently no game to display. You might need to refresh your browser or check your connection to see games</p>) : (
                     this.props.games
                         .filter(game => {    
@@ -35,10 +63,9 @@ class GameList extends Component {
                         .map(game => 
                             <div key={game._id} className={this.props.past_visibility}>
                                 <button className="btn game_button default_color" onClick={() =>this.getGameInfo(game._id)}> {game._id} </button> 
-                                {/* <FontAwesomeIcon icon="times-circle" className={"remove remove_game " + this.props.lockStatus} onClick={() => this.deleteGameFunc(game._id)} /> */}
                             </div>)
                         )}
-                    {this.props.games
+                        {this.props.games
                         .filter(game => {    
                             return this.props.today <= game._id                
                             })
@@ -48,7 +75,7 @@ class GameList extends Component {
                                     <FontAwesomeIcon icon="times-circle" className={game.lock_status === true ? "hidden remove remove_game" : "visible remove remove_game"} onClick={() => this.deleteGameFunc(game._id)} />
                                 </div>
                             ) 
-                        }
+                        } */}
 
                     </div>
                 </div>
@@ -70,8 +97,8 @@ const mapStateToProps = state => ({
     upcoming_visibility: state.display.upcoming_visibility,
     past_visibility: state.display.past_visibility,
     lockStatus: state.games.lockStatus,
-    // lockThatGame: state.d
-    // lockThatGame: state.games.draft.lock_status === true ? "hidden" : "visible"
+    upcomingGames: state.games.upcomingGames,
+    pastGames: state.games.pastGames
 })
 
 // export default GameList;

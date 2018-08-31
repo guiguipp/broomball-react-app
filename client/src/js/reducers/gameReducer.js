@@ -21,9 +21,12 @@ import {
 } from '../actions/types';
 
 import _ from "underscore"
+const moment = require("moment");
 
 const initialState = {
     games: [],
+    upcomingGames: [],
+    pastGames: [],
     newGame: {},
     deletedGame: {},
     gameInfo: {
@@ -63,14 +66,32 @@ export default function(state = initialState, action) {
         case FETCH_GAMES:
         return {
             ...state,
-            games: action.payload
+            games: action.payload,
+            upcomingGames: action.payload.filter(game => game._id >= moment().format("YYYY-MM-DD")),
+            pastGames: action.payload.filter(game => game._id < moment().format("YYYY-MM-DD")),
         }
         
+        case DELETE_GAME:
+        return {
+            ...state,
+            deletedGame: action.payload,
+            visibility: initialState.visibility,
+            games: state.games.filter(game => game._id !== action.payload._id),
+            upcomingGames: state.games.filter(game => game._id !== action.payload._id),
+            pastGames: state.games.filter(game => game._id !== action.payload._id),
+            lockStatus: "hidden",
+            draftMode: initialState.draftMode,
+            pickButtons: initialState.pickButtons,
+            }
+
+
         case NEW_GAME:
         return {
             ...state,
             newGame: action.payload,
-            games: _.sortBy([...state.games, action.payload], "game_date")
+            games: _.sortBy([...state.games, action.payload], "game_date"),
+            upcomingGames: action.payload._id >= moment().format("YYYY-MM-DD") ? [...state.upcomingGames, action.payload] : state.upcomingGames,
+            pastGames: action.payload._id < moment().format("YYYY-MM-DD") ? [...state.upcomingGames, action.payload] : state.pastGames 
         }
 
         case GET_GAME:
@@ -131,17 +152,6 @@ export default function(state = initialState, action) {
             unavailableMembers: state.showingUnavailableMembers === "Hide" ? (state.draft.players.filter(player => player.gameInfo.available === false && player.membershipStatus === "Member" && player._id !== action.payload.player)) : initialState.unavailableMembers,
             draft: action.payload.game,
         }
-
-        case DELETE_GAME:
-        return {
-            ...state,
-            deletedGame: action.payload,
-            visibility: initialState.visibility,
-            games: state.games.filter(game => game._id !== action.payload._id),
-            lockStatus: "hidden",
-            draftMode: initialState.draftMode,
-            pickButtons: initialState.pickButtons,
-            }
 
         case SHOW_UNAVAILABLE_MEMBERS:
         return {
