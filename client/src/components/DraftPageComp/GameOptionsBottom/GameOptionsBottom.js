@@ -284,6 +284,55 @@ class GameOptionsBottom extends Component {
                 this.props.editGameInfo(game, {players: allPlayers})
             }
         }
+    
+    // function to create an "alternate" type draft 
+    // Aka: captain #1 drafts first pick, then captain #2 drafts, etc. until everyone is drafted
+    alternateDraft = (game) => {
+        let darkPicks = {team: "Dark", picks: _.sortBy(this.props.players.filter(player => player.gameInfo.available === true && player.darkPickNum !== 0),(obj) => obj.gameInfo.darkPickNum)};
+        let whitePicks = {team: "White", picks: _.sortBy(this.props.players.filter(player => player.gameInfo.available === true && player.whitePickNum !== 0),(obj) => obj.gameInfo.whitePickNum)};
+        let rankedPlayers = []; 
+        
+        let num;
+        let num1 = darkPicks.picks.length;
+        let num2 = whitePicks.picks.length;
+        if (num1 > num2) {
+            num = num2
+            }
+        else {
+            num = num1
+            }
+        // there are 2 turns to complete a round
+        let turns = 2;
+        let modulo = num % turns;
+        let completeRounds = (num - modulo)/turns
+        if (this.props.lockStatus === "hidden") {
+            console.log("Error message: game is locked")
+            }
+        else {
+            if (modulo === 0) {
+                // if the num of players allows for complete rounds of serpentine draft
+                for (let i = 1; i <= completeRounds; i++) {
+                    this.testPick(darkPicks, rankedPlayers);
+                    this.testPick(whitePicks, rankedPlayers);
+                    }
+                }
+            else {
+                // if not, we have to run as many complete rounds as possible
+                for (let i = 1; i <= completeRounds; i++) {
+                    this.testPick(darkPicks, rankedPlayers);
+                    this.testPick(whitePicks, rankedPlayers);
+                    }
+                // and complete the rosters with one more pick
+                this.testPick(darkPicks, rankedPlayers);
+                }
+            this.filterTeams(rankedPlayers, "pick")
+            // we re-add the unavailable players, otherwise they cannot be reset later on
+            let unavailablePlayers = this.props.players.filter(player => player.gameInfo.available !== true)
+                        
+            let allPlayers = rankedPlayers.concat(unavailablePlayers)
+            this.props.editGameInfo(game, {players: allPlayers})
+            }
+        }
 
     render() {
         return (
@@ -312,7 +361,7 @@ class GameOptionsBottom extends Component {
                                 <button className="btn darker_color" onClick={()=> this.autodraft(this.props.gameDate)} >Autodraft</button> 
                             </div>
                             <div className="col text-center">
-                                <button className="btn btn-info navbar-btn dark_grey js_draft menu_options" id="alternate_draft">Alternate Draft</button> 
+                                <button className="btn darker_color" onClick={()=> this.alternateDraft(this.props.gameDate)}>Alternate Draft</button> 
                             </div>
                             <div className="col text-center">
                                 <button className="btn darker_color" onClick={() => this.serpentineDraft(this.props.gameDate)}>Serpentine Draft</button> 

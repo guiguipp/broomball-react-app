@@ -328,14 +328,14 @@ export const setPick = (team, game, data) => dispatch => {
     } 
 
 export const reset = (game, data) => dispatch => {
-    console.log('Data received in reset gameActions.js: ', data)
+    // console.log('Data received in reset gameActions.js: ', data)
     API.editGame(game, data)
     .then(res => {
         if(res.status !== 200) {
             throw new Error(res.statusText)
         }
         else {
-            console.log("res.data in the reset gameAction.js function: ", res.data)
+            // console.log("res.data in the reset gameAction.js function: ", res.data)
             dispatch({
                 type: RESET,
                 payload: res.data
