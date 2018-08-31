@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Draft from "./pages/Draft";
 import Player from "./pages/Player";
+import Stats from "./pages/Stats";
 import './App.css';
 
 // Redux 
@@ -26,6 +27,7 @@ const App = () => (
         <Route exact path="/" component={Home} />
         <Route path="/Draft" component={Draft} />
         <Route path="/Player" component={Player} />
+        <Route path="/Stats" component={Stats} />
       </div>
     </Router>
   </Provider>
