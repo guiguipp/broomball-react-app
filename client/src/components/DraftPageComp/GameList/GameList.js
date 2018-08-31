@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { fetchGames } from '../../../js/actions/gameActions'
 import { getGame } from '../../../js/actions/gameActions'
 import { deleteGame } from '../../../js/actions/gameActions'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import "./GameList.css";
 
 class GameList extends Component {
@@ -27,15 +27,15 @@ class GameList extends Component {
             <h2 className="h2_main">{this.props.dateHeader}</h2>
                 <div className="list-management">
                     {this.props.games.length < 1 ? (
-                        <p className="no_game_message">There is currently no game to display. Schedule a game to start a draft!</p>) : (
+                        <p className="no_game_message">There is currently no game to display. You might need to refresh your browser or check your connection to see games</p>) : (
                     this.props.games
                         .filter(game => {    
                             return this.props.today >= game._id
                             })
                         .map(game => 
                             <div key={game._id} className={this.props.past_visibility}>
-                                <button className="btn game_button default_color" id={game._id}> {game._id} </button> 
-                                <i className="fa fa-times-circle remove remove_game" id={game._id} onClick={() => this.deleteGameFunc(game._id)}> </i>
+                                <button className="btn game_button default_color" onClick={() =>this.getGameInfo(game._id)}> {game._id} </button> 
+                                {/* <FontAwesomeIcon icon="times-circle" className={"remove remove_game " + this.props.lockStatus} onClick={() => this.deleteGameFunc(game._id)} /> */}
                             </div>)
                         )}
                     {this.props.games
@@ -44,8 +44,8 @@ class GameList extends Component {
                             })
                         .map(game =>
                                 <div key={game._id} className={this.props.upcoming_visibility}>
-                                    <button className="btn game_button default_color " id={game._id} onClick={() =>this.getGameInfo(game._id)}> {game._id} </button> 
-                                    <i className="fa fa-times-circle remove remove_game" id={game._id} onClick={() => this.deleteGameFunc(game._id)}> </i>
+                                    <button className="btn game_button default_color " onClick={() =>this.getGameInfo(game._id)}> {game._id} </button> 
+                                    <FontAwesomeIcon icon="times-circle" className={game.lock_status === true ? "hidden remove remove_game" : "visible remove remove_game"} onClick={() => this.deleteGameFunc(game._id)} />
                                 </div>
                             ) 
                         }
@@ -68,7 +68,10 @@ const mapStateToProps = state => ({
     today: state.display.today,
     buttonMsg: state.display.buttonMsg,
     upcoming_visibility: state.display.upcoming_visibility,
-    past_visibility: state.display.past_visibility
+    past_visibility: state.display.past_visibility,
+    lockStatus: state.games.lockStatus,
+    // lockThatGame: state.d
+    // lockThatGame: state.games.draft.lock_status === true ? "hidden" : "visible"
 })
 
 // export default GameList;

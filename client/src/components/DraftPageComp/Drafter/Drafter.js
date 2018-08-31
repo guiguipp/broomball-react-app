@@ -7,13 +7,11 @@ import { setMemberUnavailable } from '../../../js/actions/gameActions'
 import { setTenBuckerUnavailable } from '../../../js/actions/gameActions'
 import { setAvailable } from '../../../js/actions/gameActions'
 import { setPick } from '../../../js/actions/gameActions'
-// import { setPicks } from '../../../js/actions/gameActions'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowAltCircleRight } from '@fortawesome/free-regular-svg-icons'
 import "./Drafter.css";
 
-// import _ from "underscore"
 
 class Drafter extends Component {
     
@@ -89,6 +87,7 @@ class Drafter extends Component {
             return
         }
     }
+
     removePick(team, player) {
         let gameId = this.props.draft._id
         // we remove the player from the array of ranked players
@@ -120,7 +119,6 @@ class Drafter extends Component {
             return
         }
     }
-
 
     rankOneUp(player) {
         let gameId = this.props.draft._id

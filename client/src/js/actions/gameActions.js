@@ -18,7 +18,7 @@ import {
     TRIGGER_PICK_MODE,
     TRIGGER_DRAFT_MODE,
     SET_PICK
-    // SET_PICKS_DARK
+    
 } from './types';
 
 import API from "../../utils/API"
@@ -52,8 +52,6 @@ export const deleteGame = (id) => dispatch => {
             })
         }
     })
-    // once the game is deleted, we also delete the associated Roster
-    // API.deleteRoster(id)
 }
 
 export const addGame = (date, players, player, members) => dispatch => {
@@ -257,8 +255,7 @@ export const triggerPickMode = (team) => dispatch => {
                         {
                         left: "Exit",
                         right: "Set White Picks"
-                        },
-                        // set: "player.gameInfo.darkPickNum"
+                        }
                     }
                 })
                 break;

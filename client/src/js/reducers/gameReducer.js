@@ -198,6 +198,7 @@ export default function(state = initialState, action) {
             draftMode: action.payload.team,
             pickButtons: action.payload.buttons,
             visibility: {top: "hidden", main: "visible", bottom: "visible"},
+            // as opposed to the "SET_PICK" case, the filtering needs to happen in the reducer, as it is based from data already stored in the state (not coming from API)
             picked: action.payload.team === "Dark" ? _.sortBy(state.draft.players.filter(player => player.gameInfo.available === true && player.gameInfo.darkPickNum !== 0),(obj) => obj.gameInfo.darkPickNum) : _.sortBy(state.draft.players.filter(player => player.gameInfo.available === true && player.gameInfo.whitePickNum !== 0),(obj) => obj.gameInfo.whitePickNum),
             unpicked: action.payload.team === "Dark" ? _.sortBy(state.draft.players.filter(player => player.gameInfo.available === true && player.gameInfo.darkPickNum === 0), "name") : _.sortBy(state.draft.players.filter(player => player.gameInfo.available === true && player.gameInfo.whitePickNum === 0), "name"), 
         }
@@ -216,20 +217,8 @@ export default function(state = initialState, action) {
             draft: action.payload.game,
             picked: action.payload.picked,
             unpicked: action.payload.unpicked
-            /*
-            picked: action.payload.team === "Dark" ? _.sortBy(action.payload.game.players.filter(player => player.gameInfo.darkPickNum !== 0), (obj) => obj.gameInfo.darkPickNum) : _.sortBy(action.payload.game.players.filter(player => player.gameInfo.whitePickNum !== 0), (obj) => obj.gameInfo.whitePickNum),
-            unpicked: action.payload.team === "Dark" ? action.payload.game.players.filter(player => player.gameInfo.darkPickNum === 0 && player.gameInfo.available === true) : action.payload.game.players.filter(player => player.gameInfo.whitePickNum === 0 && player.gameInfo.available === true)
-            */
-            // darkUnpicked: action.payload.players.filter(player => player.gameInfo.darkPickNum === 0),
+            
         }
-        /*
-        case SET_PICKS_DARK:
-        return {
-            ...state,
-            // draft: {...state.draft, players: _.sortBy(action.payload.players, (obj) => obj.gameInfo.darkPickNum)},
-            darkPicked: action.payload.players.filter(player => player.gameInfo.darkPickNum !== 0),
-            darkUnpicked: action.payload.players.filter(player => player.gameInfo.darkPickNum === 0),
-        }*/
 
         default: 
         return state;
