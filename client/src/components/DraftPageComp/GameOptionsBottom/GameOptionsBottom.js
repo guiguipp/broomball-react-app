@@ -161,12 +161,11 @@ class GameOptionsBottom extends Component {
         }
     
     toggleMode(currentMode, team){
-        if (currentMode === "Draft") {
-            this.props.triggerPickMode(team)
-        }
-
-        else {
+        if (currentMode === team) {
             this.props.triggerDraftMode()
+        }
+        else {
+            this.props.triggerPickMode(team)
         }
     }
 
@@ -176,7 +175,7 @@ class GameOptionsBottom extends Component {
                 <div className={"container " + this.props.visibility}>
                         <div className="row">
                             <div className="col text-center">
-                                <button className="btn lighter_color" onClick={() => this.toggleMode(this.props.draftMode, "Dark")}>{this.props.pickButtons.right}</button> 
+                                <button className="btn lighter_color" onClick={() => this.toggleMode(this.props.draftMode, "Dark")}>{this.props.pickButtons.left}</button> 
                             </div>
                             <div className="col text-center">
                                 
@@ -188,7 +187,7 @@ class GameOptionsBottom extends Component {
                                 
                             </div>
                             <div className="col text-center">
-                                <button className="btn btn-info navbar-btn regular_grey computer_draft menu_options" id="picks_white">Set White Picks</button> 
+                                <button className="btn lighter_color" onClick={() => this.toggleMode(this.props.draftMode, "White")}>{this.props.pickButtons.right}</button> 
                             </div>
                         </div>
                         <br />

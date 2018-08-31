@@ -17,8 +17,8 @@ import {
     RESET,
     TRIGGER_PICK_MODE,
     TRIGGER_DRAFT_MODE,
-    SET_PICK_DARK,
-    SET_PICKS_DARK
+    SET_PICK
+    // SET_PICKS_DARK
 } from './types';
 
 import API from "../../utils/API"
@@ -245,27 +245,36 @@ export const unlockGameInfo = (game) => dispatch => {
 }
 
 export const triggerPickMode = (team) => dispatch => {
+    console.log("team in triggerPickMode from gameActions.js: ", team)
     switch (team) {
         case "Dark":
         dispatch({
                 type: TRIGGER_PICK_MODE,
                 payload: 
-                    { 
+                    {
+                        team: team,
+                        buttons: 
+                        {
+                        left: "Exit",
+                        right: "Set White Picks"
+                        },
+                        // set: "player.gameInfo.darkPickNum"
+                    }
+                })
+                break;
+
+        case "White":
+        dispatch({
+                type: TRIGGER_PICK_MODE,
+                payload: 
+                    {
                         team: team,
                         buttons: 
                         {
                         right: "Exit",
-                        left: "Set White Picks"
-                        }
-                    }
-                })
-                break;
-        case "White":
-        dispatch({
-                type: TRIGGER_PICK_MODE,
-                payload: {
-                    right: "Set Dark Picks",
-                    left: "Exit"
+                        left: "Set Dark Picks"
+                        },
+                        // set: "player.gameInfo.whitePickNum"
                     }
                 })
                 break;
@@ -281,46 +290,49 @@ export const triggerDraftMode = () => dispatch => {
 }
 
 export const setPick = (team, game, data) => dispatch => {
+    console.log("team received: ", team)
+    console.log("game received: ", game)
+    console.log("data received: ", data)
     API.editGame(game, data)
     .then(res => {
         if(res.status !== 200) {
             throw new Error(res.statusText)
         }
         else {
-            console.log("res.data in the setPick function: ", res.data)
+            console.log("res.data.players: ", res.data.players)
+            let available = res.data.players.filter(player => player.gameInfo.available === true)
             switch (team) {
                 case "Dark":
                 dispatch({
-                    type: SET_PICK_DARK,
-                    payload: res.data
-                    })
+                    type: SET_PICK,
+                    payload: 
+                    {
+                        game: res.data,
+                        picked: _.sortBy(available.filter(player => player.gameInfo.darkPickNum !== 0),(obj) => obj.gameInfo.darkPickNum),
+                        unpicked: _.sortBy(available.filter(player => player.gameInfo.darkPickNum === 0),"name")
+                    }
+                })
                 break;
 
-                default: 
+                case "White":
+                console.log("Case White in gameActions.js: ")
+                dispatch({
+                    type: SET_PICK,
+                    payload: 
+                    {
+                        game: res.data,
+                        picked: _.sortBy(available.filter(player => player.gameInfo.whitePickNum !== 0),(obj) => obj.gameInfo.whitePickNum),
+                        unpicked: _.sortBy(available.filter(player => player.gameInfo.whitePickNum === 0),"name")
+                    }
+                })
+                break;
+
+                default:
                 return;
                 }
             }
-        
-    })
-} 
-
-export const setPicks = (game, data) => dispatch => {
-    API.editGame(game, data)
-    .then(res => {
-        if(res.status !== 200) {
-            throw new Error(res.statusText)
-        }
-        else {
-            // console.log("res.data in the setPicks function: ", res.data)
-                dispatch({
-                    type: SET_PICKS_DARK,
-                    payload: res.data
-                    })
-                }
-            })
-        
-    
-} 
+        })
+    } 
 
 export const reset = (game, data) => dispatch => {
     API.editGame(game, data)

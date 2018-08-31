@@ -17,8 +17,7 @@ import {
     UNLOCK_GAME_INFO,
     TRIGGER_PICK_MODE,
     TRIGGER_DRAFT_MODE,
-    SET_PICK_DARK,
-    SET_PICKS_DARK
+    SET_PICK
 } from '../actions/types';
 
 import _ from "underscore"
@@ -46,11 +45,13 @@ const initialState = {
     lockStatus: "visible",
     showingNonPlayingTenBuckers: "Show",    // which means this section is hidden
     showingUnavailableMembers: "Show",      // which means this section is hidden
-    draftMode: "Dark",
+    draftMode: "Draft",
     pickButtons: {
-        right: "Set Dark Picks",
-        left: "Set White Picks"
-    }
+        left: "Set Dark Picks",
+        right: "Set White Picks"
+    },
+    picked: [],
+    unpicked: [],
 }
 
 export default function(state = initialState, action) {
@@ -194,6 +195,9 @@ export default function(state = initialState, action) {
             ...state,
             draftMode: action.payload.team,
             pickButtons: action.payload.buttons,
+            picked: action.payload.team === "Dark" ? _.sortBy(state.draft.players.filter(player => player.gameInfo.available === true && player.gameInfo.darkPickNum !== 0),(obj) => obj.gameInfo.darkPickNum) : _.sortBy(state.draft.players.filter(player => player.gameInfo.available === true && player.gameInfo.whitePickNum !== 0),(obj) => obj.gameInfo.whitePickNum),
+            unpicked: action.payload.team === "Dark" ? _.sortBy(state.draft.players.filter(player => player.gameInfo.available === true && player.gameInfo.darkPickNum === 0), "name") : _.sortBy(state.draft.players.filter(player => player.gameInfo.available === true && player.gameInfo.whitePickNum === 0), "name"),
+            
         }
 
         case TRIGGER_DRAFT_MODE:
@@ -203,11 +207,16 @@ export default function(state = initialState, action) {
             pickButtons: initialState.pickButtons
         }
 
-        case SET_PICK_DARK:
+        case SET_PICK:
         return {
             ...state,
-            // draft: {...state.draft, players: _.sortBy(action.payload.players, (obj) => obj.gameInfo.darkPickNum)},
-            draft: action.payload
+            draft: action.payload.game,
+            picked: action.payload.picked,
+            unpicked: action.payload.unpicked
+            /*
+            picked: action.payload.team === "Dark" ? _.sortBy(action.payload.game.players.filter(player => player.gameInfo.darkPickNum !== 0), (obj) => obj.gameInfo.darkPickNum) : _.sortBy(action.payload.game.players.filter(player => player.gameInfo.whitePickNum !== 0), (obj) => obj.gameInfo.whitePickNum),
+            unpicked: action.payload.team === "Dark" ? action.payload.game.players.filter(player => player.gameInfo.darkPickNum === 0 && player.gameInfo.available === true) : action.payload.game.players.filter(player => player.gameInfo.whitePickNum === 0 && player.gameInfo.available === true)
+            */
             // darkUnpicked: action.payload.players.filter(player => player.gameInfo.darkPickNum === 0),
         }
         /*
