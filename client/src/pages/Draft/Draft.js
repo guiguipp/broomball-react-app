@@ -2,10 +2,7 @@ import React, { Component } from "react";
 // Redux
 import { connect } from 'react-redux';
 import { toggleGames } from "../../js/actions/displayActions"
-/*
-import { showFuture } from '../../js/actions/displayActions'
-import { showPast } from '../../js/actions/displayActions'
-*/
+
 import Logo from "../../components/images/logo.jpg";
 import GameList from "../../components/DraftPageComp/GameList";
 import Calendar from "../../components/DraftPageComp/Calendar";
@@ -34,13 +31,13 @@ render() {
                 <button className="btn contrast_color change_list_display" onClick={() => this.toggleGamesFunc(this.props.showing)}> {this.props.buttonMsg} </button>
             </div>
         </div>
-        <div className={"main_main " + this.props.visibility}>
+        <div className={"main_main " + this.props.visibility.top}>
             <GameOptionsTop />
         </div>
-        <div className={"main_main " + this.props.visibility}>
+        <div className={"main_main " + this.props.visibility.main}>
             <Drafter />
         </div>
-        <div className={"main_main " + this.props.visibility}>
+        <div className={"main_main " + this.props.visibility.bottom}>
             <GameOptionsBottom />
         </div>
     </div>

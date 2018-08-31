@@ -131,8 +131,6 @@ class Drafter extends Component {
                 case "Dark": 
                 // we adjust the rank of the player ranked immediately above
                 this.props.picked[indexOfPlayerToEdit - 1].gameInfo.darkPickNum = indexOfPlayerToEdit + 1;
-                console.log("Player downgraded: ", this.props.picked[indexOfPlayerToEdit - 1])
-                console.log("Player upgraded: ", this.props.picked[indexOfPlayerToEdit - 1])
                 // we adjust the rank of the player we rank up
                 player.gameInfo.darkPickNum = indexOfPlayerToEdit
                 this.props.setPick("Dark", gameId, {players: this.props.picked.concat(this.props.unpicked, unavailable)})
@@ -165,9 +163,7 @@ class Drafter extends Component {
                 break;
 
                 case "White":
-                // we adjust the rank of the player ranked immediately above
                 this.props.picked[indexOfPlayerToEdit + 1].gameInfo.whitePickNum = indexOfPlayerToEdit + 1;
-                // we adjust the rank of the player we rank up
                 player.gameInfo.whitePickNum = indexOfPlayerToEdit + 2
                 this.props.setPick("White", gameId, {players: this.props.picked.concat(this.props.unpicked, unavailable)})
                 break;
@@ -264,8 +260,6 @@ class Drafter extends Component {
                 (<div className="row"> 
                     <div className="col col_no_bootstrap">
                         <h1 className="h1_main">Set {this.props.draftMode} Picks</h1>
-                        {/* Setting the Dark Picks case */}
-                        
                         {/* Mapping the unranked Players */}
                         {this.props.unpicked ? (this.props.unpicked
                             .map(player => {
@@ -281,13 +275,10 @@ class Drafter extends Component {
                         </div>
                         <div className="col col_no_bootstrap">
                             <h1 className="h1_main">Ranks</h1>
-                            
+                            {/* mapping the ranked available players */}
                             {this.props.picked ? (this.props.picked
-                                // mapping the ranked available players
-                                // .filter(player => player.gameInfo.available === true && eval(this.props.set) !== 0)
                                 .map(player => {
-                                    return (
-                                        
+                                    return (    
                                         <div className="player_picking_div" key={player._id}>
                                             <button className="player_button darker_color">{player.name}</button>
                                             <FontAwesomeIcon icon="minus-circle" className="remove remove_pick" size="lg" onClick={() => this.removePick(this.props.draftMode, player)} />
@@ -325,9 +316,6 @@ const mapStateToProps = state => ({
     draftMode: state.games.draftMode,
     picked: state.games.picked,
     unpicked: state.games.unpicked,
-    
-    // darkPicked: state.games.draft.players ? _.sortBy(state.games.draft.players.filter(player => player.gameInfo.available === true && player.gameInfo.darkPickNum !== 0),(obj) => obj.gameInfo.darkPickNum) : [],
-    // darkUnpicked: state.games.draft.players ? _.sortBy(state.games.draft.players.filter(player => player.gameInfo.available === true && player.gameInfo.darkPickNum === 0), "name") : [],
 })
 
 export default connect(mapStateToProps, { editGameInfo, addNonMember, setMemberUnavailable, setTenBuckerUnavailable, setAvailable, setPick }) (Drafter)

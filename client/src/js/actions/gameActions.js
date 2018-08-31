@@ -290,16 +290,13 @@ export const triggerDraftMode = () => dispatch => {
 }
 
 export const setPick = (team, game, data) => dispatch => {
-    console.log("team received: ", team)
-    console.log("game received: ", game)
-    console.log("data received: ", data)
     API.editGame(game, data)
     .then(res => {
         if(res.status !== 200) {
             throw new Error(res.statusText)
         }
         else {
-            console.log("res.data.players: ", res.data.players)
+            // console.log("res.data.players: ", res.data.players)
             let available = res.data.players.filter(player => player.gameInfo.available === true)
             switch (team) {
                 case "Dark":
@@ -315,7 +312,6 @@ export const setPick = (team, game, data) => dispatch => {
                 break;
 
                 case "White":
-                console.log("Case White in gameActions.js: ")
                 dispatch({
                     type: SET_PICK,
                     payload: 

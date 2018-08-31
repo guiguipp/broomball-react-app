@@ -35,7 +35,11 @@ const initialState = {
         available: true,
         team: "N/A"
     },
-    visibility: "hidden",
+    visibility: {
+        top: "hidden",
+        main: "hidden",
+        bottom: "hidden"
+    },
     gameDate: "",
     draft: {},
     unavailableMembers: [],
@@ -72,17 +76,13 @@ export default function(state = initialState, action) {
         case GET_GAME:
         return {
             ...state,
-            visibility: "visible",
+            visibility: {top: "visible", main: "visible", bottom: "visible"},
             gameDate: action.payload._id,
             draft: action.payload,
             lockStatus: action.payload.lock_status === true ? "hidden" : "visible",
             unavailableMembers: state.showingUnavailableMembers === "Hide" ? action.payload.players.filter(player => player.membershipStatus === "Member" && player.gameInfo.available === false) : initialState.unavailableMembers,
             notPlayingNonMembers: initialState.notPlayingNonMembers,
             playingNonMembers: initialState.playingNonMembers,
-            // darkPicked: _.sortBy(action.payload.players.filter(player => player.gameInfo.darkPickNum !== 0),(obj) => obj.gameInfo.darkPickNum),
-            // darkUnpicked: action.payload.players.filter(player => player.gameInfo.darkPickNum === 0),
-            // whitePicked: _.sortBy(action.payload.players.filter(player => player.gameInfo.whitePickNum !== 0),(obj) => obj.gameInfo.whitePickNum),
-            // whiteUnpicked: action.payload.players.filter(player => player.gameInfo.whitePickNum === 0),
         }
 
         case EDIT_GAME_INFO:
@@ -138,7 +138,9 @@ export default function(state = initialState, action) {
             deletedGame: action.payload,
             visibility: initialState.visibility,
             games: state.games.filter(game => game._id !== action.payload._id),
-            lockStatus: "hidden"
+            lockStatus: "hidden",
+            draftMode: initialState.draftMode,
+            pickButtons: initialState.pickButtons,
             }
 
         case SHOW_UNAVAILABLE_MEMBERS:
@@ -195,15 +197,16 @@ export default function(state = initialState, action) {
             ...state,
             draftMode: action.payload.team,
             pickButtons: action.payload.buttons,
+            visibility: {top: "hidden", main: "visible", bottom: "visible"},
             picked: action.payload.team === "Dark" ? _.sortBy(state.draft.players.filter(player => player.gameInfo.available === true && player.gameInfo.darkPickNum !== 0),(obj) => obj.gameInfo.darkPickNum) : _.sortBy(state.draft.players.filter(player => player.gameInfo.available === true && player.gameInfo.whitePickNum !== 0),(obj) => obj.gameInfo.whitePickNum),
-            unpicked: action.payload.team === "Dark" ? _.sortBy(state.draft.players.filter(player => player.gameInfo.available === true && player.gameInfo.darkPickNum === 0), "name") : _.sortBy(state.draft.players.filter(player => player.gameInfo.available === true && player.gameInfo.whitePickNum === 0), "name"),
-            
+            unpicked: action.payload.team === "Dark" ? _.sortBy(state.draft.players.filter(player => player.gameInfo.available === true && player.gameInfo.darkPickNum === 0), "name") : _.sortBy(state.draft.players.filter(player => player.gameInfo.available === true && player.gameInfo.whitePickNum === 0), "name"), 
         }
 
         case TRIGGER_DRAFT_MODE:
         return {
             ...state,
             draftMode: "Draft",
+            visibility: {top: "visible", main: "visible", bottom: "visible"},
             pickButtons: initialState.pickButtons
         }
 
