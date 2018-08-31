@@ -54,28 +54,6 @@ class GameList extends Component {
                             Create a game to start drafting teams!</p>
 
                     )}
-                    {/* {this.props.games.length < 1 ? (
-                        <p className="no_game_message">There is currently no game to display. You might need to refresh your browser or check your connection to see games</p>) : (
-                    this.props.games
-                        .filter(game => {    
-                            return this.props.today >= game._id
-                            })
-                        .map(game => 
-                            <div key={game._id} className={this.props.past_visibility}>
-                                <button className="btn game_button default_color" onClick={() =>this.getGameInfo(game._id)}> {game._id} </button> 
-                            </div>)
-                        )}
-                        {this.props.games
-                        .filter(game => {    
-                            return this.props.today <= game._id                
-                            })
-                        .map(game =>
-                                <div key={game._id} className={this.props.upcoming_visibility}>
-                                    <button className="btn game_button default_color " onClick={() =>this.getGameInfo(game._id)}> {game._id} </button> 
-                                    <FontAwesomeIcon icon="times-circle" className={game.lock_status === true ? "hidden remove remove_game" : "visible remove remove_game"} onClick={() => this.deleteGameFunc(game._id)} />
-                                </div>
-                            ) 
-                        } */}
 
                     </div>
                 </div>

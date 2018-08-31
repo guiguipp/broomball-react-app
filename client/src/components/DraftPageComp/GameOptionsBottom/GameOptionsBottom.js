@@ -69,6 +69,7 @@ class GameOptionsBottom extends Component {
                 }
             }
         }
+
     autodraft(game){
         if (this.props.lockStatus === "hidden") {
             console.log("Error message: game is locked")
@@ -115,7 +116,7 @@ class GameOptionsBottom extends Component {
                     
                 this.props.editGameInfo(game, {players: allPlayers})
                 // the only purpose of calling this function is to verify that teams are balanced (level wise)
-                this.filterTeams(allPlayers)
+                this.filterTeams(allPlayers, "level")
                 }
                 else {
                     console.log("Error message: go to draft mode to draft teams")
@@ -135,29 +136,54 @@ class GameOptionsBottom extends Component {
         }
         
     // function to filter array of player objects into teams used for quick control. 
-    filterTeams = (arrayOfPlayerObjects) => {
-        // filter player objects according to name of the team #1
-        let rosterTeam1 = arrayOfPlayerObjects.filter((e) => e.gameInfo.team === "Dark")
-        rosterTeam1 = _.sortBy(rosterTeam1, "playerLevel")
-        console.log(`\n************\nDark:\n************\n`);
-        // display the name of the player for all players of the team
-        rosterTeam1.forEach((e) => {
-            console.log(`${e.name} (${e.playerLevel})`)//\nPicked in position: ${e.gameInfo.captain1Pick})`);
-        })
-        
-        let rosterTeam2 = arrayOfPlayerObjects.filter((e) => e.gameInfo.team === "White")
-        rosterTeam2 = _.sortBy(rosterTeam2, "playerLevel")
-        console.log(`\n************\nWhite:\n************\n`);
-        rosterTeam2.forEach((e) => {
-            console.log(`${e.name} (${e.playerLevel})`)//.\nPicked in position: ${e.gameInfo.captain2Pick})`);
+    filterTeams = (arrayOfPlayerObjects, mode) => {
+        if (mode === "level") {
+            // filter player objects according to name of the team #1
+            let rosterTeam1 = arrayOfPlayerObjects.filter((e) => e.gameInfo.team === "Dark")
+            rosterTeam1 = _.sortBy(rosterTeam1, "playerLevel")
+            console.log(`\n************\nDark:\n************\n`);
+            // display the name of the player for all players of the team
+            rosterTeam1.forEach((e) => {
+                console.log(`${e.name} (${e.playerLevel})`);
             })
-        
-        let unavailable = arrayOfPlayerObjects.filter((e) => e.gameInfo.team === "N/A")
-        unavailable = _.sortBy(unavailable, "playerLevel")
-        console.log(`\n************\nUnavailable:\n************\n`);
-        unavailable.forEach((e) => {
-            console.log(`${e.name} (${e.playerLevel})`)//.\nPicked in position: ${e.gameInfo.captain2Pick})`);
+            
+            let rosterTeam2 = arrayOfPlayerObjects.filter((e) => e.gameInfo.team === "White")
+            rosterTeam2 = _.sortBy(rosterTeam2, "playerLevel")
+            console.log(`\n************\nWhite:\n************\n`);
+            rosterTeam2.forEach((e) => {
+                console.log(`${e.name} (${e.playerLevel})`);
+                })
+            
+            let unavailable = arrayOfPlayerObjects.filter((e) => e.gameInfo.team === "N/A")
+            unavailable = _.sortBy(unavailable, "playerLevel")
+            console.log(`\n************\nUnavailable:\n************\n`);
+            unavailable.forEach((e) => {
+                console.log(`${e.name} (${e.playerLevel})\nAvailable: ${e.gameInfo.available}`);
+                })
+            }
+        else {
+            let rosterTeam1 = arrayOfPlayerObjects.filter((e) => e.gameInfo.team === "Dark")
+            rosterTeam1 = _.sortBy(rosterTeam1, (obj) => obj.gameInfo.darkPickNum)
+            console.log(`\n************\nDark:\n************\n`);
+            // display the name of the player for all players of the team
+            rosterTeam1.forEach((e) => {
+                console.log(`${e.name} (picked for Dark: #${e.gameInfo.darkPickNum})`);
             })
+            
+            let rosterTeam2 = arrayOfPlayerObjects.filter((e) => e.gameInfo.team === "White")
+            rosterTeam2 = _.sortBy(rosterTeam2, (obj) => obj.gameInfo.whitePickNum)
+            console.log(`\n************\nWhite:\n************\n`);
+            rosterTeam2.forEach((e) => {
+                console.log(`${e.name} (picked for White: #${e.gameInfo.whitePickNum})`);
+                })
+            
+            let unavailable = arrayOfPlayerObjects.filter((e) => e.gameInfo.team === "N/A")
+            unavailable = _.sortBy(unavailable, "name")
+            console.log(`\n************\nUnavailable:\n************\n`);
+            unavailable.forEach((e) => {
+                console.log(`${e.name} (${e.playerLevel})\nAvailable: ${e.gameInfo.available}\nPicked for Dark: #${e.gameInfo.darkPickNum})\nPicked for White: #${e.gameInfo.whitePickNum})`)//.\nPicked in position: ${e.gameInfo.captain2Pick})`);
+                })
+            }
         }
     
     toggleMode(currentMode, team){
@@ -168,6 +194,98 @@ class GameOptionsBottom extends Component {
             this.props.triggerPickMode(team)
         }
     }
+    // helper function to test if a pick is eligible to be pushed to the ranked array. If not, moves on to the next pick. 
+    testPick = (inputObject, rankedPlayers) => {
+        let index = 0;
+        let picks = inputObject.picks;
+        if (rankedPlayers.indexOf(picks[index]) !== -1) {
+            picks.splice(index,1);
+            this.testPick(inputObject, rankedPlayers);
+            }
+        else {
+            let nameOfTeam = inputObject.team;
+            // assigns the name of the team to the drafted player (to filter later on)
+            picks[index].gameInfo.team = nameOfTeam;
+            // takes the pick, pushes it to the output array
+            rankedPlayers.push(picks[index]);
+            // removes the pick from the array of picks
+            picks.splice(index,1);
+            }
+        }
+
+    // function to create a "serpentine" type draft 
+    // Aka: captain #1 drafts first pick, then captain #2 has the next 2 picks, etc. until everyone is drafted
+    serpentineDraft = (game) => {
+        // Serpentine draft sends an object to "testPick" to figure if a player has already been drafted. 
+        // If not, the player in question gets stored in the array of drafter players (and so on, recursively). 
+        // For this to happen, we need to format our objects
+        let darkPicks = {team: "Dark", picks: _.sortBy(this.props.players.filter(player => player.gameInfo.available === true && player.darkPickNum !== 0),(obj) => obj.gameInfo.darkPickNum)};
+        let whitePicks = {team: "White", picks: _.sortBy(this.props.players.filter(player => player.gameInfo.available === true && player.whitePickNum !== 0),(obj) => obj.gameInfo.whitePickNum)};
+        let rankedPlayers = []; 
+        // the function will error if we try to run it more times than players have been picked. 
+        // Therefore, we need a pattern to determine how many times it should be ran
+        let num;
+        let num1 = darkPicks.picks.length;
+        let num2 = whitePicks.picks.length;
+        if (num1 > num2) {
+            num = num2
+            }
+        else {
+            num = num1
+            }
+            // there are 4 turns to complete a round
+            let turns = 4;
+            let modulo = num % turns;
+            let completeRounds = (num - modulo)/turns
+        console.log("\nNum: ", num, "\nNum1: ", num1, "\nNum2: ", num2, "\nCompleteRounds: ", completeRounds)
+        if (this.props.lockStatus === "hidden") {
+            console.log("Error message: game is locked")
+            }
+        else {
+            if (modulo === 0) {
+                // if the num of players allows for complete rounds of serpentine draft
+                for (let i = 1; i <= completeRounds; i++) {
+                    this.testPick(darkPicks, rankedPlayers);
+                    this.testPick(whitePicks, rankedPlayers);
+                    this.testPick(whitePicks, rankedPlayers);
+                    this.testPick(darkPicks, rankedPlayers);
+                    }
+                }
+            else {
+                // if not, we have to run as many complete rounds as possible
+                for (let i = 1; i <= completeRounds; i++) {
+                    this.testPick(darkPicks, rankedPlayers);
+                    this.testPick(whitePicks, rankedPlayers);
+                    this.testPick(whitePicks, rankedPlayers);
+                    this.testPick(darkPicks, rankedPlayers);
+                    }
+                    // and complete the rosters one player at a time
+                    switch (modulo !== 0) {
+                        case modulo === 1:
+                        console.log("Modulo: ", modulo)
+                        this.testPick(darkPicks, rankedPlayers);
+                        break;
+                        case modulo === 2:
+                        console.log("Modulo: ", modulo)
+                        this.testPick(darkPicks, rankedPlayers);
+                        this.testPick(whitePicks, rankedPlayers);
+                        break;
+                        case modulo === 3:
+                        console.log("Modulo: ", modulo)
+                        this.testPick(darkPicks, rankedPlayers);
+                        this.testPick(whitePicks, rankedPlayers);
+                        this.testPick(darkPicks, rankedPlayers);
+                        break;
+                        }
+                    }
+                this.filterTeams(rankedPlayers, "pick")
+                // we re-add the unavailable players, otherwise they cannot be reset later on
+                let unavailablePlayers = this.props.players.filter(player => player.gameInfo.available !== true)
+                    
+                let allPlayers = rankedPlayers.concat(unavailablePlayers)
+                this.props.editGameInfo(game, {players: allPlayers})
+            }
+        }
 
     render() {
         return (
@@ -199,7 +317,7 @@ class GameOptionsBottom extends Component {
                                 <button className="btn btn-info navbar-btn dark_grey js_draft menu_options" id="alternate_draft">Alternate Draft</button> 
                             </div>
                             <div className="col text-center">
-                                <button className="btn btn-info navbar-btn dark_grey js_draft menu_options" id="serpentine_draft">Serpentine Draft</button> 
+                                <button className="btn darker_color" onClick={() => this.serpentineDraft(this.props.gameDate)}>Serpentine Draft</button> 
                             </div>
                         </div>
                     </div>
