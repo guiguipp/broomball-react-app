@@ -123,6 +123,8 @@ export default function(state = initialState, action) {
             unavailableMembers: initialState.unavailableMembers,
             notPlayingNonMembers: initialState.notPlayingNonMembers,
             playingNonMembers: initialState.playingNonMembers,
+            picked: state.draftMode === "Dark" ? _.sortBy(action.payload.players.filter(player => player.gameInfo.available === true && player.gameInfo.darkPickNum !== 0),(obj) => obj.gameInfo.darkPickNum) : _.sortBy(action.payload.players.filter(player => player.gameInfo.available === true && player.gameInfo.whitePickNum !== 0),(obj) => obj.gameInfo.whitePickNum),
+            unpicked: state.draftMode === "Dark" ? _.sortBy(action.payload.players.filter(player => player.gameInfo.available === true && player.gameInfo.darkPickNum === 0), "name") : _.sortBy(action.payload.players.filter(player => player.gameInfo.available === true && player.gameInfo.whitePickNum === 0), "name"), 
         }
 
         case MAKE_MEMBER_UNAVAILABLE:

@@ -243,7 +243,7 @@ export const unlockGameInfo = (game) => dispatch => {
 }
 
 export const triggerPickMode = (team) => dispatch => {
-    console.log("team in triggerPickMode from gameActions.js: ", team)
+    // console.log("team in triggerPickMode from gameActions.js: ", team)
     switch (team) {
         case "Dark":
         dispatch({
@@ -328,6 +328,7 @@ export const setPick = (team, game, data) => dispatch => {
     } 
 
 export const reset = (game, data) => dispatch => {
+    console.log('Data received in reset gameActions.js: ', data)
     API.editGame(game, data)
     .then(res => {
         if(res.status !== 200) {

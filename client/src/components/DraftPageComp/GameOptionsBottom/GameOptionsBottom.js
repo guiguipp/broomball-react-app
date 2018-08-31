@@ -237,7 +237,6 @@ class GameOptionsBottom extends Component {
             let turns = 4;
             let modulo = num % turns;
             let completeRounds = (num - modulo)/turns
-        console.log("\nNum: ", num, "\nNum1: ", num1, "\nNum2: ", num2, "\nCompleteRounds: ", completeRounds)
         if (this.props.lockStatus === "hidden") {
             console.log("Error message: game is locked")
             }
@@ -262,20 +261,19 @@ class GameOptionsBottom extends Component {
                     // and complete the rosters one player at a time
                     switch (modulo !== 0) {
                         case modulo === 1:
-                        console.log("Modulo: ", modulo)
                         this.testPick(darkPicks, rankedPlayers);
                         break;
                         case modulo === 2:
-                        console.log("Modulo: ", modulo)
                         this.testPick(darkPicks, rankedPlayers);
                         this.testPick(whitePicks, rankedPlayers);
                         break;
                         case modulo === 3:
-                        console.log("Modulo: ", modulo)
                         this.testPick(darkPicks, rankedPlayers);
                         this.testPick(whitePicks, rankedPlayers);
                         this.testPick(darkPicks, rankedPlayers);
                         break;
+                        default:
+                        return;
                         }
                     }
                 this.filterTeams(rankedPlayers, "pick")
@@ -290,7 +288,7 @@ class GameOptionsBottom extends Component {
     render() {
         return (
             <div className={"row " + this.props.visibility}>
-                <div className={"container " + this.props.visibility}>
+                <div className={"container " + this.props.visibility.bottom}>
                         <div className="row">
                             <div className="col text-center">
                                 <button className="btn lighter_color" onClick={() => this.toggleMode(this.props.draftMode, "Dark")}>{this.props.pickButtons.left}</button> 
@@ -309,7 +307,7 @@ class GameOptionsBottom extends Component {
                             </div>
                         </div>
                         <br />
-                        <div className="row">
+                        <div className={"row " + this.props.visibility.top}>
                             <div className="col text-center">
                                 <button className="btn darker_color" onClick={()=> this.autodraft(this.props.gameDate)} >Autodraft</button> 
                             </div>
@@ -322,7 +320,7 @@ class GameOptionsBottom extends Component {
                         </div>
                     </div>
 
-                <div className={"container " + this.props.visibility}>
+                <div className={"container " + this.props.visibility.bottom}>
                     <div className="container">
                         <div className="row">    
                             <div className="col text-center">
