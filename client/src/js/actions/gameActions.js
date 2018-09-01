@@ -84,9 +84,28 @@ export const getGame = (game) => dispatch => {
                 throw new Error(res.statusText)
             }
             else {
+                /* We need to know if drafting has happened for the Stats page to display properly */
+                let darkPlayers = res.data.players.filter(player => player.gameInfo.team === "Dark")
+                let whitePlayers = res.data.players.filter(player => player.gameInfo.team === "White")
+                // console.log("Array lengths: ", darkPlayers.length, " and ", whitePlayers.length)
+                let gameStats
+                let noStatsMessage
+                if (darkPlayers.length > 0 && whitePlayers.length > 0) {
+                    gameStats = "visible";
+                    noStatsMessage = "hidden";
+                }
+                else {
+                    gameStats = "hidden";
+                    noStatsMessage = "visible";
+                }
+
                 dispatch({
                     type: GET_GAME,
-                    payload: res.data
+                    payload: {
+                        game: res.data,
+                        gameStats: gameStats,
+                        noStatsMessage: noStatsMessage
+                    }
                 })
             }
         })

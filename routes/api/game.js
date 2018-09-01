@@ -59,7 +59,19 @@ game.put("/:id", function(req, res) {
         for (let i = 0; i < arrayOfKeys.length; i++) {
             update[arrayOfKeys[i]] = arrayOfValues[i]
         }
-    }
+    }/*
+    else if (req.body.data.combinedUpdate) {
+        console.log("in the else if: ", req.body.data.combinedUpdate)
+        console.log("id of game: ", req.params.id)
+        let keys = Object.keys(req.body.data.combinedUpdate)
+        console.log("keys: ", keys)
+        console.log("game update: ", keys[0])
+        let arrayOfValues = Object.values(req.body.data.combinedUpdate)
+        console.log("New game info: ", arrayOfValues[0])
+        let gameUpdate= `${keys[0]}:${arrayOfValues[0]}`
+        console.log("GameUpdate: ", gameUpdate)
+        let playerUpdate = `player._id:${req.body.data.combinedUpdate.player}`
+    }*/
     // This handles Game updates via switch statement on the key of the update sent. 
     else {
         // console.log("req.body.data sans gameInfo: ", req.body.data)

@@ -41,7 +41,9 @@ const initialState = {
     visibility: {
         top: "hidden",
         main: "hidden",
-        bottom: "hidden"
+        bottom: "hidden",
+        gameStats: "hidden",
+        noStatsMessage: "hidden"
     },
     gameDate: "",
     draft: {},
@@ -97,13 +99,19 @@ export default function(state = initialState, action) {
         case GET_GAME:
         return {
             ...state,
-            visibility: {top: "visible", main: "visible", bottom: "visible"},
-            gameDate: action.payload._id,
-            draft: action.payload,
-            lockStatus: action.payload.lock_status === true ? "hidden" : "visible",
-            unavailableMembers: state.showingUnavailableMembers === "Hide" ? action.payload.players.filter(player => player.membershipStatus === "Member" && player.gameInfo.available === false) : initialState.unavailableMembers,
+            gameDate: action.payload.game._id,
+            draft: action.payload.game,
+            lockStatus: action.payload.game.lock_status === true ? "hidden" : "visible",
+            unavailableMembers: state.showingUnavailableMembers === "Hide" ? action.payload.game.players.filter(player => player.membershipStatus === "Member" && player.gameInfo.available === false) : initialState.unavailableMembers,
             notPlayingNonMembers: initialState.notPlayingNonMembers,
             playingNonMembers: initialState.playingNonMembers,
+            visibility: {
+                top: "visible", 
+                main: "visible", 
+                bottom: "visible",
+                gameStats: action.payload.gameStats,
+                noStatsMessage: action.payload.noStatsMessage
+            }
         }
 
         case EDIT_GAME_INFO:
