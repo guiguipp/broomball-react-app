@@ -1,0 +1,25 @@
+.table_container{
+    width: 50%;
+    margin: 5%;
+}
+.darker_icon {
+    color: pink;
+}
+.lighter_icon {
+    color: blue
+}
+.data {
+    display: inline;
+}
+
+.table {
+    width: 200px;
+}
+
+.player_stats{
+
+}
+                                        
+.stats{
+
+}
