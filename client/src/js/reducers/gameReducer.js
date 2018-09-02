@@ -79,8 +79,8 @@ export default function(state = initialState, action) {
             deletedGame: action.payload,
             visibility: initialState.visibility,
             games: state.games.filter(game => game._id !== action.payload._id),
-            upcomingGames: state.games.filter(game => game._id !== action.payload._id),
-            pastGames: state.games.filter(game => game._id !== action.payload._id),
+            upcomingGames: state.upcomingGames.filter(game => game._id !== action.payload._id),
+            pastGames: state.pastGames.filter(game => game._id !== action.payload._id),
             lockStatus: "hidden",
             draftMode: initialState.draftMode,
             pickButtons: initialState.pickButtons,
@@ -104,7 +104,8 @@ export default function(state = initialState, action) {
             lockStatus: action.payload.game.lock_status === true ? "hidden" : "visible",
             unavailableMembers: state.showingUnavailableMembers === "Hide" ? action.payload.game.players.filter(player => player.membershipStatus === "Member" && player.gameInfo.available === false) : initialState.unavailableMembers,
             notPlayingNonMembers: initialState.notPlayingNonMembers,
-            playingNonMembers: initialState.playingNonMembers,
+            // We initiate the array of playing ten-buckers here (for them to not get added twice, this array will be check against when clicking on add non-member)
+            playingNonMembers: action.payload.game.players.filter(player => player.membershipStatus !== "Member"),
             visibility: {
                 top: "visible", 
                 main: "visible", 
@@ -118,8 +119,10 @@ export default function(state = initialState, action) {
         return {
             ...state,
             draft: action.payload,
-            notPlayingNonMembers: initialState.notPlayingNonMembers,
-            playingNonMembers: initialState.playingNonMembers,
+            // No longer sure why we would re-initiate the ten-buckers after editing a game?
+            // this makes the list of ten-buckers to bug after auto-drafting 
+            // notPlayingNonMembers: initialState.notPlayingNonMembers,
+            // playingNonMembers: initialState.playingNonMembers,
             showingNonPlayingTenBuckers: "Show",
             showingUnavailableMembers: "Show",
         }
