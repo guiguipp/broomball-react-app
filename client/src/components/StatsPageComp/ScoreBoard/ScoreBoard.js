@@ -10,28 +10,70 @@ import "./ScoreBoard.css"
 class ScoreBoard extends Component {
     
     logStat(playerID, type, currentValue){
+        let gameId = this.props.game._id
         switch (type){
             case "add_goal_dark":
             let goalUpdate = currentValue + 1;
             let scoreUpdate = this.props.game.goals_dark + 1;
-            this.props.editGameInfo(this.props.game._id, {player: playerID, gameInfo: {goals: goalUpdate}})
-            this.props.editGameInfo(this.props.game._id, {goals_dark: scoreUpdate})
-            // this.props.editGameInfo(this.props.game._id, {combinedUpdate: {goals_dark: scoreUpdate,player: playerID, gameInfo: {goals: newValue}}})
+            switch (true) {
+                case scoreUpdate > this.props.game.goals_white:
+                this.props.editGameInfo(gameId,{goals_dark: scoreUpdate, win: "Dark", playerUpdate: {player: playerID, gameInfo: {goals: goalUpdate}}})
+                break;
+
+                case scoreUpdate < this.props.game.goals_white:
+                this.props.editGameInfo(gameId, {goals_dark: scoreUpdate, win: "White", playerUpdate: {player: playerID, gameInfo: {goals: goalUpdate}}})
+                break;
+
+                case scoreUpdate === this.props.game.goals_white:
+                this.props.editGameInfo(gameId, {goals_dark: scoreUpdate, win: "Tie", playerUpdate: {player: playerID,gameInfo: {goals: goalUpdate}}})
+                break;
+
+                default:
+                return
+            }
             break;
 
             case "add_goal_white":
             goalUpdate = currentValue + 1;
             scoreUpdate = this.props.game.goals_white + 1;
-            this.props.editGameInfo(this.props.game._id, {player: playerID, gameInfo: {goals: goalUpdate}})
-            this.props.editGameInfo(this.props.game._id, {goals_white: scoreUpdate})
+            switch (true) {
+                case scoreUpdate > this.props.game.goals_dark:
+                this.props.editGameInfo(gameId,{goals_white: scoreUpdate, win: "White", playerUpdate: {player: playerID, gameInfo: {goals: goalUpdate}}})
+                break;
+
+                case scoreUpdate < this.props.game.goals_dark:
+                this.props.editGameInfo(gameId, {goals_white: scoreUpdate, win: "Dark", playerUpdate: {player: playerID, gameInfo: {goals: goalUpdate}}})
+                break;
+
+                case scoreUpdate === this.props.game.goals_dark:
+                this.props.editGameInfo(gameId, {goals_white: scoreUpdate, win: "Tie", playerUpdate: {player: playerID,gameInfo: {goals: goalUpdate}}})
+                break;
+
+                default:
+                return
+            }
             break;
 
             case "substract_goal_dark":
             goalUpdate = currentValue - 1;
             scoreUpdate = this.props.game.goals_dark - 1;
-            if (goalUpdate >= 0 && scoreUpdate >= 0){
-                this.props.editGameInfo(this.props.game._id, {player: playerID, gameInfo: {goals: goalUpdate}})
-                this.props.editGameInfo(this.props.game._id, {goals_dark: scoreUpdate})
+            if (goalUpdate >= 0 && scoreUpdate >= 0) {
+                switch (true) {
+                    case scoreUpdate > this.props.game.goals_white:
+                    this.props.editGameInfo(gameId,{goals_dark: scoreUpdate, win: "Dark", playerUpdate: {player: playerID, gameInfo: {goals: goalUpdate}}})
+                    break;
+    
+                    case scoreUpdate < this.props.game.goals_white:
+                    this.props.editGameInfo(gameId, {goals_dark: scoreUpdate, win: "White", playerUpdate: {player: playerID, gameInfo: {goals: goalUpdate}}})
+                    break;
+    
+                    case scoreUpdate === this.props.game.goals_white:
+                    this.props.editGameInfo(gameId, {goals_dark: scoreUpdate, win: "Tie", playerUpdate: {player: playerID,gameInfo: {goals: goalUpdate}}})
+                    break;
+    
+                    default:
+                    return
+                    }
                 }
             break;
 
@@ -39,21 +81,35 @@ class ScoreBoard extends Component {
             goalUpdate = currentValue - 1;
             scoreUpdate = this.props.game.goals_white - 1;
             if (goalUpdate >= 0 && scoreUpdate >= 0){
-                this.props.editGameInfo(this.props.game._id, {player: playerID, gameInfo: {goals: goalUpdate}})
-                this.props.editGameInfo(this.props.game._id, {goals_white: scoreUpdate})
+                switch (true) {
+                    case scoreUpdate > this.props.game.goals_dark:
+                    this.props.editGameInfo(gameId,{goals_white: scoreUpdate, win: "White", playerUpdate: {player: playerID, gameInfo: {goals: goalUpdate}}})
+                    break;
+    
+                    case scoreUpdate < this.props.game.goals_dark:
+                    this.props.editGameInfo(gameId, {goals_white: scoreUpdate, win: "Dark", playerUpdate: {player: playerID, gameInfo: {goals: goalUpdate}}})
+                    break;
+    
+                    case scoreUpdate === this.props.game.goals_dark:
+                    this.props.editGameInfo(gameId, {goals_white: scoreUpdate, win: "Tie", playerUpdate: {player: playerID,gameInfo: {goals: goalUpdate}}})
+                    break;
+    
+                    default:
+                    return
+                }
                 }
             break;
 
             case "add_assist":
             let assistUpdate = currentValue + 1;
-            this.props.editGameInfo(this.props.game._id, {player: playerID, gameInfo: {assists: assistUpdate}})
+            this.props.editGameInfo(gameId, {player: playerID, gameInfo: {assists: assistUpdate}})
             break;
 
             
             case "substract_assist":
             assistUpdate = currentValue - 1;
             if (assistUpdate >= 0){
-                this.props.editGameInfo(this.props.game._id, {player: playerID, gameInfo: {assists: assistUpdate}})
+                this.props.editGameInfo(gameId, {player: playerID, gameInfo: {assists: assistUpdate}})
                 }
             break;
 

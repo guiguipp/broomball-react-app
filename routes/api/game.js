@@ -29,6 +29,7 @@ game.post("/", function(req, res) {
     let NewGame = db.Game
     ({
         _id: req.body.game_date,
+        win: "Tie",
         game_date: req.body.game_date,
         players: req.body.players,
     })
@@ -58,47 +59,32 @@ game.put("/:id", function(req, res) {
         // A for loop allows us to do more than one update at a time (they are passed in the same update object through closure)
         for (let i = 0; i < arrayOfKeys.length; i++) {
             update[arrayOfKeys[i]] = arrayOfValues[i]
+            }
         }
-    }/*
-    else if (req.body.data.combinedUpdate) {
-        console.log("in the else if: ", req.body.data.combinedUpdate)
-        console.log("id of game: ", req.params.id)
-        let keys = Object.keys(req.body.data.combinedUpdate)
-        console.log("keys: ", keys)
-        console.log("game update: ", keys[0])
-        let arrayOfValues = Object.values(req.body.data.combinedUpdate)
-        console.log("New game info: ", arrayOfValues[0])
-        let gameUpdate= `${keys[0]}:${arrayOfValues[0]}`
-        console.log("GameUpdate: ", gameUpdate)
-        let playerUpdate = `player._id:${req.body.data.combinedUpdate.player}`
-    }*/
-    // This handles Game updates via switch statement on the key of the update sent. 
+    // This handles game updates 
     else {
-        // console.log("req.body.data sans gameInfo: ", req.body.data)
-        id = {_id: req.params.id};
-        update = req.body.data;
-        /* We might need a Switch statement later to handle different scenarios */
-        /*let key = Object.keys(req.body.data)
-        let parsedKey = key[0]
-        
-        switch (parsedKey){
-            case 'lock_status': 
-            console.log("Switch case lock")
-                    id = {_id: req.params.id};
-                    update = req.body.data;
-                    break;
-            
-            case 'players':
-            console.log("Switch case players")
-                    id = {_id: req.params.id},    
-                    update = req.body.data;
-                    break;
-
-            default: 
-            return;
-        }*/
-    }
-
+        /* when a game update is sent at the same time as the player update, they are sent with a "playerUpdate" nested object. 
+        For instance, the score is updated when a player scores a goal. We grab all keys/values before that to update the game, 
+        and the player update separately then send them together to the db */
+        if (req.body.data.playerUpdate) {
+            let updateKeys = Object.keys(req.body.data)
+            let updateValues = Object.values(req.body.data)
+            let gameInfoKey = "players.$.gameInfo." + Object.keys(req.body.data.playerUpdate.gameInfo)[0]
+            let gameInfoValue = Object.values(req.body.data.playerUpdate.gameInfo)[0]
+            id = {_id: req.params.id, "players._id": req.body.data.playerUpdate.player}
+            update = {
+                [updateKeys[0]]: updateValues[0],
+                [updateKeys[1]]: updateValues[1],
+                [gameInfoKey]: gameInfoValue
+                }
+            }
+        // else, the update only pertains to the game data (ex: lock/unlock)
+        else {
+            id = {_id: req.params.id};
+            update = req.body.data;
+            }
+        }
+    // db.Game.findOneAndUpdate({_id: "2018-08-26", "players._id": "5b6ebb53866bfe76441d998f"}, {win: "Dark", "goals_dark": 3,'players.$.gameInfo.goals': 2},{new: true})
     db.Game.findOneAndUpdate(id,update,{new: true})
     .then(function(dbGame){
         res.send(dbGame)

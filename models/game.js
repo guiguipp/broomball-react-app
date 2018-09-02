@@ -5,6 +5,7 @@ moment().format();
 
 const gameSchema = new Schema({
     _id: {type: String, required: true },
+    win: {type: String, required: false },
     game_date: { type: Date, required: true },
     goals_dark: { type: Number, required: false, default: 0 },
     goals_white: { type: Number, required: false, default: 0 },
