@@ -32,7 +32,6 @@ const initialState = {
     gameInfo: {
         goals: 0,
         assists: 0,
-        win: false,
         darkPickNum: 0,
         whitePickNum: 0,
         available: true,
@@ -92,8 +91,8 @@ export default function(state = initialState, action) {
             ...state,
             newGame: action.payload,
             games: _.sortBy([...state.games, action.payload], "game_date"),
-            upcomingGames: action.payload._id >= moment().format("YYYY-MM-DD") ? [...state.upcomingGames, action.payload] : state.upcomingGames,
-            pastGames: action.payload._id < moment().format("YYYY-MM-DD") ? [...state.upcomingGames, action.payload] : state.pastGames 
+            upcomingGames: action.payload._id >= moment().format("YYYY-MM-DD") ? _.sortBy([action.payload, ...state.upcomingGames], "game_date") : state.upcomingGames,
+            pastGames: action.payload._id < moment().format("YYYY-MM-DD") ? _.sortBy([action.payload, ...state.pastGames], "game_date") : state.pastGames 
         }
 
         case GET_GAME:
