@@ -121,50 +121,11 @@ class ScoreBoard extends Component {
 
     render() {
         return (
-            <div className="row tables_container">
-                <div className="col table_container">
-                    <h1 className="h1_alternate">Dark<br/>{this.props.game.goals_dark}</h1>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th className="table_col_name">Player</th> 
-                                <th className="table_col_name">Goals</th>
-                                <th className="table_col_name">Assists</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.props.players ? (this.props.players
-                                .filter(player => player.gameInfo.available === true && player.gameInfo.team === "Dark")
-                                .map(player => {
-                                    return (
-                                        <tr className="stats_row" key={player._id}> 
-                                            <td className="player_stats">{player.name}
-                                            </td>
-                                            <td className="player_stats">
-                                                <div className="stats">
-                                                    <FontAwesomeIcon icon="plus-circle" className="darker_icon" onClick={()=> this.logStat(player._id,"add_goal_dark",player.gameInfo.goals)} />
-                                                    <div className={player.gameInfo.goals > 0 ? "nice" : null + " data"}>{player.gameInfo.goals}</div> 
-                                                    <FontAwesomeIcon icon="minus-circle" className="darker_icon" onClick={()=> this.logStat(player._id,"substract_goal_dark",player.gameInfo.goals)}  />
-                                                </div>
-                                            </td>
-
-                                            <td className="player_stats">
-                                                <div className="stats">
-                                                    <FontAwesomeIcon icon="plus-circle" className="lighter_icon" onClick={()=> this.logStat(player._id,"add_assist",player.gameInfo.assists)} />
-                                                    <div className={player.gameInfo.assists > 0 ? "good" : null + " data"}>{player.gameInfo.assists}</div> 
-                                                    <FontAwesomeIcon icon="minus-circle" className="lighter_icon" onClick={()=> this.logStat(player._id,"substract_assist",player.gameInfo.assists)} />
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        )
-                                    })
-                                ) : null
-                                }
-                            </tbody>
-                        </table>
-                    </div>
+            <div className="full">
+                <h1 className="h1_main">{this.props.game._id}</h1>
+                <div className="row tables_container">
                     <div className="col table_container">
-                        <h1 className="h1_alternate">White<br/>{this.props.game.goals_white}</h1>
+                        <h1 className="h1_alternate">Dark<br/>{this.props.game.goals_dark}</h1>
                         <table>
                             <thead>
                                 <tr>
@@ -175,7 +136,7 @@ class ScoreBoard extends Component {
                             </thead>
                             <tbody>
                                 {this.props.players ? (this.props.players
-                                    .filter(player => player.gameInfo.available === true && player.gameInfo.team === "White")
+                                    .filter(player => player.gameInfo.available === true && player.gameInfo.team === "Dark")
                                     .map(player => {
                                         return (
                                             <tr className="stats_row" key={player._id}> 
@@ -183,17 +144,17 @@ class ScoreBoard extends Component {
                                                 </td>
                                                 <td className="player_stats">
                                                     <div className="stats">
-                                                        <FontAwesomeIcon icon="plus-circle" size="2x" className="darker_icon" onClick={()=> this.logStat(player._id,"add_goal_white",player.gameInfo.goals)} />
+                                                        <FontAwesomeIcon icon="plus-circle" className={"darker_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"add_goal_dark",player.gameInfo.goals)} />
                                                         <div className={player.gameInfo.goals > 0 ? "nice" : null + " data"}>{player.gameInfo.goals}</div> 
-                                                        <FontAwesomeIcon icon="minus-circle" size="2x" className="darker_icon" onClick={()=> this.logStat(player._id,"substract_goal_white",player.gameInfo.goals)}  />
+                                                        <FontAwesomeIcon icon="minus-circle" className={"darker_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"substract_goal_dark",player.gameInfo.goals)}  />
                                                     </div>
                                                 </td>
 
                                                 <td className="player_stats">
                                                     <div className="stats">
-                                                        <FontAwesomeIcon icon="plus-circle" size="2x" className="lighter_icon" onClick={()=> this.logStat(player._id,"add_assist",player.gameInfo.assists)} />
+                                                        <FontAwesomeIcon icon="plus-circle" className={"lighter_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"add_assist",player.gameInfo.assists)} />
                                                         <div className={player.gameInfo.assists > 0 ? "good" : null + " data"}>{player.gameInfo.assists}</div> 
-                                                        <FontAwesomeIcon icon="minus-circle" size="2x" className="lighter_icon" onClick={()=> this.logStat(player._id,"substract_assist",player.gameInfo.assists)} />
+                                                        <FontAwesomeIcon icon="minus-circle" className={"lighter_icon " + this.props.lockStatus}  onClick={()=> this.logStat(player._id,"substract_assist",player.gameInfo.assists)} />
                                                     </div>
                                                 </td>
                                             </tr>
@@ -201,8 +162,50 @@ class ScoreBoard extends Component {
                                         })
                                     ) : null
                                     }
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div className="col table_container">
+                            <h1 className="h1_alternate">White<br/>{this.props.game.goals_white}</h1>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th className="table_col_name">Player</th> 
+                                        <th className="table_col_name">Goals</th>
+                                        <th className="table_col_name">Assists</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {this.props.players ? (this.props.players
+                                        .filter(player => player.gameInfo.available === true && player.gameInfo.team === "White")
+                                        .map(player => {
+                                            return (
+                                                <tr className="stats_row" key={player._id}> 
+                                                    <td className="player_stats">{player.name}
+                                                    </td>
+                                                    <td className="player_stats">
+                                                        <div className="stats">
+                                                            <FontAwesomeIcon icon="plus-circle" size="2x" className={"darker_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"add_goal_white",player.gameInfo.goals)} />
+                                                            <div className={player.gameInfo.goals > 0 ? "nice" : null + " data"}>{player.gameInfo.goals}</div> 
+                                                            <FontAwesomeIcon icon="minus-circle" size="2x" className={"darker_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"substract_goal_white",player.gameInfo.goals)}  />
+                                                        </div>
+                                                    </td>
+
+                                                    <td className="player_stats">
+                                                        <div className="stats">
+                                                            <FontAwesomeIcon icon="plus-circle" size="2x" className={"lighter_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"add_assist",player.gameInfo.assists)} />
+                                                            <div className={player.gameInfo.assists > 0 ? "good" : null + " data"}>{player.gameInfo.assists}</div> 
+                                                            <FontAwesomeIcon icon="minus-circle" size="2x" className={"lighter_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"substract_assist",player.gameInfo.assists)} />
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                )
+                                            })
+                                        ) : null
+                                        }
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
         )
@@ -212,6 +215,8 @@ class ScoreBoard extends Component {
 const mapStateToProps = state => ({
     game: state.games.draft,
     players: state.games.draft.players,
+    lockStatus: state.games.lockStatus
+
 })
 
 export default connect(mapStateToProps, { editGameInfo }) (ScoreBoard)

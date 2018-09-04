@@ -146,7 +146,7 @@ button {
     margin-bottom: 6%;
 }
 .h1_negative {
-    
+    color: black;
 }
 .h2_main {
     font-family: boogaloo;
@@ -196,6 +196,12 @@ button {
         font-size: 60%;
     }
     .h1_alternate {
+        font-size: 150%;
+    }
+    .h3_alternate {
+        font-size: 150%;
+    }
+    .h3_main {
         font-size: 150%;
     }
     .past_game_button {

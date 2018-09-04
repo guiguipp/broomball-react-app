@@ -9,6 +9,7 @@ import Calendar from "../../components/DraftPageComp/Calendar";
 import Drafter from "../../components/DraftPageComp/Drafter"
 import GameOptionsBottom from "../../components/DraftPageComp/GameOptionsBottom"
 import GameOptionsTop from "../../components/DraftPageComp/GameOptionsTop"
+import Locker from "../../components/DraftPageComp/Locker"
 
 import "./Draft.css";
 
@@ -39,6 +40,7 @@ render() {
         </div>
         <div className={"main_main " + this.props.visibility.bottom}>
             <GameOptionsBottom />
+            <Locker />
         </div>
     </div>
     )

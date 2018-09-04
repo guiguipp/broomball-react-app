@@ -8,6 +8,7 @@ import Logo from "../../components/images/logo.jpg";
 import PastGameList from "../../components/StatsPageComp/PastGamesList"
 import ScoreBoard from "../../components/StatsPageComp/ScoreBoard"
 import NoStatsBoard from "../../components/StatsPageComp/NoStatsBoard"
+import Locker from "../../components/DraftPageComp/Locker"
 
 import "./Stats.css";
 
@@ -25,6 +26,9 @@ render() {
             <div className={"main_main " + this.props.visibility.gameStats}>
                 <div className= "row ">
                     <ScoreBoard />
+                </div>
+                <div className= "row ">
+                    <Locker />
                 </div>
             </div>
             

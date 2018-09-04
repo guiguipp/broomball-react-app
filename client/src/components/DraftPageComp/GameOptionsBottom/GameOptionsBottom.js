@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import _ from "underscore"
 import { connect } from 'react-redux';
-import { lockGameInfo } from "../../../js/actions/gameActions"
-import { unlockGameInfo } from "../../../js/actions/gameActions"
+
 import { editGameInfo } from '../../../js/actions/gameActions'
 import { reset } from '../../../js/actions/gameActions'
 import { triggerPickMode } from '../../../js/actions/gameActions'
@@ -11,14 +10,6 @@ import { triggerDraftMode } from '../../../js/actions/gameActions'
 import "./GameOptionsBottom.css";
 
 class GameOptionsBottom extends Component {
-
-    lockGame(game) {
-        this.props.lockGameInfo(game)
-    }
-
-    unlockGame(game){
-        this.props.unlockGameInfo(game)
-    }
 
     resetTeams(game){
         if (this.props.lockStatus === "hidden") {
@@ -336,7 +327,7 @@ class GameOptionsBottom extends Component {
 
     render() {
         return (
-            <div className={"row " + this.props.visibility}>
+            <div className={"row " + this.props.visibility.bottom}>
                 <div className={"container " + this.props.visibility.bottom}>
                         <div className="row">
                             <div className="col text-center">
@@ -368,18 +359,6 @@ class GameOptionsBottom extends Component {
                             </div>
                         </div>
                     </div>
-
-                <div className={"container " + this.props.visibility.bottom}>
-                    <div className="container">
-                        <div className="row">    
-                            <div className="col text-center">
-                                <button className="lock unlocked" onClick={() => this.unlockGame(this.props.gameDate)}><i className="fa fa-unlock-alt bigger_fa_lock"></i></button> 
-                                <button className="lock locked" onClick={() => this.lockGame(this.props.gameDate)}><i className="fa fa-lock bigger_fa_lock"></i></button> 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 </div>
                 )
             }
@@ -406,4 +385,4 @@ const mapStateToProps = state => ({
     }*/
 })
 
-export default connect(mapStateToProps, { lockGameInfo, unlockGameInfo, editGameInfo, reset, triggerPickMode, triggerDraftMode }) (GameOptionsBottom)
+export default connect(mapStateToProps, { editGameInfo, reset, triggerPickMode, triggerDraftMode }) (GameOptionsBottom)
