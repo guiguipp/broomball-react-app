@@ -1,9 +1,9 @@
-import { SHOW_GAMES_TO_STATS } from '../actions/types';
-// const moment = require("moment");
+import { SHOW_GAMES_TO_STATS, GET_GAMES_AND_TRANSFORM } from '../actions/types';
 
 const initialState = {
     visibility: "hidden",
-    message: "Teams have not been drafted for this team yet. Please come back later!"
+    message: "Teams have not been drafted for this team yet. Please come back later!",
+    reducedGames: []
     }
 
 export default function(state = initialState, action) {
@@ -14,6 +14,12 @@ export default function(state = initialState, action) {
             visibility: "visible",
         }
             
+        case GET_GAMES_AND_TRANSFORM:
+        return {
+            ...state,
+            reducedGames: action.payload,
+        }
+
         default:
         return state;
     }

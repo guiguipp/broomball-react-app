@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Draft from "./pages/Draft";
 import Player from "./pages/Player";
 import Stats from "./pages/Stats";
+import Records from "./pages/Records";
 import './App.css';
 
 // Redux 
@@ -28,6 +29,7 @@ const App = () => (
         <Route path="/Draft" component={Draft} />
         <Route path="/Player" component={Player} />
         <Route path="/Stats" component={Stats} />
+        <Route path="/Records" component={Records} />
       </div>
     </Router>
   </Provider>

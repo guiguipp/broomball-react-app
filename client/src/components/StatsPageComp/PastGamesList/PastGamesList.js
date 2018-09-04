@@ -1,35 +1,64 @@
 import React, { Component } from "react";
 
 import { connect } from 'react-redux';
-import { fetchGames } from '../../../js/actions/gameActions'
+import { getGamesAndTransform } from '../../../js/actions/statsActions'
 import { getGame } from '../../../js/actions/gameActions'
 
+import _ from "underscore"
 import "./PastGamesList.css";
 
 class PastGameList extends Component {
 
     componentDidMount() {
-        this.props.fetchGames();
+        this.props.getGamesAndTransform();
     }
 
     getGameInfo = (gameId) => {
+        console.log("gameId: ", gameId)
         this.props.getGame(gameId);
     }
 
+    renderGames(object) {
+        return Object.values(object).map((game, i) => {
+            return (
+                <div key= {i}>
+                    <button className="btn past_game_button contrast_color" onClick={() =>this.getGameInfo(game._id)}> {game._id} </button>
+                </div>
+            )
+        })
+    }
+
+    renderMonth(object) {
+        return Object.entries(Object.values(object)[0]).map(([key, value], i) => {
+            return (
+                <div key= {i}>
+                    <h3 className="h3_alternate">{key}:</h3>
+
+                    {this.renderGames(value)}
+                </div>
+                )
+            })
+        }
+    
+    
+    renderYear(object) {
+        let reOrderedArray = _.sortBy(Object.values(object)).reverse()
+        return reOrderedArray.map((year, i) => {
+            return (
+                <div key= {i}>
+                <h3 className="h3_main">{ Object.keys(year)}</h3>
+                {this.renderMonth(year)}
+                </div>
+            )
+        })
+    }
 
     render() {
         return (
             <div className="list_of_games">
-                    {this.props.pastGames.length > 0 ?
-                        this.props.pastGames
-                            .map(game => 
-                                <div key={game._id}>
-                                    <button className="btn past_game_button contrast_color" onClick={() =>this.getGameInfo(game._id)}> {game._id} </button> 
-                                </div>
-                                )
-                            :
-                            <p className="no_game">There is currently no game to display</p>
-                    }
+                    <div>
+                        {this.renderYear(this.props.reducedGames)}
+                    </div>
                 </div>
                 )
             }
@@ -42,8 +71,8 @@ Games.propTypes = {
 */
 
 const mapStateToProps = state => ({
-    pastGames: state.games.pastGames
+    reducedGames: state.stats.reducedGames
 })
 
 // export default GameList;
-export default connect(mapStateToProps, { fetchGames, getGame }) (PastGameList)
+export default connect(mapStateToProps, { getGamesAndTransform, getGame }) (PastGameList)
