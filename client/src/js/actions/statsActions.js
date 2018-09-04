@@ -1,5 +1,7 @@
-import { SHOW_GAMES_TO_STATS, GET_GAMES_AND_TRANSFORM } from './types';
+import { SHOW_GAMES_TO_STATS, GET_GAMES_AND_TRANSFORM, SET_YEARS_VISIBILITIES } from './types';
 import API from "../../utils/API"
+
+const moment = require("moment");
 
 export const toggleVisibility = (currentState) => dispatch => {
     if (currentState === "hidden") {
@@ -89,12 +91,25 @@ export const getGamesAndTransform = () => dispatch => {
                 throw new Error(res.statusText)
             }
             else {
-                let reducedGames = beautifyGames(res.data)
+                let pastGames = res.data.filter(game => game._id <= moment().format("YYYY-MM-DD"))
+                let reducedGames = beautifyGames(pastGames)
+                let years = Object.keys(Object.values(reducedGames)).map(e => [e] = "visible")
+                console.log("indexes2: ", years)
                 dispatch({
                     type: GET_GAMES_AND_TRANSFORM,
-                    payload: reducedGames
-                })
-            }
-        })
-    }
-    
+                    payload: 
+                        {
+                            game: reducedGames,
+                            visibility: years
+                        }
+                    })
+                }
+            })
+        }
+
+export const setVisibility = (array) => dispatch => {
+    dispatch({
+            type: SET_YEARS_VISIBILITIES,
+            payload: array
+    })
+}

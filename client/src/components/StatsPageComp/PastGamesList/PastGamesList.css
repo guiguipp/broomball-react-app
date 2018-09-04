@@ -1,10 +1,12 @@
 .list_of_games {
     width: 100%;
     padding: 0 5% 0 5%;
+    margin-top: -5%;
 }
 .past_game_button {
     width: 15%;
     min-width: 150px;
+    margin: 0% 0% 3% 5%;
 }
 
 .h3_alternate {
@@ -25,4 +27,20 @@
     font-size: 300%;
     margin: 3% 0% 1%;
     
+}
+
+.games_per_year {
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(172,173,178);
+    padding-top: 2%;
+}
+
+.hide_button {
+    text-align: right;
+    position: relative;
+    /* left: 10%; */
+    top: -50px;
+    /* font-weight: bold; */
+    color: orange;
 }

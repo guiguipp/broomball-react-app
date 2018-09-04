@@ -1,9 +1,10 @@
-import { SHOW_GAMES_TO_STATS, GET_GAMES_AND_TRANSFORM } from '../actions/types';
+import { SHOW_GAMES_TO_STATS, GET_GAMES_AND_TRANSFORM, SET_YEARS_VISIBILITIES } from '../actions/types';
 
 const initialState = {
     visibility: "hidden",
     message: "Teams have not been drafted for this team yet. Please come back later!",
-    reducedGames: []
+    reducedGames: [],
+    gameVisibility: []
     }
 
 export default function(state = initialState, action) {
@@ -17,9 +18,15 @@ export default function(state = initialState, action) {
         case GET_GAMES_AND_TRANSFORM:
         return {
             ...state,
-            reducedGames: action.payload,
+            reducedGames: action.payload.game,
+            gameVisibility: action.payload.visibility,
         }
 
+        case SET_YEARS_VISIBILITIES:
+        return {
+            ...state, 
+            gameVisibility: action.payload
+        }
         default:
         return state;
     }
