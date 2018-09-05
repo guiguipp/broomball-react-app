@@ -6,6 +6,10 @@ import {
     ADD_GAME_TO_SELECTED,
     REMOVE_GAME_FROM_SELECTED,
     TOGGLE_LIST_OF_GAMES,
+    GET_PLAYERS_FOR_RECORDS,
+    ADD_PLAYER_TO_SELECTED,
+    REMOVE_PLAYER_FROM_SELECTED,
+    TOGGLE_LIST_OF_PLAYERS,
     } from '../actions/types';
 
 const initialState = {
@@ -16,7 +20,11 @@ const initialState = {
     allGames: [],
     selectedGames: [],
     unselectedGames: [],
-    listOfGames: "hidden"
+    listOfGames: "hidden",
+    allPlayers: [],
+    selectedPlayers: [],
+    unselectedPlayers: [],
+    listOfPlayers: "hidden"
     }
 
 export default function(state = initialState, action) {
@@ -43,7 +51,7 @@ export default function(state = initialState, action) {
         case GET_GAMES_FOR_RECORDS:
         return {
             ...state,
-            selectedGames: initialState.unselectedGames,
+            selectedGames: initialState.selectedGames,
             allGames: action.payload,
             unselectedGames: action.payload
         }
@@ -65,6 +73,33 @@ export default function(state = initialState, action) {
         return {
             ...state,
             listOfGames: action.payload
+        }
+
+        case GET_PLAYERS_FOR_RECORDS:
+        return {
+            ...state,
+            selectedPlayers: initialState.selectedPlayers,
+            allPlayers: action.payload,
+            unselectedPlayers: action.payload
+        }
+
+        case ADD_PLAYER_TO_SELECTED:
+        return {
+            ...state,
+            selectedPlayers: [...state.selectedPlayers, action.payload],
+            unselectedPlayers: state.unselectedPlayers.filter(player => player._id !== action.payload._id)
+        }
+
+        case REMOVE_PLAYER_FROM_SELECTED:
+        return {
+            ...state,
+            selectedPlayers: state.selectedPlayers.filter(player => player._id !== action.payload._id),
+            unselectedPlayers: [...state.unselectedPlayers, action.payload]
+        }
+        case TOGGLE_LIST_OF_PLAYERS:
+        return {
+            ...state,
+            listOfPlayers: action.payload
         }
         default:
         return state;

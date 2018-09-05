@@ -1,0 +1,38 @@
+.list_of_players {
+    width: 100%;
+    padding: 0 5% 0 5%;
+    margin-top: -5%;
+}
+
+.record_player_button {
+    margin: 3%;
+    min-width: 150px;
+    border-radius: 20px;
+}
+
+.selected_member {
+    background: linear-gradient(160deg, teal, #17a2b8);
+    color: white;
+}
+
+.unselected_member {
+    color: teal;
+    border-style: solid;
+    border-color: teal;
+    border-width: 2px;
+}
+
+.selected_non_member {
+    background: linear-gradient(70deg, #DE733A,#EA8D47);
+    color: white;
+}
+
+.unselected_non_member {
+    color: #EA8D47;
+    border-style: solid;
+    border-color: #EA8D47;
+    border-width: 2px;
+}
+.player_action_icon {
+    margin-left: 10px;
+}

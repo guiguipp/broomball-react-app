@@ -6,6 +6,10 @@ import {
     ADD_GAME_TO_SELECTED,
     REMOVE_GAME_FROM_SELECTED,
     TOGGLE_LIST_OF_GAMES,
+    GET_PLAYERS_FOR_RECORDS, 
+    ADD_PLAYER_TO_SELECTED,
+    REMOVE_PLAYER_FROM_SELECTED,
+    TOGGLE_LIST_OF_PLAYERS,
 } from './types';
 
 import API from "../../utils/API"
@@ -154,6 +158,41 @@ export const unselectGame = (id) => dispatch => {
 export const toggleListOfGames = (newStatus) => dispatch => {
     dispatch({
         type: TOGGLE_LIST_OF_GAMES,
+        payload: newStatus
+    })
+}
+// players
+export const getPlayersForStats = () => dispatch => {
+    API.getPlayers()
+        .then(res => { 
+            if(res.status !== 200) {
+                throw new Error(res.statusText)
+            }
+            else {
+                dispatch({
+                    type: GET_PLAYERS_FOR_RECORDS,
+                    payload: res.data
+                })
+            }
+        })
+}
+export const selectPlayer = (id) => dispatch => {
+    dispatch({
+        type: ADD_PLAYER_TO_SELECTED,
+        payload: id
+    })
+}
+
+export const unselectPlayer = (id) => dispatch => {
+    dispatch({
+        type: REMOVE_PLAYER_FROM_SELECTED,
+        payload: id
+    })
+}
+
+export const toggleListOfPlayers = (newStatus) => dispatch => {
+    dispatch({
+        type: TOGGLE_LIST_OF_PLAYERS,
         payload: newStatus
     })
 }
