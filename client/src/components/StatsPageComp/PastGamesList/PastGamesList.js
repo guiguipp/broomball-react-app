@@ -21,17 +21,12 @@ class PastGameList extends Component {
         
         let visibleBefore = this.props.gameVisibility.slice(0, num)
         let visibleAfter = this.props.gameVisibility.slice(num + 1)
-        console.log("visible after: ", visibleAfter)
         let newArray = [...visibleBefore, newStatus, ...visibleAfter]
         
-        console.log("This.props.gamesVisiblit: ", this.props.gameVisibility)
-        console.log("New visibility: ", newArray)
-
         this.props.setVisibility(newArray)
         }
 
     getGameInfo = (gameId) => {
-        console.log("gameId: ", gameId)
         this.props.getGame(gameId);
         }
 

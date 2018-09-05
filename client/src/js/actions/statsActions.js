@@ -1,4 +1,13 @@
-import { SHOW_GAMES_TO_STATS, GET_GAMES_AND_TRANSFORM, SET_YEARS_VISIBILITIES } from './types';
+import { 
+    SHOW_GAMES_TO_STATS, 
+    GET_GAMES_AND_TRANSFORM, 
+    SET_YEARS_VISIBILITIES, 
+    GET_GAMES_FOR_RECORDS, 
+    ADD_GAME_TO_SELECTED,
+    REMOVE_GAME_FROM_SELECTED,
+    TOGGLE_LIST_OF_GAMES,
+} from './types';
+
 import API from "../../utils/API"
 
 const moment = require("moment");
@@ -111,5 +120,40 @@ export const setVisibility = (array) => dispatch => {
     dispatch({
             type: SET_YEARS_VISIBILITIES,
             payload: array
+    })
+}
+
+export const getGamesForStats = () => dispatch => {
+    API.getGames()
+        .then(res => { 
+            if(res.status !== 200) {
+                throw new Error(res.statusText)
+            }
+            else {
+                dispatch({
+                    type: GET_GAMES_FOR_RECORDS,
+                    payload: res.data
+                })
+            }
+        })
+}
+export const selectGame = (id) => dispatch => {
+    dispatch({
+        type: ADD_GAME_TO_SELECTED,
+        payload: id
+    })
+}
+
+export const unselectGame = (id) => dispatch => {
+    dispatch({
+        type: REMOVE_GAME_FROM_SELECTED,
+        payload: id
+    })
+}
+
+export const toggleListOfGames = (newStatus) => dispatch => {
+    dispatch({
+        type: TOGGLE_LIST_OF_GAMES,
+        payload: newStatus
     })
 }

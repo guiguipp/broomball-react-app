@@ -26,9 +26,7 @@ const moment = require("moment");
 const initialState = {
     games: [],
     upcomingGames: [],
-    pastGames: [],
-    newGame: {},
-    deletedGame: {},
+    pastGames: [], // games showing in the "Past Games" list of Draft.js. Sorted from recent to old
     gameInfo: {
         goals: 0,
         assists: 0,
@@ -69,17 +67,16 @@ export default function(state = initialState, action) {
             ...state,
             games: action.payload,
             upcomingGames: action.payload.filter(game => game._id >= moment().format("YYYY-MM-DD")),
-            pastGames: action.payload.filter(game => game._id < moment().format("YYYY-MM-DD")),
+            pastGames: _.sortBy(action.payload.filter(game => game._id < moment().format("YYYY-MM-DD")),"_id").reverse(),
         }
         
         case DELETE_GAME:
         return {
             ...state,
-            deletedGame: action.payload,
             visibility: initialState.visibility,
             games: state.games.filter(game => game._id !== action.payload._id),
             upcomingGames: state.upcomingGames.filter(game => game._id !== action.payload._id),
-            pastGames: state.pastGames.filter(game => game._id !== action.payload._id),
+            pastGames: _.sortBy(state.pastGames.filter(game => game._id !== action.payload._id),"_id").reverse(),
             lockStatus: "hidden",
             draftMode: initialState.draftMode,
             pickButtons: initialState.pickButtons,
@@ -89,10 +86,9 @@ export default function(state = initialState, action) {
         case NEW_GAME:
         return {
             ...state,
-            newGame: action.payload,
             games: _.sortBy([...state.games, action.payload], "game_date"),
             upcomingGames: action.payload._id >= moment().format("YYYY-MM-DD") ? _.sortBy([action.payload, ...state.upcomingGames], "game_date") : state.upcomingGames,
-            pastGames: action.payload._id < moment().format("YYYY-MM-DD") ? _.sortBy([action.payload, ...state.pastGames], "game_date") : state.pastGames 
+            pastGames: action.payload._id < moment().format("YYYY-MM-DD") ? _.sortBy([action.payload, ...state.pastGames], "game_date").reverse() : state.pastGames 
         }
 
         case GET_GAME:
@@ -220,7 +216,7 @@ export default function(state = initialState, action) {
             draftMode: action.payload.team,
             pickButtons: action.payload.buttons,
             visibility: {top: "hidden", main: "visible", bottom: "visible"},
-            // as opposed to the "SET_PICK" case, the filtering needs to happen in the reducer, as it is based from data already stored in the state (not coming from API)
+            // as opposed to the "SET_PICK" case, the filtering needs to happen in the reducer, as it is based on data already stored in the state (not coming from API)
             picked: action.payload.team === "Dark" ? _.sortBy(state.draft.players.filter(player => player.gameInfo.available === true && player.gameInfo.darkPickNum !== 0),(obj) => obj.gameInfo.darkPickNum) : _.sortBy(state.draft.players.filter(player => player.gameInfo.available === true && player.gameInfo.whitePickNum !== 0),(obj) => obj.gameInfo.whitePickNum),
             unpicked: action.payload.team === "Dark" ? _.sortBy(state.draft.players.filter(player => player.gameInfo.available === true && player.gameInfo.darkPickNum === 0), "name") : _.sortBy(state.draft.players.filter(player => player.gameInfo.available === true && player.gameInfo.whitePickNum === 0), "name"), 
         }
