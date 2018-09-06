@@ -1,18 +1,43 @@
 import { 
     SHOW_GAMES_TO_STATS, 
-    GET_GAMES_AND_TRANSFORM, 
+    GET_GAMES_AND_TRANSFORM,
+    GET_GAMES_IN_TIMESPAN, 
     SET_YEARS_VISIBILITIES, 
     ADD_GAME_TO_SELECTED,
     REMOVE_GAME_FROM_SELECTED,
     ADD_PLAYER_TO_SELECTED,
     REMOVE_PLAYER_FROM_SELECTED,
     TOGGLE_RECORDS_VIEWS,
-    PLAYER_RECORDS
+    ADD_PLAYER_RECORDS,
+    REMOVE_PLAYER_RECORDS
 } from './types';
 
 import API from "../../utils/API"
 
 const moment = require("moment");
+// need a separate function to fetch games within a time span
+export const getGamesForRecords = () => dispatch => {
+    API.getGames()
+        .then(res => {
+            if(res.status !== 200) {
+                throw new Error(res.statusText)
+            }
+            else {
+                let arrayOfTenBuckerIDs = []
+                let allTenBuckers= res.data.map(game => game.players.filter(player => player.membershipStatus !== "Member"))
+                allTenBuckers.forEach(array => array.map(player => arrayOfTenBuckerIDs.push(player._id)))
+
+                dispatch({
+                    type: GET_GAMES_IN_TIMESPAN,
+                    payload: { 
+                        games: res.data,
+                        allTenBuckers: arrayOfTenBuckerIDs
+                    }
+                })
+            }
+        })
+    }
+
 
 export const toggleVisibility = (currentState) => dispatch => {
     if (currentState === "hidden") {
@@ -142,14 +167,14 @@ export const unselectGame = (game) => dispatch => {
 export const selectPlayer = (player) => dispatch => {
     dispatch({
         type: ADD_PLAYER_TO_SELECTED,
-        payload: player
+        payload: {selected: player}
     })
 }
 
 export const unselectPlayer = (player) => dispatch => {
     dispatch({
         type: REMOVE_PLAYER_FROM_SELECTED,
-        payload: player
+        payload: {selected: player}
     })
 }
 
@@ -221,10 +246,18 @@ export const toggleViews = (currentStatus, element) => dispatch => {
     }
 }
 
-export const playerStatObject = (player) => dispatch => {
+export const addPlayerStatObject = (player) => dispatch => {
     console.log("player in statsActions.js: ", player)
     dispatch({
-        type: PLAYER_RECORDS,
+        type: ADD_PLAYER_RECORDS,
+        payload: player
+    })
+}
+
+export const removePlayerStatObject = (player) => dispatch => {
+    console.log("player in statsActions.js: ", player)
+    dispatch({
+        type: REMOVE_PLAYER_RECORDS,
         payload: player
     })
 }

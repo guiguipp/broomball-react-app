@@ -1,18 +1,24 @@
 import { 
     SHOW_GAMES_TO_STATS, 
-    GET_GAMES_AND_TRANSFORM, 
+    GET_GAMES_AND_TRANSFORM,
+    GET_GAMES_IN_TIMESPAN, 
     SET_YEARS_VISIBILITIES, 
     ADD_GAME_TO_SELECTED,
     REMOVE_GAME_FROM_SELECTED,
     ADD_PLAYER_TO_SELECTED,
     REMOVE_PLAYER_FROM_SELECTED,
     TOGGLE_RECORDS_VIEWS,
-    PLAYER_RECORDS
+    ADD_PLAYER_RECORDS,
+    REMOVE_PLAYER_RECORDS
     } from '../actions/types';
+
+import _ from "underscore"
+const moment = require("moment");
 
 const initialState = {
     visibility: "hidden",
     message: "Teams have not been drafted for this team yet. Please come back later!",
+    gamesForRecords: [],
     reducedGames: [],
     gameVisibility: [],
     selectedGames: [],
@@ -23,7 +29,8 @@ const initialState = {
     listOfGames: "hidden",
     listOfPlayers: "hidden", 
     sortOptionsDisplay: "hidden",
-    playerRecords: []
+    playerRecords: [],
+    arrayOfTenBuckersID: [],
     }
 
 export default function(state = initialState, action) {
@@ -39,6 +46,13 @@ export default function(state = initialState, action) {
             ...state,
             reducedGames: action.payload.game,
             gameVisibility: action.payload.visibility,
+        }
+
+        case GET_GAMES_IN_TIMESPAN:
+        return {
+            ...state,
+            gamesForRecords: _.sortBy(action.payload.games.filter(game => game._id < moment().format("YYYY-MM-DD")),"_id").reverse(),
+            arrayOfTenBuckersID: action.payload.allTenBuckers,
         }
 
         case SET_YEARS_VISIBILITIES:
@@ -64,15 +78,15 @@ export default function(state = initialState, action) {
         case ADD_PLAYER_TO_SELECTED:
         return {
             ...state,
-            selectedPlayers: [...state.selectedPlayers, action.payload],
-            unselectedPlayers: state.unselectedPlayers.filter(player => player._id !== action.payload._id)
+            selectedPlayers: [...state.selectedPlayers, action.payload.selected],
+            unselectedPlayers: state.unselectedPlayers.filter(player => player._id !== action.payload.selected._id)
         }
 
         case REMOVE_PLAYER_FROM_SELECTED:
         return {
             ...state,
-            selectedPlayers: state.selectedPlayers.filter(player => player._id !== action.payload._id),
-            unselectedPlayers: [...state.unselectedPlayers, action.payload]
+            selectedPlayers: state.selectedPlayers.filter(player => player._id !== action.payload.selected._id),
+            unselectedPlayers: [...state.unselectedPlayers, action.payload.selected]
         }
         
         case TOGGLE_RECORDS_VIEWS:
@@ -84,10 +98,16 @@ export default function(state = initialState, action) {
             sortOptionsDisplay: action.payload.sort
         }
 
-        case PLAYER_RECORDS:
+        case ADD_PLAYER_RECORDS:
         return {
             ...state, 
-            playerRecords: action.payload
+            playerRecords: [...state.playerRecords, action.payload]
+        }
+
+        case REMOVE_PLAYER_RECORDS:
+        return {
+            ...state, 
+            playerRecords: state.playerRecords.filter(player => player._id !== action.payload._id)
         }
 
         default:

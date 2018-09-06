@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { connect } from 'react-redux';
-import { fetchGames } from '../../../js/actions/gameActions'
+import { getGamesForRecords } from '../../../js/actions/statsActions'
 import { selectGame } from '../../../js/actions/statsActions'
 import { unselectGame } from '../../../js/actions/statsActions'
 import { toggleViews } from '../../../js/actions/statsActions'
@@ -13,7 +13,7 @@ import "./GameSelector.css";
 class GameSelector extends Component {
 
     componentDidMount() {
-        this.props.fetchGames();
+        this.props.getGamesForRecords();
     }
 
     unselectGame(game) {
@@ -66,8 +66,8 @@ Games.propTypes = {
 const mapStateToProps = state => ({
     selectedGames: state.stats.selectedGames,
     unselectedGames: state.stats.unselectedGames,
-    allGames: state.games.pastGames,
+    allGames: state.stats.gamesForRecords,
     listOfGames: state.stats.listOfGames
 })
 
-export default connect(mapStateToProps, { fetchGames, selectGame, unselectGame, toggleViews }) (GameSelector)
+export default connect(mapStateToProps, { getGamesForRecords, selectGame, unselectGame, toggleViews }) (GameSelector)

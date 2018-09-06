@@ -5,14 +5,17 @@
     border-radius: 20px;
     padding: 1% 1% 1% 2%;
     margin: 1% 1% 1% 2%;
+    width: 20%;
+    height: 200px;
+    overflow: scroll;
 }
 .player_name {
     text-align: center;
     font-weight: bold;
     font-variant: small-caps;
     margin-bottom: 10%;
+    font-size: 125%;
 }
-
 
 .member_record {
     color: teal;
@@ -22,4 +25,14 @@
 .non_member_record {
     color: #EA8D47;
     border-color: #EA8D47;
+}
+.entry {
+    font-variant: small-caps;
+}
+.addendum {
+    padding-left: 5%;
+    font-size: 85%;
+}
+.value {
+    font-weight: bold;
 }
