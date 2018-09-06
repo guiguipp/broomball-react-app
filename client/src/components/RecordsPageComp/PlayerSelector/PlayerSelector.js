@@ -25,9 +25,9 @@ class PlayerSelector extends Component {
 
     selectPlayer(broomballer) {
         this.props.selectPlayer(broomballer)
-        console.log("broomballer in PlayerSelector: ", broomballer)
         let gamesPlayed = this.props.selectedGames.filter(game => game.players.filter(player => player._id === broomballer._id )[0])
-        let playerReduced = gamesPlayed.reduce((players, game) => {
+        if (gamesPlayed.length > 0) {
+            let playerReduced = gamesPlayed.reduce((players, game) => {
                 let gameInfo = game.players.filter(player => player._id === broomballer._id).map(player => player.gameInfo)
                 let win;
                 let available;
@@ -59,18 +59,34 @@ class PlayerSelector extends Component {
                 
                 return players
                 }, {});
-                
-                let gamePlayedFromArray = playerReduced.gamesPlayed.length
-                let winsFromArray = playerReduced.wins.length
-                let goalsFromArray = playerReduced.goals.reduce((a,b) => a + b, 0)
-                let assistsFromArray = playerReduced.assists.reduce((a, b) => a + b, 0)
-                
-                playerReduced.gamesPlayed = gamePlayedFromArray
-                playerReduced.wins = winsFromArray
-                playerReduced.goals = goalsFromArray 
-                playerReduced.assists = assistsFromArray
-                
-                this.props.addPlayerStatObject( playerReduced )
+                    
+            let gamePlayedFromArray = playerReduced.gamesPlayed.length
+            let winsFromArray = playerReduced.wins.length
+            let winPercent = gamePlayedFromArray > 0 ? Math.floor((playerReduced.wins.length / playerReduced.gamesPlayed.length) * 100) : "N/A"
+            let goalsFromArray = playerReduced.goals.reduce((a,b) => a + b, 0)
+            let assistsFromArray = playerReduced.assists.reduce((a, b) => a + b, 0)
+            
+            playerReduced.gamesPlayed = gamePlayedFromArray
+            playerReduced.wins = winsFromArray
+            playerReduced.winPercent = winPercent
+            playerReduced.goals = goalsFromArray 
+            playerReduced.assists = assistsFromArray
+            
+            this.props.addPlayerStatObject( playerReduced )
+            }
+            else {
+                let playerWithoutRecord = {
+                    name: broomballer.name,
+                    gamesPlayed: 0,
+                    goals: "N/A",
+                    assists: "N/A",
+                    membershipStatus: broomballer.membershipStatus,
+                    winPercent: "N/A",
+                    win: "N/A",
+                    _id: broomballer._id
+                }
+                this.props.addPlayerStatObject(playerWithoutRecord)
+            }
     }
 
     toggleViews(currentStatus){

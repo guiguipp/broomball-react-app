@@ -248,7 +248,6 @@ export const toggleViews = (currentStatus, element) => dispatch => {
 }
 
 export const addPlayerStatObject = (player) => dispatch => {
-    console.log("player in statsActions.js: ", player)
     dispatch({
         type: ADD_PLAYER_RECORDS,
         payload: player
@@ -256,15 +255,14 @@ export const addPlayerStatObject = (player) => dispatch => {
 }
 
 export const removePlayerStatObject = (player) => dispatch => {
-    console.log("player in statsActions.js: ", player)
     dispatch({
         type: REMOVE_PLAYER_RECORDS,
         payload: player
     })
 }
-
+// this handles when games are removed after the players. In this case, data needs to be re-initiated
+// we recreate the array of players
 export const updatePlayers = (players) => dispatch => {
-    console.log("players in updatePlayers statsActions.js: ", players)
     dispatch({
         type: REPLACE_PLAYERS_RECORDS,
         payload: players

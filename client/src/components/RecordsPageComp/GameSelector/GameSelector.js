@@ -27,7 +27,6 @@ class GameSelector extends Component {
             this.props.selectedPlayers.forEach((broomballer) => {
             // re-filter the game array removing the game unselected
             let gamesPlayed = this.props.selectedGames.filter(match => match._id !== game._id).filter(game => game.players.filter(player => player._id === broomballer._id )[0])
-            console.log("gamesPlayed: ", gamesPlayed)
             if (gamesPlayed.length > 0) {
                 let playerReduced = gamesPlayed.reduce((players, game) => {
                     let gameInfo = game.players.filter(player => player._id === broomballer._id).map(player => player.gameInfo)
@@ -64,23 +63,38 @@ class GameSelector extends Component {
                     // this line errors if the player is a ten-bucker who didn't play in the remaining games
                     let gamePlayedFromArray = playerReduced.gamesPlayed.length
                     let winsFromArray = playerReduced.wins.length
+                    let winPercent = gamePlayedFromArray > 0 ? Math.floor((playerReduced.wins.length / playerReduced.gamesPlayed.length) * 100) : "N/A"
                     let goalsFromArray = playerReduced.goals.reduce((a,b) => a + b, 0)
                     let assistsFromArray = playerReduced.assists.reduce((a, b) => a + b, 0)
                     
                     playerReduced.gamesPlayed = gamePlayedFromArray
                     playerReduced.wins = winsFromArray
+                    playerReduced.winPercent = winPercent
                     playerReduced.goals = goalsFromArray 
                     playerReduced.assists = assistsFromArray
                     
         
                     playersForRecords.push(playerReduced)
                     }
+                    else {
+                        let playerWithoutRecord = {
+                            name: broomballer.name,
+                            gamesPlayed: 0,
+                            goals: "N/A",
+                            assists: "N/A",
+                            membershipStatus: broomballer.membershipStatus,
+                            winPercent: "N/A",
+                            win: "N/A",
+                            _id: broomballer._id
+                        }
+                        playersForRecords.push(playerWithoutRecord)
+                    }
                 this.props.updatePlayers( playersForRecords )
                 })
             }
         
     }
-
+    
     selectGame(game) {
         this.props.selectGame(game)
         /*  Adapting the reducer originally created in PlayerSelector */
@@ -90,52 +104,72 @@ class GameSelector extends Component {
             this.props.selectedPlayers.forEach((broomballer) => {
             // re-filter the game array adding it newly added game
             let gamesPlayed = [game, ...this.props.selectedGames].filter(game => game.players.filter(player => player._id === broomballer._id )[0])
-            let playerReduced = gamesPlayed.reduce((players, game) => {
-                let gameInfo = game.players.filter(player => player._id === broomballer._id).map(player => player.gameInfo)
-                let win;
-                let available;
-                players.name = broomballer.name
-                players._id = broomballer._id
-                players.membershipStatus = broomballer.membershipStatus
+            if (gamesPlayed.length > 0) {
+                let playerReduced = gamesPlayed.reduce((players, game) => {
+                    let gameInfo = game.players.filter(player => player._id === broomballer._id).map(player => player.gameInfo)
+                    let win;
+                    let available;
+                    players.name = broomballer.name
+                    players._id = broomballer._id
+                    players.membershipStatus = broomballer.membershipStatus
+                    
+                    players.gamesPlayed = players.gamesPlayed || []
+                    if(gameInfo[0].available === true){
+                        available= 1
+                        players.gamesPlayed.push(available)
+                    }
+                    
+                    players.goals = players.goals || []
+                    if(gameInfo[0].available === true) {
+                        players.goals.push(gameInfo[0].goals)
+                    }
+                    
+                    players.assists = players.assists || []
+                    if (gameInfo[0].available === true) {
+                        players.assists.push(gameInfo[0].assists)
+                    }
+                    
+                    players.wins = players.wins || []
+                    if(gameInfo[0].available === true && game.win === gameInfo[0].team){
+                        win= "Win"
+                        players.wins.push(win)
+                    }
                 
-                players.gamesPlayed = players.gamesPlayed || []
-                if(gameInfo[0].available === true){
-                    available= 1
-                    players.gamesPlayed.push(available)
+                    return players
+                    }, {});
+                    
+                    let gamePlayedFromArray = playerReduced.gamesPlayed ? playerReduced.gamesPlayed.length : 0 
+                    let winsFromArray = playerReduced.wins ? playerReduced.wins.length : 0
+                    let winPercent = gamePlayedFromArray > 0 ? Math.floor((playerReduced.wins.length / playerReduced.gamesPlayed.length) * 100) : "N/A"
+                    let goalsFromArray = playerReduced.goals ? playerReduced.goals.reduce((a,b) => a + b, 0) : 0
+                    let assistsFromArray = playerReduced.assists ? playerReduced.assists.reduce((a, b) => a + b, 0) : 0
+                    
+                    playerReduced.gamesPlayed = gamePlayedFromArray
+                    playerReduced.wins = winsFromArray
+                    playerReduced.winPercent = winPercent
+                    playerReduced.goals = goalsFromArray 
+                    playerReduced.assists = assistsFromArray
+                    
+                    playersForRecords.push(playerReduced)
+                }
+                else {
+                    let playerWithoutRecord = {
+                        name: broomballer.name,
+                        gamesPlayed: 0,
+                        goals: "N/A",
+                        assists: "N/A",
+                        membershipStatus: broomballer.membershipStatus,
+                        winPercent: "N/A",
+                        win: "N/A",
+                        _id: broomballer._id
+                    }
+                    playersForRecords.push(playerWithoutRecord)
                 }
                 
-                players.goals = players.goals || []
-                if(gameInfo[0].available === true) {
-                    players.goals.push(gameInfo[0].goals)
-                }
                 
-                players.assists = players.assists || []
-                if (gameInfo[0].available === true) {
-                    players.assists.push(gameInfo[0].assists)
-                }
-                
-                players.wins = players.wins || []
-                if(gameInfo[0].available === true && game.win === gameInfo[0].team){
-                    win= "Win"
-                    players.wins.push(win)
-                }
-                
-                return players
-                }, {});
-                
-                let gamePlayedFromArray = playerReduced.gamesPlayed ? playerReduced.gamesPlayed.length : 0 
-                let winsFromArray = playerReduced.wins ? playerReduced.wins.length : 0
-                let goalsFromArray = playerReduced.goals ? playerReduced.goals.reduce((a,b) => a + b, 0) : 0
-                let assistsFromArray = playerReduced.assists ? playerReduced.assists.reduce((a, b) => a + b, 0) : 0
-                
-                playerReduced.gamesPlayed = gamePlayedFromArray
-                playerReduced.wins = winsFromArray
-                playerReduced.goals = goalsFromArray 
-                playerReduced.assists = assistsFromArray
-                
-    
-                playersForRecords.push(playerReduced)
                 this.props.updatePlayers( playersForRecords )
+
+                
                 })
             }
     }
