@@ -25,14 +25,16 @@ class PlayerSelector extends Component {
 
     selectPlayer(broomballer) {
         this.props.selectPlayer(broomballer)
-        this.props.addPlayerStatObject(this.props.selectedGames.filter(game => game.players.filter(player => player._id === broomballer._id )[0])
-            .reduce((players, game) => {
+        let gamePlayed = this.props.selectedGames.filter(game => game.players.filter(player => player._id === broomballer._id )[0])
+            console.log("gamePlayed: ", gamePlayed)
+        let playerReduced = gamePlayed.reduce((players, game) => {
                 let gameInfo = game.players.filter(player => player._id === broomballer._id).map(player => player.gameInfo)
                 let win;
                 let available;
                 players.name = broomballer.name
                 players._id = broomballer._id
                 players.membershipStatus = broomballer.membershipStatus
+                
                 players.gamesPlayed = players.gamesPlayed || []
                 if(gameInfo[0].available === true){
                     available= 1
@@ -56,8 +58,20 @@ class PlayerSelector extends Component {
                 }
                 
                 return players
-                }, {})
-            )
+                }, {});
+                console.log("PlayerReduced before update: ", playerReduced)
+                let gamePlayedFromArray = playerReduced.gamesPlayed.length
+                let winsFromArray = playerReduced.wins.length
+                let goalsFromArray = playerReduced.goals.reduce((a,b) => a + b, 0)
+                let assistsFromArray = playerReduced.assists.reduce((a, b) => a + b, 0)
+                
+                playerReduced.gamesPlayed = gamePlayedFromArray
+                playerReduced.wins = winsFromArray
+                playerReduced.goals = goalsFromArray 
+                playerReduced.assists = assistsFromArray
+                console.log("PlayerReduced after update: ", playerReduced)
+
+                this.props.addPlayerStatObject( playerReduced )
     }
 
     toggleViews(currentStatus){

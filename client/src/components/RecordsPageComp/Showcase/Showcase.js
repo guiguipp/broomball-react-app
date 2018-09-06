@@ -28,12 +28,12 @@ class Showcase extends Component {
                         return (
                             <div key={object._id} className={object.membershipStatus === "Member" ? "member_record player_card" : "non_member_record player_card "}>
                                 <p className="player_name">{object.name}</p>
-                                <p><span className="entry">Games Played:</span> <span className="value">{object.gamesPlayed.length}</span>/{this.props.selectedGames.length}</p>
-                                <p><span className="entry">Games Won:</span> <span className="value">{object.gamesPlayed.length !== 0 ? ((object.gamesPlayed.length / object.wins.length !== 0 ? object.wins.length : 0) * 100).toFixed(0) + "%" : "N/A"}</span></p>
-                                <p><span className="entry">Goals:</span> <span className="value">{object.gamesPlayed.length !== 0 ? object.goals.reduce((a,b) => a + b, 0) : "N/A"}</span>
-                                <br/><span className="addendum"> –– per game: <span className="value">{object.gamesPlayed.length !== 0 ? ((object.goals.reduce((a,b) => a + b, 0) / object.gamesPlayed.length)) : "N/A"}</span></span></p>
-                                <p><span className="entry">Assists:</span> <span className="value">{object.gamesPlayed.length !== 0 ? object.assists.reduce((a,b) => a + b, 0) : "N/A"}</span>
-                                <br/><span className="addendum"> –– per game: <span className="value">{object.gamesPlayed.length !== 0 ? ((object.assists.reduce((a,b) => a + b, 0) / object.gamesPlayed.length)) : "N/A"}</span></span></p>
+                                <p><span className="entry">Games Played:</span> <span className="value">{object.gamesPlayed}</span>/{this.props.selectedGames.length}</p>
+                                <p><span className="entry">Games Won:</span> <span className="value">{object.gamesPlayed !== 0 ? (Math.floor((object.wins / object.gamesPlayed) * 100) + "%") : "N/A"}</span></p>
+                                <p><span className="entry">Goals:</span> <span className="value">{object.gamesPlayed !== 0 ? object.goals : "N/A"}</span>
+                                <br/><span className="addendum"> –– per game: <span className="value">{object.gamesPlayed.length !== 0 ? (object.goals / object.gamesPlayed).toFixed(2) : "N/A"}</span></span></p>
+                                <p><span className="entry">Assists:</span> <span className="value">{object.gamesPlayed.length !== 0 ? object.assists : "N/A"}</span>
+                                <br/><span className="addendum"> –– per game: <span className="value">{object.gamesPlayed.length !== 0 ? (object.assists / object.gamesPlayed).toFixed(2) : "N/A"}</span></span></p>
                             </div>
                             )}
                             ) : null }
