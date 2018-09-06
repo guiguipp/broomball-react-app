@@ -1,0 +1,25 @@
+.player_card {
+    border-style: solid;
+    border-width: 1px;
+    display: inline-grid;
+    border-radius: 20px;
+    padding: 1% 1% 1% 2%;
+    margin: 1% 1% 1% 2%;
+}
+.player_name {
+    text-align: center;
+    font-weight: bold;
+    font-variant: small-caps;
+    margin-bottom: 10%;
+}
+
+
+.member_record {
+    color: teal;
+    border-color: teal;
+}
+
+.non_member_record {
+    color: #EA8D47;
+    border-color: #EA8D47;
+}

@@ -12,86 +12,26 @@ class Showcase extends Component {
         this.props.toggleViews(currentStatus, "sort")
     }
     renderPlayerStats(object) {
-        return (
-            <div key={object._id}>
-                <p>{object.name}</p>
-                <p>Games Played: {object.gamesPlayed.length}/{this.props.selectedGames.length}</p>
-                <p>Games Won: {object.wins.length}</p>
-                <p>Goals recorded: {object.goals.reduce((a,b) => a + b, 0)} (average: {object.goals.reduce((a,b) => a + b, 0) / object.goals.length})</p>
-                <p>Assists recorded: {object.assists.reduce((a,b) => a + b, 0)} (average: {object.assists.reduce((a,b) => a + b, 0) / object.goals.length})</p>
-            </div>
-        )
+        console.log("Object in renderPlayerStats: ", object)
+        if (object.name) {
+            return (
+                <div key={object._id} className={object.membershipStatus === "Member" ? "member_record player_card" : "non_member_record player_card "}>
+                    <p className="player_name">{object.name}</p>
+                    <p>Games Played: {object.gamesPlayed.length}/{this.props.selectedGames.length}</p>
+                    <p>Games Won: {object.gamesPlayed.length !== 0 ? ((object.gamesPlayed.length / object.wins.length !== 0 ? object.wins.length : 0) * 100).toFixed(2) + "%" : "N/A"}</p>
+                    <p>Goals: {object.gamesPlayed.length !== 0 ? object.goals.reduce((a,b) => a + b, 0) : "N/A"} (per game: {object.gamesPlayed.length !== 0 ? ((object.goals.reduce((a,b) => a + b, 0) / object.gamesPlayed.length) * 100).toFixed(2) + "%" : "N/A"})</p>
+                    <p>Assists: {object.gamesPlayed.length !== 0 ? object.assists.reduce((a,b) => a + b, 0) : "N/A"} (per game: {object.gamesPlayed.length !== 0 ? ((object.assists.reduce((a,b) => a + b, 0) / object.gamesPlayed.length) * 100).toFixed(2) + "%" : "N/A"})</p>
+                </div>
+                )
+            }
+        else {
+            return (
+            <div className="non_member_record player_card">
+                <p>No stats available for the player you selected (inactive ten bucker)</p>        
+            </div>)
+            }
         }
-    showStat(playerObject){
-        
-    // let refactoring1 = this.props.selectedGames.map(game => game.players.includes(player._id))
-    // let refactoring2 = this.props.selectedGames.map(game => game.players.filter(joueur => joueur._id === player._id ))
-    // let refactoring3 = this.props.selectedGames.map(game => game.players.filter(joueur => joueur._id === player._id ).filter(game => game.gameInfo.available === true))
-    // let refactoring4 = this.props.selectedGames.map(game => game.players.filter(joueur => joueur._id === player._id ).filter(game => game.gameInfo.available === true)).filter(array => array.length !== 0)
-    // console.log("refactoring1: ", refactoring1)
-    // console.log("refactoring2: ", refactoring2)
-    // console.log("refactoring3: ", refactoring3)
-    // console.log("refactoring4: ", refactoring4)
-    // console.log("refactoring4.length: ", refactoring4.length)
-    /*
-    let reduced1 = this.props.selectedGames
-        .reduce((players, game) => {
-            let filtered = game.players.filter(joueur => joueur._id === player._id)[0]
-            console.log(player.name, "\nchecking the game: ", game)
-            console.log("filtered: ", filtered)
-            console.log("Checking the player: ", players)
-            players.gamesPlayed = [] || []
-            players.gamesPlayed = [filtered, ...players.gamesPlayed]
-
-            return players
-            }, {})
-    console.log("reduced: ", reduced1)
-    */
     
-    let reduced2 = this.props.selectedGames.filter(game => game.players.filter(player => player._id === playerObject._id )[0])
-        .reduce((players, game) => {
-            let gameInfo = game.players.filter(player => player._id === playerObject._id).map(player => player.gameInfo)
-            let win;
-            let available;
-            players.name = playerObject.name
-            players._id = playerObject._id
-            players.gamesPlayed = players.gamesPlayed || []
-            if(gameInfo[0].available === true){
-                available= 1
-                players.gamesPlayed.push(available)
-            }
-            
-            players.goals = players.goals || []
-            if(gameInfo[0].available === true) {
-                players.goals.push(gameInfo[0].goals)
-            }
-            
-            players.assists = players.assists || []
-            if (gameInfo[0].available === true) {
-                players.assists.push(gameInfo[0].assists)
-            }
-            
-            players.wins = players.wins || []
-            if(gameInfo[0].available === true && game.win === gameInfo[0].team){
-                win= "Win"
-                players.wins.push(win)
-            }
-            
-            return players
-            }, {})
-            console.log("reduced2: ", reduced2)
-
-    /*let reduced2 = this.props.selectedGames
-        .reduce((player, game) => {
-            return player
-        }, { 
-            gamesPlayed: 0,
-            results: [],
-            goals: 0,
-            assists: 0
-            })*/
-    // console.log("reduced: ", reduced1)
-    }
     render() {
         return (
             <div className="full">
@@ -100,7 +40,7 @@ class Showcase extends Component {
                         <h3 className="header_h3 " onClick={()=> this.toggleViews(this.props.sortOptionsDisplay)}> {this.props.sortOptionsDisplay === "hidden" ? <FontAwesomeIcon icon="caret-right" className="header_icon"/> : <FontAwesomeIcon icon="caret-down" className="header_icon" />}Stats</h3>
                     </div>
                 </div>
-                <div className="content">
+                <div key={this.props.selectedPlayers.length} className="content">
                     <div className={"list_of_options " + this.props.sortOptionsDisplay}>
                     Options Will Be Here
                     </div>
@@ -127,6 +67,7 @@ class Showcase extends Component {
                                     let available;
                                     players.name = playerObject.name
                                     players._id = playerObject._id
+                                    players.membershipStatus = playerObject.membershipStatus
                                     players.gamesPlayed = players.gamesPlayed || []
                                     if(gameInfo[0].available === true){
                                         available= 1

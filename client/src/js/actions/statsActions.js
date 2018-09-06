@@ -6,7 +6,8 @@ import {
     REMOVE_GAME_FROM_SELECTED,
     ADD_PLAYER_TO_SELECTED,
     REMOVE_PLAYER_FROM_SELECTED,
-    TOGGLE_RECORDS_VIEWS
+    TOGGLE_RECORDS_VIEWS,
+    PLAYER_RECORDS
 } from './types';
 
 import API from "../../utils/API"
@@ -131,24 +132,24 @@ export const selectGame = (id) => dispatch => {
     })
 }
 
-export const unselectGame = (id) => dispatch => {
+export const unselectGame = (game) => dispatch => {
     dispatch({
         type: REMOVE_GAME_FROM_SELECTED,
-        payload: id
+        payload: game
     })
 }
 
-export const selectPlayer = (id) => dispatch => {
+export const selectPlayer = (player) => dispatch => {
     dispatch({
         type: ADD_PLAYER_TO_SELECTED,
-        payload: id
+        payload: player
     })
 }
 
-export const unselectPlayer = (id) => dispatch => {
+export const unselectPlayer = (player) => dispatch => {
     dispatch({
         type: REMOVE_PLAYER_FROM_SELECTED,
-        payload: id
+        payload: player
     })
 }
 
@@ -218,4 +219,12 @@ export const toggleViews = (currentStatus, element) => dispatch => {
             return
         }
     }
+}
+
+export const playerStatObject = (player) => dispatch => {
+    console.log("player in statsActions.js: ", player)
+    dispatch({
+        type: PLAYER_RECORDS,
+        payload: player
+    })
 }

@@ -6,8 +6,8 @@ import {
     REMOVE_GAME_FROM_SELECTED,
     ADD_PLAYER_TO_SELECTED,
     REMOVE_PLAYER_FROM_SELECTED,
-    TOGGLE_RECORDS_VIEWS
-    
+    TOGGLE_RECORDS_VIEWS,
+    PLAYER_RECORDS
     } from '../actions/types';
 
 const initialState = {
@@ -15,16 +15,15 @@ const initialState = {
     message: "Teams have not been drafted for this team yet. Please come back later!",
     reducedGames: [],
     gameVisibility: [],
-    allGames: [],
     selectedGames: [],
     unselectedGames: [],
-    allPlayers: [],
     selectedPlayers: [],
     unselectedPlayers: [],
     datePickers: "hidden",
     listOfGames: "hidden",
     listOfPlayers: "hidden", 
     sortOptionsDisplay: "hidden",
+    playerRecords: []
     }
 
 export default function(state = initialState, action) {
@@ -75,6 +74,7 @@ export default function(state = initialState, action) {
             selectedPlayers: state.selectedPlayers.filter(player => player._id !== action.payload._id),
             unselectedPlayers: [...state.unselectedPlayers, action.payload]
         }
+        
         case TOGGLE_RECORDS_VIEWS:
         return {
             ...state,
@@ -83,6 +83,13 @@ export default function(state = initialState, action) {
             listOfPlayers: action.payload.players, 
             sortOptionsDisplay: action.payload.sort
         }
+
+        case PLAYER_RECORDS:
+        return {
+            ...state, 
+            playerRecords: action.payload
+        }
+
         default:
         return state;
     }
