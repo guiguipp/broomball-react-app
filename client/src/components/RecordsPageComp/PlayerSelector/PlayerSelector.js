@@ -25,9 +25,9 @@ class PlayerSelector extends Component {
 
     selectPlayer(broomballer) {
         this.props.selectPlayer(broomballer)
-        let gamePlayed = this.props.selectedGames.filter(game => game.players.filter(player => player._id === broomballer._id )[0])
-            console.log("gamePlayed: ", gamePlayed)
-        let playerReduced = gamePlayed.reduce((players, game) => {
+        console.log("broomballer in PlayerSelector: ", broomballer)
+        let gamesPlayed = this.props.selectedGames.filter(game => game.players.filter(player => player._id === broomballer._id )[0])
+        let playerReduced = gamesPlayed.reduce((players, game) => {
                 let gameInfo = game.players.filter(player => player._id === broomballer._id).map(player => player.gameInfo)
                 let win;
                 let available;
@@ -59,7 +59,7 @@ class PlayerSelector extends Component {
                 
                 return players
                 }, {});
-                console.log("PlayerReduced before update: ", playerReduced)
+                
                 let gamePlayedFromArray = playerReduced.gamesPlayed.length
                 let winsFromArray = playerReduced.wins.length
                 let goalsFromArray = playerReduced.goals.reduce((a,b) => a + b, 0)
@@ -69,8 +69,7 @@ class PlayerSelector extends Component {
                 playerReduced.wins = winsFromArray
                 playerReduced.goals = goalsFromArray 
                 playerReduced.assists = assistsFromArray
-                console.log("PlayerReduced after update: ", playerReduced)
-
+                
                 this.props.addPlayerStatObject( playerReduced )
     }
 

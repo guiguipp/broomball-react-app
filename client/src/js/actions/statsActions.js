@@ -9,7 +9,8 @@ import {
     REMOVE_PLAYER_FROM_SELECTED,
     TOGGLE_RECORDS_VIEWS,
     ADD_PLAYER_RECORDS,
-    REMOVE_PLAYER_RECORDS
+    REMOVE_PLAYER_RECORDS,
+    REPLACE_PLAYERS_RECORDS
 } from './types';
 
 import API from "../../utils/API"
@@ -259,5 +260,13 @@ export const removePlayerStatObject = (player) => dispatch => {
     dispatch({
         type: REMOVE_PLAYER_RECORDS,
         payload: player
+    })
+}
+
+export const updatePlayers = (players) => dispatch => {
+    console.log("players in updatePlayers statsActions.js: ", players)
+    dispatch({
+        type: REPLACE_PLAYERS_RECORDS,
+        payload: players
     })
 }

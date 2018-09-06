@@ -9,7 +9,8 @@ import {
     REMOVE_PLAYER_FROM_SELECTED,
     TOGGLE_RECORDS_VIEWS,
     ADD_PLAYER_RECORDS,
-    REMOVE_PLAYER_RECORDS
+    REMOVE_PLAYER_RECORDS,
+    REPLACE_PLAYERS_RECORDS
     } from '../actions/types';
 
 import _ from "underscore"
@@ -108,6 +109,12 @@ export default function(state = initialState, action) {
         return {
             ...state, 
             playerRecords: state.playerRecords.filter(player => player._id !== action.payload._id)
+        }
+
+        case REPLACE_PLAYERS_RECORDS:
+        return {
+            ...state, 
+            playerRecords: action.payload
         }
 
         default:
