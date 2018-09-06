@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 
 import { connect } from 'react-redux';
-import { getPlayersForStats } from '../../../js/actions/statsActions'
+import { fetchPlayers } from '../../../js/actions/playerActions'
 import { selectPlayer } from '../../../js/actions/statsActions'
 import { unselectPlayer } from '../../../js/actions/statsActions'
-import { toggleListOfPlayers } from '../../../js/actions/statsActions'
+
+import { toggleViews } from '../../../js/actions/statsActions'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -13,7 +14,7 @@ import "./PlayerSelector.css";
 class PlayerSelector extends Component {
 
     componentDidMount() {
-        this.props.getPlayersForStats();
+        this.props.fetchPlayers();
     }
 
     unselectPlayer(player) {
@@ -24,19 +25,16 @@ class PlayerSelector extends Component {
         this.props.selectPlayer(player)
     }
 
-    toggleListOfPlayers(currentStatus){
-        let newStatus;
-        if(currentStatus === "hidden") {newStatus = "visible"}
-        else {newStatus = "hidden"}
-        this.props.toggleListOfPlayers(newStatus)
+    toggleViews(currentStatus){
+        this.props.toggleViews(currentStatus, "players")
     }
 
     render() {
         return (
-                <div>
+                <div className="full">
                     <div className="header">
                         <div>
-                            <h3 className="header_h3" onClick={()=> this.toggleListOfPlayers(this.props.listOfPlayers)}> {this.props.listOfPlayers === "hidden" ? <FontAwesomeIcon icon="caret-right" className="header_icon"/> : <FontAwesomeIcon icon="caret-down" className="header_icon" />}Select Players</h3>
+                            <h3 className="header_h3" onClick={()=> this.toggleViews(this.props.listOfPlayers)}> {this.props.listOfPlayers === "hidden" ? <FontAwesomeIcon icon="caret-right" className="header_icon"/> : <FontAwesomeIcon icon="caret-down" className="header_icon" />}Select Players</h3>
                         </div>
                     </div>
                     <div className="content">
@@ -69,8 +67,8 @@ class PlayerSelector extends Component {
 const mapStateToProps = state => ({
     selectedPlayers: state.stats.selectedPlayers,
     unselectedPlayers: state.stats.unselectedPlayers,
-    allPlayers: state.stats.allPlayers,
+    allPlayers: state.players.players,
     listOfPlayers: state.stats.listOfPlayers
 })
 
-export default connect(mapStateToProps, { getPlayersForStats, selectPlayer, unselectPlayer, toggleListOfPlayers }) (PlayerSelector)
+export default connect(mapStateToProps, { fetchPlayers, selectPlayer, unselectPlayer, toggleViews }) (PlayerSelector)

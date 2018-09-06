@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 // import { fetchGames } from "../../js/actions/gameActions"
 import GameSelector from "../../components/RecordsPageComp/GameSelector"
 import PlayerSelector from "../../components/RecordsPageComp/PlayerSelector"
+import Showcase from "../../components/RecordsPageComp/Showcase"
 
 import Logo from "../../components/images/logo.jpg";
 
@@ -25,6 +26,9 @@ render() {
             </div>
             <div className= "row">
                 < PlayerSelector />
+            </div>
+            <div className= "row">
+                < Showcase />
             </div>
         </div>
     </div>

@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 
 import { connect } from 'react-redux';
-import { getGamesForStats } from '../../../js/actions/statsActions'
+import { fetchGames } from '../../../js/actions/gameActions'
 import { selectGame } from '../../../js/actions/statsActions'
 import { unselectGame } from '../../../js/actions/statsActions'
-import { toggleListOfGames } from '../../../js/actions/statsActions'
+import { toggleViews } from '../../../js/actions/statsActions'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -13,7 +13,7 @@ import "./GameSelector.css";
 class GameSelector extends Component {
 
     componentDidMount() {
-        this.props.getGamesForStats();
+        this.props.fetchGames();
     }
 
     unselectGame(game) {
@@ -24,19 +24,16 @@ class GameSelector extends Component {
         this.props.selectGame(game)
     }
 
-    toggleListOfGames(currentStatus){
-        let newStatus;
-        if(currentStatus === "hidden") {newStatus = "visible"}
-        else {newStatus = "hidden"}
-        this.props.toggleListOfGames(newStatus)
+    toggleViews(currentStatus){
+        this.props.toggleViews(currentStatus, "games")
     }
 
     render() {
         return (
-                <div>
+                <div className="full">
                     <div className="header">
                         <div>
-                            <h3 className="header_h3" onClick={()=> this.toggleListOfGames(this.props.listOfGames)}> {this.props.listOfGames === "hidden" ? <FontAwesomeIcon icon="caret-right" className="header_icon"/> : <FontAwesomeIcon icon="caret-down" className="header_icon" />}Select Games</h3>
+                            <h3 className="header_h3" onClick={()=> this.toggleViews(this.props.listOfGames)}> {this.props.listOfGames === "hidden" ? <FontAwesomeIcon icon="caret-right" className="header_icon"/> : <FontAwesomeIcon icon="caret-down" className="header_icon" />}Select Games</h3>
                         </div>
                     </div>
                     <div className="content">
@@ -69,8 +66,8 @@ Games.propTypes = {
 const mapStateToProps = state => ({
     selectedGames: state.stats.selectedGames,
     unselectedGames: state.stats.unselectedGames,
-    allGames: state.stats.allGames,
+    allGames: state.games.pastGames,
     listOfGames: state.stats.listOfGames
 })
 
-export default connect(mapStateToProps, { getGamesForStats, selectGame, unselectGame, toggleListOfGames }) (GameSelector)
+export default connect(mapStateToProps, { fetchGames, selectGame, unselectGame, toggleViews }) (GameSelector)

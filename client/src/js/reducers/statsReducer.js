@@ -2,14 +2,12 @@ import {
     SHOW_GAMES_TO_STATS, 
     GET_GAMES_AND_TRANSFORM, 
     SET_YEARS_VISIBILITIES, 
-    GET_GAMES_FOR_RECORDS,
     ADD_GAME_TO_SELECTED,
     REMOVE_GAME_FROM_SELECTED,
-    TOGGLE_LIST_OF_GAMES,
-    GET_PLAYERS_FOR_RECORDS,
     ADD_PLAYER_TO_SELECTED,
     REMOVE_PLAYER_FROM_SELECTED,
-    TOGGLE_LIST_OF_PLAYERS,
+    TOGGLE_RECORDS_VIEWS
+    
     } from '../actions/types';
 
 const initialState = {
@@ -20,11 +18,13 @@ const initialState = {
     allGames: [],
     selectedGames: [],
     unselectedGames: [],
-    listOfGames: "hidden",
     allPlayers: [],
     selectedPlayers: [],
     unselectedPlayers: [],
-    listOfPlayers: "hidden"
+    datePickers: "hidden",
+    listOfGames: "hidden",
+    listOfPlayers: "hidden", 
+    sortOptionsDisplay: "hidden",
     }
 
 export default function(state = initialState, action) {
@@ -48,14 +48,6 @@ export default function(state = initialState, action) {
             gameVisibility: action.payload
         }
 
-        case GET_GAMES_FOR_RECORDS:
-        return {
-            ...state,
-            selectedGames: initialState.selectedGames,
-            allGames: action.payload,
-            unselectedGames: action.payload
-        }
-
         case ADD_GAME_TO_SELECTED:
         return {
             ...state,
@@ -68,19 +60,6 @@ export default function(state = initialState, action) {
             ...state,
             selectedGames: state.selectedGames.filter(game => game._id !== action.payload._id),
             unselectedGames: [...state.unselectedGames, action.payload]
-        }
-        case TOGGLE_LIST_OF_GAMES:
-        return {
-            ...state,
-            listOfGames: action.payload
-        }
-
-        case GET_PLAYERS_FOR_RECORDS:
-        return {
-            ...state,
-            selectedPlayers: initialState.selectedPlayers,
-            allPlayers: action.payload,
-            unselectedPlayers: action.payload
         }
 
         case ADD_PLAYER_TO_SELECTED:
@@ -96,10 +75,13 @@ export default function(state = initialState, action) {
             selectedPlayers: state.selectedPlayers.filter(player => player._id !== action.payload._id),
             unselectedPlayers: [...state.unselectedPlayers, action.payload]
         }
-        case TOGGLE_LIST_OF_PLAYERS:
+        case TOGGLE_RECORDS_VIEWS:
         return {
             ...state,
-            listOfPlayers: action.payload
+            datePickers: action.payload.dates,
+            listOfGames: action.payload.games,
+            listOfPlayers: action.payload.players, 
+            sortOptionsDisplay: action.payload.sort
         }
         default:
         return state;

@@ -2,14 +2,11 @@ import {
     SHOW_GAMES_TO_STATS, 
     GET_GAMES_AND_TRANSFORM, 
     SET_YEARS_VISIBILITIES, 
-    GET_GAMES_FOR_RECORDS, 
     ADD_GAME_TO_SELECTED,
     REMOVE_GAME_FROM_SELECTED,
-    TOGGLE_LIST_OF_GAMES,
-    GET_PLAYERS_FOR_RECORDS, 
     ADD_PLAYER_TO_SELECTED,
     REMOVE_PLAYER_FROM_SELECTED,
-    TOGGLE_LIST_OF_PLAYERS,
+    TOGGLE_RECORDS_VIEWS
 } from './types';
 
 import API from "../../utils/API"
@@ -127,20 +124,6 @@ export const setVisibility = (array) => dispatch => {
     })
 }
 
-export const getGamesForStats = () => dispatch => {
-    API.getGames()
-        .then(res => { 
-            if(res.status !== 200) {
-                throw new Error(res.statusText)
-            }
-            else {
-                dispatch({
-                    type: GET_GAMES_FOR_RECORDS,
-                    payload: res.data
-                })
-            }
-        })
-}
 export const selectGame = (id) => dispatch => {
     dispatch({
         type: ADD_GAME_TO_SELECTED,
@@ -155,27 +138,6 @@ export const unselectGame = (id) => dispatch => {
     })
 }
 
-export const toggleListOfGames = (newStatus) => dispatch => {
-    dispatch({
-        type: TOGGLE_LIST_OF_GAMES,
-        payload: newStatus
-    })
-}
-// players
-export const getPlayersForStats = () => dispatch => {
-    API.getPlayers()
-        .then(res => { 
-            if(res.status !== 200) {
-                throw new Error(res.statusText)
-            }
-            else {
-                dispatch({
-                    type: GET_PLAYERS_FOR_RECORDS,
-                    payload: res.data
-                })
-            }
-        })
-}
 export const selectPlayer = (id) => dispatch => {
     dispatch({
         type: ADD_PLAYER_TO_SELECTED,
@@ -190,9 +152,70 @@ export const unselectPlayer = (id) => dispatch => {
     })
 }
 
-export const toggleListOfPlayers = (newStatus) => dispatch => {
-    dispatch({
-        type: TOGGLE_LIST_OF_PLAYERS,
-        payload: newStatus
-    })
+export const toggleViews = (currentStatus, element) => dispatch => {
+    if (currentStatus === "visible") {
+        dispatch({
+            type: TOGGLE_RECORDS_VIEWS,
+            payload: {
+                dates: "hidden",
+                games: "hidden",
+                players: "hidden",
+                sort: "hidden",
+            }
+        })}
+    else {
+        switch (element) {
+            case "dates":
+            dispatch({
+                type: TOGGLE_RECORDS_VIEWS,
+                payload: {
+                    dates: "visible",
+                    games: "hidden",
+                    players: "hidden",
+                    sort: "hidden",
+                }
+            })
+            
+            break;
+            
+            case "games":
+                dispatch({
+                    type: TOGGLE_RECORDS_VIEWS,
+                    payload: {
+                        dates: "hidden",
+                        games: "visible",
+                        players: "hidden",
+                        sort: "hidden",
+                    }
+                })
+            break;
+
+            case "players":
+                dispatch({
+                        type: TOGGLE_RECORDS_VIEWS,
+                        payload: {
+                            dates: "hidden",
+                            games: "hidden",
+                            players: "visible",
+                            sort: "hidden",
+                        }
+                    })
+            break;
+
+            case "sort":
+            dispatch({
+                type: TOGGLE_RECORDS_VIEWS,
+                payload: {
+                    dates: "hidden",
+                    games: "hidden",
+                    players: "hidden",
+                    sort: "visible",
+                }
+            })
+            break;
+
+            default:
+            return
+        }
+    }
 }
