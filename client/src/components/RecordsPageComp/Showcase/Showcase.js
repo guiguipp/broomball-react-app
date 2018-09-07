@@ -23,8 +23,8 @@ class Showcase extends Component {
                     </div>
                 </div>
                 <div className="content">
-                    <div className="list_of_options ">
-                    {/* <div className={"list_of_options " + this.props.sortOptionsDisplay}> */}
+                    
+                    <div className={"list_of_options " + this.props.sortOptionsDisplay}>
                         
                             <button className={this.props.sortingOptions.azTab + " tab_button"} onClick={()=> this.toggleSort("az", this.props.sortingOptions.azTab, this.props.sortingOptions.alphaAsc)}>A-Z <span className="sort_action_icon"> <FontAwesomeIcon icon="long-arrow-alt-down" className={this.props.sortingOptions.alphaDesc + " sorting_arrow"} /> <FontAwesomeIcon icon="long-arrow-alt-up" className={this.props.sortingOptions.alphaAsc + " sorting_arrow"} /> </span> </button>
                             <button className={this.props.sortingOptions.gamesTab + " tab_button"} onClick={()=> this.toggleSort("games", this.props.sortingOptions.gamesTab, this.props.sortingOptions.gamesAsc)}>Games Played  <span className="sort_action_icon"> <FontAwesomeIcon icon="long-arrow-alt-down" className={this.props.sortingOptions.gamesDesc + " sorting_arrow"} /> <FontAwesomeIcon icon="long-arrow-alt-up" className={this.props.sortingOptions.gamesAsc + " sorting_arrow"} /> </span> </button>

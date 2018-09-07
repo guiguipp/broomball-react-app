@@ -76,7 +76,6 @@ class PlayerSelector extends Component {
             playerReduced.gpg = gpg
             playerReduced.apg = apg
             
-            console.log("gpg: ", gpg,"\nplayerReduced: ", playerReduced, "\ngamePlayedFromArray: ",gamePlayedFromArray, "\ngamePlayedFromArray.length: ", gamePlayedFromArray.length, "\ngoalsFromArray: ", goalsFromArray )
             this.props.addPlayerStatObject( playerReduced )
             }
             else {
