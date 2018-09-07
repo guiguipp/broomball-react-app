@@ -10,7 +10,21 @@ import {
     TOGGLE_RECORDS_VIEWS,
     ADD_PLAYER_RECORDS,
     REMOVE_PLAYER_RECORDS,
-    REPLACE_PLAYERS_RECORDS
+    REPLACE_PLAYERS_RECORDS,
+    SORT_AZ_ASC,
+    SORT_AZ_DESC,
+    SORT_GAMES_ASC,
+    SORT_GAMES_DESC,
+    SORT_WINS_ASC,
+    SORT_WINS_DESC,
+    SORT_GOALS_ASC,
+    SORT_GOALS_DESC, 
+    SORT_GPG_ASC,
+    SORT_GPG_DESC,
+    SORT_ASSISTS_ASC,
+    SORT_ASSISTS_DESC,
+    SORT_APG_ASC,
+    SORT_APG_DESC,
     } from '../actions/types';
 
 import _ from "underscore"
@@ -32,6 +46,30 @@ const initialState = {
     sortOptionsDisplay: "hidden",
     playerRecords: [],
     arrayOfTenBuckersID: [],
+    sortingOptions:
+        {
+            alphaDesc: "inactive",
+            alphaAsc: "inactive",
+            gamesDesc: "inactive",
+            gamesAsc: "inactive",
+            goalsDesc: "inactive",
+            goalsAsc: "inactive",
+            gpgDesc: "inactive",
+            gpgAsc: "inactive",
+            winsDesc: "inactive",
+            winsAsc: "inactive",
+            assistsDesc: "inactive",
+            assistsAsc: "inactive",
+            apgDesc: "inactive",
+            apgAsc: "inactive",
+            azTab: "unselected_tab",
+            gamesTab: "unselected_tab",
+            winsTab: "unselected_tab",
+            goalsTab: "unselected_tab",
+            gpgTab: "unselected_tab",
+            assistsTab: "unselected_tab",
+            apgTab: "unselected_tab",
+        }
     }
 
 export default function(state = initialState, action) {
@@ -116,6 +154,106 @@ export default function(state = initialState, action) {
             ...state, 
             playerRecords: action.payload
         }
+
+
+        case SORT_AZ_ASC:
+        return {
+            ...state,
+            sortingOptions: action.payload,
+            playerRecords: _.sortBy(state.playerRecords, "name").reverse() // we need to do this because names are capitalized
+        }
+
+        case SORT_AZ_DESC:
+        return {
+            ...state,
+            sortingOptions: action.payload,
+            playerRecords: _.sortBy(state.playerRecords, "name")
+        }
+
+        case SORT_GAMES_ASC:
+        return {
+            ...state,
+            sortingOptions: action.payload,
+            playerRecords: _.sortBy(state.playerRecords, "gamesPlayed")
+        }
+
+        case SORT_GAMES_DESC:
+        return {
+            ...state,
+            sortingOptions: action.payload,
+            playerRecords: _.sortBy(state.playerRecords, "gamesPlayed").reverse()
+        }
+
+        case SORT_WINS_ASC:
+        return {
+            ...state,
+            sortingOptions: action.payload,
+            playerRecords: _.sortBy(state.playerRecords, "winPercent")
+        }
+
+        case SORT_WINS_DESC:
+        return {
+            ...state,
+            sortingOptions: action.payload,
+            playerRecords: _.sortBy(state.playerRecords, "winPercent").reverse()
+        }
+
+        case SORT_GOALS_ASC:
+        return {
+            ...state,
+            sortingOptions: action.payload,
+            playerRecords: _.sortBy(state.playerRecords, "goals")
+        }
+
+        case SORT_GOALS_DESC:
+        return {
+            ...state,
+            sortingOptions: action.payload,
+            playerRecords: _.sortBy(state.playerRecords, "goals").reverse()
+        }
+        
+        case SORT_GPG_ASC:
+        return {
+            ...state,
+            sortingOptions: action.payload,
+            playerRecords: _.sortBy(state.playerRecords, "gpg")
+        }
+
+        case SORT_GPG_DESC:
+        return {
+            ...state,
+            sortingOptions: action.payload,
+            playerRecords: _.sortBy(state.playerRecords, "gpg").reverse()
+        }
+
+        case SORT_ASSISTS_ASC:
+        return {
+            ...state,
+            sortingOptions: action.payload,
+            playerRecords: _.sortBy(state.playerRecords, "assists")
+        }
+
+        case SORT_ASSISTS_DESC:
+        return {
+            ...state,
+            sortingOptions: action.payload,
+            playerRecords: _.sortBy(state.playerRecords, "assists").reverse()
+        }
+
+        case SORT_APG_ASC:
+        return {
+            ...state,
+            sortingOptions: action.payload,
+            playerRecords: _.sortBy(state.playerRecords, "apg")
+        }
+
+        case SORT_APG_DESC:
+        return {
+            ...state,
+            sortingOptions: action.payload,
+            playerRecords: _.sortBy(state.playerRecords, "apg").reverse()
+        }
+
 
         default:
         return state;

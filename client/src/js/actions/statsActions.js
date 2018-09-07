@@ -10,7 +10,21 @@ import {
     TOGGLE_RECORDS_VIEWS,
     ADD_PLAYER_RECORDS,
     REMOVE_PLAYER_RECORDS,
-    REPLACE_PLAYERS_RECORDS
+    REPLACE_PLAYERS_RECORDS,
+    SORT_AZ_ASC,
+    SORT_AZ_DESC,
+    SORT_GAMES_ASC,
+    SORT_GAMES_DESC,
+    SORT_WINS_ASC,
+    SORT_WINS_DESC,
+    SORT_GOALS_ASC,
+    SORT_GOALS_DESC, 
+    SORT_GPG_ASC,
+    SORT_GPG_DESC,
+    SORT_ASSISTS_ASC,
+    SORT_ASSISTS_DESC,
+    SORT_APG_ASC,
+    SORT_APG_DESC,
 } from './types';
 
 import API from "../../utils/API"
@@ -268,3 +282,629 @@ export const updatePlayers = (players) => dispatch => {
         payload: players
     })
 }
+
+export const toggleSortOptions = (tab, currentStatus, ascArrow) => dispatch => {
+    switch(tab){
+        case "az":
+        if(currentStatus === "unselected_tab") {
+            dispatch({
+                type: SORT_AZ_DESC,
+                payload: {
+                    alphaDesc: "active",
+                    alphaAsc: "inactive",
+                    gamesDesc: "inactive",
+                    gamesAsc: "inactive",
+                    goalsDesc: "inactive",
+                    goalsAsc: "inactive",
+                    gpgDesc: "inactive",
+                    gpgAsc: "inactive",
+                    winsDesc: "inactive",
+                    winsAsc: "inactive",
+                    assistsDesc: "inactive",
+                    assistsAsc: "inactive",
+                    apgDesc: "inactive",
+                    apgAsc: "inactive",
+                    azTab: "selected_tab",
+                    gamesTab: "unselected_tab",
+                    winsTab: "unselected_tab",
+                    goalsTab: "unselected_tab",
+                    gpgTab: "unselected_tab",
+                    assistsTab: "unselected_tab",
+                    apgTab: "unselected_tab",
+                }
+            })
+        }
+        else if (currentStatus === "selected_tab" && ascArrow === "active") {
+            dispatch({
+                type: SORT_AZ_DESC,
+                payload: {
+                    alphaDesc: "active",
+                    alphaAsc: "inactive",
+                    gamesDesc: "inactive",
+                    gamesAsc: "inactive",
+                    goalsDesc: "inactive",
+                    goalsAsc: "inactive",
+                    gpgDesc: "inactive",
+                    gpgAsc: "inactive",
+                    winsDesc: "inactive",
+                    winsAsc: "inactive",
+                    assistsDesc: "inactive",
+                    assistsAsc: "inactive",
+                    apgDesc: "inactive",
+                    apgAsc: "inactive",
+                    azTab: "selected_tab",
+                    gamesTab: "unselected_tab",
+                    winsTab: "unselected_tab",
+                    goalsTab: "unselected_tab",
+                    gpgTab: "unselected_tab",
+                    assistsTab: "unselected_tab",
+                    apgTab: "unselected_tab",
+                }
+            })
+
+        }
+        else {
+            dispatch({
+                type: SORT_AZ_ASC,
+                payload: {
+                    alphaDesc: "inactive",
+                    alphaAsc: "active",
+                    gamesDesc: "inactive",
+                    gamesAsc: "inactive",
+                    goalsDesc: "inactive",
+                    goalsAsc: "inactive",
+                    gpgDesc: "inactive",
+                    gpgAsc: "inactive",
+                    winsDesc: "inactive",
+                    winsAsc: "inactive",
+                    assistsDesc: "inactive",
+                    assistsAsc: "inactive",
+                    apgDesc: "inactive",
+                    apgAsc: "inactive",
+                    azTab: "selected_tab",
+                    gamesTab: "unselected_tab",
+                    winsTab: "unselected_tab",
+                    goalsTab: "unselected_tab",
+                    gpgTab: "unselected_tab",
+                    assistsTab: "unselected_tab",
+                    apgTab: "unselected_tab",
+                }
+            })
+        }
+        break;
+        
+        case "games":
+        if(currentStatus === "unselected_tab") {
+            dispatch({
+                type: SORT_GAMES_DESC,
+                payload: {
+                    alphaDesc: "inactive",
+                    alphaAsc: "inactive",
+                    gamesDesc: "active",
+                    gamesAsc: "inactive",
+                    goalsDesc: "inactive",
+                    goalsAsc: "inactive",
+                    gpgDesc: "inactive",
+                    gpgAsc: "inactive",
+                    winsDesc: "inactive",
+                    winsAsc: "inactive",
+                    assistsDesc: "inactive",
+                    assistsAsc: "inactive",
+                    apgDesc: "inactive",
+                    apgAsc: "inactive",
+                    azTab: "unselected_tab",
+                    gamesTab: "selected_tab",
+                    winsTab: "unselected_tab",
+                    goalsTab: "unselected_tab",
+                    gpgTab: "unselected_tab",
+                    assistsTab: "unselected_tab",
+                    apgTab: "unselected_tab",
+                }
+            })
+        }
+        else if (currentStatus === "selected_tab" && ascArrow === "active") {
+            dispatch({
+                type: SORT_GAMES_DESC,
+                payload: {
+                    alphaDesc: "inactive",
+                    alphaAsc: "inactive",
+                    gamesDesc: "active",
+                    gamesAsc: "inactive",
+                    goalsDesc: "inactive",
+                    goalsAsc: "inactive",
+                    gpgDesc: "inactive",
+                    gpgAsc: "inactive",
+                    winsDesc: "inactive",
+                    winsAsc: "inactive",
+                    assistsDesc: "inactive",
+                    assistsAsc: "inactive",
+                    apgDesc: "inactive",
+                    apgAsc: "inactive",
+                    azTab: "unselected_tab",
+                    gamesTab: "selected_tab",
+                    winsTab: "unselected_tab",
+                    goalsTab: "unselected_tab",
+                    gpgTab: "unselected_tab",
+                    assistsTab: "unselected_tab",
+                    apgTab: "unselected_tab",
+                }
+            })
+
+        }
+        else {
+            dispatch({
+                type: SORT_GAMES_ASC,
+                payload: {
+                    alphaDesc: "inactive",
+                    alphaAsc: "inactive",
+                    gamesDesc: "inactive",
+                    gamesAsc: "active",
+                    goalsDesc: "inactive",
+                    goalsAsc: "inactive",
+                    gpgDesc: "inactive",
+                    gpgAsc: "inactive",
+                    winsDesc: "inactive",
+                    winsAsc: "inactive",
+                    assistsDesc: "inactive",
+                    assistsAsc: "inactive",
+                    apgDesc: "inactive",
+                    apgAsc: "inactive",
+                    azTab: "unselected_tab",
+                    gamesTab: "selected_tab",
+                    winsTab: "unselected_tab",
+                    goalsTab: "unselected_tab",
+                    gpgTab: "unselected_tab",
+                    assistsTab: "unselected_tab",
+                    apgTab: "unselected_tab",
+                }
+            })
+        }
+        break;
+        
+        case "wins":
+        if(currentStatus === "unselected_tab") {
+            dispatch({
+                type: SORT_WINS_DESC,
+                payload: {
+                    alphaDesc: "inactive",
+                    alphaAsc: "inactive",
+                    gamesDesc: "inactive",
+                    gamesAsc: "inactive",
+                    goalsDesc: "inactive",
+                    goalsAsc: "inactive",
+                    gpgDesc: "inactive",
+                    gpgAsc: "inactive",
+                    winsDesc: "active",
+                    winsAsc: "inactive",
+                    assistsDesc: "inactive",
+                    assistsAsc: "inactive",
+                    apgDesc: "inactive",
+                    apgAsc: "inactive",
+                    azTab: "unselected_tab",
+                    gamesTab: "unselected_tab",
+                    winsTab: "selected_tab",
+                    goalsTab: "unselected_tab",
+                    gpgTab: "unselected_tab",
+                    assistsTab: "unselected_tab",
+                    apgTab: "unselected_tab",
+                }
+            })
+        }
+        else if (currentStatus === "selected_tab" && ascArrow === "active") {
+            dispatch({
+                type: SORT_WINS_DESC,
+                payload: {
+                    alphaDesc: "inactive",
+                    alphaAsc: "inactive",
+                    gamesDesc: "inactive",
+                    gamesAsc: "inactive",
+                    goalsDesc: "inactive",
+                    goalsAsc: "inactive",
+                    gpgDesc: "inactive",
+                    gpgAsc: "inactive",
+                    winsDesc: "active",
+                    winsAsc: "inactive",
+                    assistsDesc: "inactive",
+                    assistsAsc: "inactive",
+                    apgDesc: "inactive",
+                    apgAsc: "inactive",
+                    azTab: "unselected_tab",
+                    gamesTab: "unselected_tab",
+                    winsTab: "selected_tab",
+                    goalsTab: "unselected_tab",
+                    gpgTab: "unselected_tab",
+                    assistsTab: "unselected_tab",
+                    apgTab: "unselected_tab",
+                }
+            })
+
+        }
+        else {
+            dispatch({
+                type: SORT_WINS_ASC,
+                payload: {
+                    alphaDesc: "inactive",
+                    alphaAsc: "inactive",
+                    gamesDesc: "inactive",
+                    gamesAsc: "inactive",
+                    goalsDesc: "inactive",
+                    goalsAsc: "inactive",
+                    gpgDesc: "inactive",
+                    gpgAsc: "inactive",
+                    winsDesc: "inactive",
+                    winsAsc: "active",
+                    assistsDesc: "inactive",
+                    assistsAsc: "inactive",
+                    apgDesc: "inactive",
+                    apgAsc: "inactive",
+                    azTab: "unselected_tab",
+                    gamesTab: "unselected_tab",
+                    winsTab: "selected_tab",
+                    goalsTab: "unselected_tab",
+                    gpgTab: "unselected_tab",
+                    assistsTab: "unselected_tab",
+                    apgTab: "unselected_tab",
+                }
+            })
+        }
+        break;
+        
+        case "goals":
+        if(currentStatus === "unselected_tab") {
+            dispatch({
+                type: SORT_GOALS_DESC,
+                payload: {
+                    alphaDesc: "inactive",
+                    alphaAsc: "inactive",
+                    gamesDesc: "inactive",
+                    gamesAsc: "inactive",
+                    goalsDesc: "active",
+                    goalsAsc: "inactive",
+                    gpgDesc: "inactive",
+                    gpgAsc: "inactive",
+                    winsDesc: "inactive",
+                    winsAsc: "inactive",
+                    assistsDesc: "inactive",
+                    assistsAsc: "inactive",
+                    apgDesc: "inactive",
+                    apgAsc: "inactive",
+                    azTab: "unselected_tab",
+                    gamesTab: "unselected_tab",
+                    winsTab: "unselected_tab",
+                    goalsTab: "selected_tab",
+                    gpgTab: "unselected_tab",
+                    assistsTab: "unselected_tab",
+                    apgTab: "unselected_tab",
+                }
+            })
+        }
+        else if (currentStatus === "selected_tab" && ascArrow === "active") {
+            dispatch({
+                type: SORT_GOALS_DESC,
+                payload: {
+                    alphaDesc: "inactive",
+                    alphaAsc: "inactive",
+                    gamesDesc: "inactive",
+                    gamesAsc: "inactive",
+                    goalsDesc: "active",
+                    goalsAsc: "inactive",
+                    gpgDesc: "inactive",
+                    gpgAsc: "inactive",
+                    winsDesc: "inactive",
+                    winsAsc: "inactive",
+                    assistsDesc: "inactive",
+                    assistsAsc: "inactive",
+                    apgDesc: "inactive",
+                    apgAsc: "inactive",
+                    azTab: "unselected_tab",
+                    gamesTab: "unselected_tab",
+                    winsTab: "unselected_tab",
+                    goalsTab: "selected_tab",
+                    gpgTab: "unselected_tab",
+                    assistsTab: "unselected_tab",
+                    apgTab: "unselected_tab",
+                }
+            })
+
+        }
+        else {
+            dispatch({
+                type: SORT_GOALS_ASC,
+                payload: {
+                    alphaDesc: "inactive",
+                    alphaAsc: "inactive",
+                    gamesDesc: "inactive",
+                    gamesAsc: "inactive",
+                    goalsDesc: "inactive",
+                    goalsAsc: "active",
+                    gpgDesc: "inactive",
+                    gpgAsc: "inactive",
+                    winsDesc: "inactive",
+                    winsAsc: "inactive",
+                    assistsDesc: "inactive",
+                    assistsAsc: "inactive",
+                    apgDesc: "inactive",
+                    apgAsc: "inactive",
+                    azTab: "unselected_tab",
+                    gamesTab: "unselected_tab",
+                    winsTab: "unselected_tab",
+                    goalsTab: "selected_tab",
+                    gpgTab: "unselected_tab",
+                    assistsTab: "unselected_tab",
+                    apgTab: "unselected_tab",
+                }
+            })
+        }
+        break;
+        
+        case "gpg":
+        if(currentStatus === "unselected_tab") {
+            dispatch({
+                type: SORT_GPG_DESC,
+                payload: {
+                    alphaDesc: "inactive",
+                    alphaAsc: "inactive",
+                    gamesDesc: "inactive",
+                    gamesAsc: "inactive",
+                    goalsDesc: "inactive",
+                    goalsAsc: "inactive",
+                    gpgDesc: "active",
+                    gpgAsc: "inactive",
+                    winsDesc: "inactive",
+                    winsAsc: "inactive",
+                    assistsDesc: "inactive",
+                    assistsAsc: "inactive",
+                    apgDesc: "inactive",
+                    apgAsc: "inactive",
+                    azTab: "unselected_tab",
+                    gamesTab: "unselected_tab",
+                    winsTab: "unselected_tab",
+                    goalsTab: "unselected_tab",
+                    gpgTab: "selected_tab",
+                    assistsTab: "unselected_tab",
+                    apgTab: "unselected_tab",
+                }
+            })
+        }
+        else if (currentStatus === "selected_tab" && ascArrow === "active") {
+            dispatch({
+                type: SORT_GPG_DESC,
+                payload: {
+                    alphaDesc: "inactive",
+                    alphaAsc: "inactive",
+                    gamesDesc: "inactive",
+                    gamesAsc: "inactive",
+                    goalsDesc: "inactive",
+                    goalsAsc: "inactive",
+                    gpgDesc: "active",
+                    gpgAsc: "inactive",
+                    winsDesc: "inactive",
+                    winsAsc: "inactive",
+                    assistsDesc: "inactive",
+                    assistsAsc: "inactive",
+                    apgDesc: "inactive",
+                    apgAsc: "inactive",
+                    azTab: "unselected_tab",
+                    gamesTab: "unselected_tab",
+                    winsTab: "unselected_tab",
+                    goalsTab: "unselected_tab",
+                    gpgTab: "selected_tab",
+                    assistsTab: "unselected_tab",
+                    apgTab: "unselected_tab",
+                }
+            })
+
+        }
+        else {
+            dispatch({
+                type: SORT_GPG_ASC,
+                payload: {
+                    alphaDesc: "inactive",
+                    alphaAsc: "inactive",
+                    gamesDesc: "inactive",
+                    gamesAsc: "inactive",
+                    goalsDesc: "inactive",
+                    goalsAsc: "inactive",
+                    gpgDesc: "inactive",
+                    gpgAsc: "active",
+                    winsDesc: "inactive",
+                    winsAsc: "inactive",
+                    assistsDesc: "inactive",
+                    assistsAsc: "inactive",
+                    apgDesc: "inactive",
+                    apgAsc: "inactive",
+                    azTab: "unselected_tab",
+                    gamesTab: "unselected_tab",
+                    winsTab: "unselected_tab",
+                    goalsTab: "unselected_tab",
+                    gpgTab: "selected_tab",
+                    assistsTab: "unselected_tab",
+                    apgTab: "unselected_tab",
+                }
+            })
+        }
+        break;
+        
+        
+        case "assists":
+        if(currentStatus === "unselected_tab") {
+            dispatch({
+                type: SORT_ASSISTS_DESC,
+                payload: {
+                    alphaDesc: "inactive",
+                    alphaAsc: "inactive",
+                    gamesDesc: "inactive",
+                    gamesAsc: "inactive",
+                    goalsDesc: "inactive",
+                    goalsAsc: "inactive",
+                    gpgDesc: "inactive",
+                    gpgAsc: "inactive",
+                    winsDesc: "inactive",
+                    winsAsc: "inactive",
+                    assistsDesc: "active",
+                    assistsAsc: "inactive",
+                    apgDesc: "inactive",
+                    apgAsc: "inactive",
+                    azTab: "unselected_tab",
+                    gamesTab: "unselected_tab",
+                    winsTab: "unselected_tab",
+                    goalsTab: "unselected_tab",
+                    gpgTab: "unselected_tab",
+                    assistsTab: "selected_tab",
+                    apgTab: "unselected_tab",
+                }
+            })
+        }
+        else if (currentStatus === "selected_tab" && ascArrow === "active") {
+            dispatch({
+                type: SORT_ASSISTS_DESC,
+                payload: {
+                    alphaDesc: "inactive",
+                    alphaAsc: "inactive",
+                    gamesDesc: "inactive",
+                    gamesAsc: "inactive",
+                    goalsDesc: "inactive",
+                    goalsAsc: "inactive",
+                    gpgDesc: "inactive",
+                    gpgAsc: "inactive",
+                    winsDesc: "inactive",
+                    winsAsc: "inactive",
+                    assistsDesc: "active",
+                    assistsAsc: "inactive",
+                    apgDesc: "inactive",
+                    apgAsc: "inactive",
+                    azTab: "unselected_tab",
+                    gamesTab: "unselected_tab",
+                    winsTab: "unselected_tab",
+                    goalsTab: "unselected_tab",
+                    gpgTab: "unselected_tab",
+                    assistsTab: "selected_tab",
+                    apgTab: "unselected_tab",
+                }
+            }) 
+
+        }
+        else {
+            dispatch({
+                type: SORT_ASSISTS_ASC,
+                payload: {
+                    alphaDesc: "inactive",
+                    alphaAsc: "inactive",
+                    gamesDesc: "inactive",
+                    gamesAsc: "inactive",
+                    goalsDesc: "inactive",
+                    goalsAsc: "inactive",
+                    gpgDesc: "inactive",
+                    gpgAsc: "inactive",
+                    winsDesc: "inactive",
+                    winsAsc: "inactive",
+                    assistsDesc: "inactive",
+                    assistsAsc: "active",
+                    apgDesc: "inactive",
+                    apgAsc: "inactive",
+                    azTab: "unselected_tab",
+                    gamesTab: "unselected_tab",
+                    winsTab: "unselected_tab",
+                    goalsTab: "unselected_tab",
+                    gpgTab: "unselected_tab",
+                    assistsTab: "selected_tab",
+                    apgTab: "unselected_tab",
+                }
+            })
+        }
+        break;
+        
+        case "apg":
+        if(currentStatus === "unselected_tab") {
+            dispatch({
+                type: SORT_APG_DESC,
+                payload: {
+                    alphaDesc: "inactive",
+                    alphaAsc: "inactive",
+                    gamesDesc: "inactive",
+                    gamesAsc: "inactive",
+                    goalsDesc: "inactive",
+                    goalsAsc: "inactive",
+                    gpgDesc: "inactive",
+                    gpgAsc: "inactive",
+                    winsDesc: "inactive",
+                    winsAsc: "inactive",
+                    assistsDesc: "inactive",
+                    assistsAsc: "inactive",
+                    apgDesc: "active",
+                    apgAsc: "inactive",
+                    azTab: "unselected_tab",
+                    gamesTab: "unselected_tab",
+                    winsTab: "unselected_tab",
+                    goalsTab: "unselected_tab",
+                    gpgTab: "unselected_tab",
+                    assistsTab: "unselected_tab",
+                    apgTab: "selected_tab",
+                }
+            })
+        }
+        else if (currentStatus === "selected_tab" && ascArrow === "active") {
+            dispatch({
+                type: SORT_APG_DESC,
+                payload: {
+                    alphaDesc: "inactive",
+                    alphaAsc: "inactive",
+                    gamesDesc: "inactive",
+                    gamesAsc: "inactive",
+                    goalsDesc: "inactive",
+                    goalsAsc: "inactive",
+                    gpgDesc: "inactive",
+                    gpgAsc: "inactive",
+                    winsDesc: "inactive",
+                    winsAsc: "inactive",
+                    assistsDesc: "inactive",
+                    assistsAsc: "inactive",
+                    apgDesc: "active",
+                    apgAsc: "inactive",
+                    azTab: "unselected_tab",
+                    gamesTab: "unselected_tab",
+                    winsTab: "unselected_tab",
+                    goalsTab: "unselected_tab",
+                    gpgTab: "unselected_tab",
+                    assistsTab: "unselected_tab",
+                    apgTab: "selected_tab",
+                }
+            })
+
+        }
+        else {
+            dispatch({
+                type: SORT_APG_ASC,
+                payload: {
+                    alphaDesc: "inactive",
+                    alphaAsc: "inactive",
+                    gamesDesc: "inactive",
+                    gamesAsc: "inactive",
+                    goalsDesc: "inactive",
+                    goalsAsc: "inactive",
+                    gpgDesc: "inactive",
+                    gpgAsc: "inactive",
+                    winsDesc: "inactive",
+                    winsAsc: "inactive",
+                    assistsDesc: "inactive",
+                    assistsAsc: "inactive",
+                    apgDesc: "inactive",
+                    apgAsc: "active",
+                    azTab: "unselected_tab",
+                    gamesTab: "unselected_tab",
+                    winsTab: "unselected_tab",
+                    goalsTab: "unselected_tab",
+                    gpgTab: "unselected_tab",
+                    assistsTab: "unselected_tab",
+                    apgTab: "selected_tab",
+                }
+            })
+        }
+        break;
+
+        default:
+        return
+    }
+
+}
+

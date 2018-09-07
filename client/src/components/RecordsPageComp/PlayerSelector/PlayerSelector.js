@@ -65,13 +65,18 @@ class PlayerSelector extends Component {
             let winPercent = gamePlayedFromArray > 0 ? Math.floor((playerReduced.wins.length / playerReduced.gamesPlayed.length) * 100) : "N/A"
             let goalsFromArray = playerReduced.goals.reduce((a,b) => a + b, 0)
             let assistsFromArray = playerReduced.assists.reduce((a, b) => a + b, 0)
+            let gpg = gamePlayedFromArray > 0 ? (goalsFromArray / gamePlayedFromArray).toFixed(2) : "N/A"
+            let apg = gamePlayedFromArray > 0 ? (assistsFromArray / gamePlayedFromArray).toFixed(2) : "N/A"
             
             playerReduced.gamesPlayed = gamePlayedFromArray
             playerReduced.wins = winsFromArray
             playerReduced.winPercent = winPercent
             playerReduced.goals = goalsFromArray 
             playerReduced.assists = assistsFromArray
+            playerReduced.gpg = gpg
+            playerReduced.apg = apg
             
+            console.log("gpg: ", gpg,"\nplayerReduced: ", playerReduced, "\ngamePlayedFromArray: ",gamePlayedFromArray, "\ngamePlayedFromArray.length: ", gamePlayedFromArray.length, "\ngoalsFromArray: ", goalsFromArray )
             this.props.addPlayerStatObject( playerReduced )
             }
             else {
@@ -83,6 +88,8 @@ class PlayerSelector extends Component {
                     membershipStatus: broomballer.membershipStatus,
                     winPercent: "N/A",
                     win: "N/A",
+                    gpg: "N/A",
+                    apg: "N/A",
                     _id: broomballer._id
                 }
                 this.props.addPlayerStatObject(playerWithoutRecord)

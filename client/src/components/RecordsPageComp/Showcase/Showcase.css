@@ -26,13 +26,48 @@
     color: #EA8D47;
     border-color: #EA8D47;
 }
+
 .entry {
     font-variant: small-caps;
 }
+
 .addendum {
     padding-left: 5%;
     font-size: 85%;
 }
+
 .value {
     font-weight: bold;
+}
+
+.unselected_tab {
+    color: teal;
+    border-style: solid;
+    border-color: teal;
+    border-width: 2px;
+}
+
+.tab_button {
+    margin: 1% 2%;
+    border-radius: 20px;
+    padding: 1% 1% 1% 2%;
+}
+
+.selected_tab {
+    background: linear-gradient(160deg, teal, #17a2b8);
+    color: white;
+}
+
+.sort_action_icon {
+    margin-left: 15px;
+}
+.sorting_arrow {
+    font-size: 130%;
+}
+.active {
+    color: #EA8D47;
+}
+
+.inactive {
+    color: teal;
 }
