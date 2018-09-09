@@ -25,6 +25,7 @@ import {
     SORT_ASSISTS_DESC,
     SORT_APG_ASC,
     SORT_APG_DESC,
+    SET_DATE_RANGE
     } from '../actions/types';
 
 import _ from "underscore"
@@ -34,13 +35,14 @@ const initialState = {
     visibility: "hidden",
     message: "Teams have not been drafted for this team yet. Please come back later!",
     gamesForRecords: [],
+    pastGamesFromAPI: [],
     reducedGames: [],
     gameVisibility: [],
     selectedGames: [],
     unselectedGames: [],
     selectedPlayers: [],
     unselectedPlayers: [],
-    datePickers: "hidden",
+    datePickers: "visible",
     listOfGames: "hidden",
     listOfPlayers: "hidden", 
     sortOptionsDisplay: "hidden",
@@ -90,6 +92,7 @@ export default function(state = initialState, action) {
         case GET_GAMES_IN_TIMESPAN:
         return {
             ...state,
+            pastGamesFromAPI: _.sortBy(action.payload.games.filter(game => game._id < moment().format("YYYY-MM-DD")),"_id").reverse(),
             gamesForRecords: _.sortBy(action.payload.games.filter(game => game._id < moment().format("YYYY-MM-DD")),"_id").reverse(),
             arrayOfTenBuckersID: action.payload.allTenBuckers,
         }
@@ -254,6 +257,13 @@ export default function(state = initialState, action) {
             ...state,
             sortingOptions: action.payload,
             playerRecords: state.playerRecords.filter(player => player.apg === "N/A").concat(_.sortBy(state.playerRecords.filter(player => player.apg !== "N/A"), "apg").reverse())
+        }
+
+        case SET_DATE_RANGE:
+        return {
+            ...state,
+            dateRange: action.payload,
+            gamesForRecords: state.gamesForRecords.filter(game => game._id >= action.payload.from && game._id <= action.payload.to),
         }
 
         default:

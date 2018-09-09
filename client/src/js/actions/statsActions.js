@@ -25,6 +25,7 @@ import {
     SORT_ASSISTS_DESC,
     SORT_APG_ASC,
     SORT_APG_DESC,
+    SET_DATE_RANGE,
 } from './types';
 
 import API from "../../utils/API"
@@ -280,6 +281,17 @@ export const updatePlayers = (players) => dispatch => {
     dispatch({
         type: REPLACE_PLAYERS_RECORDS,
         payload: players
+    })
+}
+
+export const selectDateRange = (start, end) => dispatch => {
+    console.log("Start: ", start, "\nEnd: ", end)
+    dispatch({
+        type: SET_DATE_RANGE,
+        payload: {
+            from: start,
+            to: end
+        }
     })
 }
 
