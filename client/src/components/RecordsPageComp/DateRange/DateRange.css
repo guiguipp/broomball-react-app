@@ -16,7 +16,7 @@ input {
     background-color: beige;
     box-shadow: 3px 4px 8px 0px rgba(0, 0, 0, 0.2);
 }
-#date_submit {
+#range_submit {
     margin: 5% 0% 0% 91%;
 }
 
@@ -27,4 +27,5 @@ input {
 }
 .calendar_alignment{
     margin: 0 0 0 10%;
+    width: 25%;
 }

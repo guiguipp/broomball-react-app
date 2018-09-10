@@ -185,7 +185,7 @@ class Drafter extends Component {
                                 .map(player => {
                                     return (
                                         <div className="player_div" key={player._id}>
-                                            <button className="player_button leaning_right_color">{player.name}</button>
+                                            <button className="content_button player_button leaning_right_color">{player.name}</button>
                                             <FontAwesomeIcon icon="times-circle" className={"remove remove_player " + this.props.lockStatus} onClick={() => this.setUnavailable(player._id, player.membershipStatus)} />
                                             <FontAwesomeIcon icon={faArrowAltCircleRight} className={"arrows " + this.props.lockStatus} size="2x" onClick={() => this.assignTeam(player._id, "N/A")} />
                                         </div>
@@ -202,7 +202,7 @@ class Drafter extends Component {
                                 return (
                                     <div className="player_div" key={player._id}>
                                         <FontAwesomeIcon icon="arrow-circle-left" className={"arrows " + this.props.lockStatus} size="2x" onClick={() => this.assignTeam(player._id, "Dark")} />
-                                        <button className="player_button plain_color">{player.name}</button>
+                                        <button className="content_button player_button plain_color">{player.name}</button>
                                         <FontAwesomeIcon icon="times-circle" className={"remove remove_player " + this.props.lockStatus} onClick={() => this.setUnavailable(player._id, player.membershipStatus)} />
                                         <FontAwesomeIcon icon={faArrowAltCircleRight} className={"arrows " + this.props.lockStatus} size="2x" onClick={() => this.assignTeam(player._id, "White")} />
                                     </div>
@@ -215,7 +215,7 @@ class Drafter extends Component {
                             .map(player => {
                                 return (
                                     <div className="player_div" key={player._id}>   
-                                        <button className="player_button unavailable" onClick={() => this.makeAvailable(player._id)}>{player.name}</button>
+                                        <button className="content_button player_button unavailable" onClick={() => this.makeAvailable(player._id)}>{player.name}</button>
                                     </div>
                                     )
                                     })
@@ -226,7 +226,7 @@ class Drafter extends Component {
                             .map(player => {
                                 return (
                                     <div className="player_div" key={player._id}>   
-                                        <button className="player_button negative_color" onClick={() => this.addTenBuckerToDraft(player)}>{player.name}</button>
+                                        <button className="content_button player_button negative_color" onClick={() => this.addTenBuckerToDraft(player)}>{player.name}</button>
                                     </div>
                                     )
                                     })
@@ -244,7 +244,7 @@ class Drafter extends Component {
                                         return (
                                             <div className="player_div" key={player._id}>
                                                 <FontAwesomeIcon icon="arrow-circle-left" className={"arrows " + this.props.lockStatus} size="2x" onClick={() => this.assignTeam(player._id, "N/A")} />
-                                                <button className={"player_button leaning_left_color "}>{player.name}</button>
+                                                <button className={"content_button player_button leaning_left_color "}>{player.name}</button>
                                                 <FontAwesomeIcon icon="times-circle" className={"remove remove_player " + this.props.lockStatus} onClick={() => this.setUnavailable(player._id, player.membershipStatus)} />
                                             </div>
                                             )
@@ -263,7 +263,7 @@ class Drafter extends Component {
                             .map(player => {
                                 return (
                                     <div className="player_picking_div" key={player._id}>
-                                        <button className="player_picking lighter_color"  onClick={() => this.addPick(this.props.draftMode, player._id)} >{player.name}</button>
+                                        <button className="content_button player_picking lighter_color"  onClick={() => this.addPick(this.props.draftMode, player._id)} >{player.name}</button>
                                         <FontAwesomeIcon icon="angle-right" className="pick_arrow arrows" size="2x" onClick={() => this.addPick(this.props.draftMode, player._id)} />
                                     </div>
                                 )
@@ -278,7 +278,7 @@ class Drafter extends Component {
                                 .map(player => {
                                     return (    
                                         <div className="player_picking_div" key={player._id}>
-                                            <button className="player_button darker_color">{player.name}</button>
+                                            <button className="content_button player_button darker_color">{player.name}</button>
                                             <FontAwesomeIcon icon="minus-circle" className="remove remove_pick" size="lg" onClick={() => this.removePick(this.props.draftMode, player)} />
                                             <div className="sorter"> 
                                                 <FontAwesomeIcon icon="chevron-up" size="2x" className="up_arrow" onClick={() => this.rankOneUp(player)}/>

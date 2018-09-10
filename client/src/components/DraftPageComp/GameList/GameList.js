@@ -33,7 +33,7 @@ class GameList extends Component {
                         this.props.upcomingGames
                             .map(game =>
                                 <div key={game._id}>
-                                    <button className="btn game_button default_color " onClick={() =>this.getGameInfo(game._id)}> {game._id} </button> 
+                                    <button className="content_button btn game_button default_color " onClick={() =>this.getGameInfo(game._id)}> {game._id} </button> 
                                     <FontAwesomeIcon icon="times-circle" className={"remove remove_game"} onClick={() => this.deleteGameFunc(game._id)} />
                                 </div>
                                 )
@@ -46,7 +46,7 @@ class GameList extends Component {
                         this.props.pastGames
                             .map(game => 
                                 <div key={game._id}>
-                                    <button className="btn game_button default_color" onClick={() =>this.getGameInfo(game._id)}> {game._id} </button> 
+                                    <button className="content_button btn game_button default_color" onClick={() =>this.getGameInfo(game._id)}> {game._id} </button> 
                                     <FontAwesomeIcon icon="times-circle" className={"remove remove_game"} onClick={() => this.deleteGameFunc(game._id)} />
                                 </div>
                                 )

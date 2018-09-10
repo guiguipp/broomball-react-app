@@ -1,5 +1,5 @@
 /* Dark brown: #260e04 */
-button {
+.content_button {
     box-shadow: 3px 4px 8px 0px rgba(0, 0, 0, 0.2);
     text-align: center;
     border-radius: 5px;
@@ -11,6 +11,7 @@ button {
     background: linear-gradient(70deg, #DE733A,#EA8D47);
     color: white;
 }
+
 .default_color:active {
     background: white;
     color: #DE733A;

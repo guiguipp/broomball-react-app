@@ -30,8 +30,8 @@ class TenBuckerList extends Component {
                                 <tr key={player._id}> 
                                     <td className="player_table">{player.name}</td>
                                     <td className="player_table"> 
-                                        <button className="darker_color button_space_playerList" onClick={()=> this.sendPlayerToEditForm(player)}>Edit</button>
-                                        <button className="negative_color button_space_playerList" onClick={()=> this.deletePlayer(player._id)}>Delete</button> 
+                                        <button className="content_button darker_color button_space_playerList" onClick={()=> this.sendPlayerToEditForm(player)}>Edit</button>
+                                        <button className="content_button negative_color button_space_playerList" onClick={()=> this.deletePlayer(player._id)}>Delete</button> 
                                     </td>
                                 </tr>)
                             })

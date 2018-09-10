@@ -28,7 +28,7 @@ class DateSelector extends Component {
                     </div>
                     <div className="content">
                         <div className={"date_pickers " + this.props.datePickers}>
-                            <div className="calendar_container">
+                            <div className={"calendar_container " + this.props.datePickers}>
                                 <DateRange />
                             </div>
                         </div>

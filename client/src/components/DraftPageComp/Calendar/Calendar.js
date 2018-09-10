@@ -56,13 +56,17 @@ class Calendar extends Component {
                 <div>
                     <form onSubmit={this.handleSubmit} >
                         <div id="in-line">
-                            <DatePicker 
-                                placeholderText="MM DD YYYY"
-                                selected={this.state.dateSelected}
-                                onChange={this.handleChange}
-                                value={this.state.value}
-                                />
-                            <button id="date_submit" className="btn contrast_color" name="submit" type="submit" >Submit</button>
+                            <div className="calendar_component">
+                                <DatePicker 
+                                    placeholderText="MM DD YYYY"
+                                    selected={this.state.dateSelected}
+                                    onChange={this.handleChange}
+                                    value={this.state.value}
+                                    />
+                            </div>
+                            <div className="submit_button">
+                                <button id="date_submit" className="btn contrast_color content_button" name="submit" type="submit" >Submit</button>
+                            </div>
                         </div>
                     </form>
                 </div>

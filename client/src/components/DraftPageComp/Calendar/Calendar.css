@@ -19,3 +19,8 @@ input {
 #date_submit {
     margin-top: 2%;
 }
+
+.calendar_component {
+    margin-left: -2%;
+    padding-top: 3%;
+}

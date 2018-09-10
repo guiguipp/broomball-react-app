@@ -58,14 +58,14 @@ class DateRange extends Component {
                         />
 
                         <DatePicker
-                            placeholderText="To: MM DD YYYY"
+                            placeholderText="To:     MM DD YYYY"
                             selected={this.state.endDate}
                             selectsEnd
                             startDate={this.state.startDate}
                             endDate={this.state.endDate}
                             onChange={this.handleChangeEnd}
                         />
-                            <button id="date_submit" className="btn contrast_color" name="submit" type="submit" >Submit</button>
+                            <button id="range_submit" className="content_button btn contrast_color" name="submit" type="submit" >Submit</button>
                         </div>
                     </form>
                 </div>

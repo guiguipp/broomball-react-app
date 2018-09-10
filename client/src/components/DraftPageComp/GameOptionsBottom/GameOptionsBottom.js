@@ -331,31 +331,31 @@ class GameOptionsBottom extends Component {
                 <div className={"container " + this.props.visibility.bottom}>
                         <div className="row">
                             <div className="col text-center">
-                                <button className="btn lighter_color" onClick={() => this.toggleMode(this.props.draftMode, "Dark")}>{this.props.pickButtons.left}</button> 
+                                <button className="content_button btn lighter_color" onClick={() => this.toggleMode(this.props.draftMode, "Dark")}>{this.props.pickButtons.left}</button> 
                             </div>
                             <div className="col text-center">
                                 
                             </div>
                             <div className="col text-center">
-                                <button className="btn contrast_color" onClick={() => this.resetTeams(this.props.gameDate)}>Reset</button> 
+                                <button className="content_button btn contrast_color" onClick={() => this.resetTeams(this.props.gameDate)}>Reset</button> 
                             </div>
                             <div className="col text-center">
                                 
                             </div>
                             <div className="col text-center">
-                                <button className="btn lighter_color" onClick={() => this.toggleMode(this.props.draftMode, "White")}>{this.props.pickButtons.right}</button> 
+                                <button className="content_button btn lighter_color" onClick={() => this.toggleMode(this.props.draftMode, "White")}>{this.props.pickButtons.right}</button> 
                             </div>
                         </div>
                         <br />
                         <div className={"row " + this.props.visibility.top}>
                             <div className="col text-center">
-                                <button className="btn darker_color" onClick={()=> this.autodraft(this.props.gameDate)} >Autodraft</button> 
+                                <button className="content_button btn darker_color" onClick={()=> this.autodraft(this.props.gameDate)} >Autodraft</button> 
                             </div>
                             <div className="col text-center">
-                                <button className="btn darker_color" onClick={()=> this.alternateDraft(this.props.gameDate)}>Alternate Draft</button> 
+                                <button className="content_button btn darker_color" onClick={()=> this.alternateDraft(this.props.gameDate)}>Alternate Draft</button> 
                             </div>
                             <div className="col text-center">
-                                <button className="btn darker_color" onClick={() => this.serpentineDraft(this.props.gameDate)}>Serpentine Draft</button> 
+                                <button className="content_button btn darker_color" onClick={() => this.serpentineDraft(this.props.gameDate)}>Serpentine Draft</button> 
                             </div>
                         </div>
                     </div>
