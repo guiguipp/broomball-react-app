@@ -27,7 +27,8 @@ import {
     SORT_APG_DESC,
     SET_DATE_RANGE,
     SET_CHART_DATA,
-    TOOGLE_CHART_OPTIONS
+    TOOGLE_CHART_OPTIONS,
+    TOGGLE_CHART_VISIBILITY
 } from './types';
 
 import API from "../../utils/API"
@@ -923,7 +924,7 @@ export const toggleSortOptions = (tab, currentStatus, ascArrow) => dispatch => {
 }
 
 export const sendDataToChart = (newDataset) => dispatch => {
-    console.log("new dataset: ", newDataset)
+    console.log("new dataset in statsAction.js: ", newDataset)
     dispatch({
         type: SET_CHART_DATA,
         payload: newDataset
@@ -936,4 +937,17 @@ export const toggleChartOptions = (object) => dispatch => {
         payload: object
     })
 }
-    
+
+export const toggleChartVisibility = (currentStatus) => dispatch => {
+    let newStatus
+    if (currentStatus === "hidden") {
+        newStatus = "visible"
+    }
+    else {
+        newStatus = "hidden"
+    }
+    dispatch({
+        type: TOGGLE_CHART_VISIBILITY,
+        payload: newStatus
+    })
+}

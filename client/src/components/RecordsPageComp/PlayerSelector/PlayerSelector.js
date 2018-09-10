@@ -22,6 +22,34 @@ class PlayerSelector extends Component {
     unselectPlayer(player) {
         this.props.unselectPlayer(player)
         this.props.removePlayerStatObject(player)
+        // removing the player from the chart dataset
+        let indexOfRemovedPlayer = this.props.chartData.labels.indexOf(player.name)
+        // removing all the info for this player. We need a new array
+        let newLabels = this.props.chartData.labels.slice(0,indexOfRemovedPlayer).concat(this.props.chartData.labels.slice(indexOfRemovedPlayer + 1))
+        console.log("lables without player: ", newLabels)
+        
+        let newGoals = this.props.chartData.datasets[0].data.slice(0, indexOfRemovedPlayer).concat(this.props.chartData.datasets[0].data.slice(indexOfRemovedPlayer + 1));
+        let newAssists = this.props.chartData.datasets[1].data.slice(0, indexOfRemovedPlayer).concat(this.props.chartData.datasets[1].data.slice(indexOfRemovedPlayer + 1));
+        let newGames = this.props.chartData.datasets[2].data.slice(0, indexOfRemovedPlayer).concat(this.props.chartData.datasets[2].data.slice(indexOfRemovedPlayer + 1));
+        let newWins = this.props.chartData.datasets[3].data.slice(0, indexOfRemovedPlayer).concat(this.props.chartData.datasets[3].data.slice(indexOfRemovedPlayer + 1));
+        let newGpg = this.props.chartData.datasets[4].data.slice(0, indexOfRemovedPlayer).concat(this.props.chartData.datasets[4].data.slice(indexOfRemovedPlayer + 1));
+        let newApg = this.props.chartData.datasets[5].data.slice(0, indexOfRemovedPlayer).concat(this.props.chartData.datasets[5].data.slice(indexOfRemovedPlayer + 1));
+        
+        let newData = {
+            labels: newLabels,
+            datasets: [
+                {...this.props.chartData.datasets[0], data: newGoals}, // goals
+                {...this.props.chartData.datasets[1], data: newAssists}, // assists
+                {...this.props.chartData.datasets[2], data: newGames}, // Games
+                {...this.props.chartData.datasets[3], data: newWins}, // wins
+                {...this.props.chartData.datasets[4], data: newGpg}, // gpg
+                {...this.props.chartData.datasets[5], data: newApg}, // apg
+                ]
+        }
+
+        console.log("newData: ", newData)
+        this.props.sendDataToChart(newData)
+
     }
 
     selectPlayer(broomballer) {
@@ -95,16 +123,10 @@ class PlayerSelector extends Component {
                     _id: broomballer._id
                 }
                 this.props.addPlayerStatObject(playerWithoutRecord)
+                this.addPlayerToChartData( playerWithoutRecord )
             }
     }
     addPlayerToChartData(player){
-        console.log("Player in addPlayerToChartData: ", player)
-        console.log("Current chart data: ", this.props.chartData)
-        console.log("Current labels (aka: players): ", this.props.chartData.labels)
-        console.log("Current datasets: ", this.props.chartData.datasets)
-        console.log("index 0: ", this.props.chartData.datasets[0])
-        console.log("goals: ", this.props.chartData.datasets[0].data)
-        // should not modify the state directly: it's not re-rendering when adding other players!!
         let newData = {
             labels: [player.name, ...this.props.chartData.labels],
             datasets: [
@@ -118,6 +140,11 @@ class PlayerSelector extends Component {
         }
         console.log("newData: ", newData)
         this.props.sendDataToChart(newData)
+    }
+
+    removePlayerFromChartData(player){
+        let indexOfRemovedPlayer = this.props.chartData.labels.indexOf(player.name)
+        console.log("indexOfThePlayerWeWant to remove", indexOfRemovedPlayer)
     }
 
     toggleViews(currentStatus){

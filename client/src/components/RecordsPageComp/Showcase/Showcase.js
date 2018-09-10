@@ -19,7 +19,7 @@ class Showcase extends Component {
             <div className="full">
                 <div className="header">
                     <div>
-                        <h3 className="header_h3 " onClick={()=> this.toggleViews(this.props.sortOptionsDisplay)}> {this.props.sortOptionsDisplay === "hidden" ? <FontAwesomeIcon icon="caret-right" className="header_icon"/> : <FontAwesomeIcon icon="caret-down" className="header_icon" />}Sort options</h3>
+                        <h3 className="header_h3 " onClick={()=> this.toggleViews(this.props.sortOptionsDisplay)}> {this.props.sortOptionsDisplay === "hidden" ? <FontAwesomeIcon icon="caret-right" className="header_icon"/> : <FontAwesomeIcon icon="caret-down" className="header_icon" />}Stats</h3>
                     </div>
                 </div>
                 <div className="content">
@@ -35,7 +35,7 @@ class Showcase extends Component {
                             <button className={this.props.sortingOptions.apgTab + " tab_button"} onClick={()=> this.toggleSort("apg", this.props.sortingOptions.apgTab, this.props.sortingOptions.apgAsc)}>APG <span className="sort_action_icon"> <FontAwesomeIcon icon="long-arrow-alt-down" className={this.props.sortingOptions.apgDesc + " sorting_arrow"} /> <FontAwesomeIcon icon="long-arrow-alt-up" className={this.props.sortingOptions.apgAsc + " sorting_arrow"} /> </span> </button>
                         
                     </div>
-                    <div className="records">
+                    <div className="records ">
                     {this.props.playerRecords ? this.props.playerRecords.map(object => {
                         return (
                             <div key={object._id} className={object.membershipStatus === "Member" ? "member_record player_card" : "non_member_record player_card "}>

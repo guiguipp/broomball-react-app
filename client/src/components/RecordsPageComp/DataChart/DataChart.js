@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import { connect } from 'react-redux';
 import { toggleViews } from '../../../js/actions/statsActions'
+import { toggleChartVisibility } from '../../../js/actions/statsActions'
 import { toggleChartOptions } from '../../../js/actions/statsActions'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -19,8 +20,14 @@ class DataChart extends Component {
     toggleViews(currentStatus) {
         this.props.toggleViews(currentStatus, "sort")
     }
+    createChart(status){
+        this.props.toggleChartVisibility(status)
 
+    }
     toggleChart(tabChanging, az, games, wins, goals, gpg, assists, apg){
+        console.log("Player Records in DataChart.js: ", this.props.playerRecords)
+
+
         switch (tabChanging) {
             case "az":
             if (az === "unselected_chart") {
@@ -199,9 +206,7 @@ class DataChart extends Component {
 
             default:
             break;
-        }
-        
-        
+        }        
     }
 
 
@@ -211,11 +216,11 @@ class DataChart extends Component {
                 <div className="full">
                     <div className="header">
                         <div>
-                            <h3 className="header_h3 " onClick={()=> this.toggleViews(this.props.sortOptionsDisplay)}> {this.props.sortOptionsDisplay === "hidden" ? <FontAwesomeIcon icon="caret-right" className="header_icon"/> : <FontAwesomeIcon icon="caret-down" className="header_icon" />}Chart</h3>
+                            <h3 className="header_h3 " onClick={()=> this.createChart(this.props.chartDisplay)}> {this.props.chartDisplay === "hidden" ? <FontAwesomeIcon icon="caret-right" className="header_icon"/> : <FontAwesomeIcon icon="caret-down" className="header_icon" />}Chart</h3>
                         </div>
                     </div>
                     <div className="content">
-                        <div className={"list_of_options " + this.props.sortOptionsDisplay}>
+                        <div className={"list_of_options " + this.props.chartDisplay}>
                             
                             <button className={this.props.chartingOptions.azTab + " chart_button"} onClick={()=> this.toggleChart("az", this.props.chartingOptions.azTab, this.props.chartingOptions.gamesTab, this.props.chartingOptions.winsTab, this.props.chartingOptions.goalsTab, this.props.chartingOptions.gpgTab, this.props.chartingOptions.assistsTab, this.props.chartingOptions.apgTab )}>A-Z </button>
                             <button className={this.props.chartingOptions.gamesTab + " chart_button"} onClick={()=> this.toggleChart("games", this.props.chartingOptions.azTab, this.props.chartingOptions.gamesTab, this.props.chartingOptions.winsTab, this.props.chartingOptions.goalsTab, this.props.chartingOptions.gpgTab, this.props.chartingOptions.assistsTab, this.props.chartingOptions.apgTab )}>Games Played </button>
@@ -226,7 +231,7 @@ class DataChart extends Component {
                             <button className={this.props.chartingOptions.apgTab + " chart_button"} onClick={()=> this.toggleChart("apg", this.props.chartingOptions.azTab, this.props.chartingOptions.gamesTab, this.props.chartingOptions.winsTab, this.props.chartingOptions.goalsTab, this.props.chartingOptions.gpgTab, this.props.chartingOptions.assistsTab, this.props.chartingOptions.apgTab )}>APG </button>
                         
                         </div>
-                        <div className={"chart " + this.props.sortOptionsDisplay}>
+                        <div className={"chart " + this.props.chartDisplay}>
                             {this.props.chartData.labels.length > 0 ?  
                             <HorizontalBar
                                 data={this.props.chartData}
@@ -252,8 +257,8 @@ Games.propTypes = {
 const mapStateToProps = state => ({
     playerRecords: state.stats.playerRecords,
     chartData: state.stats.chartData,
-    sortOptionsDisplay: state.stats.sortOptionsDisplay,
+    chartDisplay: state.stats.chartDisplay,
     chartingOptions: state.stats.chartingOptions,
 })
 
-export default connect(mapStateToProps, { toggleViews, toggleChartOptions }) (DataChart)
+export default connect(mapStateToProps, { toggleViews, toggleChartVisibility, toggleChartOptions }) (DataChart)

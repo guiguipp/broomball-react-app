@@ -27,7 +27,8 @@ import {
     SORT_APG_DESC,
     SET_DATE_RANGE,
     SET_CHART_DATA,
-    TOOGLE_CHART_OPTIONS
+    TOOGLE_CHART_OPTIONS,
+    TOGGLE_CHART_VISIBILITY
     } from '../actions/types';
 
 import _ from "underscore"
@@ -50,6 +51,7 @@ const initialState = {
     sortOptionsDisplay: "hidden",
     playerRecords: [],
     arrayOfTenBuckersID: [],
+    chartDisplay: "hidden",
     sortingOptions:
         {
             alphaDesc: "active",
@@ -347,7 +349,11 @@ export default function(state = initialState, action) {
             ...state,
             chartingOptions: action.payload,
         }
-
+        case TOGGLE_CHART_VISIBILITY:
+        return {
+            ...state,
+            chartDisplay: action.payload
+        }
         default:
         return state;
     }
