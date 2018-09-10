@@ -70,3 +70,4 @@ export const SORT_ASSISTS_DESC = "SORT_ASSISTS_DESC"
 export const SORT_APG_ASC = "SORT_APG_ASC"
 export const SORT_APG_DESC = "SORT_APG_DESC"
 
+export const SET_CHART_DATA = "SET_CHART_DATA"

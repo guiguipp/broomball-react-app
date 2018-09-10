@@ -7,14 +7,19 @@
     margin: 1% 1% 1% 2%;
     width: 20%;
     height: 200px;
-    overflow: scroll;
 }
+
 .player_name {
-    text-align: center;
     font-weight: bold;
     font-variant: small-caps;
     margin-bottom: 10%;
     font-size: 125%;
+    text-align: center;
+}
+
+.player_data {
+    position: relative;
+    overflow: scroll;
 }
 
 .member_record {

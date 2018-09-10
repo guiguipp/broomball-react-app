@@ -7,6 +7,7 @@ import { unselectPlayer } from '../../../js/actions/statsActions'
 import { addPlayerStatObject } from "../../../js/actions/statsActions"
 import { removePlayerStatObject } from "../../../js/actions/statsActions"
 import { toggleViews } from '../../../js/actions/statsActions'
+import { sendDataToChart } from '../../../js/actions/statsActions'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -25,6 +26,7 @@ class PlayerSelector extends Component {
 
     selectPlayer(broomballer) {
         this.props.selectPlayer(broomballer)
+        
         let gamesPlayed = this.props.selectedGames.filter(game => game.players.filter(player => player._id === broomballer._id )[0])
         if (gamesPlayed.length > 0) {
             let playerReduced = gamesPlayed.reduce((players, game) => {
@@ -65,8 +67,8 @@ class PlayerSelector extends Component {
             let winPercent = gamePlayedFromArray > 0 ? Math.floor((playerReduced.wins.length / playerReduced.gamesPlayed.length) * 100) : "N/A"
             let goalsFromArray = playerReduced.goals.reduce((a,b) => a + b, 0)
             let assistsFromArray = playerReduced.assists.reduce((a, b) => a + b, 0)
-            let gpg = gamePlayedFromArray > 0 ? (goalsFromArray / gamePlayedFromArray).toFixed(2) : "N/A"
-            let apg = gamePlayedFromArray > 0 ? (assistsFromArray / gamePlayedFromArray).toFixed(2) : "N/A"
+            let gpg = gamePlayedFromArray > 0 ? parseFloat((goalsFromArray / gamePlayedFromArray)) : "N/A"
+            let apg = gamePlayedFromArray > 0 ? parseFloat((assistsFromArray / gamePlayedFromArray)) : "N/A"
             
             playerReduced.gamesPlayed = gamePlayedFromArray
             playerReduced.wins = winsFromArray
@@ -77,6 +79,7 @@ class PlayerSelector extends Component {
             playerReduced.apg = apg
             
             this.props.addPlayerStatObject( playerReduced )
+            this.addPlayerToChartData( playerReduced )
             }
             else {
                 let playerWithoutRecord = {
@@ -93,6 +96,28 @@ class PlayerSelector extends Component {
                 }
                 this.props.addPlayerStatObject(playerWithoutRecord)
             }
+    }
+    addPlayerToChartData(player){
+        console.log("Player in addPlayerToChartData: ", player)
+        console.log("Current chart data: ", this.props.chartData)
+        console.log("Current labels (aka: players): ", this.props.chartData.labels)
+        console.log("Current datasets: ", this.props.chartData.datasets)
+        console.log("index 0: ", this.props.chartData.datasets[0])
+        console.log("goals: ", this.props.chartData.datasets[0].data)
+        // should not modify the state directly: it's not re-rendering when adding other players!!
+        let newData = {
+            labels: [player.name, ...this.props.chartData.labels],
+            datasets: [
+            {...this.props.chartData.datasets[0], data: [player.goals, ...this.props.chartData.datasets[0].data]}, // goals
+            {...this.props.chartData.datasets[1], data: [player.assists, ...this.props.chartData.datasets[1].data]}, // assists
+            {...this.props.chartData.datasets[2], data: [player.gamesPlayed, ...this.props.chartData.datasets[2].data]}, // Games
+            {...this.props.chartData.datasets[3], data: [player.winPercent, ...this.props.chartData.datasets[3].data]}, // wins
+            {...this.props.chartData.datasets[4], data: [player.gpg, ...this.props.chartData.datasets[4].data]}, // gpg
+            {...this.props.chartData.datasets[5], data: [player.apg, ...this.props.chartData.datasets[5].data]}, // apg
+            ]
+        }
+        console.log("newData: ", newData)
+        this.props.sendDataToChart(newData)
     }
 
     toggleViews(currentStatus){
@@ -140,7 +165,8 @@ const mapStateToProps = state => ({
     unselectedPlayers: state.stats.unselectedPlayers,
     allPlayers: state.players.players,
     arrayOfTenBuckersID: state.stats.arrayOfTenBuckersID,
-    listOfPlayers: state.stats.listOfPlayers
+    listOfPlayers: state.stats.listOfPlayers,
+    chartData: state.stats.chartData,
 })
 
-export default connect(mapStateToProps, { fetchPlayers, selectPlayer, unselectPlayer, toggleViews, addPlayerStatObject, removePlayerStatObject }) (PlayerSelector)
+export default connect(mapStateToProps, { fetchPlayers, selectPlayer, unselectPlayer, toggleViews, addPlayerStatObject, removePlayerStatObject, sendDataToChart }) (PlayerSelector)

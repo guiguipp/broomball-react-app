@@ -25,7 +25,8 @@ import {
     SORT_ASSISTS_DESC,
     SORT_APG_ASC,
     SORT_APG_DESC,
-    SET_DATE_RANGE
+    SET_DATE_RANGE,
+    SET_CHART_DATA
     } from '../actions/types';
 
 import _ from "underscore"
@@ -71,7 +72,66 @@ const initialState = {
             gpgTab: "unselected_tab",
             assistsTab: "unselected_tab",
             apgTab: "unselected_tab",
-        }
+        },
+    chartData: {
+        labels: [],
+        datasets: [
+            {
+                label: "Goals",
+                data: [],
+                backgroundColor: 'rgba(255,99,132,0.6)',
+                borderColor: 'rgba(255,99,132,1)',
+                borderWidth: 1,
+                hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+                hoverBorderColor: 'rgba(255,99,132,1)',
+            },
+            {
+                label: "Assists",
+                data: [],
+                backgroundColor: 'rgba(54,162,235,0.6)',
+                borderColor: 'rgba(255,99,132,1)',
+                borderWidth: 1,
+                hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+                hoverBorderColor: 'rgba(255,99,132,1)',
+            },
+            {
+                label: "Games",
+                data: [],
+                backgroundColor: 'rgba(255,206,86,0.6)',
+                borderColor: 'rgba(255,99,132,1)',
+                borderWidth: 1,
+                hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+                hoverBorderColor: 'rgba(255,99,132,1)',
+            },
+            {
+                label: "Wins",
+                data: [],
+                backgroundColor: 'rgba(75,192,192,0.6)',
+                borderColor: 'rgba(255,99,132,1)',
+                borderWidth: 1,
+                hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+                hoverBorderColor: 'rgba(255,99,132,1)',
+            },
+            {
+                label: "GPG",
+                data: [],
+                backgroundColor: 'rgba(75,192,192,0.6)',
+                borderColor: 'rgba(255,99,132,1)',
+                borderWidth: 1,
+                hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+                hoverBorderColor: 'rgba(255,99,132,1)',
+            },
+            {
+                label: "APG",
+                data: [],
+                backgroundColor: 'rgba(255,99,132,0.6)',
+                borderColor: 'rgba(255,99,132,1)',
+                borderWidth: 1,
+                hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+                hoverBorderColor: 'rgba(255,99,132,1)',
+            },
+        ]
+    }
     }
 
 export default function(state = initialState, action) {
@@ -264,6 +324,12 @@ export default function(state = initialState, action) {
             ...state,
             dateRange: action.payload,
             gamesForRecords: state.gamesForRecords.filter(game => game._id >= action.payload.from && game._id <= action.payload.to),
+        }
+
+        case SET_CHART_DATA:
+        return {
+            ...state,
+            chartData: action.payload,
         }
 
         default:

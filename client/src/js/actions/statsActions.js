@@ -26,6 +26,7 @@ import {
     SORT_APG_ASC,
     SORT_APG_DESC,
     SET_DATE_RANGE,
+    SET_CHART_DATA
 } from './types';
 
 import API from "../../utils/API"
@@ -920,3 +921,10 @@ export const toggleSortOptions = (tab, currentStatus, ascArrow) => dispatch => {
 
 }
 
+export const sendDataToChart = (newDataset) => dispatch => {
+    console.log("new dataset: ", newDataset)
+    dispatch({
+        type: SET_CHART_DATA,
+        payload: newDataset
+    })
+}
