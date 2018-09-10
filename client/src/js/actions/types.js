@@ -71,3 +71,4 @@ export const SORT_APG_ASC = "SORT_APG_ASC"
 export const SORT_APG_DESC = "SORT_APG_DESC"
 
 export const SET_CHART_DATA = "SET_CHART_DATA"
+export const TOOGLE_CHART_OPTIONS = "TOOGLE_CHART_OPTIONS"

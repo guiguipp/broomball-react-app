@@ -3,3 +3,20 @@
     height: 700px;
     margin: auto;
 }
+.chart_button {
+    margin: 2%;
+    height: 40px;
+    min-width: 150px;
+    border-radius: 20px;
+}
+.selected_chart {
+    background: linear-gradient(70deg, #DE733A,#EA8D47);
+    color: white;
+}
+
+.unselected_chart {
+    color: #EA8D47;
+    border-style: solid;
+    border-color: #EA8D47;
+    border-width: 2px;
+}

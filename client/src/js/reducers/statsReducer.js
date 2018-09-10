@@ -26,7 +26,8 @@ import {
     SORT_APG_ASC,
     SORT_APG_DESC,
     SET_DATE_RANGE,
-    SET_CHART_DATA
+    SET_CHART_DATA,
+    TOOGLE_CHART_OPTIONS
     } from '../actions/types';
 
 import _ from "underscore"
@@ -72,6 +73,15 @@ const initialState = {
             gpgTab: "unselected_tab",
             assistsTab: "unselected_tab",
             apgTab: "unselected_tab",
+        },
+    chartingOptions: {
+        azTab: "unselected_chart",
+        gamesTab: "unselected_chart",
+        winsTab: "unselected_chart",
+        goalsTab: "unselected_chart",
+        gpgTab: "unselected_chart",
+        assistsTab: "unselected_chart",
+        apgTab: "unselected_chart",
         },
     chartData: {
         labels: [],
@@ -330,6 +340,12 @@ export default function(state = initialState, action) {
         return {
             ...state,
             chartData: action.payload,
+        }
+
+        case TOOGLE_CHART_OPTIONS:
+        return {
+            ...state,
+            chartingOptions: action.payload,
         }
 
         default:
