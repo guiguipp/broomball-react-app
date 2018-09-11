@@ -299,14 +299,6 @@ export const removePlayerStatObject = (player) => dispatch => {
         payload: player
     })
 }
-// this handles when games are removed after the players. In this case, data needs to be re-initiated
-// we recreate the array of players
-export const updatePlayers = (players) => dispatch => {
-    dispatch({
-        type: REPLACE_PLAYERS_RECORDS,
-        payload: players
-    })
-}
 
 export const selectDateRange = (start, end) => dispatch => {
     console.log("Start: ", start, "\nEnd: ", end)
@@ -1025,5 +1017,14 @@ export const batchUnselect = (type) => dispatch => {
     dispatch({
         type: BATCH_UNSELECT,
         payload: type
+    })
+}
+
+// this handles when games are removed after the players. In this case, data needs to be re-initiated
+// we recreate the array of players
+export const updatePlayers = (players) => dispatch => {
+    dispatch({
+        type: REPLACE_PLAYERS_RECORDS,
+        payload: players
     })
 }

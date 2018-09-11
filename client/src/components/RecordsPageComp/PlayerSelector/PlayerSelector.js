@@ -127,15 +127,13 @@ class PlayerSelector extends Component {
                 arrayOfplayer.push(playerWithoutRecord)
             }
             this.addBatchChartData(arrayOfplayer)
-        }
-    
+    }
 
     toggleViews(currentStatus){
         this.props.toggleViews(currentStatus, "players")
     }
-    // calling the "individual" functions repeatedly makes redux (and redux devtool) fail & Chrome lag. For this reason, we 
-    // create separate functions that will handle updates on the whole array. 
-    // This function dispatches data to the function that will handle it.
+    // calling the "individual" functions repeatedly makes redux (and redux devtool) fail & Chrome lag. For this reason, we create separate functions that will handle updates on the whole array. 
+    // This dispatcher sends data to the function that will handle it.
     selectAllPlayers(playerUpdate){
         switch (playerUpdate) {
             case "unselected_member":
@@ -180,7 +178,7 @@ class PlayerSelector extends Component {
                     
                     players.gamesPlayed = players.gamesPlayed || []
                     if(gameInfo[0].available === true){
-                        available= 1
+                        available = 1
                         players.gamesPlayed.push(available)
                     }
                     
@@ -246,13 +244,13 @@ class PlayerSelector extends Component {
             else if (type === "unselect") {
                 this.replaceBatchChartData( transformedArrayForCards )
             }
-        }
+    }
     // this handles unselecting players depending on the membership type sent
     batchUnselect(type){
         this.props.batchUnselect(type);
         this.props.selectedPlayers.filter(player => player.membershipStatus === type).forEach(broomballer => this.unselectPlayer(broomballer));
         this.selectAndTransform(this.props.selectedPlayers.filter(player => player.membershipStatus !== type), "unselect")
-        }
+    }
 
     addBatchChartData(arrayOfPlayers) {
         let labels = []

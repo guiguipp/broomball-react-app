@@ -244,7 +244,7 @@ class DataChart extends Component {
                         </div>
                     </div>
                     <div className="content">
-                        <div className={"list_of_options " + this.props.chartDisplay}>
+                        {/* <div className={"list_of_options " + this.props.chartDisplay}>
                             
                             <button className={this.props.chartingOptions.gamesTab + " chart_button"} onClick={()=> this.toggleChart(this.props.chartingOptions.gamesTab, this.props.chartingOptions.gamesTab, this.props.chartingOptions.winsTab, this.props.chartingOptions.goalsTab, this.props.chartingOptions.gpgTab, this.props.chartingOptions.assistsTab, this.props.chartingOptions.apgTab )}>Games Played </button>
                             <button className={this.props.chartingOptions.winsTab + " chart_button"} onClick={()=> this.toggleChart(this.props.chartingOptions.winsTab, this.props.chartingOptions.gamesTab, this.props.chartingOptions.winsTab, this.props.chartingOptions.goalsTab, this.props.chartingOptions.gpgTab, this.props.chartingOptions.assistsTab, this.props.chartingOptions.apgTab )}>Win %</button>
@@ -253,9 +253,9 @@ class DataChart extends Component {
                             <button className={this.props.chartingOptions.assistsTab + " chart_button"} onClick={()=> this.toggleChart(this.props.chartingOptions.assistsTab, this.props.chartingOptions.gamesTab, this.props.chartingOptions.winsTab, this.props.chartingOptions.goalsTab, this.props.chartingOptions.gpgTab, this.props.chartingOptions.assistsTab, this.props.chartingOptions.apgTab )}>Assists </button>
                             <button className={this.props.chartingOptions.apgTab + " chart_button"} onClick={()=> this.toggleChart(this.props.chartingOptions.apgTab, this.props.chartingOptions.gamesTab, this.props.chartingOptions.winsTab, this.props.chartingOptions.goalsTab, this.props.chartingOptions.gpgTab, this.props.chartingOptions.assistsTab, this.props.chartingOptions.apgTab )}>APG </button>
                         
-                        </div>
+                        </div> */}
                         <div className={"chart " }>
-                            {this.props.curatedChartData ?  
+                            {this.props.chartData && this.props.chartDisplay !== "hidden" ?  
                             <div className="chartAreaWrapper">
                                 <HorizontalBar
                                     data={this.props.curatedChartData}

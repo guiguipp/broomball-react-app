@@ -7,6 +7,7 @@ import { unselectGame } from '../../../js/actions/statsActions'
 import { toggleViews } from '../../../js/actions/statsActions'
 
 import { updatePlayers } from '../../../js/actions/statsActions'
+import { batchChartUpdate } from '../../../js/actions/statsActions'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -105,12 +106,13 @@ class GameSelector extends Component {
     selectGame(game) {
         this.props.selectGame(game)
         /*  Adapting the reducer originally created in PlayerSelector */
-        let playersForRecords = []
+        let transformedArrayForCards = []
         // if the game is added after players have been selected
             if (this.props.selectedPlayers.length > 0) {
                 this.props.selectedPlayers.forEach((broomballer) => {
                 // re-filter the game array adding it newly added game
                 let gamesPlayed = [game, ...this.props.selectedGames].filter(game => game.players.filter(player => player._id === broomballer._id )[0])
+                
                 if (gamesPlayed.length > 0) {
                     let playerReduced = gamesPlayed.reduce((players, game) => {
                         let gameInfo = game.players.filter(player => player._id === broomballer._id).map(player => player.gameInfo)
@@ -122,7 +124,7 @@ class GameSelector extends Component {
                         
                         players.gamesPlayed = players.gamesPlayed || []
                         if(gameInfo[0].available === true){
-                            available= 1
+                            available = 1
                             players.gamesPlayed.push(available)
                         }
                         
@@ -161,7 +163,7 @@ class GameSelector extends Component {
                         playerReduced.gpg = gpg
                         playerReduced.apg = apg
                         
-                        playersForRecords.push(playerReduced)
+                        transformedArrayForCards.push(playerReduced)
                     }
                     else {
                         let playerWithoutRecord = {
@@ -176,30 +178,51 @@ class GameSelector extends Component {
                             apg: "N/A",
                             _id: broomballer._id
                         }
-                        playersForRecords.push(playerWithoutRecord)
+                        transformedArrayForCards.push(playerWithoutRecord)
                     }
-                this.props.updatePlayers( playersForRecords )
                 })        
-        }
+            // preventing the data to send before the array is complete
+            if (transformedArrayForCards.length === this.props.selectedPlayers.length) {
+                this.props.updatePlayers( transformedArrayForCards )
+                this.replaceBatchChartData( transformedArrayForCards )
+                }
+            }
     }
 
     toggleViews(currentStatus){
         this.props.toggleViews(currentStatus, "games")
     }
 
-    addPlayerToChartData(player){
-        let newData = {
-            labels: [player.name, ...this.props.chartData.labels],
+    replaceBatchChartData(arrayOfPlayers) {
+        let labels = []
+        let goalsArray = []
+        let assistsArray = []
+        let gamesPlayedArray = []
+        let winPercentArray = []
+        let gpgArray = []
+        let apgArray = []
+        arrayOfPlayers.forEach(e => {
+            labels.push(e.name);
+            goalsArray.push(e.goals);
+            assistsArray.push(e.assists);
+            gamesPlayedArray.push(e.gamesPlayed);
+            winPercentArray.push(e.winPercent);
+            gpgArray.push(e.gpg);
+            apgArray.push(e.apg);
+        })
+
+        let newObject = {
+            labels: labels,
             datasets: [
-            {...this.props.chartData.datasets[0], data: [player.goals, ...this.props.chartData.datasets[0].data]}, // goals
-            {...this.props.chartData.datasets[1], data: [player.assists, ...this.props.chartData.datasets[1].data]}, // assists
-            {...this.props.chartData.datasets[2], data: [player.gamesPlayed, ...this.props.chartData.datasets[2].data]}, // Games
-            {...this.props.chartData.datasets[3], data: [player.winPercent, ...this.props.chartData.datasets[3].data]}, // wins
-            {...this.props.chartData.datasets[4], data: [player.gpg, ...this.props.chartData.datasets[4].data]}, // gpg
-            {...this.props.chartData.datasets[5], data: [player.apg, ...this.props.chartData.datasets[5].data]}, // apg
-            ]
+                {...this.props.chartData.datasets[0], data: goalsArray},
+                {...this.props.chartData.datasets[1], data: assistsArray},
+                {...this.props.chartData.datasets[2], data: gamesPlayedArray},
+                {...this.props.chartData.datasets[3], data: winPercentArray},
+                {...this.props.chartData.datasets[4], data: gpgArray},
+                {...this.props.chartData.datasets[5], data: apgArray}
+                ]
         }
-        // this.props.sendDataToChart(newData)
+        this.props.batchChartUpdate(newObject)
     }
 
     render() {
@@ -242,7 +265,8 @@ const mapStateToProps = state => ({
     unselectedGames: state.stats.unselectedGames,
     allGames: state.stats.gamesForRecords,
     listOfGames: state.stats.listOfGames,
-    selectedPlayers: state.stats.selectedPlayers
+    selectedPlayers: state.stats.selectedPlayers,
+    chartData: state.stats.chartData
 })
 
-export default connect(mapStateToProps, { getGamesForRecords, selectGame, unselectGame, toggleViews, updatePlayers }) (GameSelector)
+export default connect(mapStateToProps, { getGamesForRecords, selectGame, unselectGame, toggleViews, updatePlayers, batchChartUpdate }) (GameSelector)

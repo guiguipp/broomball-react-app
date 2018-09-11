@@ -347,14 +347,14 @@ export default function(state = initialState, action) {
             dateRange: action.payload,
             gamesForRecords: state.gamesForRecords.filter(game => game._id >= action.payload.from && game._id <= action.payload.to),
         }
-
+        /*
         case SET_CHART_DATA:
         return {
             ...state,
             // chartData: action.payload,
             // curatedChartData: action.payload,
             // chartingOptions: initialState.chartingOptions
-        }
+        }*/
 
         case TOOGLE_CHART_OPTIONS:
         return {
@@ -380,7 +380,7 @@ export default function(state = initialState, action) {
         return {
             ...state,
             chartData: action.payload,
-            // curatedChartData: action.payload,
+            curatedChartData: action.payload,
         }
 
         case BATCH_UNSELECT:
