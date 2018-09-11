@@ -931,7 +931,7 @@ export const sendDataToChart = (newDataset) => dispatch => {
 }
 
 export const toggleChartOptions = (displayObject, updateObject ) => dispatch => {
-    console.log("Display Object: ", displayObject, "\nupdateObject: ", updateObject)
+    // console.log("Display Object: ", displayObject, "\nupdateObject: ", updateObject)
     dispatch({
         type: TOOGLE_CHART_OPTIONS,
         payload: {
