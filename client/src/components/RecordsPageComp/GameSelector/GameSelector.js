@@ -187,6 +187,21 @@ class GameSelector extends Component {
         this.props.toggleViews(currentStatus, "games")
     }
 
+    addPlayerToChartData(player){
+        let newData = {
+            labels: [player.name, ...this.props.chartData.labels],
+            datasets: [
+            {...this.props.chartData.datasets[0], data: [player.goals, ...this.props.chartData.datasets[0].data]}, // goals
+            {...this.props.chartData.datasets[1], data: [player.assists, ...this.props.chartData.datasets[1].data]}, // assists
+            {...this.props.chartData.datasets[2], data: [player.gamesPlayed, ...this.props.chartData.datasets[2].data]}, // Games
+            {...this.props.chartData.datasets[3], data: [player.winPercent, ...this.props.chartData.datasets[3].data]}, // wins
+            {...this.props.chartData.datasets[4], data: [player.gpg, ...this.props.chartData.datasets[4].data]}, // gpg
+            {...this.props.chartData.datasets[5], data: [player.apg, ...this.props.chartData.datasets[5].data]}, // apg
+            ]
+        }
+        // this.props.sendDataToChart(newData)
+    }
+
     render() {
         return (
                 <div className="full">

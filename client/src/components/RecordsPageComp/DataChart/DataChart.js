@@ -2,23 +2,20 @@ import React, { Component } from "react";
 
 import { connect } from 'react-redux';
 import { toggleViews } from '../../../js/actions/statsActions'
-import { toggleChartVisibility } from '../../../js/actions/statsActions'
 import { toggleChartOptions } from '../../../js/actions/statsActions'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {HorizontalBar} from "react-chartjs-2";
 // see https://www.npmjs.com/package/react-chartjs-2 for documentation
-
 import "./DataChart.css";
 
+// defaults.global.barThickness = 20;
 class DataChart extends Component {
+    
     toggleViews(currentStatus) {
-        this.props.toggleViews(currentStatus, "sort")
+        this.props.toggleViews(currentStatus, "chart")
     }
-    createChart(status){
-        this.props.toggleChartVisibility(status)
 
-    }
     toggleChart(tabChanging, games, wins, goals, gpg, assists, apg){
         // we create an empty array with the # of players we pull records from, that way, we can remove bars from chart by showing data = 0 
         let emptyArray = [];
@@ -243,7 +240,7 @@ class DataChart extends Component {
                 <div className="full">
                     <div className="header">
                         <div>
-                            <h3 className="header_h3 " onClick={()=> this.createChart(this.props.chartDisplay)}> {this.props.chartDisplay === "hidden" ? <FontAwesomeIcon icon="caret-right" className="header_icon"/> : <FontAwesomeIcon icon="caret-down" className="header_icon" />}Chart</h3>
+                            <h3 className="header_h3 " onClick={()=> this.toggleViews(this.props.chartDisplay)}> {this.props.chartDisplay === "hidden" ? <FontAwesomeIcon icon="caret-right" className="header_icon"/> : <FontAwesomeIcon icon="caret-down" className="header_icon" />}Chart</h3>
                         </div>
                     </div>
                     <div className="content">
@@ -259,13 +256,16 @@ class DataChart extends Component {
                         </div>
                         <div className={"chart " }>
                             {this.props.curatedChartData ?  
-                            <HorizontalBar
-                                data={this.props.curatedChartData}
-                                options={{
-                                    responsive: true,
-                                    maintainAspectRatio: true
-                                    }}
-                            /> : null }  
+                            <div className="chartAreaWrapper">
+                                <HorizontalBar
+                                    data={this.props.curatedChartData}
+                                    options={{
+                                            responsive: true,
+                                            maintainAspectRatio: true,
+                                            barThickness: 100
+                                            }}
+                                    />
+                            </div> : null }  
                         </div>
                     </div>
                 </div>
@@ -288,4 +288,4 @@ const mapStateToProps = state => ({
     chartingOptions: state.stats.chartingOptions,
 })
 
-export default connect(mapStateToProps, { toggleViews, toggleChartVisibility, toggleChartOptions }) (DataChart)
+export default connect(mapStateToProps, { toggleViews, /*toggleChartVisibility,*/ toggleChartOptions }) (DataChart)

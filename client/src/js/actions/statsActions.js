@@ -28,8 +28,9 @@ import {
     SET_DATE_RANGE,
     SET_CHART_DATA,
     TOOGLE_CHART_OPTIONS,
-    TOGGLE_CHART_VISIBILITY,
-    TOGGLE_SELECT_ALL
+    TOGGLE_SELECT_ALL,
+    BATCH_CARD_UPDATE,
+    BATCH_CHART_UPDATE
 } from './types';
 
 import API from "../../utils/API"
@@ -207,6 +208,7 @@ export const toggleViews = (currentStatus, element) => dispatch => {
                 games: "hidden",
                 players: "hidden",
                 sort: "hidden",
+                chart: "hidden"
             }
         })}
     else {
@@ -219,6 +221,7 @@ export const toggleViews = (currentStatus, element) => dispatch => {
                     games: "hidden",
                     players: "hidden",
                     sort: "hidden",
+                    chart: "hidden"
                 }
             })
             
@@ -232,6 +235,7 @@ export const toggleViews = (currentStatus, element) => dispatch => {
                         games: "visible",
                         players: "hidden",
                         sort: "hidden",
+                        chart: "hidden"
                     }
                 })
             break;
@@ -244,6 +248,7 @@ export const toggleViews = (currentStatus, element) => dispatch => {
                             games: "hidden",
                             players: "visible",
                             sort: "hidden",
+                            chart: "hidden"
                         }
                     })
             break;
@@ -256,6 +261,20 @@ export const toggleViews = (currentStatus, element) => dispatch => {
                     games: "hidden",
                     players: "hidden",
                     sort: "visible",
+                    chart: "hidden"
+                }
+            })
+            break;
+
+            case "chart":
+            dispatch({
+                type: TOGGLE_RECORDS_VIEWS,
+                payload: {
+                    dates: "hidden",
+                    games: "hidden",
+                    players: "hidden",
+                    sort: "hidden",
+                    chart: "visible"
                 }
             })
             break;
@@ -925,6 +944,7 @@ export const toggleSortOptions = (tab, currentStatus, ascArrow) => dispatch => {
 }
 
 export const sendDataToChart = (newDataset) => dispatch => {
+    console.log("newDataSet in sendDataToChart statsActions.js: ", newDataset)
     dispatch({
         type: SET_CHART_DATA,
         payload: newDataset
@@ -942,22 +962,7 @@ export const toggleChartOptions = (displayObject, updateObject ) => dispatch => 
     })
 }
 
-export const toggleChartVisibility = (currentStatus) => dispatch => {
-    let newStatus
-    if (currentStatus === "hidden") {
-        newStatus = "visible"
-    }
-    else {
-        newStatus = "hidden"
-    }
-    dispatch({
-        type: TOGGLE_CHART_VISIBILITY,
-        payload: newStatus
-    })
-}
-
 export const toggleSelectAll = (update) => dispatch => {
-    console.log("update in toggleSelectAll statsActionsupdate: ", update)
     switch (update) {
         case "unselected_member":
         dispatch({
@@ -983,7 +988,7 @@ export const toggleSelectAll = (update) => dispatch => {
             type: TOGGLE_SELECT_ALL,
             payload: {
                 player: "tenBucker",
-                memberSelection: "selected_tenBucker"}
+                tenBuckerSelection: "selected_non_member"}
             })    
         break;
 
@@ -991,12 +996,26 @@ export const toggleSelectAll = (update) => dispatch => {
         dispatch({
             type: TOGGLE_SELECT_ALL,
             payload: {
-                player: "member",
-                memberSelection: "unselected_tenBucker"}
+                player: "tenBucker",
+                tenBuckerSelection: "unselected_non_member"}
             })    
         break;
 
         default:
         return;
     }
+}
+
+export const batchCardUpdate = (newData) => dispatch => {
+    dispatch({
+        type: BATCH_CARD_UPDATE,
+        payload: newData
+    })
+}
+
+export const batchChartUpdate = (newData) => dispatch => {
+    dispatch({
+        type: BATCH_CHART_UPDATE,
+        payload: newData
+    })
 }

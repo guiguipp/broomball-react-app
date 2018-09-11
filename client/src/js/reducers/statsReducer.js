@@ -28,8 +28,9 @@ import {
     SET_DATE_RANGE,
     SET_CHART_DATA,
     TOOGLE_CHART_OPTIONS,
-    TOGGLE_CHART_VISIBILITY,
-    TOGGLE_SELECT_ALL
+    TOGGLE_SELECT_ALL,
+    BATCH_CARD_UPDATE,
+    BATCH_CHART_UPDATE
     } from '../actions/types';
 
 import _ from "underscore"
@@ -50,9 +51,9 @@ const initialState = {
     listOfGames: "hidden",
     listOfPlayers: "hidden", 
     sortOptionsDisplay: "hidden",
+    chartDisplay: "hidden",
     playerRecords: [],
     arrayOfTenBuckersID: [],
-    chartDisplay: "hidden",
     sortingOptions:
         {
             alphaDesc: "active",
@@ -105,6 +106,7 @@ const initialState = {
                 borderWidth: 1,
                 hoverBackgroundColor: 'rgba(54, 162, 235, 0.6)',
                 hoverBorderColor: 'rgba(54, 162, 235, 0.6)',
+                barThickness: 15,
             },
             {
                 label: "Games",
@@ -114,6 +116,7 @@ const initialState = {
                 borderWidth: 1,
                 hoverBackgroundColor: 'rgba(255, 206, 86, 0.6)',
                 hoverBorderColor: 'rgba(255, 206, 86, 0.6)',
+                barThickness: 15,
             },
             {
                 label: "Wins",
@@ -123,6 +126,7 @@ const initialState = {
                 borderWidth: 1,
                 hoverBackgroundColor: 'rgba(75,192,192,0.6)',
                 hoverBorderColor: 'rgba(75,192,192,0.6)',
+                barThickness: 15,
             },
             {
                 label: "GPG",
@@ -132,6 +136,7 @@ const initialState = {
                 borderWidth: 1,
                 hoverBackgroundColor: 'rgba(153,102,255,0.6)',
                 hoverBorderColor: 'rgba(153,102,255,0.6)',
+                barThickness: 15,
             },
             {
                 label: "APG",
@@ -141,6 +146,7 @@ const initialState = {
                 borderWidth: 1,
                 hoverBackgroundColor: 'rgba(255, 159, 64, 0.6)',
                 hoverBorderColor: 'rgba(255, 159, 64, 0.6)',
+                options: {barThickness: 100},
             },
         ]
     },
@@ -215,7 +221,8 @@ export default function(state = initialState, action) {
             datePickers: action.payload.dates,
             listOfGames: action.payload.games,
             listOfPlayers: action.payload.players, 
-            sortOptionsDisplay: action.payload.sort
+            sortOptionsDisplay: action.payload.sort,
+            chartDisplay: action.payload.chart
         }
 
         case ADD_PLAYER_RECORDS:
@@ -354,11 +361,6 @@ export default function(state = initialState, action) {
             chartingOptions: action.payload.display,
             curatedChartData: action.payload.update
         }
-        case TOGGLE_CHART_VISIBILITY:
-        return {
-            ...state,
-            chartDisplay: action.payload
-        }
 
         case TOGGLE_SELECT_ALL:
         return {
@@ -366,6 +368,20 @@ export default function(state = initialState, action) {
             memberSelection: action.payload.player === "member" ? action.payload.memberSelection : state.memberSelection,
             tenBuckerSelection: action.payload.player !== "member" ? action.payload.tenBuckerSelection : state.tenBuckerSelection,
         }
+        
+        case BATCH_CARD_UPDATE:
+        return {
+            ...state,
+            playerRecords: _.sortBy(action.payload, "name")
+        }
+
+        case BATCH_CHART_UPDATE:
+        return {
+            ...state,
+            chartData: action.payload,
+            curatedChartData: action.payload,
+        }
+
         default:
         return state;
     }
