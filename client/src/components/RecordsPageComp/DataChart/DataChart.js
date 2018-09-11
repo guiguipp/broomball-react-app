@@ -20,15 +20,11 @@ class DataChart extends Component {
 
     }
     toggleChart(tabChanging, games, wins, goals, gpg, assists, apg){
-        console.log("Player Records in DataChart.js: ", this.props.playerRecords)
-        console.log("chartData: ", this.props.chartData )
-        console.log("chartData: ", this.props.curatedChartData )
+        // we create an empty array with the # of players we pull records from, that way, we can remove bars from chart by showing data = 0 
         let emptyArray = [];
-
         for (let i = 0; i < this.props.playerRecords.length; i ++) {
             emptyArray.push(0)
-        }
-        
+            }
         
         let newGoals = this.props.chartData.datasets[0]
         let newAssists = this.props.chartData.datasets[1]
@@ -254,14 +250,14 @@ class DataChart extends Component {
                         <div className={"list_of_options " + this.props.chartDisplay}>
                             
                             <button className={this.props.chartingOptions.gamesTab + " chart_button"} onClick={()=> this.toggleChart(this.props.chartingOptions.gamesTab, this.props.chartingOptions.gamesTab, this.props.chartingOptions.winsTab, this.props.chartingOptions.goalsTab, this.props.chartingOptions.gpgTab, this.props.chartingOptions.assistsTab, this.props.chartingOptions.apgTab )}>Games Played </button>
-                            <button className={this.props.chartingOptions.winsTab + " chart_button"} onClick={()=> this.toggleChart(this.props.chartingOptions.winsTab, this.props.chartingOptions.gamesTab, this.props.chartingOptions.winsTab, this.props.chartingOptions.goalsTab, this.props.chartingOptions.gpgTab, this.props.chartingOptions.assistsTab, this.props.chartingOptions.apgTab )}>Games Won </button>
+                            <button className={this.props.chartingOptions.winsTab + " chart_button"} onClick={()=> this.toggleChart(this.props.chartingOptions.winsTab, this.props.chartingOptions.gamesTab, this.props.chartingOptions.winsTab, this.props.chartingOptions.goalsTab, this.props.chartingOptions.gpgTab, this.props.chartingOptions.assistsTab, this.props.chartingOptions.apgTab )}>Win %</button>
                             <button className={this.props.chartingOptions.goalsTab + " chart_button"} onClick={()=> this.toggleChart(this.props.chartingOptions.goalsTab, this.props.chartingOptions.gamesTab, this.props.chartingOptions.winsTab, this.props.chartingOptions.goalsTab, this.props.chartingOptions.gpgTab, this.props.chartingOptions.assistsTab, this.props.chartingOptions.apgTab )}>Goals </button>
                             <button className={this.props.chartingOptions.gpgTab + " chart_button"} onClick={()=> this.toggleChart(this.props.chartingOptions.gpgTab, this.props.chartingOptions.gamesTab, this.props.chartingOptions.winsTab, this.props.chartingOptions.goalsTab, this.props.chartingOptions.gpgTab, this.props.chartingOptions.assistsTab, this.props.chartingOptions.apgTab )}>GPG </button>
                             <button className={this.props.chartingOptions.assistsTab + " chart_button"} onClick={()=> this.toggleChart(this.props.chartingOptions.assistsTab, this.props.chartingOptions.gamesTab, this.props.chartingOptions.winsTab, this.props.chartingOptions.goalsTab, this.props.chartingOptions.gpgTab, this.props.chartingOptions.assistsTab, this.props.chartingOptions.apgTab )}>Assists </button>
                             <button className={this.props.chartingOptions.apgTab + " chart_button"} onClick={()=> this.toggleChart(this.props.chartingOptions.apgTab, this.props.chartingOptions.gamesTab, this.props.chartingOptions.winsTab, this.props.chartingOptions.goalsTab, this.props.chartingOptions.gpgTab, this.props.chartingOptions.assistsTab, this.props.chartingOptions.apgTab )}>APG </button>
                         
                         </div>
-                        <div className={"chart " + this.props.chartDisplay}>
+                        <div className={"chart " }>
                             {this.props.curatedChartData ?  
                             <HorizontalBar
                                 data={this.props.curatedChartData}

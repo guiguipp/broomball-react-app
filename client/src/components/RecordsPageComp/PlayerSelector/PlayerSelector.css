@@ -36,3 +36,8 @@
 .player_action_icon {
     margin-left: 10px;
 }
+
+.button_options {
+    width: 50%;
+    margin: 0% auto 7%;
+}

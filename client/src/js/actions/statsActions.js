@@ -28,7 +28,8 @@ import {
     SET_DATE_RANGE,
     SET_CHART_DATA,
     TOOGLE_CHART_OPTIONS,
-    TOGGLE_CHART_VISIBILITY
+    TOGGLE_CHART_VISIBILITY,
+    TOGGLE_SELECT_ALL
 } from './types';
 
 import API from "../../utils/API"
@@ -953,4 +954,49 @@ export const toggleChartVisibility = (currentStatus) => dispatch => {
         type: TOGGLE_CHART_VISIBILITY,
         payload: newStatus
     })
+}
+
+export const toggleSelectAll = (update) => dispatch => {
+    console.log("update in toggleSelectAll statsActionsupdate: ", update)
+    switch (update) {
+        case "unselected_member":
+        dispatch({
+            type: TOGGLE_SELECT_ALL,
+            payload: {
+                player: "member",
+                memberSelection: "selected_member"}
+            })    
+        break;
+
+        case "selected_memebr":
+        dispatch({
+            type: TOGGLE_SELECT_ALL,
+            payload: {
+                player: "member",
+                memberSelection: "unselected_member"}
+            })    
+        
+        break;
+
+        case "unselected_non_member":
+        dispatch({
+            type: TOGGLE_SELECT_ALL,
+            payload: {
+                player: "tenBucker",
+                memberSelection: "selected_tenBucker"}
+            })    
+        break;
+
+        case "selected_non_member":
+        dispatch({
+            type: TOGGLE_SELECT_ALL,
+            payload: {
+                player: "member",
+                memberSelection: "unselected_tenBucker"}
+            })    
+        break;
+
+        default:
+        return;
+    }
 }

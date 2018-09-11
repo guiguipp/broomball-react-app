@@ -28,7 +28,8 @@ import {
     SET_DATE_RANGE,
     SET_CHART_DATA,
     TOOGLE_CHART_OPTIONS,
-    TOGGLE_CHART_VISIBILITY
+    TOGGLE_CHART_VISIBILITY,
+    TOGGLE_SELECT_ALL
     } from '../actions/types';
 
 import _ from "underscore"
@@ -143,65 +144,8 @@ const initialState = {
             },
         ]
     },
-    // curatedChartData: {
-    //     labels: [],
-    //     datasets: [
-    //         {
-    //             label: "Goals",
-    //             data: [],
-    //             backgroundColor: 'rgba(255, 99, 132, 0.6)',
-    //             borderColor: 'rgba(172,173,178,1)',
-    //             borderWidth: 1,
-    //             hoverBackgroundColor: 'rgba(255, 99, 132, 0.6)',
-    //             hoverBorderColor: 'rgba(255, 99, 132, 0.6)',
-    //         },
-    //         {
-    //             label: "Assists",
-    //             data: [],
-    //             backgroundColor: 'rgba(54, 162, 235, 0.6)',
-    //             borderColor: 'rgba(172,173,178,1)',
-    //             borderWidth: 1,
-    //             hoverBackgroundColor: 'rgba(54, 162, 235, 0.6)',
-    //             hoverBorderColor: 'rgba(54, 162, 235, 0.6)',
-    //         },
-    //         {
-    //             label: "Games",
-    //             data: [],
-    //             backgroundColor: 'rgba(255, 206, 86, 0.6)',
-    //             borderColor: 'rgba(172,173,178,1)',
-    //             borderWidth: 1,
-    //             hoverBackgroundColor: 'rgba(255, 206, 86, 0.6)',
-    //             hoverBorderColor: 'rgba(255, 206, 86, 0.6)',
-    //         },
-    //         {
-    //             label: "Wins",
-    //             data: [],
-    //             backgroundColor: 'rgba(75,192,192,0.6)',
-    //             borderColor: 'rgba(172,173,178,1)',
-    //             borderWidth: 1,
-    //             hoverBackgroundColor: 'rgba(75,192,192,0.6)',
-    //             hoverBorderColor: 'rgba(75,192,192,0.6)',
-    //         },
-    //         {
-    //             label: "GPG",
-    //             data: [],
-    //             backgroundColor: 'rgba(153,102,255,0.6)',
-    //             borderColor: 'rgba(172,173,178,1)',
-    //             borderWidth: 1,
-    //             hoverBackgroundColor: 'rgba(153,102,255,0.6)',
-    //             hoverBorderColor: 'rgba(153,102,255,0.6)',
-    //         },
-    //         {
-    //             label: "APG",
-    //             data: [],
-    //             backgroundColor: 'rgba(255, 159, 64, 0.6)',
-    //             borderColor: 'rgba(172,173,178,1)',
-    //             borderWidth: 1,
-    //             hoverBackgroundColor: 'rgba(255, 159, 64, 0.6)',
-    //             hoverBorderColor: 'rgba(255, 159, 64, 0.6)',
-    //         },
-    //     ]
-    // }
+    memberSelection: "unselected_member",
+    tenBuckerSelection: "unselected_non_member"
     }
 
 export default function(state = initialState, action) {
@@ -401,6 +345,7 @@ export default function(state = initialState, action) {
             ...state,
             chartData: action.payload,
             curatedChartData: action.payload,
+            chartingOptions: initialState.chartingOptions
         }
 
         case TOOGLE_CHART_OPTIONS:
@@ -413,6 +358,13 @@ export default function(state = initialState, action) {
         return {
             ...state,
             chartDisplay: action.payload
+        }
+
+        case TOGGLE_SELECT_ALL:
+        return {
+            ...state,
+            memberSelection: action.payload.player === "member" ? action.payload.memberSelection : state.memberSelection,
+            tenBuckerSelection: action.payload.player !== "member" ? action.payload.tenBuckerSelection : state.tenBuckerSelection,
         }
         default:
         return state;

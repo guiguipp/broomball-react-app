@@ -8,6 +8,7 @@ import { addPlayerStatObject } from "../../../js/actions/statsActions"
 import { removePlayerStatObject } from "../../../js/actions/statsActions"
 import { toggleViews } from '../../../js/actions/statsActions'
 import { sendDataToChart } from '../../../js/actions/statsActions'
+import { toggleSelectAll } from '../../../js/actions/statsActions'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -131,7 +132,7 @@ class PlayerSelector extends Component {
             {...this.props.chartData.datasets[0], data: [player.goals, ...this.props.chartData.datasets[0].data]}, // goals
             {...this.props.chartData.datasets[1], data: [player.assists, ...this.props.chartData.datasets[1].data]}, // assists
             {...this.props.chartData.datasets[2], data: [player.gamesPlayed, ...this.props.chartData.datasets[2].data]}, // Games
-            {...this.props.chartData.datasets[3], data: [player.winPercent / 100, ...this.props.chartData.datasets[3].data]}, // wins
+            {...this.props.chartData.datasets[3], data: [player.winPercent, ...this.props.chartData.datasets[3].data]}, // wins
             {...this.props.chartData.datasets[4], data: [player.gpg, ...this.props.chartData.datasets[4].data]}, // gpg
             {...this.props.chartData.datasets[5], data: [player.apg, ...this.props.chartData.datasets[5].data]}, // apg
             ]
@@ -143,6 +144,34 @@ class PlayerSelector extends Component {
         this.props.toggleViews(currentStatus, "players")
     }
 
+    selectAllPlayers(playerUpdate){
+        console.log("players update in playerSelector", playerUpdate)
+        switch (playerUpdate) {
+            case "unselected_member":
+            this.props.toggleSelectAll(playerUpdate)
+            this.props.allPlayers.filter(player => player.membershipStatus === "Member").forEach(e => this.selectPlayer(e))
+            break;
+
+            case "selected_memebr":
+            this.props.toggleSelectAll(playerUpdate)
+            this.props.allPlayers.filter(player => player.membershipStatus === "Member").forEach(e => this.unselectPlayer(e))
+            break;
+
+            case "unselected_non_member":
+            this.props.toggleSelectAll(playerUpdate)
+            this.props.allPlayers.filter(player => player.membershipStatus !== "Member" && this.props.arrayOfTenBuckersID.includes(player._id)).forEach(e => this.selectPlayer(e))
+            break;
+
+            case "selected_non_member":
+            this.props.toggleSelectAll(playerUpdate)
+            this.props.allPlayers.filter(player => player.membershipStatus !== "Member" && this.props.arrayOfTenBuckersID.includes(player._id)).forEach(e => this.unselectPlayer(e))
+            break;
+            
+            default:
+            return;
+        }
+    }
+
     render() {
         return (
                 <div className="full">
@@ -152,6 +181,13 @@ class PlayerSelector extends Component {
                         </div>
                     </div>
                     <div className="content">
+                        <div className={this.props.listOfPlayers + " select_all"}>
+                        {/* <div className={"select_all " + this.props.listOfPlayers}> */}
+                            <div className="button_options">
+                                <button className={"btn record_player_button " + this.props.memberSelection} onClick={() => this.selectAllPlayers(this.props.memberSelection)}> {this.props.memberSelection === "unselected_member" ? "Select" : "Unselect"} Members </button>
+                                <button className={"btn record_player_button " + this.props.tenBuckerSelection} onClick={() => this.selectAllPlayers(this.props.tenBuckerSelection)}> {this.props.tenBuckerSelection === "unselected_non_member" ? "Select" : "Unselect"} Ten Buckers </button>
+                            </div>
+                        </div>
                         <div className={"list_of_players " + this.props.listOfPlayers}>
                                 {this.props.allPlayers.length > 0 ?
                                     this.props.allPlayers
@@ -182,10 +218,12 @@ const mapStateToProps = state => ({
     selectedGames: state.stats.selectedGames,
     selectedPlayers: state.stats.selectedPlayers,
     unselectedPlayers: state.stats.unselectedPlayers,
+    memberSelection: state.stats.memberSelection,
+    tenBuckerSelection: state.stats.tenBuckerSelection,
     allPlayers: state.players.players,
     arrayOfTenBuckersID: state.stats.arrayOfTenBuckersID,
     listOfPlayers: state.stats.listOfPlayers,
     chartData: state.stats.chartData,
 })
 
-export default connect(mapStateToProps, { fetchPlayers, selectPlayer, unselectPlayer, toggleViews, addPlayerStatObject, removePlayerStatObject, sendDataToChart }) (PlayerSelector)
+export default connect(mapStateToProps, { fetchPlayers, selectPlayer, unselectPlayer, toggleViews, addPlayerStatObject, removePlayerStatObject, sendDataToChart, toggleSelectAll }) (PlayerSelector)
