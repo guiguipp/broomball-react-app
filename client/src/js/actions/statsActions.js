@@ -924,17 +924,20 @@ export const toggleSortOptions = (tab, currentStatus, ascArrow) => dispatch => {
 }
 
 export const sendDataToChart = (newDataset) => dispatch => {
-    console.log("new dataset in statsAction.js: ", newDataset)
     dispatch({
         type: SET_CHART_DATA,
         payload: newDataset
     })
 }
 
-export const toggleChartOptions = (object) => dispatch => {
+export const toggleChartOptions = (displayObject, updateObject ) => dispatch => {
+    console.log("Display Object: ", displayObject, "\nupdateObject: ", updateObject)
     dispatch({
         type: TOOGLE_CHART_OPTIONS,
-        payload: object
+        payload: {
+            display: displayObject,
+            update: updateObject
+        }
     })
 }
 

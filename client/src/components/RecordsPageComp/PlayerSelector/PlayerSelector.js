@@ -26,7 +26,6 @@ class PlayerSelector extends Component {
         let indexOfRemovedPlayer = this.props.chartData.labels.indexOf(player.name)
         // removing all the info for this player. We need a new array
         let newLabels = this.props.chartData.labels.slice(0,indexOfRemovedPlayer).concat(this.props.chartData.labels.slice(indexOfRemovedPlayer + 1))
-        console.log("lables without player: ", newLabels)
         
         let newGoals = this.props.chartData.datasets[0].data.slice(0, indexOfRemovedPlayer).concat(this.props.chartData.datasets[0].data.slice(indexOfRemovedPlayer + 1));
         let newAssists = this.props.chartData.datasets[1].data.slice(0, indexOfRemovedPlayer).concat(this.props.chartData.datasets[1].data.slice(indexOfRemovedPlayer + 1));
@@ -47,7 +46,6 @@ class PlayerSelector extends Component {
                 ]
         }
 
-        console.log("newData: ", newData)
         this.props.sendDataToChart(newData)
 
     }
@@ -138,13 +136,7 @@ class PlayerSelector extends Component {
             {...this.props.chartData.datasets[5], data: [player.apg, ...this.props.chartData.datasets[5].data]}, // apg
             ]
         }
-        console.log("newData: ", newData)
         this.props.sendDataToChart(newData)
-    }
-
-    removePlayerFromChartData(player){
-        let indexOfRemovedPlayer = this.props.chartData.labels.indexOf(player.name)
-        console.log("indexOfThePlayerWeWant to remove", indexOfRemovedPlayer)
     }
 
     toggleViews(currentStatus){
