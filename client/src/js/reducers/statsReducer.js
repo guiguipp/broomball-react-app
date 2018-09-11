@@ -30,7 +30,8 @@ import {
     TOOGLE_CHART_OPTIONS,
     TOGGLE_SELECT_ALL,
     BATCH_CARD_UPDATE,
-    BATCH_CHART_UPDATE
+    BATCH_CHART_UPDATE,
+    BATCH_UNSELECT,
     } from '../actions/types';
 
 import _ from "underscore"
@@ -350,9 +351,9 @@ export default function(state = initialState, action) {
         case SET_CHART_DATA:
         return {
             ...state,
-            chartData: action.payload,
-            curatedChartData: action.payload,
-            chartingOptions: initialState.chartingOptions
+            // chartData: action.payload,
+            // curatedChartData: action.payload,
+            // chartingOptions: initialState.chartingOptions
         }
 
         case TOOGLE_CHART_OPTIONS:
@@ -372,14 +373,21 @@ export default function(state = initialState, action) {
         case BATCH_CARD_UPDATE:
         return {
             ...state,
-            playerRecords: _.sortBy(action.payload, "name")
+            playerRecords: _.sortBy(action.payload.concat(state.playerRecords), "name")
         }
 
         case BATCH_CHART_UPDATE:
         return {
             ...state,
             chartData: action.payload,
-            curatedChartData: action.payload,
+            // curatedChartData: action.payload,
+        }
+
+        case BATCH_UNSELECT:
+        return {
+            ...state,
+            playerRecords: _.sortBy(state.playerRecords.filter(player => player.membershipStatus !== action.payload), "name")
+            // curatedChartData: action.payload,
         }
 
         default:

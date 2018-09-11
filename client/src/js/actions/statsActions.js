@@ -30,7 +30,8 @@ import {
     TOOGLE_CHART_OPTIONS,
     TOGGLE_SELECT_ALL,
     BATCH_CARD_UPDATE,
-    BATCH_CHART_UPDATE
+    BATCH_CHART_UPDATE,
+    BATCH_UNSELECT
 } from './types';
 
 import API from "../../utils/API"
@@ -973,7 +974,7 @@ export const toggleSelectAll = (update) => dispatch => {
             })    
         break;
 
-        case "selected_memebr":
+        case "selected_member":
         dispatch({
             type: TOGGLE_SELECT_ALL,
             payload: {
@@ -1017,5 +1018,12 @@ export const batchChartUpdate = (newData) => dispatch => {
     dispatch({
         type: BATCH_CHART_UPDATE,
         payload: newData
+    })
+}
+
+export const batchUnselect = (type) => dispatch => {
+    dispatch({
+        type: BATCH_UNSELECT,
+        payload: type
     })
 }
