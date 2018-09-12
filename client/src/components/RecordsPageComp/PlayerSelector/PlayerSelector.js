@@ -9,7 +9,11 @@ import { removePlayerStatObject } from "../../../js/actions/statsActions"
 import { toggleViews } from '../../../js/actions/statsActions'
 import { sendDataToChart } from '../../../js/actions/statsActions'
 import { toggleSelectAll } from '../../../js/actions/statsActions'
+// this replaces all the records in the playerRecords array
+import { updatePlayers } from '../../../js/actions/statsActions'
+// this merges newly created records with already existing records in the playerRecords array
 import { batchCardUpdate } from '../../../js/actions/statsActions'
+
 import { batchChartUpdate } from '../../../js/actions/statsActions'
 import { batchUnselect } from '../../../js/actions/statsActions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -55,7 +59,7 @@ class PlayerSelector extends Component {
     // select individual player
     selectPlayer(broomballer) {
         let arrayOfplayer = []
-        this.props.selectPlayer(broomballer)
+        this.markAsSelected(broomballer)
         let gamesPlayed = this.props.selectedGames.filter(game => game.players.filter(player => player._id === broomballer._id )[0])
         if (gamesPlayed.length > 0) {
             let playerReduced = gamesPlayed.reduce((players, game) => {
@@ -138,7 +142,9 @@ class PlayerSelector extends Component {
         switch (playerUpdate) {
             case "unselected_member":
             this.props.toggleSelectAll(playerUpdate)
-            this.selectAndTransform(this.props.allPlayers.filter(player => player.membershipStatus === "Member"), "select")
+            // we need to add both all members + non-members already selected for we are going to replace all existing records
+            let allMembersAndSelectedTenBuckers = this.props.allPlayers.filter(player => player.membershipStatus === "Member").concat(this.props.selectedPlayers.filter(player => player.membershipStatus !== "Member"))
+            this.selectAndTransform(allMembersAndSelectedTenBuckers, "select")
             break;
 
             case "selected_member":
@@ -148,7 +154,10 @@ class PlayerSelector extends Component {
 
             case "unselected_non_member":
             this.props.toggleSelectAll(playerUpdate)
-            this.selectAndTransform(this.props.allPlayers.filter(player => player.membershipStatus !== "Member" && this.props.arrayOfTenBuckersID.includes(player._id)), "select")
+            // Adding both all ten buckers (who have played one of possible games) + non-members already selected
+            let allTenBuckersAndSelectedMembers = this.props.allPlayers.filter(player => player.membershipStatus !== "Member" && this.props.arrayOfTenBuckersID.includes(player._id)).concat(this.props.selectedPlayers.filter(player => player.membershipStatus === "Member"))
+            console.log("allTenBuckersAndSelectedMembers: ", allTenBuckersAndSelectedMembers, "\nSee if the array is formed correctly")
+            this.selectAndTransform(allTenBuckersAndSelectedMembers, "select")
             break;
 
             case "selected_non_member":
@@ -166,7 +175,7 @@ class PlayerSelector extends Component {
         let transformedArrayForCards = []
             array.forEach(broomballer => {
                 let gamesPlayed = this.props.selectedGames.filter(game => game.players.filter(player => player._id === broomballer._id )[0])
-                if (type === "select") { this.props.selectPlayer(broomballer)}
+                if (type === "select") { this.markAsSelected(broomballer)}
                 if (gamesPlayed.length > 0) {
                 let playerReduced = gamesPlayed.reduce((players, game) => {
                     let gameInfo = game.players.filter(player => player._id === broomballer._id).map(player => player.gameInfo)
@@ -238,7 +247,7 @@ class PlayerSelector extends Component {
             // if the type is "select", the function will add the players to the existing records for chart (via addBatchChartData)
             // otherwise, it will remove and replace them via the replace BatchChartData
             if (type === "select") {
-                this.props.batchCardUpdate(transformedArrayForCards)
+                this.props.updatePlayers(transformedArrayForCards)
                 this.addBatchChartData(transformedArrayForCards)
                 }
             else if (type === "unselect") {
@@ -316,6 +325,15 @@ class PlayerSelector extends Component {
         this.props.batchChartUpdate(newObject)
     }
 
+    // Before sending the player to the selectPlayer action that will add it to the selectedPlayers array, we need to make sure the record does not already exist
+    // in that array (we might accidentally send twice via the batch select that consolidates before re-sending to playerRecords array). Otherwise, it creates 
+    // problems with duplicate keys in React
+    markAsSelected(player) {
+        let arrayOfIds = this.props.selectedPlayers.map(broomballer => broomballer._id)
+        if ( !arrayOfIds.includes(player._id) ){
+            this.props.selectPlayer(player)
+        }
+    }
     render() {
         return (
                 <div className="full">
@@ -327,8 +345,8 @@ class PlayerSelector extends Component {
                     <div className="content">
                         <div className={this.props.listOfPlayers + " select_all"}>
                             <div className="button_options">
-                                <button className={"btn record_player_button " + this.props.memberSelection} onClick={() => this.selectAllPlayers(this.props.memberSelection)}> {this.props.memberSelection === "unselected_member" ? "Select" : "Unselect"} Members </button>
-                                <button className={"btn record_player_button " + this.props.tenBuckerSelection} onClick={() => this.selectAllPlayers(this.props.tenBuckerSelection)}> {this.props.tenBuckerSelection === "unselected_non_member" ? "Select" : "Unselect"} Ten Buckers </button>
+                                <button className={"btn record_player_button " + this.props.memberSelection} onClick={() => this.selectAllPlayers(this.props.memberSelection)}> {this.props.memberSelection === "unselected_member" ? "Select" : "Unselect"} All Members </button>
+                                <button className={"btn record_player_button " + this.props.tenBuckerSelection} onClick={() => this.selectAllPlayers(this.props.tenBuckerSelection)}> {this.props.tenBuckerSelection === "unselected_non_member" ? "Select" : "Unselect"} All Ten Buckers </button>
                             </div>
                         </div>
                         <div className={"list_of_players " + this.props.listOfPlayers}>
@@ -380,5 +398,6 @@ export default connect(mapStateToProps, {
         toggleSelectAll, 
         batchCardUpdate, 
         batchChartUpdate, 
-        batchUnselect 
+        batchUnselect, 
+        updatePlayers 
     }) (PlayerSelector)

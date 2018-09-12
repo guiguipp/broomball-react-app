@@ -373,7 +373,8 @@ export default function(state = initialState, action) {
         case BATCH_CARD_UPDATE:
         return {
             ...state,
-            playerRecords: _.sortBy(action.payload.concat(state.playerRecords), "name")
+            // playerRecords: _.sortBy(action.payload.concat(state.playerRecords), "name"),
+            playerRecords: action.payload.concat(state.playerRecords.filter(player => player._id !== action.payload._id))
         }
 
         case BATCH_CHART_UPDATE:

@@ -94,3 +94,19 @@
     border-width: 2px;
     background-color: white;
 }
+
+.chart {
+    position: relative;
+}
+
+.chart > canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+}
+.chartAreaWrapper {
+    width: 100%;
+    min-height: 300px;
+    overflow-y: scroll;
+}

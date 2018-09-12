@@ -240,7 +240,7 @@ class DataChart extends Component {
                 <div className="full">
                     <div className="header">
                         <div>
-                            <h3 className="header_h3 " onClick={()=> this.toggleViews(this.props.chartDisplay)}> {this.props.chartDisplay === "hidden" ? <FontAwesomeIcon icon="caret-right" className="header_icon"/> : <FontAwesomeIcon icon="caret-down" className="header_icon" />}Chart</h3>
+                            <h3 className="header_h3 " onClick={()=> this.toggleViews(this.props.chartDisplay)}> {this.props.chartDisplay === "hidden" ? <FontAwesomeIcon icon="caret-right" className="header_icon"/> : <FontAwesomeIcon icon="caret-down" className="header_icon" />}Show Chart</h3>
                         </div>
                     </div>
                     <div className="content">
@@ -259,9 +259,11 @@ class DataChart extends Component {
                             <div className="chartAreaWrapper">
                                 <HorizontalBar
                                     data={this.props.curatedChartData}
+                                    height= { this.props.chartData.labels.length * 50 }
+                                    className= { this.props.chartDisplay }
                                     options={{
                                             responsive: true,
-                                            maintainAspectRatio: true,
+                                            maintainAspectRatio: false,
                                             barThickness: 100
                                             }}
                                     />

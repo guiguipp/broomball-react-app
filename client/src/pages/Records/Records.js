@@ -23,20 +23,25 @@ render() {
         <img className="logo_img" src={Logo} alt="logo"/>
         <div className="main_main"> 
             <h1 className="h1_main">League Records</h1>
+            
             <div className= "row">
                 < DateSelector />
             </div>
+            
             <div className= "row">
                 < GameSelector />
             </div>
+            
             <div className= "row">
                 < PlayerSelector />
             </div>
-            <div className= "row">
-                < Showcase />
-            </div>
+            
             <div className= "row">
                 < DataChart />
+            </div>
+
+            <div className= "row">
+                < Showcase />
             </div>
         </div>
     </div>
