@@ -26,12 +26,13 @@ import {
     SORT_APG_ASC,
     SORT_APG_DESC,
     SET_DATE_RANGE,
-    SET_CHART_DATA,
+    // SET_CHART_DATA,
     TOOGLE_CHART_OPTIONS,
     TOGGLE_SELECT_ALL,
     BATCH_CARD_UPDATE,
     BATCH_CHART_UPDATE,
-    BATCH_UNSELECT
+    BATCH_UNSELECT,
+    TOGGLE_POSITIONS
 } from './types';
 
 import API from "../../utils/API"
@@ -935,7 +936,7 @@ export const toggleSortOptions = (tab, currentStatus, ascArrow) => dispatch => {
     }
 
 }
-
+/*
 export const sendDataToChart = (newDataset) => dispatch => {
     // console.log("newDataSet in sendDataToChart statsActions.js: ", newDataset)
     dispatch({
@@ -943,7 +944,7 @@ export const sendDataToChart = (newDataset) => dispatch => {
         payload: newDataset
     })
 }
-
+*/
 export const toggleChartOptions = (displayObject, updateObject ) => dispatch => {
     // console.log("Display Object: ", displayObject, "\nupdateObject: ", updateObject)
     dispatch({
@@ -1027,4 +1028,62 @@ export const updatePlayers = (players) => dispatch => {
         type: REPLACE_PLAYERS_RECORDS,
         payload: players
     })
+}
+
+export const togglePositions = (data) => dispatch => {
+    console.log("data in togglePositions statsActions.js", data)
+    switch (data) {
+        case "selected_defense":
+        case "selected_forward":
+        case "selected_goalie":
+        dispatch({
+            type: TOGGLE_POSITIONS,
+            payload: {
+                forwardSelection: "unselected_forward",
+                goalieSelection: "unselected_goalie",
+                defenseSelection: "unselected_defense",
+                positionVisibility: "All",
+            }
+        })
+        break;
+
+        case "unselected_forward":
+        dispatch({
+            type: TOGGLE_POSITIONS,
+            payload: {
+                forwardSelection: "selected_forward",
+                goalieSelection: "selected_goalie",
+                defenseSelection: "unselected_defense",
+                positionVisibility: "Forward",
+                }
+            })
+        break; 
+        
+        case "unselected_defense":
+        dispatch({
+            type: TOGGLE_POSITIONS,
+            payload: {
+                forwardSelection: "unselected_forward",
+                goalieSelection: "unselected_goalie",
+                defenseSelection: "selected_defense",
+                positionVisibility: "Defense",
+                }
+            })
+        break;
+
+        case "unselected_goalie":
+        dispatch({
+            type: TOGGLE_POSITIONS,
+            payload: {
+                forwardSelection: "unselected_forward",
+                goalieSelection: "selected_goalie",
+                defenseSelection: "unselected_defense",
+                positionVisibility: "Goalie",
+                }
+            })
+        break;
+
+        default:
+        return;
+    }
 }

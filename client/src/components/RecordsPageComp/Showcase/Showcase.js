@@ -5,6 +5,7 @@ import { toggleViews } from "../../../js/actions/statsActions"
 import { toggleSortOptions } from "../../../js/actions/statsActions"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { playerStatObject } from "../../../js/actions/statsActions"
+import { togglePositions } from "../../../js/actions/statsActions"
 import "./Showcase.css";
 
 class Showcase extends Component {
@@ -13,6 +14,9 @@ class Showcase extends Component {
     }
     toggleSort(tab, currentStatus, ascArrow){
         this.props.toggleSortOptions(tab, currentStatus, ascArrow)
+    }
+    selectByPosition(position) {
+        this.props.togglePositions(position)
     }
     render() {
         return (
@@ -33,24 +37,34 @@ class Showcase extends Component {
                             <button className={this.props.sortingOptions.gpgTab + " tab_button"} onClick={()=> this.toggleSort("gpg", this.props.sortingOptions.gpgTab, this.props.sortingOptions.gpgAsc)}>GPG  <span className="sort_action_icon"> <FontAwesomeIcon icon="long-arrow-alt-down" className={this.props.sortingOptions.gpgDesc + " sorting_arrow"} /> <FontAwesomeIcon icon="long-arrow-alt-up" className={this.props.sortingOptions.gpgAsc + " sorting_arrow"} /> </span> </button>
                             <button className={this.props.sortingOptions.assistsTab + " tab_button"} onClick={()=> this.toggleSort("assists", this.props.sortingOptions.assistsTab, this.props.sortingOptions.assistsAsc)}>Assists  <span className="sort_action_icon"> <FontAwesomeIcon icon="long-arrow-alt-down" className={this.props.sortingOptions.assistsDesc + " sorting_arrow"} /> <FontAwesomeIcon icon="long-arrow-alt-up" className={this.props.sortingOptions.assistsAsc + " sorting_arrow"} /> </span> </button>
                             <button className={this.props.sortingOptions.apgTab + " tab_button"} onClick={()=> this.toggleSort("apg", this.props.sortingOptions.apgTab, this.props.sortingOptions.apgAsc)}>APG <span className="sort_action_icon"> <FontAwesomeIcon icon="long-arrow-alt-down" className={this.props.sortingOptions.apgDesc + " sorting_arrow"} /> <FontAwesomeIcon icon="long-arrow-alt-up" className={this.props.sortingOptions.apgAsc + " sorting_arrow"} /> </span> </button>
-                        
+                    
                     </div>
                     <div className="records ">
                     {this.props.playerRecords ? this.props.playerRecords.map(object => {
                         return (
-                            <div key={object._id} className={object.membershipStatus === "Member" ? "member_record player_card" : "non_member_record player_card "}>
-                                <div className="player_name">{object.name}</div>
-                                <div className="player_data">
-                                    <p><span className="entry">Games Played:</span> <span className="value">{object.gamesPlayed}</span>/{this.props.selectedGames.length}</p>
-                                    <p><span className="entry">Games Won:</span> <span className="value">{ object.winPercent !== "N/A" ? object.winPercent + "%" : object.winPercent } </span> </p>
-                                    <p><span className="entry">Goals:</span> <span className="value">{object.gamesPlayed !== 0 ? object.goals : "N/A"}</span>
-                                    <br/><span className="addendum"> –– per game: <span className="value">{object.gamesPlayed !== 0 ? object.gpg : "N/A"}</span></span></p>
-                                    <p><span className="entry">Assists:</span> <span className="value">{object.gamesPlayed !== 0 ? object.assists : "N/A"}</span>
-                                    <br/><span className="addendum"> –– per game: <span className="value">{object.gamesPlayed !== 0 ? object.apg : "N/A"}</span></span></p>
+                            <div key={object._id} className={object.preferredPosition === this.props.positionVisibility ? "hidden_card wrapping_card_div" : "visible wrapping_card_div" }>
+                                <div  className={object.membershipStatus === "Member" ? "member_record player_card " : "non_member_record player_card"}>
+                                {/* <div className={object.preferredPosition === this.props.positionVisibility ? " hidden" : " visible" }> */}
+                                    <div className="player_name">{object.name} <span className="position_dot"> <FontAwesomeIcon icon="circle" className={"dot_" + object.preferredPosition} /> </span></div>
+                                    <div className="player_data">
+                                        <p><span className="entry">Games Played:</span> <span className="value">{object.gamesPlayed}</span>/{this.props.selectedGames.length}</p>
+                                        <p><span className="entry">Games Won:</span> <span className="value">{ object.winPercent !== "N/A" ? object.winPercent + "%" : object.winPercent } </span> </p>
+                                        <p><span className="entry">Goals:</span> <span className="value">{object.gamesPlayed !== 0 ? object.goals : "N/A"}</span>
+                                        <br/><span className="addendum"> –– per game: <span className="value">{object.gamesPlayed !== 0 ? object.gpg : "N/A"}</span></span></p>
+                                        <p><span className="entry">Assists:</span> <span className="value">{object.gamesPlayed !== 0 ? object.assists : "N/A"}</span>
+                                        <br/><span className="addendum"> –– per game: <span className="value">{object.gamesPlayed !== 0 ? object.apg : "N/A"}</span></span></p>
+                                    </div>
                                 </div>
                             </div>
                             )}
                             ) : null }
+                            <div className={this.props.sortOptionsDisplay + " select_all"}>
+                                <div className="button_options_second_set">
+                                    <button className={"btn record_player_button " + this.props.forwardSelection} onClick={() => this.selectByPosition(this.props.forwardSelection)} > {this.props.positionVisibility === "Forward" ? "Show" : "Hide"} Offense Players </button>
+                                    <button className={"btn record_player_button " + this.props.goalieSelection} onClick={() => this.selectByPosition(this.props.goalieSelection)} > {this.props.positionVisibility === "Forward" ? "Show" : "Hide"} Goalies </button>
+                                    <button className={"btn record_player_button " + this.props.defenseSelection} onClick={() => this.selectByPosition(this.props.defenseSelection)} > {this.props.positionVisibility === "Defense" ? "Show" : "Hide"} Defense Players </button>
+                                </div>
+                            </div>
                     </div>
                 </div>
             </div>
@@ -63,7 +77,12 @@ const mapStateToProps = state => ({
     selectedPlayers: state.stats.selectedPlayers,
     sortOptionsDisplay: state.stats.sortOptionsDisplay,
     playerRecords: state.stats.playerRecords,
-    sortingOptions: state.stats.sortingOptions
+    sortingOptions: state.stats.sortingOptions,
+    forwardSelection: state.stats.selectors.forwardSelection,
+    defenseSelection: state.stats.selectors.defenseSelection,
+    goalieSelection: state.stats.selectors.goalieSelection,
+    positionVisibility: state.stats.selectors.positionVisibility,
 })
 
-export default connect(mapStateToProps, { toggleViews, toggleSortOptions }) (Showcase)
+export default connect(mapStateToProps, { toggleViews, toggleSortOptions, togglePositions }) (Showcase)
+

@@ -7,7 +7,7 @@ import { unselectPlayer } from '../../../js/actions/statsActions'
 import { addPlayerStatObject } from "../../../js/actions/statsActions"
 import { removePlayerStatObject } from "../../../js/actions/statsActions"
 import { toggleViews } from '../../../js/actions/statsActions'
-import { sendDataToChart } from '../../../js/actions/statsActions'
+// import { sendDataToChart } from '../../../js/actions/statsActions' // this was used for individual updates... but it is now done by replacing data (Redux was lagging)
 import { toggleSelectAll } from '../../../js/actions/statsActions'
 // this replaces all the records in the playerRecords array
 import { updatePlayers } from '../../../js/actions/statsActions'
@@ -53,10 +53,11 @@ class PlayerSelector extends Component {
                 ]
         }
 
-        this.props.sendDataToChart(newData)
+        this.props.batchChartUpdate(newData)
 
     }
     // select individual player
+    // if duplicate, see how to remove
     selectPlayer(broomballer) {
         let arrayOfplayer = []
         this.markAsSelected(broomballer)
@@ -69,6 +70,7 @@ class PlayerSelector extends Component {
                 players.name = broomballer.name
                 players._id = broomballer._id
                 players.membershipStatus = broomballer.membershipStatus
+                players.preferredPosition = broomballer.preferredPosition
                 
                 players.gamesPlayed = players.gamesPlayed || []
                 if(gameInfo[0].available === true){
@@ -164,7 +166,7 @@ class PlayerSelector extends Component {
             this.props.toggleSelectAll(playerUpdate)
             this.batchUnselect("Ten Bucker")
             break;
-            
+
             default:
             return;
         }
@@ -184,6 +186,7 @@ class PlayerSelector extends Component {
                     players.name = broomballer.name
                     players._id = broomballer._id
                     players.membershipStatus = broomballer.membershipStatus
+                    players.preferredPosition = broomballer.preferredPosition
                     
                     players.gamesPlayed = players.gamesPlayed || []
                     if(gameInfo[0].available === true){
@@ -344,10 +347,11 @@ class PlayerSelector extends Component {
                     </div>
                     <div className="content">
                         <div className={this.props.listOfPlayers + " select_all"}>
-                            <div className="button_options">
+                            <div className="button_options_first_set">
                                 <button className={"btn record_player_button " + this.props.memberSelection} onClick={() => this.selectAllPlayers(this.props.memberSelection)}> {this.props.memberSelection === "unselected_member" ? "Select" : "Unselect"} All Members </button>
                                 <button className={"btn record_player_button " + this.props.tenBuckerSelection} onClick={() => this.selectAllPlayers(this.props.tenBuckerSelection)}> {this.props.tenBuckerSelection === "unselected_non_member" ? "Select" : "Unselect"} All Ten Buckers </button>
                             </div>
+                            
                         </div>
                         <div className={"list_of_players " + this.props.listOfPlayers}>
                                 {this.props.allPlayers.length > 0 ?
@@ -394,7 +398,7 @@ export default connect(mapStateToProps, {
         toggleViews, 
         addPlayerStatObject, 
         removePlayerStatObject, 
-        sendDataToChart, 
+        // sendDataToChart, 
         toggleSelectAll, 
         batchCardUpdate, 
         batchChartUpdate, 

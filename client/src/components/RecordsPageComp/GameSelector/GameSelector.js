@@ -36,6 +36,7 @@ class GameSelector extends Component {
                         players.name = broomballer.name
                         players._id = broomballer._id
                         players.membershipStatus = broomballer.membershipStatus
+                        players.preferredPosition = broomballer.preferredPosition
                         
                         players.gamesPlayed = players.gamesPlayed || []
                         if(gameInfo[0].available === true){
@@ -121,6 +122,7 @@ class GameSelector extends Component {
                         players.name = broomballer.name
                         players._id = broomballer._id
                         players.membershipStatus = broomballer.membershipStatus
+                        players.preferredPosition = broomballer.preferredPosition
                         
                         players.gamesPlayed = players.gamesPlayed || []
                         if(gameInfo[0].available === true){

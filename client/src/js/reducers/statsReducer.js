@@ -26,12 +26,13 @@ import {
     SORT_APG_ASC,
     SORT_APG_DESC,
     SET_DATE_RANGE,
-    SET_CHART_DATA,
+    // SET_CHART_DATA,
     TOOGLE_CHART_OPTIONS,
     TOGGLE_SELECT_ALL,
     BATCH_CARD_UPDATE,
     BATCH_CHART_UPDATE,
     BATCH_UNSELECT,
+    TOGGLE_POSITIONS,
     } from '../actions/types';
 
 import _ from "underscore"
@@ -152,7 +153,13 @@ const initialState = {
         ]
     },
     memberSelection: "unselected_member",
-    tenBuckerSelection: "unselected_non_member"
+    tenBuckerSelection: "unselected_non_member",
+    selectors: {
+        forwardSelection: "unselected_forward",
+        goalieSelection: "unselected_goalie",
+        defenseSelection: "unselected_defense",
+        positionVisibility: "all"
+        }
     }
 
 export default function(state = initialState, action) {
@@ -389,6 +396,12 @@ export default function(state = initialState, action) {
             ...state,
             playerRecords: _.sortBy(state.playerRecords.filter(player => player.membershipStatus !== action.payload), "name")
             // curatedChartData: action.payload,
+        }
+
+        case TOGGLE_POSITIONS:
+        return {
+            ...state, 
+            selectors: action.payload
         }
 
         default:

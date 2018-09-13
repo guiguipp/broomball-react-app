@@ -37,7 +37,10 @@
     margin-left: 10px;
 }
 
-.button_options {
+.button_options_first_set {
     width: 50%;
     margin: 0% auto 7%;
+    padding-left: 15px;
 }
+
+
