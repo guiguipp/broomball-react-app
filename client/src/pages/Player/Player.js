@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { toggleTabStatus } from '../../js/actions/playerActions';
 
-import Logo from "../../components/images/logo.jpg";
+import NavBar from "../../components/NavBar";
 import Form from "../../components/PlayerPageComp/Form";
 
 import MemberList from "../../components/PlayerPageComp/MemberList/"
@@ -24,18 +24,18 @@ toggleStatus(id, currentStatus) {
 render() {
     return (
     <div>
-        <img className="logo_img" src={Logo} alt="logo"/>
+        <NavBar />
         <div className="main_alternate">
-                <h1 className="h1_alternate">Summit Broomball</h1>
+                <h1 className="h1_alternate">Players</h1>
                 <div className="row tab_centering">
                     <span id="1" className={"tab " + this.props.tab1} onClick={() => this.toggleStatus("1", this.props.tab1) }> Members </span>
                     <span id="2" className={"tab " + this.props.tab2} onClick={() => this.toggleStatus("2", this.props.tab2) }> Ten Buckers </span>
                     <span id="3" className={"tab " + this.props.tab3} onClick={() => this.toggleStatus("3", this.props.tab3) }> {this.props.formMode} Player </span>
                 </div>
                 <div className= "row main_for_tab">
-                    <span className={this.props.panel1 + " full_size"}> <MemberList /> </span> 
-                    <span className={this.props.panel2 + " full_size"}> <TenBuckerList /> </span> 
-                    <span className={this.props.panel3 + " full_size"}> <Form /> </span> 
+                    <span className={this.props.panel1 + " full_tab_size"}> <MemberList /> </span> 
+                    <span className={this.props.panel2 + " full_tab_size"}> <TenBuckerList /> </span> 
+                    <span className={this.props.panel3 + " full_tab_size"}> <Form /> </span> 
                 </div>
             </div>
         </div>

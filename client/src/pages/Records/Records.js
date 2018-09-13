@@ -1,26 +1,22 @@
 import React, { Component } from "react";
 // Redux
 import { connect } from 'react-redux';
-// import { fetchGames } from "../../js/actions/gameActions"
+
+import NavBar from "../../components/NavBar"
 import DateSelector from "../../components/RecordsPageComp/DateSelector"
 import GameSelector from "../../components/RecordsPageComp/GameSelector"
 import PlayerSelector from "../../components/RecordsPageComp/PlayerSelector"
 import Showcase from "../../components/RecordsPageComp/Showcase"
 import DataChart from "../../components/RecordsPageComp/DataChart"
 
-import Logo from "../../components/images/logo.jpg";
-
 import "./Records.css";
 
 class Records extends Component { 
-componentDidMount() {
-    // this.props.fetchGames()
-}
 
 render() {
     return (
     <div>
-        <img className="logo_img" src={Logo} alt="logo"/>
+        <NavBar />
         <div className="main_main"> 
             <h1 className="h1_main">League Records</h1>
             

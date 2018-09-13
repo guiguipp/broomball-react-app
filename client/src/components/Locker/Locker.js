@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 
 import { connect } from 'react-redux';
-import { lockGameInfo } from "../../../js/actions/gameActions"
-import { unlockGameInfo } from "../../../js/actions/gameActions"
+import { lockGameInfo } from "../../js/actions/gameActions"
+import { unlockGameInfo } from "../../js/actions/gameActions"
 
 import "./Locker.css";
 
@@ -20,7 +20,7 @@ class Locker extends Component {
         return (
             <div className={this.props.visibility.noStatsMessage === "visible" ? "hidden row full " : " row full"}>
                 <div className="container">
-                    <div className="row full">    
+                    <div className="row full center_row">    
                         <div className="col text-center">
                             <button className="content_button lock unlocked" onClick={() => this.unlockGame(this.props.gameDate)}><i className="fa fa-unlock-alt bigger_fa_lock"></i></button> 
                             <button className="content_button lock locked" onClick={() => this.lockGame(this.props.gameDate)}><i className="fa fa-lock bigger_fa_lock"></i></button> 

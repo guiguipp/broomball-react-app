@@ -16,6 +16,10 @@
     border-top-right-radius: 15px;
 }
 
+.full_tab_size {
+    width: 80%;
+}
+
 .show {
     background: white;
     border-left-style: solid;

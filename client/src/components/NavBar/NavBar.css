@@ -1,0 +1,29 @@
+.toggler_img {
+    width: 50%;
+}
+
+.navbar {
+    margin-bottom: 5%;
+}
+
+.navbar-toggler {
+    margin-left: 73%;
+    margin-top: 3%;
+}
+
+.nav-link {
+    font-family: boogaloo;
+    font-size: 125%;
+    color: #ffbe75;
+}
+
+.nav-link:hover {
+    color: #17a2b8;
+}
+
+.nav_title {
+    font-family: 'Yellowtail', cursive;
+    font-size: 200%;
+    color: white;
+    text-shadow: -0.5px -0.5px 0 #EA8D47, 0.5px -0.5px 0 #EA8D47, -0.5px 0.5px 0 #EA8D47, 0.5px 0.5px 0 #EA8D47;
+}

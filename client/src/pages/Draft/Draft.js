@@ -3,13 +3,13 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { toggleGames } from "../../js/actions/displayActions"
 
-import Logo from "../../components/images/logo.jpg";
+import NavBar from "../../components/NavBar";
 import GameList from "../../components/DraftPageComp/GameList";
 import Calendar from "../../components/DraftPageComp/Calendar";
 import Drafter from "../../components/DraftPageComp/Drafter"
 import GameOptionsBottom from "../../components/DraftPageComp/GameOptionsBottom"
 import GameOptionsTop from "../../components/DraftPageComp/GameOptionsTop"
-import Locker from "../../components/DraftPageComp/Locker"
+import Locker from "../../components/Locker"
 
 import "./Draft.css";
 
@@ -21,7 +21,7 @@ toggleGamesFunc(currentlyShowing) {
 render() {
     return (
     <div>
-        <img className="logo_img" src={Logo} alt="logo"/>
+        <NavBar />
         <div className="main_main"> 
             <h1 className="h1_main">Summit Broomball</h1>
             <div className= "row">

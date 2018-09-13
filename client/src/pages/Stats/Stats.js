@@ -4,11 +4,11 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { toggleVisibility } from "../../js/actions/statsActions"
 
-import Logo from "../../components/images/logo.jpg";
+import NavBar from "../../components/NavBar";
 import PastGameList from "../../components/StatsPageComp/PastGamesList"
 import ScoreBoard from "../../components/StatsPageComp/ScoreBoard"
 import NoStatsBoard from "../../components/StatsPageComp/NoStatsBoard"
-import Locker from "../../components/DraftPageComp/Locker"
+import Locker from "../../components/Locker"
 
 import "./Stats.css";
 
@@ -16,9 +16,9 @@ class Stats extends Component {
 render() {
     return (
         <div>
-            <img className="logo_img" src={Logo} alt="logo"/>
-                    <h1 className="h1_alternate">Enter Stats</h1>
+            <NavBar />
             <div className="main_main">
+                    <h1 className="h1_main">Enter Stats</h1>
                 <div className= "row ">
                     <PastGameList />
                 </div>
