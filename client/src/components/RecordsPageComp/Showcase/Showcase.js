@@ -60,9 +60,9 @@ class Showcase extends Component {
                             ) : null }
                             <div className={this.props.sortOptionsDisplay + " select_all"}>
                                 <div className="button_options_second_set">
-                                    <button className={"btn record_player_button " + this.props.forwardSelection} onClick={() => this.selectByPosition(this.props.forwardSelection)} > {this.props.positionVisibility === "Forward" ? "Show" : "Hide"} Offense Players </button>
-                                    <button className={"btn record_player_button " + this.props.goalieSelection} onClick={() => this.selectByPosition(this.props.goalieSelection)} > {this.props.positionVisibility === "Forward" ? "Show" : "Hide"} Goalies </button>
-                                    <button className={"btn record_player_button " + this.props.defenseSelection} onClick={() => this.selectByPosition(this.props.defenseSelection)} > {this.props.positionVisibility === "Defense" ? "Show" : "Hide"} Defense Players </button>
+                                    <button className={"btn record_player_button " + this.props.forwardSelection} onClick={() => this.selectByPosition(this.props.forwardSelection)} > {this.props.positionVisibility === "Forward" ? "Unhide" : "Hide"} Offense Players </button>
+                                    <button className={"btn record_player_button " + this.props.goalieSelection} onClick={() => this.selectByPosition(this.props.goalieSelection)} > {this.props.positionVisibility === "Goalie" ? "Unhide" : "Hide"} Goalies </button>
+                                    <button className={"btn record_player_button " + this.props.defenseSelection} onClick={() => this.selectByPosition(this.props.defenseSelection)} > {this.props.positionVisibility === "Defense" ? "Unhide" : "Hide"} Defense Players </button>
                                 </div>
                             </div>
                     </div>

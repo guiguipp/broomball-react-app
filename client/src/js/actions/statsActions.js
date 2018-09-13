@@ -1052,7 +1052,7 @@ export const togglePositions = (data) => dispatch => {
             type: TOGGLE_POSITIONS,
             payload: {
                 forwardSelection: "selected_forward",
-                goalieSelection: "selected_goalie",
+                goalieSelection: "unselected_goalie",
                 defenseSelection: "unselected_defense",
                 positionVisibility: "Forward",
                 }
