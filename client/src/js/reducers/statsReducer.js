@@ -283,7 +283,7 @@ export default function(state = initialState, action) {
         return {
             ...state,
             sortingOptions: action.payload,
-            playerRecords: state.playerRecords.filter(player => player.winPercent === "N/A").concat(_.sortBy(state.playerRecords.filter(player => player.winPercent !== "N/A"), "winPercent"))
+            playerRecords: _.sortBy(state.playerRecords.filter(player => player.winPercent !== "N/A"), "winPercent").concat(state.playerRecords.filter(player => player.winPercent === "N/A"))
         }
 
         case SORT_WINS_DESC:

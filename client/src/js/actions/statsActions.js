@@ -153,7 +153,7 @@ export const getGamesAndTransform = () => dispatch => {
                 let pastGames = res.data.filter(game => game._id <= moment().format("YYYY-MM-DD"))
                 let reducedGames = beautifyGames(pastGames)
                 let years = Object.keys(Object.values(reducedGames)).map(e => [e] = "visible")
-                console.log("indexes2: ", years)
+                // console.log("indexes2: ", years)
                 dispatch({
                     type: GET_GAMES_AND_TRANSFORM,
                     payload: 
@@ -1031,7 +1031,7 @@ export const updatePlayers = (players) => dispatch => {
 }
 
 export const togglePositions = (data) => dispatch => {
-    console.log("data in togglePositions statsActions.js", data)
+    // console.log("data in togglePositions statsActions.js", data)
     switch (data) {
         case "selected_defense":
         case "selected_forward":

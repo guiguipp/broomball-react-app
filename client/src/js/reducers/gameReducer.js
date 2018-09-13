@@ -118,8 +118,8 @@ export default function(state = initialState, action) {
             // this makes the list of ten-buckers to bug after auto-drafting 
             // notPlayingNonMembers: initialState.notPlayingNonMembers,
             // playingNonMembers: initialState.playingNonMembers,
-            showingNonPlayingTenBuckers: "Show",
-            showingUnavailableMembers: "Show",
+            // showingNonPlayingTenBuckers: "Show",
+            // showingUnavailableMembers: "Show",
         }
         
         case RESET:
