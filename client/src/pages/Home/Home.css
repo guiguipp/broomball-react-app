@@ -1,0 +1,53 @@
+.welcome_text {
+    text-align: justify;
+    font-family: 'Yellowtail', cursive;
+    color: #EA8D47;
+    font-size: 125%
+}
+.text_center {
+    text-align: center;
+    margin-top: 15%;
+}
+.menu_button {
+    width: 100%;
+    /* min-width: 120px; */
+    /* height: 45px; */
+    border-radius: 20px;
+}
+.instructions_div {
+    display: inline-flex;
+    width: 100%;
+    margin-top: 3%;
+}
+.page_div {
+    width: 20%;
+    margin: 2% 2.5%;
+    /* border-style: solid; */
+}
+
+.instruction {
+    text-align: center;
+    min-height: 90px;
+}
+.instructions_text {
+    font-family: boogaloo;
+    font-size: 125%;
+    margin-bottom: 20%;
+    
+}
+
+@media only screen and (max-width: 730px) {
+    .page_div {
+        width: 40%;
+        margin: 2.5% 29% 10%;
+    }
+    .instructions_div {
+        display: inline;
+    }
+    .instruction {
+        min-height: 0px;
+    }
+    .instructions_text {
+        font-size: 90%;
+    }
+}
