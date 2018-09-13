@@ -16,9 +16,6 @@ const PORT = process.env.PORT || 8080;
 // CORS issues
 const cors = require('cors')
 app.use(cors())
-app.listen(process.env.PORT || 8080, function(){
-    console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
-    });
 
 // logging the requests
 const morgan = require("morgan");
@@ -44,13 +41,22 @@ app.use(bodyParser.json());
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));
-    }
+}
 
 // Routes
 // =============================================================
 const routes = require("./routes")
 app.use(routes);
 
-app.listen(PORT, function() {
-    console.log("Server.js listening on: http://localhost:" + PORT);
+if (process.env.NODE_ENV === 'production') {
+    // Serve any static files
+    app.use(express.static(path.join(__dirname, 'client/build')));
+    // Handle React routing, return all requests to React app
+    app.get('*', function(req, res) {
+        res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+    });
+    }
+
+app.listen(process.env.PORT || 8080, function(){
+console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
 });
