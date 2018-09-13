@@ -22,8 +22,11 @@ app.use(cors())
 const morgan = require("morgan");
 app.use(morgan("dev"));
 
+const URL = process.env.MONGODB_URI || "mongodb://localhost/summit_broomball"
+
 // DB connection
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/summit_broomball", { autoIndex: false});
+mongoose.connect(URL, { autoIndex: false});
+console.log("URL used: ", URL)
 const db = mongoose.connection
 
 // handle mongo errors
@@ -59,6 +62,6 @@ if (process.env.NODE_ENV === 'production') {
     });
     }
     
-app.listen(process.env.PORT || 3001, function(){
+app.listen(process.env.PORT || 8080, function(){
 console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
 });
