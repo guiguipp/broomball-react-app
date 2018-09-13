@@ -47,7 +47,7 @@ if (process.env.NODE_ENV === 'production') {
 // =============================================================
 const routes = require("./routes")
 app.use(routes);
-
+/*
 if (process.env.NODE_ENV === 'production') {
     // Serve any static files
     app.use(express.static(path.join(__dirname, 'client/build')));
@@ -56,7 +56,7 @@ if (process.env.NODE_ENV === 'production') {
         res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
     });
     }
-
+*/
 app.listen(process.env.PORT || 8080, function(){
 console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
 });
