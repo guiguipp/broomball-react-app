@@ -119,10 +119,29 @@ export const editGameInfo = (game, data) => dispatch => {
         }
         else {
             // we get full game data from the API's response
-            // console.log("res.data: ", res.data)
+            /*
+            // Then we need to check if the locker can be displayed
+            let darkPlayers = res.data.players.filter(player => player.gameInfo.team === "Dark" && player.gameInfo.available === true)
+            let whitePlayers = res.data.players.filter(player => player.gameInfo.team === "White" && player.gameInfo.available === true)
+                // console.log("Array lengths: ", darkPlayers.length, " and ", whitePlayers.length)
+                let gameStats
+                let noStatsMessage
+                if (darkPlayers.length > 0 && whitePlayers.length > 0) {
+                    gameStats = "visible";
+                    noStatsMessage = "hidden";
+                }
+                else {
+                    gameStats = "hidden";
+                    noStatsMessage = "visible";
+                }*/
+            
             dispatch({
                 type: EDIT_GAME_INFO,
-                payload: res.data
+                payload: {
+                    game: res.data,
+                    // gameStats: gameStats,
+                    // noStatsMessage: noStatsMessage
+                    }
             })
         }
     })

@@ -18,9 +18,9 @@ class Locker extends Component {
 
     render() {
         return (
-            <div className={this.props.visibility.noStatsMessage === "visible" ? "hidden row full " : " row full"}>
+            <div className={this.props.visibility.bottom === "visible" ? "visible row " : "hidden row"}>
                 <div className="container">
-                    <div className="row full center_row">    
+                    <div className="row">    
                         <div className="col text-center">
                             <button className="content_button lock unlocked" onClick={() => this.unlockGame(this.props.gameDate)}><i className="fa fa-unlock-alt bigger_fa_lock"></i></button> 
                             <button className="content_button lock locked" onClick={() => this.lockGame(this.props.gameDate)}><i className="fa fa-lock bigger_fa_lock"></i></button> 
@@ -43,7 +43,7 @@ const mapStateToProps = state => ({
     visibility: state.games.visibility,
     lockStatus: state.games.lockStatus,
     draftMode: state.games.draftMode,
-    noStatsMessage: state.stats.visibility,
+    // noStatsMessage: state.stats.visibility,
 })
 
 export default connect(mapStateToProps, { lockGameInfo, unlockGameInfo }) (Locker)

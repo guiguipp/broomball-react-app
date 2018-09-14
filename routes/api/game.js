@@ -87,7 +87,6 @@ game.put("/:id", function(req, res) {
             }
         }
     let updateWithTimeStamp = { updated: moment(), ...update }
-    console.log("Update with time stamp?: ", updateWithTimeStamp)
     // db.Game.findOneAndUpdate({_id: "2018-08-26", "players._id": "5b6ebb53866bfe76441d998f"}, {win: "Dark", "goals_dark": 3,'players.$.gameInfo.goals': 2},{new: true})
     db.Game.findOneAndUpdate(id, updateWithTimeStamp, {new: true})
     .then(function(dbGame){

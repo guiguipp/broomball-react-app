@@ -40,7 +40,7 @@ const initialState = {
         main: "hidden",
         bottom: "hidden",
         gameStats: "hidden",
-        noStatsMessage: "hidden"
+        noStatsMessage: "hidden",
     },
     gameDate: "",
     draft: {},
@@ -48,7 +48,7 @@ const initialState = {
     allTenBuckers: [],
     notPlayingNonMembers: [],
     playingNonMembers: [],
-    lockStatus: "visible",
+    lockStatus: "visible", // this hides the arrows + delete icons if the game is locked
     showingNonPlayingTenBuckers: "Show",    // which means this section is hidden
     showingUnavailableMembers: "Show",      // which means this section is hidden
     draftMode: "Draft",
@@ -96,6 +96,7 @@ export default function(state = initialState, action) {
             ...state,
             gameDate: action.payload.game._id,
             draft: action.payload.game,
+            // This hides the locker if 
             lockStatus: action.payload.game.lock_status === true ? "hidden" : "visible",
             unavailableMembers: state.showingUnavailableMembers === "Hide" ? action.payload.game.players.filter(player => player.membershipStatus === "Member" && player.gameInfo.available === false) : initialState.unavailableMembers,
             notPlayingNonMembers: initialState.notPlayingNonMembers,
@@ -113,13 +114,21 @@ export default function(state = initialState, action) {
         case EDIT_GAME_INFO:
         return {
             ...state,
-            draft: action.payload,
-            // No longer sure why we would re-initiate the ten-buckers after editing a game?
-            // this makes the list of ten-buckers to bug after auto-drafting 
-            // notPlayingNonMembers: initialState.notPlayingNonMembers,
-            // playingNonMembers: initialState.playingNonMembers,
-            // showingNonPlayingTenBuckers: "Show",
-            // showingUnavailableMembers: "Show",
+            draft: action.payload.game,
+            /*No longer sure why we would re-initiate the ten-buckers after editing a game?
+            this makes the list of ten-buckers to bug after auto-drafting 
+            notPlayingNonMembers: initialState.notPlayingNonMembers,
+            playingNonMembers: initialState.playingNonMembers,
+            showingNonPlayingTenBuckers: "Show",
+            showingUnavailableMembers: "Show",
+            */
+            // Every time the game is updated, it checks if the locker (via the noStatsMessage state) can be shown
+            /*
+            visibility: {
+                gameStats: action.payload.gameStats,
+                noStatsMessage: action.payload.noStatsMessage,
+                ...state.visibiliy
+            }*/
         }
         
         case RESET:
