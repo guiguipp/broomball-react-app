@@ -5,7 +5,7 @@ const apiRoutes = require("./api");
 router.use("/api", apiRoutes)
 
 
-const cors = require('cors')
-router.use(cors())
+// const cors = require('cors')
+// router.use(cors())
 
 module.exports = router;

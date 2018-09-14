@@ -12,11 +12,11 @@ const path = require('path');
 // Sets up the Express App
 // =============================================================
 const app = express();
-const PORT = process.env.PORT || 8080;
+// const PORT = process.env.PORT || 3001;
 
 // CORS issues
-const cors = require('cors')
-app.use(cors())
+// const cors = require('cors')
+// app.use(cors())
 
 // logging the requests
 const morgan = require("morgan");
@@ -33,8 +33,6 @@ const db = mongoose.connection
 db.on("error", console.error.bind(console,"Connection error"));
 db.once("open", () => console.log("connected to the DB collection 'summit_broomball'") )
 
-
-// db.games.insert({date: 2018-07-20});
 
 // Sets up the Express app to handle data parsing
 // parse application/x-www-form-urlencoded
@@ -57,7 +55,7 @@ if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, 'client/build')));
     // Handle React routing, return all requests to React app
     app.get('*', function(req, res) {
-        console.log("req.params in server.js: ", req.params)
+        console.log("req.params in server.js:\n ", req.params)
         res.sendFile(path.join(__dirname + "/client/build/", 'index.html'));
     });
     }
