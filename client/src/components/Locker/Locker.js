@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { lockGameInfo } from "../../js/actions/gameActions"
 import { unlockGameInfo } from "../../js/actions/gameActions"
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import "./Locker.css";
 
 class Locker extends Component {
@@ -22,8 +22,8 @@ class Locker extends Component {
                 <div className="container">
                     <div className="row">    
                         <div className="col text-center">
-                            <button className="content_button lock unlocked" onClick={() => this.unlockGame(this.props.gameDate)}><i className="fa fa-unlock-alt bigger_fa_lock"></i></button> 
-                            <button className="content_button lock locked" onClick={() => this.lockGame(this.props.gameDate)}><i className="fa fa-lock bigger_fa_lock"></i></button> 
+                            <button className={this.props.lockStatus === "visible" ? "locked content_button lock" : "unlocked content_button lock"} onClick={() => this.unlockGame(this.props.gameDate)}><FontAwesomeIcon icon="unlock-alt" /></button> 
+                            <button className={this.props.lockStatus === "visible" ? "unlocked content_button lock" : "locked content_button lock"} onClick={() => this.lockGame(this.props.gameDate)}><FontAwesomeIcon icon="lock" className={this.props.lockStatus === "hidden" ? "locked" : "unlocked"} /></button> 
                         </div>
                     </div>
                 </div>
