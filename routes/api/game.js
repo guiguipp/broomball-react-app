@@ -1,6 +1,8 @@
 const game = require("express").Router()
 const db = require("../../models")
 
+const moment = require("moment");
+
 game.get("/", function(req, res) {
     db.Game.find({}, null, {sort: {game_date: 1}})
     .populate("players.player")    
@@ -84,8 +86,10 @@ game.put("/:id", function(req, res) {
             update = req.body.data;
             }
         }
+    let updateWithTimeStamp = { updated: moment(), ...update }
+    console.log("Update with time stamp?: ", updateWithTimeStamp)
     // db.Game.findOneAndUpdate({_id: "2018-08-26", "players._id": "5b6ebb53866bfe76441d998f"}, {win: "Dark", "goals_dark": 3,'players.$.gameInfo.goals': 2},{new: true})
-    db.Game.findOneAndUpdate(id,update,{new: true})
+    db.Game.findOneAndUpdate(id, updateWithTimeStamp, {new: true})
     .then(function(dbGame){
         res.send(dbGame)
         })
@@ -95,7 +99,7 @@ game.put("/:id", function(req, res) {
     }) 
 
 game.delete("/:id", function(req, res) {
-    // console.log("req.params.id in game put route: ", req.params.id)
+    // console.log("req.params.id in game delete route: ", req.params.id)
     db.Game.findByIdAndDelete(req.params.id)
     .then(function(dbGame){
         res.send(dbGame)

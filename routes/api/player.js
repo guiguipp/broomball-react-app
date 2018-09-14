@@ -1,6 +1,8 @@
 const player = require("express").Router()
 const db = require("../../models")
 
+const moment = require("moment");
+
 player.get("/", function(req, res) {
     db.Player.find({}, null, {sort: {name: 1}})
         .then(function(dbPlayer){
@@ -59,7 +61,8 @@ player.post("/", function(req, res) {
     })
 
 player.put("/:id", function(req, res) {
-    db.Player.findByIdAndUpdate(req.params.id, req.body.data, {new: true}) 
+    let updateObj = { updated: moment(), ...req.body.data }
+    db.Player.findByIdAndUpdate(req.params.id, updateObj, {new: true}) 
         .then(function(dbPlayer){
             console.log("dbPlayer: ", dbPlayer)
             res.send(dbPlayer)
