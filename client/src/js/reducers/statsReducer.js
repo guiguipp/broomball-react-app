@@ -236,123 +236,128 @@ export default function(state = initialState, action) {
         case ADD_PLAYER_RECORDS:
         return {
             ...state, 
-            playerRecords: _.sortBy([...state.playerRecords, action.payload],"name")
+            playerRecords: _.sortBy([...state.playerRecords, action.payload],"name"),
+            filteredPlayerRecords: _.sortBy([...state.playerRecords, action.payload],"name")
         }
 
         case REMOVE_PLAYER_RECORDS:
         return {
             ...state, 
-            playerRecords: _.sortBy(state.playerRecords.filter(player => player._id !== action.payload._id),"name")
+            playerRecords: _.sortBy(state.playerRecords.filter(player => player._id !== action.payload._id),"name"),
+            filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player._id !== action.payload._id),"name")
         }
 
         case REPLACE_PLAYERS_RECORDS:
         return {
             ...state, 
-            playerRecords: _.sortBy(action.payload, "name")
+            playerRecords: _.sortBy(action.payload, "name"),
+            filteredPlayerRecords: _.sortBy(action.payload, "name"),
         }
 
         case SORT_AZ_ASC:
         return {
             ...state,
             sortingOptions: action.payload,
-            playerRecords: _.sortBy(state.playerRecords, "name").reverse() // we need to do this because names are capitalized
+            filteredPlayerRecords: _.sortBy(state.playerRecords, "name").reverse()
         }
 
         case SORT_AZ_DESC:
         return {
             ...state,
             sortingOptions: action.payload,
-            playerRecords: _.sortBy(state.playerRecords, "name")
+            filteredPlayerRecords: _.sortBy(state.playerRecords, "name"),
         }
 
         case SORT_GAMES_ASC:
         return {
             ...state,
             sortingOptions: action.payload,
-            playerRecords: state.playerRecords.filter(player => player.gamesPlayed === "N/A").concat(_.sortBy(state.playerRecords.filter(player => player.gamesPlayed !== "N/A"), "gamesPlayed"))
+            filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player.gamesPlayed !== "N/A"), "gamesPlayed")
         }
 
         case SORT_GAMES_DESC:
         return {
             ...state,
             sortingOptions: action.payload,
-            playerRecords: state.playerRecords.filter(player => player.gamesPlayed === "N/A").concat(_.sortBy(state.playerRecords.filter(player => player.gamesPlayed !== "N/A"), "gamesPlayed").reverse())
+            filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player.gamesPlayed !== "N/A"), "gamesPlayed").reverse()
         }
 
         case SORT_WINS_ASC:
         return {
             ...state,
             sortingOptions: action.payload,
-            playerRecords: _.sortBy(state.playerRecords.filter(player => player.winPercent !== "N/A"), "winPercent").concat(state.playerRecords.filter(player => player.winPercent === "N/A"))
+            filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player.winPercent !== "N/A"), "winPercent")
         }
 
         case SORT_WINS_DESC:
         return {
             ...state,
             sortingOptions: action.payload,
-            playerRecords: state.playerRecords.filter(player => player.winPercent === "N/A").concat(_.sortBy(state.playerRecords.filter(player => player.winPercent !== "N/A"), "winPercent").reverse())
+            filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player.winPercent !== "N/A"), "winPercent").reverse(),
         }
 
         case SORT_GOALS_ASC:
         return {
             ...state,
             sortingOptions: action.payload,
-            playerRecords: state.playerRecords.filter(player => player.goals === "N/A").concat(_.sortBy(state.playerRecords.filter(player => player.goals !== "N/A"), "goals"))
+            filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player.goals !== "N/A"), "goals"),
         }
         
         case SORT_GOALS_DESC:
         return {
             ...state,
             sortingOptions: action.payload,
-            playerRecords: state.playerRecords.filter(player => player.goals === "N/A").concat(_.sortBy(state.playerRecords.filter(player => player.goals !== "N/A"), "goals").reverse())
+            filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player.goals !== "N/A"), "goals").reverse(),
         }
         
         case SORT_ASSISTS_ASC:
         return {
             ...state,
             sortingOptions: action.payload,
-            playerRecords: state.playerRecords.filter(player => player.assists === "N/A").concat(_.sortBy(state.playerRecords.filter(player => player.assists !== "N/A"), "assists"))            
+            filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player.assists !== "N/A"), "assists"),
         }
         
         case SORT_ASSISTS_DESC:
         return {
             ...state,
             sortingOptions: action.payload,
-            playerRecords: state.playerRecords.filter(player => player.assists === "N/A").concat(_.sortBy(state.playerRecords.filter(player => player.assists !== "N/A"), "assists").reverse())        }
+            filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player.assists !== "N/A"), "assists").reverse(),
+        }
+
 
         case SORT_GPG_ASC:
         return {
             ...state,
             sortingOptions: action.payload,
-            playerRecords: state.playerRecords.filter(player => player.gpg === "N/A").concat(_.sortBy(state.playerRecords.filter(player => player.gpg !== "N/A"), "gpg"))
+            filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player.gpg !== "N/A"), "gpg")
         }
 
         case SORT_GPG_DESC:
         return {
             ...state,
             sortingOptions: action.payload,
-            playerRecords: state.playerRecords.filter(player => player.gpg === "N/A").concat(_.sortBy(state.playerRecords.filter(player => player.gpg !== "N/A"), "gpg").reverse())
+            filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player.gpg !== "N/A"), "gpg").reverse(),
         }
 
         case SORT_APG_ASC:
         return {
             ...state,
             sortingOptions: action.payload,
-            playerRecords: state.playerRecords.filter(player => player.apg === "N/A").concat(_.sortBy(state.playerRecords.filter(player => player.apg !== "N/A"), "apg"))
+            filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player.apg !== "N/A"), "apg"),
         }
 
         case SORT_APG_DESC:
         return {
             ...state,
             sortingOptions: action.payload,
-            playerRecords: state.playerRecords.filter(player => player.apg === "N/A").concat(_.sortBy(state.playerRecords.filter(player => player.apg !== "N/A"), "apg").reverse())
+            filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player.apg !== "N/A"), "apg").reverse(),
         }
 
         case SET_DATE_RANGE:
         return {
             ...state,
             dateRange: action.payload,
-            gamesForRecords: state.gamesForRecords.filter(game => game._id >= action.payload.from && game._id <= action.payload.to),
+            gamesForRecords: state.gamesForRecords.filter(game => game._id >= action.payload.from && game._id <= action.payload.to)
         }
         /*
         case SET_CHART_DATA:
@@ -362,7 +367,7 @@ export default function(state = initialState, action) {
             // curatedChartData: action.payload,
             // chartingOptions: initialState.chartingOptions
         }*/
-
+        // This can probably be removed: it looks like it was tied to a featured that was suppressed
         case TOOGLE_CHART_OPTIONS:
         return {
             ...state,
@@ -395,7 +400,6 @@ export default function(state = initialState, action) {
         return {
             ...state,
             playerRecords: _.sortBy(state.playerRecords.filter(player => player.membershipStatus !== action.payload), "name")
-            // curatedChartData: action.payload,
         }
 
         case TOGGLE_POSITIONS:

@@ -158,7 +158,6 @@ class PlayerSelector extends Component {
             this.props.toggleSelectAll(playerUpdate)
             // Adding both all ten buckers (who have played one of possible games) + non-members already selected
             let allTenBuckersAndSelectedMembers = this.props.allPlayers.filter(player => player.membershipStatus !== "Member" && this.props.arrayOfTenBuckersID.includes(player._id)).concat(this.props.selectedPlayers.filter(player => player.membershipStatus === "Member"))
-            console.log("allTenBuckersAndSelectedMembers: ", allTenBuckersAndSelectedMembers, "\nSee if the array is formed correctly")
             this.selectAndTransform(allTenBuckersAndSelectedMembers, "select")
             break;
 

@@ -76,7 +76,7 @@ const mapStateToProps = state => ({
     selectedGames: state.stats.selectedGames,
     selectedPlayers: state.stats.selectedPlayers,
     sortOptionsDisplay: state.stats.sortOptionsDisplay,
-    playerRecords: state.stats.playerRecords,
+    playerRecords: state.stats.filteredPlayerRecords,
     sortingOptions: state.stats.sortingOptions,
     forwardSelection: state.stats.selectors.forwardSelection,
     defenseSelection: state.stats.selectors.defenseSelection,

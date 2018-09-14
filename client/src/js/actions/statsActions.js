@@ -945,6 +945,7 @@ export const sendDataToChart = (newDataset) => dispatch => {
     })
 }
 */
+// Is this still used? If not, remove it
 export const toggleChartOptions = (displayObject, updateObject ) => dispatch => {
     // console.log("Display Object: ", displayObject, "\nupdateObject: ", updateObject)
     dispatch({
