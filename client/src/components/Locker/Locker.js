@@ -23,7 +23,7 @@ class Locker extends Component {
                     <div className="row">    
                         <div className="col text-center">
                             <button className={this.props.lockStatus === "visible" ? "locked content_button lock" : "unlocked content_button lock"} onClick={() => this.unlockGame(this.props.gameDate)}><FontAwesomeIcon icon="unlock-alt" /></button> 
-                            <button className={this.props.lockStatus === "visible" ? "unlocked content_button lock" : "locked content_button lock"} onClick={() => this.lockGame(this.props.gameDate)}><FontAwesomeIcon icon="lock" className={this.props.lockStatus === "hidden" ? "locked" : "unlocked"} /></button> 
+                            <button className={this.props.lockStatus === "visible" ? "unlocked content_button lock" : "locked content_button lock"} onClick={() => this.lockGame(this.props.gameDate)}><FontAwesomeIcon icon="lock"/></button> 
                         </div>
                     </div>
                 </div>
