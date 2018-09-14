@@ -22,7 +22,7 @@ const app = express();
 const morgan = require("morgan");
 app.use(morgan("dev"));
 
-const URL = process.env.MONGODB_URI || "mongodb://localhost/summit_broomball"
+const URL = process.env.MONGODB_URI
 
 // DB connection
 mongoose.connect(URL, { autoIndex: false});
@@ -60,6 +60,6 @@ if (process.env.NODE_ENV === 'production') {
     });
     }
     
-app.listen(process.env.PORT || 8080, function(){
+app.listen(process.env.PORT, function(){
 console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
 });
