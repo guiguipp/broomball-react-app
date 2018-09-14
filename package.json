@@ -9,8 +9,7 @@
         "server": "nodemon server.js",
         "build": "webpack --config ./config/webpack.config.js --progress --colors",
         "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
-        "start": "concurrently \"nodemon server.js\" \"npm run client\"",
-        "postinstall": "npm run build"
+        "start": "concurrently \"nodemon server.js\" \"npm run client\""
     },
     "dependencies": {
         "axios": "^0.18.0",
