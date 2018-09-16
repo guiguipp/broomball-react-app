@@ -32,6 +32,9 @@
         width: 100%;
     }
     /* Draft Page */
+    .drafter_mode {
+        display: block;
+    }
     .organizer {
         display: grid;
     }
@@ -58,9 +61,6 @@
     .player_div {
         width: 100%;
     }
-    .col_header {
-        padding-left: 43%;
-    }
     .game_date {
         margin-top: 7%;
         margin-bottom: -21px;
@@ -84,13 +84,36 @@
         width: 40%;
     }
     .list_of_picked_players {
-        width: 40%;
+        width: 45%;
+        padding-left: 1%;
     }
     .pick_col_header {
         display: none;
     }
+    .pick_option, .draft_option {
+        text-align: center;
+        font-size: xx-small;
+        margin: 0 1%;
+        width: 27%;
+    }
+    .reduced_container {
+        padding: 0 1%;
+        text-align: center;
+    }
     .player_picking_div {
         min-width: 200px;
+    }
+    .lock {
+        margin: 2%;
+    }
+    .leaning_right_div {
+        margin-left: -13%;
+    }
+    .leaning_left_div {
+        margin-left: 28%;
+    }
+    .leaning_center_div {
+        margin-left: 11%;
     }
     /* Stats page */
     .list_of_games {

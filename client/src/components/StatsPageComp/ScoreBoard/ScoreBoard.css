@@ -1,6 +1,7 @@
 .tables_container {
     /* display: inline-flex; */
     margin: auto;
+    padding: 3%;
 }
 .table_container {
     padding: 0 5%;
@@ -37,13 +38,20 @@
     text-align: center;
     min-width: 120px;
 }
+.null {
+    display: inline;
+    margin: 0 7% 0 7%;
+    border-style: solid;
+    padding: 8%;
+    font-size: 1.2em;
+}
 .nice {
     display: inline;
-    margin: 0 14px 0 14px;
+    margin: 0 7% 0 7%;
     border-color: orange;
     border-style: solid;
     border-width: 2px;
-    padding: 10px;
+    padding: 8%;
     font-size: 1.2em;
     /* color: white; */
     font-weight: bold;
@@ -52,11 +60,11 @@
 }
 .good {
     display: inline;
-    margin: 0 14px 0 14px;
+    margin: 0 7% 0 7%;
     border-color: orange;
     border-style: solid;
     border-width: 2px;
-    padding: 10px;
+    padding: 8%;
     font-size: 1.2em;
     /* color: white; */
     font-weight: bold;

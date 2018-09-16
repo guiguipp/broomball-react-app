@@ -328,35 +328,31 @@ class GameOptionsBottom extends Component {
     render() {
         return (
             <div className={"row " + this.props.visibility.bottom}>
-                <div className={"container " + this.props.visibility.bottom}>
+                <div className={"container " + this.props.visibility.bottom + " reduced_container"}>
                         <div className="row game_options_container">
-                            <div className="col text-center">
+                            
                                 <button className="content_button btn lighter_color pick_option" onClick={() => this.toggleMode(this.props.draftMode, "Dark")}>{this.props.pickButtons.left}</button> 
-                            </div>
-                            <div className="col text-center invisible_div">
-                                
-                            </div>
-                            <div className="col text-center">
+                            
+                            
+                            
                                 <button className="content_button btn contrast_color pick_option" onClick={() => this.resetTeams(this.props.gameDate)}>Reset</button> 
-                            </div>
-                            <div className="col text-center invisible_div">
-                                
-                            </div>
-                            <div className="col text-center">
+                            
+                            
+                            
                                 <button className="content_button btn lighter_color pick_option" onClick={() => this.toggleMode(this.props.draftMode, "White")}>{this.props.pickButtons.right}</button> 
-                            </div>
+                            
                         </div>
                         <br />
                         <div className={"row " + this.props.visibility.top + " game_options_container"}>
-                            <div className="col text-center">
+                            
                                 <button className="content_button btn darker_color draft_option" onClick={()=> this.autodraft(this.props.gameDate)} >Autodraft</button> 
-                            </div>
-                            <div className="col text-center">
+                            
+                            
                                 <button className="content_button btn darker_color draft_option" onClick={()=> this.alternateDraft(this.props.gameDate)}>Alternate Draft</button> 
-                            </div>
-                            <div className="col text-center">
+                            
+                            
                                 <button className="content_button btn darker_color draft_option" onClick={() => this.serpentineDraft(this.props.gameDate)}>Serpentine Draft</button> 
-                            </div>
+                            
                         </div>
                     </div>
                 </div>

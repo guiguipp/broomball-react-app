@@ -184,7 +184,7 @@ class Drafter extends Component {
                                 .filter(player => player.gameInfo.available === true && player.gameInfo.team === "Dark")
                                 .map(player => {
                                     return (
-                                        <div className="player_div" key={player._id}>
+                                        <div className="player_div leaning_right_div" key={player._id}>
                                             <button className="content_button player_button leaning_right_color">{player.name}</button>
                                             <FontAwesomeIcon icon="times-circle" className={"remove remove_player " + this.props.lockStatus} onClick={() => this.setUnavailable(player._id, player.membershipStatus)} />
                                             <FontAwesomeIcon icon={faArrowAltCircleRight} className={"arrows " + this.props.lockStatus} onClick={() => this.assignTeam(player._id, "N/A")} />
@@ -200,7 +200,7 @@ class Drafter extends Component {
                             .filter(player => player.gameInfo.available === true && player.gameInfo.team === "N/A")
                             .map(player => {
                                 return (
-                                    <div className="player_div" key={player._id}>
+                                    <div className="player_div leaning_center_div" key={player._id}>
                                         <FontAwesomeIcon icon="arrow-circle-left" className={"arrows " + this.props.lockStatus} onClick={() => this.assignTeam(player._id, "Dark")} />
                                         <button className="content_button player_button plain_color">{player.name}</button>
                                         <FontAwesomeIcon icon="times-circle" className={"remove remove_player " + this.props.lockStatus} onClick={() => this.setUnavailable(player._id, player.membershipStatus)} />
@@ -242,7 +242,7 @@ class Drafter extends Component {
                                     .filter(player => player.gameInfo.available === true && player.gameInfo.team === "White")
                                     .map(player => {
                                         return (
-                                            <div className="player_div" key={player._id}>
+                                            <div className="player_div leaning_left_div" key={player._id}>
                                                 <FontAwesomeIcon icon="arrow-circle-left" className={"arrows " + this.props.lockStatus} size="2x" onClick={() => this.assignTeam(player._id, "N/A")} />
                                                 <button className={"content_button player_button leaning_left_color "}>{player.name}</button>
                                                 <FontAwesomeIcon icon="times-circle" className={"remove remove_player " + this.props.lockStatus} onClick={() => this.setUnavailable(player._id, player.membershipStatus)} />
