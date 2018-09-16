@@ -80,14 +80,7 @@
     position: relative;
     left: 5px;
     top: -10px;
-}
-
-.up_arrow:hover {
-    color:#ffbe75;
-}
-
-.down_arrow:hover {
-    color:#ffbe75;
+    font-size: 200%
 }
 
 .down_arrow {
@@ -95,6 +88,7 @@
     position: relative;
     left: -23px;
     top: 22px;
+    font-size: 200%;
 }
 
 .player_picking_div {
@@ -104,4 +98,11 @@
     position: relative;
     left: -8%;
     margin-top: 2%
+}
+.up_arrow:visited, .up_arrow:hover, .up_arrow:focus, .up_arrow:active {
+    color:#ffbe75;
+}
+
+.down_arrow:visited, .down_arrow:hover, .down_arrow:focus, .down_arrow:active {
+    color:#ffbe75;
 }

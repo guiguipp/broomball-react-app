@@ -15,39 +15,21 @@
     border-radius: 20px;
 }
 .instructions_div {
-    display: inline-flex;
     width: 100%;
     margin-top: 3%;
+    text-align: center;
 }
 .page_div {
-    width: 20%;
     margin: 2% 2.5%;
-    /* border-style: solid; */
+    width: 40%;
+    display: inline-grid;
 }
-
 .instruction {
     text-align: center;
-    min-height: 90px;
 }
 .instructions_text {
     font-family: boogaloo;
     font-size: 125%;
     margin-bottom: 20%;
     
-}
-
-@media only screen and (max-width: 730px) {
-    .page_div {
-        width: 40%;
-        margin: 2.5% 29% 10%;
-    }
-    .instructions_div {
-        display: inline;
-    }
-    .instruction {
-        min-height: 0px;
-    }
-    .instructions_text {
-        font-size: 90%;
-    }
 }

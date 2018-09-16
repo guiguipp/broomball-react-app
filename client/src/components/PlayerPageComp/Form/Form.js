@@ -125,8 +125,8 @@ class Form extends Component {
                                 />
                         </div>
                         
-                        <button type="submit" value="Submit"> Submit </button>
-                        <button type="cancel" value="Cancel" onClick={(event) => this.handleCancel(event)} > Cancel </button>
+                        <button type="submit" value="Submit" className="contrast_color"> Submit </button>
+                        <button type="cancel" value="Cancel" className="contrast_color" onClick={(event) => this.handleCancel(event)} > Cancel </button>
                     </form>
                 </div>
             </div>

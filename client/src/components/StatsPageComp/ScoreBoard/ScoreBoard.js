@@ -143,9 +143,9 @@ class ScoreBoard extends Component {
                                         .map(player => {
                                             return (
                                                 <tr className="stats_row" key={player._id}> 
-                                                    <td className="player_stats">{player.name}
+                                                    <td className="player_stats stats_name">{player.name}
                                                     </td>
-                                                    <td className="player_stats">
+                                                    <td className="player_stats stats_data">
                                                         <div className="stats">
                                                             <FontAwesomeIcon icon="plus-circle" className={"darker_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"add_goal_dark",player.gameInfo.goals)} />
                                                             <div className={player.gameInfo.goals > 0 ? "nice" : null + " data"}>{player.gameInfo.goals}</div> 
@@ -153,7 +153,7 @@ class ScoreBoard extends Component {
                                                         </div>
                                                     </td>
 
-                                                    <td className="player_stats">
+                                                    <td className="player_stats stats_data">
                                                         <div className="stats">
                                                             <FontAwesomeIcon icon="plus-circle" className={"lighter_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"add_assist",player.gameInfo.assists)} />
                                                             <div className={player.gameInfo.assists > 0 ? "good" : null + " data"}>{player.gameInfo.assists}</div> 
@@ -184,9 +184,9 @@ class ScoreBoard extends Component {
                                             .map(player => {
                                                 return (
                                                     <tr className="stats_row" key={player._id}> 
-                                                        <td className="player_stats">{player.name}
+                                                        <td className="player_stats stats_name">{player.name}
                                                         </td>
-                                                        <td className="player_stats">
+                                                        <td className="player_stats stats_data">
                                                             <div className="stats">
                                                                 <FontAwesomeIcon icon="plus-circle" size="2x" className={"darker_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"add_goal_white",player.gameInfo.goals)} />
                                                                 <div className={player.gameInfo.goals > 0 ? "nice" : null + " data"}>{player.gameInfo.goals}</div> 
@@ -194,7 +194,7 @@ class ScoreBoard extends Component {
                                                             </div>
                                                         </td>
 
-                                                        <td className="player_stats">
+                                                        <td className="player_stats stats_data">
                                                             <div className="stats">
                                                                 <FontAwesomeIcon icon="plus-circle" size="2x" className={"lighter_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"add_assist",player.gameInfo.assists)} />
                                                                 <div className={player.gameInfo.assists > 0 ? "good" : null + " data"}>{player.gameInfo.assists}</div> 

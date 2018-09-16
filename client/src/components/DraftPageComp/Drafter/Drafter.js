@@ -177,9 +177,9 @@ class Drafter extends Component {
         return (
             <div>
                 {this.props.draftMode === "Draft" ? 
-                    (<div className="row">
-                    <div className="col col_no_bootstrap">
-                        <h1 className="h1_main"><br/>Dark</h1>
+                    (<div className="row drafter_mode">
+                    <div className="col col_no_bootstrap dark_draft_players">
+                        <h1 className="h1_main col_header"><br/>Dark</h1>
                         {this.props.draft.players ? (this.props.draft.players
                                 .filter(player => player.gameInfo.available === true && player.gameInfo.team === "Dark")
                                 .map(player => {
@@ -187,24 +187,24 @@ class Drafter extends Component {
                                         <div className="player_div" key={player._id}>
                                             <button className="content_button player_button leaning_right_color">{player.name}</button>
                                             <FontAwesomeIcon icon="times-circle" className={"remove remove_player " + this.props.lockStatus} onClick={() => this.setUnavailable(player._id, player.membershipStatus)} />
-                                            <FontAwesomeIcon icon={faArrowAltCircleRight} className={"arrows " + this.props.lockStatus} size="2x" onClick={() => this.assignTeam(player._id, "N/A")} />
+                                            <FontAwesomeIcon icon={faArrowAltCircleRight} className={"arrows " + this.props.lockStatus} onClick={() => this.assignTeam(player._id, "N/A")} />
                                         </div>
                                         )
                                         })
                                 ) : (<p>Data has not loaded yet</p>)
                             }
                     </div>
-                    <div className="col col_no_bootstrap">
-                    <h1 className="h1_alternate">{this.props.gameDate}<br/><br/></h1>
+                    <div className="col col_no_bootstrap undraft_players">
+                    <h1 className="h1_alternate col_header game_date">{this.props.gameDate}<br/><br/></h1>
                         {this.props.draft.players ? (this.props.draft.players
                             .filter(player => player.gameInfo.available === true && player.gameInfo.team === "N/A")
                             .map(player => {
                                 return (
                                     <div className="player_div" key={player._id}>
-                                        <FontAwesomeIcon icon="arrow-circle-left" className={"arrows " + this.props.lockStatus} size="2x" onClick={() => this.assignTeam(player._id, "Dark")} />
+                                        <FontAwesomeIcon icon="arrow-circle-left" className={"arrows " + this.props.lockStatus} onClick={() => this.assignTeam(player._id, "Dark")} />
                                         <button className="content_button player_button plain_color">{player.name}</button>
                                         <FontAwesomeIcon icon="times-circle" className={"remove remove_player " + this.props.lockStatus} onClick={() => this.setUnavailable(player._id, player.membershipStatus)} />
-                                        <FontAwesomeIcon icon={faArrowAltCircleRight} className={"arrows " + this.props.lockStatus} size="2x" onClick={() => this.assignTeam(player._id, "White")} />
+                                        <FontAwesomeIcon icon={faArrowAltCircleRight} className={"arrows " + this.props.lockStatus} onClick={() => this.assignTeam(player._id, "White")} />
                                     </div>
                                     )
                                     })
@@ -235,9 +235,9 @@ class Drafter extends Component {
 
 
                     </div>
-                    <div className="col col_no_bootstrap">
+                    <div className="col col_no_bootstrap white_drafted_players">
                     
-                    <h1 className="h1_main"><br/>White</h1>
+                    <h1 className="h1_main col_header"><br/>White</h1>
                         {this.props.draft.players ? (this.props.draft.players
                                     .filter(player => player.gameInfo.available === true && player.gameInfo.team === "White")
                                     .map(player => {
@@ -255,41 +255,44 @@ class Drafter extends Component {
                 </div>
                 ) : 
                 // Picking players page
-                (<div className="row"> 
-                    <div className="col col_no_bootstrap">
-                        <h1 className="h1_main">Set {this.props.draftMode} Picks</h1>
+                (<div className="row picker_mode"> 
+                    <div className="col col_no_bootstrap set_picks_col">
+                        <h1 className="h1_main pick_col_header">Set {this.props.draftMode} Picks</h1>
+                        <div className="list_of_unpicked_players">
                         {/* Mapping the unranked Players */}
                         {this.props.unpicked ? (this.props.unpicked
                             .map(player => {
                                 return (
                                     <div className="player_picking_div" key={player._id}>
                                         <button className="content_button player_picking lighter_color"  onClick={() => this.addPick(this.props.draftMode, player._id)} >{player.name}</button>
-                                        <FontAwesomeIcon icon="angle-right" className="pick_arrow arrows" size="2x" onClick={() => this.addPick(this.props.draftMode, player._id)} />
+                                        <FontAwesomeIcon icon="angle-right" className="pick_arrow arrows" onClick={() => this.addPick(this.props.draftMode, player._id)} />
                                     </div>
                                 )
                             } )
                         ) : ( <p>Bogus data</p> )
                         }
                         </div>
-                        <div className="col col_no_bootstrap">
-                            <h1 className="h1_main">Ranks</h1>
+                    </div>
+                        <div className="col col_no_bootstrap ranks_col">
+                            <h1 className="h1_main pick_col_header">Ranks</h1>
                             {/* mapping the ranked available players */}
+                            <div className="list_of_picked_players">
                             {this.props.picked ? (this.props.picked
                                 .map(player => {
                                     return (    
                                         <div className="player_picking_div" key={player._id}>
                                             <button className="content_button player_button darker_color">{player.name}</button>
-                                            <FontAwesomeIcon icon="minus-circle" className="remove remove_pick" size="lg" onClick={() => this.removePick(this.props.draftMode, player)} />
+                                            <FontAwesomeIcon icon="minus-circle" className="remove remove_pick" onClick={() => this.removePick(this.props.draftMode, player)} />
                                             <div className="sorter"> 
-                                                <FontAwesomeIcon icon="chevron-up" size="2x" className="up_arrow" onClick={() => this.rankOneUp(player)}/>
-                                                <FontAwesomeIcon icon="chevron-down" size="2x" className="down_arrow" onClick={() => this.rankOneDown(player)}/>
+                                                <FontAwesomeIcon icon="chevron-up" className="up_arrow" onClick={() => this.rankOneUp(player)}/>
+                                                <FontAwesomeIcon icon="chevron-down" className="down_arrow" onClick={() => this.rankOneDown(player)}/>
                                             </div>
                                         </div>
                                     )
                                 } )
                             ) : ( <p>Bogus data</p> )
                             }
-                
+                            </div>
                         </div> 
                 </div>)}
             </div>

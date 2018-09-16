@@ -10,14 +10,20 @@
 }
 
 .player_name {
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
+    width: 70%;
+    padding-bottom: 4%;
+    margin-bottom: 10%;
+    text-align: center;
+    margin: 0 auto 2%;
     font-weight: bold;
     font-variant: small-caps;
-    margin-bottom: 10%;
     font-size: 125%;
-    text-align: center;
 }
 
 .player_data {
+    padding-top: 8%;
     position: relative;
     overflow: scroll;
 }

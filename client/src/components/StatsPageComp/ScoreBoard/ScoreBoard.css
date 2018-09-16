@@ -68,3 +68,9 @@
 .h1_main {
     margin-bottom: 0%;
 }
+.player_stats {
+    font-variant: small-caps;
+}
+.list_of_games {
+    padding: 5%;
+}

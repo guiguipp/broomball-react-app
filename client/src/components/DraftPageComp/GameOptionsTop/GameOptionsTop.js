@@ -41,10 +41,10 @@ class GameOptionsTop extends Component {
     }
     render() {
         return (
-            <div className="container">
+            <div className="container button_container">
                         <div className="row">
                             <div className="col text-center">
-                                <button className="content_button darker_color game_options" onClick={()=> this.unavailable(this.props.showingUnavailableMembers)}>{this.props.showingUnavailableMembers} unavailable</button> 
+                                <button className="content_button darker_color game_options" onClick={()=> this.unavailable(this.props.showingUnavailableMembers)}>{this.props.showingUnavailableMembers} Unavailable</button> 
                             </div>
                             <div className="col text-center">
                                 <button className="content_button darker_color game_options" onClick={()=> this.tenBuckers(this.props.showingNonPlayingTenBuckers)}>{this.props.showingNonPlayingTenBuckers} Non-Members</button> 

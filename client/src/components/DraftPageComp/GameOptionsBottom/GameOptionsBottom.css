@@ -1,3 +1,9 @@
 .buffer {
     width: 33%;
 }
+.pick_option {
+    width: 130px;
+}
+.draft_option {
+    width: 80%;
+}
