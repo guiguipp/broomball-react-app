@@ -8,6 +8,9 @@ import Player from "./pages/Player";
 import Stats from "./pages/Stats";
 import Records from "./pages/Records";
 import './App.css';
+import './media1024.css';
+import './media768.css';
+import './media375.css';
 
 // Redux 
 import { Provider } from 'react-redux'
