@@ -23,7 +23,7 @@ render() {
     <div>
         <NavBar />
         <div className="main_main"> 
-            <h1 className="h1_main">Draft</h1>
+            <h1 className="h1_main">Draft Teams</h1>
             <div className= "row organizer">
                 <div className="col"><Calendar/></div>
                 <div className="col"><GameList/></div>
