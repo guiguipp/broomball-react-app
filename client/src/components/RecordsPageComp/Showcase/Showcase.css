@@ -109,7 +109,6 @@
 }
 
 .button_options_second_set {
-    width: 80%;
     margin: 7% auto;
     text-align: center;
 }
@@ -161,4 +160,8 @@
 
 .records {
     padding: 0 5%;
+}
+
+.hide_button {
+    text-align: center;
 }

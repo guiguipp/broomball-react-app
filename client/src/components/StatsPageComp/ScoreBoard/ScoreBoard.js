@@ -147,17 +147,17 @@ class ScoreBoard extends Component {
                                                     </td>
                                                     <td className="player_stats stats_data">
                                                         <div className="stats">
-                                                            <FontAwesomeIcon icon="plus-circle" className={"darker_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"add_goal_dark",player.gameInfo.goals)} />
+                                                            <FontAwesomeIcon icon="plus-circle" className={"darker_icon stats_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"add_goal_dark",player.gameInfo.goals)} />
                                                             <div className={player.gameInfo.goals > 0 ? "nice" : null + " data"}>{player.gameInfo.goals}</div> 
-                                                            <FontAwesomeIcon icon="minus-circle" className={"darker_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"substract_goal_dark",player.gameInfo.goals)}  />
+                                                            <FontAwesomeIcon icon="minus-circle" className={"darker_icon stats_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"substract_goal_dark",player.gameInfo.goals)}  />
                                                         </div>
                                                     </td>
 
                                                     <td className="player_stats stats_data">
                                                         <div className="stats">
-                                                            <FontAwesomeIcon icon="plus-circle" className={"lighter_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"add_assist",player.gameInfo.assists)} />
+                                                            <FontAwesomeIcon icon="plus-circle" className={"lighter_icon stats_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"add_assist",player.gameInfo.assists)} />
                                                             <div className={player.gameInfo.assists > 0 ? "good" : null + " data"}>{player.gameInfo.assists}</div> 
-                                                            <FontAwesomeIcon icon="minus-circle" className={"lighter_icon " + this.props.lockStatus}  onClick={()=> this.logStat(player._id,"substract_assist",player.gameInfo.assists)} />
+                                                            <FontAwesomeIcon icon="minus-circle" className={"lighter_icon stats_icon " + this.props.lockStatus}  onClick={()=> this.logStat(player._id,"substract_assist",player.gameInfo.assists)} />
                                                         </div>
                                                     </td>
                                                 </tr>

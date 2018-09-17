@@ -17,7 +17,7 @@ render() {
     return (
     <div>
         <NavBar />
-        <div className="main_main"> 
+        <div className="main_main main_padded"> 
             <h1 className="h1_main">League Records</h1>
             
             <div className= "row">

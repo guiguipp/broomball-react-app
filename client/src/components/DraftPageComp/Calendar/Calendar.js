@@ -54,7 +54,7 @@ class Calendar extends Component {
                 </div>
 
                 <div>
-                    <form onSubmit={this.handleSubmit} >
+                    <form className="game_form" onSubmit={this.handleSubmit} >
                         <div id="in-line">
                             <div className="calendar_component">
                                 <DatePicker 

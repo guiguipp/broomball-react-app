@@ -26,7 +26,6 @@
     text-align: left;
     font-size: 300%;
     margin: 3% 0% 1%;
-    
 }
 
 .games_per_year {
@@ -36,11 +35,9 @@
     padding-top: 2%;
 }
 
-.hide_button {
+.hide_year_button {
     text-align: right;
     position: relative;
-    /* left: 10%; */
     top: -50px;
-    /* font-weight: bold; */
     color: orange;
 }

@@ -57,7 +57,7 @@ class Form extends Component {
 
     render() {
         return (
-            <div className="container">
+            <div className="form_container container">
                 <div className="row">
                     <form onSubmit={this.handleSubmit}>
                         <div className="field">

@@ -328,7 +328,7 @@ class GameOptionsBottom extends Component {
     render() {
         return (
             <div className={"row " + this.props.visibility.bottom}>
-                <div className={"container " + this.props.visibility.bottom + " reduced_container"}>
+                <div className={this.props.visibility.bottom + " reduced_container"}>
                         <div className="row game_options_container">
                             
                                 <button className="content_button btn lighter_color pick_option" onClick={() => this.toggleMode(this.props.draftMode, "Dark")}>{this.props.pickButtons.left}</button> 

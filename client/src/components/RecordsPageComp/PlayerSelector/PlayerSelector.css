@@ -2,6 +2,7 @@
     width: 100%;
     padding: 0 5% 0 5%;
     margin-top: -5%;
+    text-align: center;
 }
 
 .record_player_button {
@@ -40,7 +41,7 @@
 }
 
 .button_options_first_set {
-    width: 50%;
+    text-align: center;
     margin: 0% auto 7%;
     padding-left: 15px;
 }

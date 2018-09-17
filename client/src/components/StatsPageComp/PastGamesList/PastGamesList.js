@@ -58,7 +58,7 @@ class PastGameList extends Component {
                 <div key={i}>
                     <div>
                         <h3 className="h3_main">{ Object.keys(year)}</h3> 
-                        <div className="hide_button" onClick={()=> this.toggleVisibility(this.props.gameVisibility[i], i)}> {this.props.gameVisibility[i] === "visible" ? "[hide]" : "[show]" }</div>
+                        <div className="hide_year_button" onClick={()=> this.toggleVisibility(this.props.gameVisibility[i], i)}> {this.props.gameVisibility[i] === "visible" ? "[hide]" : "[show]" }</div>
                     </div>
                     <div className={this.props.gameVisibility ? this.props.gameVisibility[i] : null + " games_per_year"}>
                         {this.renderMonth(year)} 

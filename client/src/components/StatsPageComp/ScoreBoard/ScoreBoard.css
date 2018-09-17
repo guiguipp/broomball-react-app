@@ -1,11 +1,15 @@
 .tables_container {
-    /* display: inline-flex; */
+    display: inline-flex;
     margin: auto;
     padding: 3%;
 }
 .table_container {
     padding: 0 5%;
     min-width: 356px;
+}
+
+.stats_name {
+    font-size: 115%;
 }
 
 .darker_icon {
@@ -38,6 +42,7 @@
     text-align: center;
     min-width: 120px;
 }
+
 .null {
     display: inline;
     margin: 0 7% 0 7%;

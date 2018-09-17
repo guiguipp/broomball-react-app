@@ -347,8 +347,8 @@ class PlayerSelector extends Component {
                     <div className="content">
                         <div className={this.props.listOfPlayers + " select_all"}>
                             <div className="button_options_first_set">
-                                <button className={"btn record_player_button " + this.props.memberSelection} onClick={() => this.selectAllPlayers(this.props.memberSelection)}> {this.props.memberSelection === "unselected_member" ? "Select" : "Unselect"} All Members </button>
-                                <button className={"btn record_player_button " + this.props.tenBuckerSelection} onClick={() => this.selectAllPlayers(this.props.tenBuckerSelection)}> {this.props.tenBuckerSelection === "unselected_non_member" ? "Select" : "Unselect"} All Ten Buckers </button>
+                                <button className={"btn record_player_button all_button " + this.props.memberSelection} onClick={() => this.selectAllPlayers(this.props.memberSelection)}> {this.props.memberSelection === "unselected_member" ? "Select" : "Unselect"} All Members </button>
+                                <button className={"btn record_player_button all_button " + this.props.tenBuckerSelection} onClick={() => this.selectAllPlayers(this.props.tenBuckerSelection)}> {this.props.tenBuckerSelection === "unselected_non_member" ? "Select" : "Unselect"} All Ten Buckers </button>
                             </div>
                             
                         </div>
