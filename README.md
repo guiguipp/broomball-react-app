@@ -22,7 +22,7 @@ Players can be of two types: **Members** and **Ten Buckers**. This reflects how 
 ## Draft
 [Autodraft Feature] <img src="portfolio/autodraft.gif" width="350"/>
 
-![] <img src="portfolio/autodraft.gif" width="350"/>
+#<img src="portfolio/autodraft.gif" width="350"/>
 
 
 
