@@ -20,13 +20,7 @@ Players can be of two types: **Members** and **Ten Buckers**. This reflects how 
 >Later on, this page will be modified to implement the `react-redux-form` package which will allow better validation of input. 
 
 ## Draft
-![](portfolio/autodraft.gif | width="200")
-Relative no size
-![Alt Text](portfolio/autodraft.gif)
-img tag no size
-![Autodraft Feature] <img src="portfolio/autodraft.gif" />
-img tag size
-![Autodraft Feature] <img src="portfolio/autodraft.gif" width="200"/>
+![Autodraft Feature] <img src="portfolio/autodraft.gif" width="350"/>
 
 
 
