@@ -20,20 +20,11 @@ Players can be of two types: **Members** and **Ten Buckers**. This reflects how 
 >Later on, this page will be modified to implement the `react-redux-form` package which will allow better validation of input. 
 
 ## Draft
-![AutoDraft feature](http://www.lesjardinsextraordinaires.net/portfolio-gifs/Autodraft.gif)
-![AutoDraft feature][autoDraft]
-![AutoDraft feature][alt]
-![AutoDraft feature](http://www.lesjardinsextraordinaires.net/portfolio-gifs/Autodraft.gif | width="200")
-![Alt Text](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
-![Alt Text](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif | width="100")
-![Alt Text] <img src="http://www.lesjardinsextraordinaires.net/portfolio-gifs/Autodraft.gif" width="100" />
+![Autodraft Feature] <img src="http://www.lesjardinsextraordinaires.net/portfolio-gifs/Autodraft.gif" width="100" />
 
 
 ## Stats
 ## Records
 
 
-
-[autoDraft]: <img src="http://www.lesjardinsextraordinaires.net/portfolio-gifs/Autodraft.gif" width="200" />
-[alt]: http://www.lesjardinsextraordinaires.net/portfolio-gifs/Autodraft.gif | width="200"
 
