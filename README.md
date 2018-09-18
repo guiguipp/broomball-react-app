@@ -22,7 +22,7 @@ Players can be of two types: **Members** and **Ten Buckers**. This reflects how 
 ## Draft
 <img src="portfolio/autodraft.gif" width="350"/>
 ### Creating a game
-
+![Draft](<img src="portfolio/autodraft.gif" width="350"/>)
 
 
 ## Stats
