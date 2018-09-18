@@ -21,6 +21,8 @@ Players can be of two types: **Members** and **Ten Buckers**. This reflects how 
 
 ## Draft
 ![AutoDraft feature][autoDraft]
+![AutoDraft feature][alt]
+![AutoDraft feature](http://www.lesjardinsextraordinaires.net/portfolio-gifs/Autodraft.gif | width="200")
 
 
 ## Stats
@@ -29,4 +31,5 @@ Players can be of two types: **Members** and **Ten Buckers**. This reflects how 
 
 
 [autoDraft]: <img src="http://www.lesjardinsextraordinaires.net/portfolio-gifs/Autodraft.gif" width="200" />
+[alt]: http://www.lesjardinsextraordinaires.net/portfolio-gifs/Autodraft.gif | width="200"
 
