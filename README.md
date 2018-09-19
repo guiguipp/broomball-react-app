@@ -61,8 +61,11 @@ The `Alternate Draft` mode will draft players to the Dark and White teams altern
 ##### Serpentine Draft
 The `Serpentine Draft` mode aims at counter-balancing the advantage the Dark team gets in the drafting process, by granting the White team (and Dark team subsequently) two turns in a row (ABBA). That is, the captain of the Dark team gets their first pick, then the captain of the White team gets to pick two players next: their "n" and "n+1" pick ("n" being their most highly ranked pick in the list of players undrafted yet). Then the Dark captain gets the next two turns, and so on until all players have been drafted. 
 
+> Synchronous drafting will soon be available. 
+
 ### Lock
 Use the `Lock` / `Unlock` buttons to enable/disable making changes to the draft.
+> User authentication will soon allow to define database access permissions for users.
 
 ## Stats
 The **Stats** page displays the list of all past games. They are dispatched by year/month for convenience. Clicking on a game button allows to enter the stats for all players, as set in the Draft page. 
