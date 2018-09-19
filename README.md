@@ -23,7 +23,7 @@ Players can be of two types: **Members** and **Ten Buckers**. This reflects how 
 
 ## Draft
 ### Creating a game
-The Draft page displays upcoming and past games in separate lists. To create a game, click on a date in the date picker. Alternatively, you can enter a date in the input field (format needs to be: "YYYY-MM-DD").
+The Draft page displays upcoming and past games in separate lists. To create a game, click on a date in the date picker. Alternatively, you can enter a date in the input field (date picker automatically adjust applies data format to: "YYYY-MM-DD").
 
 
 ### Curating the player list
@@ -37,10 +37,10 @@ Ten Buckers can be viewed after clicking on "Show Non-Members". Clicking on thei
 
 ### Asynchronous draft
 #### Manual draft
-Players can be added to the Dark or White team by clicking on the left and right arrow icons respectively. Once drafted on a team. 
+Players can be added to the Dark or White team by clicking on the left and right arrow icons respectively. 
 
 #### Autodraft
-Players can be automatically drafted by clicking on **Autodraft**. Players added to the draft are added to either team based on their skill level to create balanced teams.  
+Players can be automatically drafted by clicking on **Autodraft**. Players available to draft are added to either team based on their skill level to create balanced teams (this information is logged for quality control).  
 <img src="https://github.com/guiguipp/portfolio/blob/master/broomball-react/autodraft.gif" width="450" style="text-align: center"/>
 
 #### Machine drafting
@@ -61,7 +61,7 @@ The `Alternate Draft` mode will draft players to the Dark and White teams altern
 <img src="https://github.com/guiguipp/portfolio/blob/master/broomball-react/machineDrafting.gif" width="450" style="text-align: center"/>
 
 ##### Serpentine Draft
-The `Serpentine Draft` mode aims at counter-balancing the advantage the Dark team gets in the drafting process, by granting the White team (and Dark team subsequently) two turns in a row (ABBA). That is, the captain of the Dark team gets their first pick, then the captain of the White team gets to pick two players next: their "n" and "n+1" pick ("n" being their most highly ranked pick in the list of players undrafted yet). Then the Dark captain gets the next two turns, and so on until all players have been drafted. 
+The `Serpentine Draft` mode aims at counter-balancing the advantage the first captain may benefit with the "alternate" drafting process, by granting the White team (and Dark team subsequently) two turns in a row (ABBA). That is, the captain of the Dark team gets their first pick, then the captain of the White team gets to pick two players next: their "n" and "n+1" pick ("n" being their most highly ranked pick in the list of players undrafted yet). Then the Dark captain gets the next two turns, and so on until all players have been drafted. 
 
 > Synchronous drafting will soon be available. 
 
@@ -100,6 +100,6 @@ All these options include ascending and descending orders. Another option is to 
 
 <img src="https://github.com/guiguipp/portfolio/blob/master/broomball-react/curateRecords.gif" width="450" style="text-align: center"/>
 
-The app also integrates `chart.js` for alternative visualization of the stats recorded. 
+Click on `Show Chart` to visualize the data recorded via the `chart.js` package that the app also integrates. 
 
 
