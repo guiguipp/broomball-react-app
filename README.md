@@ -17,7 +17,7 @@ Refactoring a previous attempt that was using JQuery and MySQL (through Sequeliz
 ## Players
 This page allows to add Players to the app's database.
 
-Players can be of two types: **Members** and **Ten Buckers**. This reflects how the group is managed: there are 30 players who regularly pay membership fees to be able to play all games, while some players are added on a per game basis, as needed to fill page, for a cost of $10 (hence the "Ten Bucker" name).
+Players can be of two types: **Members** and **Ten Buckers**. This reflects how the group is managed: there are 30 players who regularly pay membership fees to be able to play all games, while some players are added on a per game basis, as needed to fill benches, for a cost of $10 (hence the "Ten Bucker" name).
 
 >Later on, this page will be modified to implement the `react-redux-form` package which will allow better validation of input. 
 
