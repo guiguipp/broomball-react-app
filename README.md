@@ -26,9 +26,10 @@ The Draft page displays upcoming and past games in separate lists. To create a g
 
 ### Curating the player list
 All members are automatically added to the draft by default. Click on the remove `x` icon to mark them a player as unavailable as needed. 
-<img src="portfolio/unavailable.gif" width="450"/>
 
-Click on "Show Unavailable" to display the list of all Members marked as unavailable for that game. Should the availability of a player change, click on their name to re-add them to the list of available players.
+<img src="https://github.com/guiguipp/portfolio/blob/master/broomball-react/portfolio/unavailable.gif" width="450"/>
+
+Click on "Show Unavailable" to display the list of all Members marked as unavailable for that game. Should the availability of a player change, click on their name to rgit e-add them to the list of available players.
 
 Ten Buckers can be viewed after clicking on "Show Non-Members". Clicking on their name adds them to the draft. Should their availability change, clicking on the remove `x` icon will reset these settings.
 
@@ -41,12 +42,12 @@ Players can be automatically drafted by clicking on **Autodraft**. Players added
 <img src="https://github.com/guiguipp/portfolio/blob/master/broomball-react/autodraft.gif" width="450"/>
 
 #### Machine drafting
-<img src="portfolio/setPicks.gif" width="450"/>
+<img src="https://github.com/guiguipp/portfolio/blob/master/broomball-react/setPicks.gif" width="450"/>
 Players can be drafted by a designated captain by clicking on the **Set Dark Picks** or the **Set White Picks** respectively. 
 
 Click on the player button to add a player to the list of picks in the order you would want to have them drafted. This order may be reset either by clicking on the `up` or `down` caret on the right of the list, or the `x` remove button that removes the player from the picks altogether.
 
-<img src="portfolio/resetPicks.gif" width="450"/>
+<img src="https://github.com/guiguipp/portfolio/blob/master/broomball-react/resetPicks.gif" width="450"/>
 
 
 
@@ -54,7 +55,7 @@ Once the two captains have set their order picks, two machine drafting options a
 ##### Alternate Draft
 The `Alternate Draft` mode will draft players to the Dark and White teams alternatively (ABAB). That is, the captain of the Dark team gets their first pick, then the captain of the White team gets their first pick ...provided it has not already been drafted. Otherwise, they get their second pick, etc. Dark and White captains get turns alternatively until all players have been drafted. 
 
-<img src="portfolio/machineDrafting.gif" width="450"/>
+<img src="https://github.com/guiguipp/portfolio/blob/master/broomball-react/machineDrafting.gif" width="450"/>
 
 ##### Serpentine Draft
 The `Serpentine Draft` mode aims at counter-balancing the advantage the Dark team gets in the drafting process, by granting the White team (and Dark team subsequently) two turns in a row (ABBA). That is, the captain of the Dark team gets their first pick, then the captain of the White team gets to pick two players next: their "n" and "n+1" pick ("n" being their most highly ranked pick in the list of players undrafted yet). Then the Dark captain gets the next two turns, and so on until all players have been drafted. 
@@ -65,7 +66,7 @@ Use the `Lock` / `Unlock` buttons to enable/disable making changes to the draft.
 ## Stats
 The **Stats** page displays the list of all past games. They are dispatched by year/month for convenience. Clicking on a game button allows to enter the stats for all players, as set in the Draft page. 
 
-<img src="portfolio/recordScore.gif" width="450"/>
+<img src="https://github.com/guiguipp/portfolio/blob/master/broomball-react/recordScore.gif" width="450"/>
 
 Entering the stats updates the score recorded for the game.
 
@@ -77,7 +78,7 @@ The `Select Players` shows the list of all Members + Ten Buckers having played a
 
 
 This displays "Cards" with the recorded stats of players for the game selected.
-<img src="portfolio/playerCards.gif" width="450"/>
+<img src="https://github.com/guiguipp/portfolio/blob/master/broomball-react/playerCards.gif" width="450"/>
 
 
 The cards can be sorted: 
@@ -91,7 +92,7 @@ The cards can be sorted:
 
 All these options include ascending and descending orders. Another option is to hide Goalies, Forward players, or Defense players for comparison purposes. 
 
-<img src="portfolio/curateRecords.gif" width="450"/>
+<img src="https://github.com/guiguipp/portfolio/blob/master/broomball-react/curateRecords.gif" width="450"/>
 
 The app also integrates `chart.js` for alternative visualization of the stats recorded. 
 
