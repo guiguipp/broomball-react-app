@@ -38,7 +38,7 @@ Players can be added to the Dark or White team by clicking on the left and right
 
 #### Autodraft
 Players can be automatically drafted by clicking on **Autodraft**. Players added to the draft are added to either team based on their skill level to create balanced teams.  
-<img src="portfolio/autodraft.gif" width="450"/>
+<img src="https://github.com/guiguipp/portfolio/blob/master/broomball-react/autodraft.gif" width="450"/>
 
 #### Machine drafting
 <img src="portfolio/setPicks.gif" width="450"/>
