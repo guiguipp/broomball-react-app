@@ -15,7 +15,7 @@ Refactoring a previous attempt that was using JQuery and MySQL (through Sequeliz
 - [Records](#Records)
 
 ## Players
-This page allows to add Players to the app's database.
+The [Players](https://broomball.herokuapp.com/Player) page allows to add Players to the app's database.
 
 Players can be of two types: **Members** and **Ten Buckers**. This reflects how the group is managed: there are 30 players who regularly pay membership fees to be able to play all games, while some players are added on a per game basis, as needed to fill benches, for a cost of $10 (hence the "Ten Bucker" name).
 
@@ -23,7 +23,7 @@ Players can be of two types: **Members** and **Ten Buckers**. This reflects how 
 
 ## Draft
 ### Creating a game
-The Draft page displays upcoming and past games in separate lists. To create a game, click on a date in the date picker. Alternatively, you can enter a date in the input field (date picker automatically adjust applies data format to: "YYYY-MM-DD").
+The [Draft](https://broomball.herokuapp.com/Draft) page displays upcoming and past games in separate lists. To create a game, click on a date in the date picker. Alternatively, you can enter a date in the input field (date picker automatically adjust applies data format to: "YYYY-MM-DD").
 
 
 ### Curating the player list
@@ -70,14 +70,14 @@ Use the `Lock` / `Unlock` buttons to enable/disable making changes to the draft.
 > User authentication will soon allow to define database access permissions for users.
 
 ## Stats
-The **Stats** page displays the list of all past games. They are dispatched by year/month for convenience. Clicking on a game button allows to enter the stats for all players, as set in the Draft page. 
+The [Stats](https://broomball.herokuapp.com/Stats) page displays the list of all past games. They are dispatched by year/month for convenience. Clicking on a game button allows to enter the stats for all players, as set in the Draft page. 
 
 <img src="https://github.com/guiguipp/portfolio/blob/master/broomball-react/recordScore.gif" width="450" style="text-align: center"/>
 
 Entering the stats updates the score recorded for the game.
 
 ## Records
-The **Records** page displays the data recorded on the **Stats** page. 
+The [Records](https://broomball.herokuapp.com/Records) page displays the data recorded on the **Stats** page. 
 Use the date picker from the `Select Date` option to narrow a time frame. All relevant games are then available for selection in the `Select Games` section. 
 
 The `Select Players` shows the list of all Members + Ten Buckers having played at least one game in the chosen time span. Players can be individually selected, or by clicking on the **Select All Members** or **Select All Ten Buckers** respectively. 
