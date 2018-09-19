@@ -31,7 +31,7 @@ All members are automatically added to the draft by default. Click on the remove
 
 <img src="https://github.com/guiguipp/portfolio/blob/master/broomball-react/unavailable.gif" width="450" align="center"/>
 
-Click on "Show Unavailable" to display the list of all Members marked as unavailable for that game. Should the availability of a player change, click on their name to rgit e-add them to the list of available players.
+Click on "Show Unavailable" to display the list of all Members marked as unavailable for that game. Should the availability of a player change, click on their name to re-add them to the list of available players.
 
 Ten Buckers can be viewed after clicking on "Show Non-Members". Clicking on their name adds them to the draft. Should their availability change, clicking on the remove `x` icon will reset these settings.
 
