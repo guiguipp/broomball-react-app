@@ -27,7 +27,7 @@ The Draft page displays upcoming and past games in separate lists. To create a g
 ### Curating the player list
 All members are automatically added to the draft by default. Click on the remove `x` icon to mark them a player as unavailable as needed. 
 
-<img src="https://github.com/guiguipp/portfolio/blob/master/broomball-react/portfolio/unavailable.gif" width="450"/>
+<img src="https://github.com/guiguipp/portfolio/blob/master/broomball-react/unavailable.gif" width="450"/>
 
 Click on "Show Unavailable" to display the list of all Members marked as unavailable for that game. Should the availability of a player change, click on their name to rgit e-add them to the list of available players.
 
