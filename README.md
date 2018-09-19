@@ -42,8 +42,9 @@ Players can be automatically drafted by clicking on **Autodraft**. Players added
 <img src="https://github.com/guiguipp/portfolio/blob/master/broomball-react/autodraft.gif" width="450"/>
 
 #### Machine drafting
-<img src="https://github.com/guiguipp/portfolio/blob/master/broomball-react/setPicks.gif" width="450"/>
 Players can be drafted by a designated captain by clicking on the **Set Dark Picks** or the **Set White Picks** respectively. 
+
+<img src="https://github.com/guiguipp/portfolio/blob/master/broomball-react/setPicks.gif" width="450"/>
 
 Click on the player button to add a player to the list of picks in the order you would want to have them drafted. This order may be reset either by clicking on the `up` or `down` caret on the right of the list, or the `x` remove button that removes the player from the picks altogether.
 
