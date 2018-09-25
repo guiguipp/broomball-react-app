@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const apiRoutes = require("./api");
-const currentURL = "http://localhost:3000" ? "http://localhost:8080" : window.location.origin
 
 // https://enable-cors.org/server_expressjs.html
 // https://stackoverflow.com/questions/7067966/how-to-allow-cors

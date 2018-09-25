@@ -27,12 +27,13 @@ import {
     SORT_APG_DESC,
     SET_DATE_RANGE,
     // SET_CHART_DATA,
-    TOOGLE_CHART_OPTIONS,
     TOGGLE_SELECT_ALL,
     BATCH_CARD_UPDATE,
     BATCH_CHART_UPDATE,
     BATCH_UNSELECT,
     TOGGLE_POSITIONS,
+    TOGGLE_PLAYER_MODAL,
+    PLAYER_MODAL_DATA
     } from '../actions/types';
 
 import _ from "underscore"
@@ -159,7 +160,8 @@ const initialState = {
         goalieSelection: "unselected_goalie",
         defenseSelection: "unselected_defense",
         positionVisibility: "all"
-        }
+        },
+    playerModal: false,
     }
 
 export default function(state = initialState, action) {
@@ -367,14 +369,7 @@ export default function(state = initialState, action) {
             // curatedChartData: action.payload,
             // chartingOptions: initialState.chartingOptions
         }*/
-        // This can probably be removed: it looks like it was tied to a featured that was suppressed
-        case TOOGLE_CHART_OPTIONS:
-        return {
-            ...state,
-            chartingOptions: action.payload.display,
-            curatedChartData: action.payload.update
-        }
-
+        
         case TOGGLE_SELECT_ALL:
         return {
             ...state,
@@ -406,6 +401,17 @@ export default function(state = initialState, action) {
         return {
             ...state, 
             selectors: action.payload
+        }
+
+        case TOGGLE_PLAYER_MODAL:
+        return {
+            ...state, 
+            playerModal: action.payload
+        }
+        case PLAYER_MODAL_DATA:
+        return {
+            ...state,
+            playerModalData: action.payload
         }
 
         default:

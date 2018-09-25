@@ -27,12 +27,13 @@ import {
     SORT_APG_DESC,
     SET_DATE_RANGE,
     // SET_CHART_DATA,
-    TOOGLE_CHART_OPTIONS,
     TOGGLE_SELECT_ALL,
     BATCH_CARD_UPDATE,
     BATCH_CHART_UPDATE,
     BATCH_UNSELECT,
-    TOGGLE_POSITIONS
+    TOGGLE_POSITIONS,
+    TOGGLE_PLAYER_MODAL, 
+    PLAYER_MODAL_DATA
 } from './types';
 
 import API from "../../utils/API"
@@ -936,26 +937,6 @@ export const toggleSortOptions = (tab, currentStatus, ascArrow) => dispatch => {
     }
 
 }
-/*
-export const sendDataToChart = (newDataset) => dispatch => {
-    // console.log("newDataSet in sendDataToChart statsActions.js: ", newDataset)
-    dispatch({
-        type: SET_CHART_DATA,
-        payload: newDataset
-    })
-}
-*/
-// Is this still used? If not, remove it
-export const toggleChartOptions = (displayObject, updateObject ) => dispatch => {
-    // console.log("Display Object: ", displayObject, "\nupdateObject: ", updateObject)
-    dispatch({
-        type: TOOGLE_CHART_OPTIONS,
-        payload: {
-            display: displayObject,
-            update: updateObject
-        }
-    })
-}
 
 export const toggleSelectAll = (update) => dispatch => {
     switch (update) {
@@ -1087,4 +1068,18 @@ export const togglePositions = (data) => dispatch => {
         default:
         return;
     }
+}
+
+export const togglePlayerModal = (newStatus) => dispatch => {
+    dispatch({
+        type: TOGGLE_PLAYER_MODAL,
+        payload: newStatus
+    })
+}
+
+export const dataForPlayerModal = (data) => dispatch => {
+    dispatch({
+        type: PLAYER_MODAL_DATA,
+        payload: data
+    })
 }
