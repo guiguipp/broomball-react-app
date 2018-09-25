@@ -23,7 +23,7 @@ class Showcase extends Component {
         this.props.togglePositions(position)
     }
     showPlayerStats(playerName, playerID){
-        console.log("All player info from object: ", playerID)
+        console.log("PlayerID: ", playerID)
         let noGameInfo = {assists: 0, available: false, darkPickNum: 0, goals: 0, team: "N/A", whitePickNum: 0}
         // mapping the gameInfo nested Object for each game selected
         let performance = this.props.selectedGames.map(game => game.players.filter(player => player._id === playerID)).map(array => array[0] ? array[0].gameInfo : noGameInfo)
@@ -56,9 +56,6 @@ class Showcase extends Component {
                 ]
             }
         };
-        // console.log("Performance chart: ", playerChart)
-        // console.log("Current status: ", this.props.playerModal)
-        // this.props.dataForPlayerModal(playerChart)
         this.props.togglePlayerModal(true, playerInfo)
     }
     
