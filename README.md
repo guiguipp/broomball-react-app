@@ -15,15 +15,15 @@ Refactoring a previous attempt that was using JQuery and MySQL (through Sequeliz
 - [Records](#Records)
 
 ## Players
-This page allows to add Players to the app's database.
+The [Players](https://broomball.herokuapp.com/Player) page allows to add Players to the app's database.
 
-Players can be of two types: **Members** and **Ten Buckers**. This reflects how the group is managed: there are 30 players who regularly pay membership fees to be able to play all games, while some players are added on a per game basis, as needed to fill page, for a cost of $10 (hence the "Ten Bucker" name).
+Players can be of two types: **Members** and **Ten Buckers**. This reflects how the group is managed: there are 30 players who regularly pay membership fees to be able to play all games, while some players are added on a per game basis, as needed to fill benches, for a cost of $10 (hence the "Ten Bucker" name).
 
 >Later on, this page will be modified to implement the `react-redux-form` package which will allow better validation of input. 
 
 ## Draft
 ### Creating a game
-The Draft page displays upcoming and past games in separate lists. To create a game, click on a date in the date picker. Alternatively, you can enter a date in the input field (format needs to be: "YYYY-MM-DD").
+The [Draft](https://broomball.herokuapp.com/Draft) page displays upcoming and past games in separate lists. To create a game, click on a date in the date picker. Alternatively, you can enter a date in the input field (date picker automatically adjust applies data format to: "YYYY-MM-DD").
 
 
 ### Curating the player list
@@ -31,16 +31,16 @@ All members are automatically added to the draft by default. Click on the remove
 
 <img src="https://github.com/guiguipp/portfolio/blob/master/broomball-react/unavailable.gif" width="450" align="center"/>
 
-Click on "Show Unavailable" to display the list of all Members marked as unavailable for that game. Should the availability of a player change, click on their name to rgit e-add them to the list of available players.
+Click on "Show Unavailable" to display the list of all Members marked as unavailable for that game. Should the availability of a player change, click on their name to re-add them to the list of available players.
 
 Ten Buckers can be viewed after clicking on "Show Non-Members". Clicking on their name adds them to the draft. Should their availability change, clicking on the remove `x` icon will reset these settings.
 
 ### Asynchronous draft
 #### Manual draft
-Players can be added to the Dark or White team by clicking on the left and right arrow icons respectively. Once drafted on a team. 
+Players can be added to the Dark or White team by clicking on the left and right arrow icons respectively. 
 
 #### Autodraft
-Players can be automatically drafted by clicking on **Autodraft**. Players added to the draft are added to either team based on their skill level to create balanced teams.  
+Players can be automatically drafted by clicking on **Autodraft**. Players available to draft are added to either team based on their skill level to create balanced teams (this information is logged for quality control).  
 <img src="https://github.com/guiguipp/portfolio/blob/master/broomball-react/autodraft.gif" width="450" style="text-align: center"/>
 
 #### Machine drafting
@@ -61,7 +61,7 @@ The `Alternate Draft` mode will draft players to the Dark and White teams altern
 <img src="https://github.com/guiguipp/portfolio/blob/master/broomball-react/machineDrafting.gif" width="450" style="text-align: center"/>
 
 ##### Serpentine Draft
-The `Serpentine Draft` mode aims at counter-balancing the advantage the Dark team gets in the drafting process, by granting the White team (and Dark team subsequently) two turns in a row (ABBA). That is, the captain of the Dark team gets their first pick, then the captain of the White team gets to pick two players next: their "n" and "n+1" pick ("n" being their most highly ranked pick in the list of players undrafted yet). Then the Dark captain gets the next two turns, and so on until all players have been drafted. 
+The `Serpentine Draft` mode aims at counter-balancing the advantage the first captain may benefit with the "alternate" drafting process, by granting the White team (and Dark team subsequently) two turns in a row (ABBA). That is, the captain of the Dark team gets their first pick, then the captain of the White team gets to pick two players next: their "n" and "n+1" pick ("n" being their most highly ranked pick in the list of players undrafted yet). Then the Dark captain gets the next two turns, and so on until all players have been drafted. 
 
 > Synchronous drafting will soon be available. 
 
@@ -70,14 +70,14 @@ Use the `Lock` / `Unlock` buttons to enable/disable making changes to the draft.
 > User authentication will soon allow to define database access permissions for users.
 
 ## Stats
-The **Stats** page displays the list of all past games. They are dispatched by year/month for convenience. Clicking on a game button allows to enter the stats for all players, as set in the Draft page. 
+The [Stats](https://broomball.herokuapp.com/Stats) page displays the list of all past games. They are dispatched by year/month for convenience. Clicking on a game button allows to enter the stats for all players, as set in the Draft page. 
 
 <img src="https://github.com/guiguipp/portfolio/blob/master/broomball-react/recordScore.gif" width="450" style="text-align: center"/>
 
 Entering the stats updates the score recorded for the game.
 
 ## Records
-The **Records** page displays the data recorded on the **Stats** page. 
+The [Records](https://broomball.herokuapp.com/Records) page displays the data recorded on the **Stats** page. 
 Use the date picker from the `Select Date` option to narrow a time frame. All relevant games are then available for selection in the `Select Games` section. 
 
 The `Select Players` shows the list of all Members + Ten Buckers having played at least one game in the chosen time span. Players can be individually selected, or by clicking on the **Select All Members** or **Select All Ten Buckers** respectively. 
@@ -100,6 +100,6 @@ All these options include ascending and descending orders. Another option is to 
 
 <img src="https://github.com/guiguipp/portfolio/blob/master/broomball-react/curateRecords.gif" width="450" style="text-align: center"/>
 
-The app also integrates `chart.js` for alternative visualization of the stats recorded. 
+Click on `Show Chart` to visualize the data recorded via the `chart.js` package that the app also integrates. 
 
 
