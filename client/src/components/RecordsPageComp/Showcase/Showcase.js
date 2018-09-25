@@ -6,7 +6,7 @@ import { toggleSortOptions } from "../../../js/actions/statsActions"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { togglePositions } from "../../../js/actions/statsActions"
 import { togglePlayerModal } from "../../../js/actions/statsActions"
-import { dataForPlayerModal } from "../../../js/actions/statsActions"
+// import { dataForPlayerModal } from "../../../js/actions/statsActions"
 
 import PlayerStatsModal from "../PlayerStatsModal"
 
@@ -22,39 +22,44 @@ class Showcase extends Component {
     selectByPosition(position) {
         this.props.togglePositions(position)
     }
-    showPlayerStats(playerID){
+    showPlayerStats(playerName, playerID){
         console.log("All player info from object: ", playerID)
         let noGameInfo = {assists: 0, available: false, darkPickNum: 0, goals: 0, team: "N/A", whitePickNum: 0}
         // mapping the gameInfo nested Object for each game selected
         let performance = this.props.selectedGames.map(game => game.players.filter(player => player._id === playerID)).map(array => array[0] ? array[0].gameInfo : noGameInfo)
         // creating a ChartJS object:
-        let playerChart = {
-            labels: this.props.selectedGames.map(game => game._id),
-            datasets: [
-                {
-                    label: "Goals",
-                    data: performance.map(game => game.goals),
-                    backgroundColor: 'rgba(255, 99, 132, 0.6)',
-                    borderColor: 'rgba(172,173,178,1)',
-                    borderWidth: 1,
-                    hoverBackgroundColor: 'rgba(255, 99, 132, 0.6)',
-                    hoverBorderColor: 'rgba(255, 99, 132, 0.6)',
-                },
-                {
-                    label: "Assists",
-                    data: performance.map(game => game.assists),
-                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                    borderColor: 'rgba(172,173,178,1)',
-                    borderWidth: 1,
-                    hoverBackgroundColor: 'rgba(54, 162, 235, 0.6)',
-                    hoverBorderColor: 'rgba(54, 162, 235, 0.6)',
-                }
-            ]
+        let playerInfo = {
+            name: playerName,
+            data: {
+                labels: this.props.selectedGames.map(game => game._id),
+                datasets: [
+                    {
+                        label: "Goals",
+                        data: performance.map(game => game.goals),
+                        backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                        borderColor: 'rgba(172,173,178,1)',
+                        borderWidth: 1,
+                        hoverBackgroundColor: 'rgba(255, 99, 132, 0.6)',
+                        hoverBorderColor: 'rgba(255, 99, 132, 0.6)',
+                        lineTension: 0,
+                    },
+                    {
+                        label: "Assists",
+                        data: performance.map(game => game.assists),
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                        borderColor: 'rgba(172,173,178,1)',
+                        borderWidth: 1,
+                        hoverBackgroundColor: 'rgba(54, 162, 235, 0.6)',
+                        hoverBorderColor: 'rgba(54, 162, 235, 0.6)',
+                        lineTension: 0,
+                    }
+                ]
+            }
         };
-        console.log("Performance chart: ", playerChart)
-        console.log("Current status: ", this.props.playerModal)
-        this.props.dataForPlayerModal(playerChart)
-        this.props.togglePlayerModal(true)
+        // console.log("Performance chart: ", playerChart)
+        // console.log("Current status: ", this.props.playerModal)
+        // this.props.dataForPlayerModal(playerChart)
+        this.props.togglePlayerModal(true, playerInfo)
     }
     
     render() {
@@ -81,7 +86,7 @@ class Showcase extends Component {
                     <div className="records ">
                     {this.props.playerRecords ? this.props.playerRecords.map(object => {
                         return (
-                            <div key={object._id} className={object.preferredPosition === this.props.positionVisibility ? "hidden_card wrapping_card_div" : "visible wrapping_card_div" } onClick={()=> this.showPlayerStats(object._id)}>
+                            <div key={object._id} className={object.preferredPosition === this.props.positionVisibility ? "hidden_card wrapping_card_div" : "visible wrapping_card_div" } onClick={()=> this.showPlayerStats(object.name, object._id)}>
                                 <div className={object.membershipStatus === "Member" ? "member_record player_card " : "non_member_record player_card"}>
                                 
                                     <div className="player_name">{object.name} <span className="position_dot"> <FontAwesomeIcon icon="circle" className={"dot_" + object.preferredPosition} /> </span></div>
@@ -125,5 +130,5 @@ const mapStateToProps = state => ({
     playerModal: state.stats.playerModal
 })
 
-export default connect(mapStateToProps, { toggleViews, toggleSortOptions, togglePositions, togglePlayerModal, dataForPlayerModal }) (Showcase)
+export default connect(mapStateToProps, { toggleViews, toggleSortOptions, togglePositions, togglePlayerModal, /*dataForPlayerModal*/ }) (Showcase)
 

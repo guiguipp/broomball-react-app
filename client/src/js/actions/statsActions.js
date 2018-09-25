@@ -33,7 +33,6 @@ import {
     BATCH_UNSELECT,
     TOGGLE_POSITIONS,
     TOGGLE_PLAYER_MODAL, 
-    PLAYER_MODAL_DATA
 } from './types';
 
 import API from "../../utils/API"
@@ -1070,16 +1069,12 @@ export const togglePositions = (data) => dispatch => {
     }
 }
 
-export const togglePlayerModal = (newStatus) => dispatch => {
+export const togglePlayerModal = (newStatus, data) => dispatch => {
     dispatch({
         type: TOGGLE_PLAYER_MODAL,
-        payload: newStatus
-    })
-}
-
-export const dataForPlayerModal = (data) => dispatch => {
-    dispatch({
-        type: PLAYER_MODAL_DATA,
-        payload: data
+        payload: {
+            status: newStatus,
+            data: data
+        }
     })
 }

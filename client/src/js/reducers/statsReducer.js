@@ -33,7 +33,6 @@ import {
     BATCH_UNSELECT,
     TOGGLE_POSITIONS,
     TOGGLE_PLAYER_MODAL,
-    PLAYER_MODAL_DATA
     } from '../actions/types';
 
 import _ from "underscore"
@@ -162,6 +161,7 @@ const initialState = {
         positionVisibility: "all"
         },
     playerModal: false,
+    playerModalData: {}
     }
 
 export default function(state = initialState, action) {
@@ -406,12 +406,8 @@ export default function(state = initialState, action) {
         case TOGGLE_PLAYER_MODAL:
         return {
             ...state, 
-            playerModal: action.payload
-        }
-        case PLAYER_MODAL_DATA:
-        return {
-            ...state,
-            playerModalData: action.payload
+            playerModal: action.payload.status,
+            playerModalData: action.payload.data
         }
 
         default:
