@@ -1,7 +1,7 @@
 
 import React from 'react';
 // React router
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Draft from "./pages/Draft";
 import Player from "./pages/Player";
@@ -42,11 +42,14 @@ const App = () => (
   <Provider store={store}>
     <Router>
       <div>
-        <Route exact path="/" component={Home} />
-        <Route path="/Draft" component={Draft} />
-        <Route path="/Player" component={Player} />
-        <Route path="/Stats" component={Stats} />
-        <Route path="/Records" component={Records} />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/Draft" component={Draft} />
+          <Route path="/Player" component={Player} />
+          <Route path="/Stats" component={Stats} />
+          <Route path="/Records" component={Records} />
+          <Route path="/*" component={Home} />
+        </Switch>
       </div>
     </Router>
   </Provider>

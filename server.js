@@ -40,26 +40,23 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // parse application/json
 app.use(bodyParser.json());
 
-// Serve up static assets (usually on heroku)
-// if (process.env.NODE_ENV === 'production') {
-//     app.use(express.static('client/build'));
-// }
-
 // Routes
 // =============================================================
 const routes = require("./routes")
 app.use(routes);
 
+
 if (process.env.NODE_ENV === 'production') {
     // Serve any static files
     app.use(express.static(path.join(__dirname, 'client/build')));
+    
     // Handle React routing, return all requests to React app
     app.get('*', function(req, res) {
         console.log("req.params in server.js:\n ", req.params)
         res.sendFile(path.join(__dirname + "/client/build/", 'index.html'));
     });
     }
-    
+
 app.listen(PORT, function(){
 console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
 });
