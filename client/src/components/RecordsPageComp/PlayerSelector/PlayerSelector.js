@@ -4,10 +4,11 @@ import { connect } from 'react-redux';
 import { fetchPlayers } from '../../../js/actions/playerActions'
 import { selectPlayer } from '../../../js/actions/statsActions'
 import { unselectPlayer } from '../../../js/actions/statsActions'
+// This adds a player to the playerRecords array
 import { addPlayerStatObject } from "../../../js/actions/statsActions"
 import { removePlayerStatObject } from "../../../js/actions/statsActions"
 import { toggleViews } from '../../../js/actions/statsActions'
-// import { sendDataToChart } from '../../../js/actions/statsActions' // this was used for individual updates... but it is now done by replacing data (Redux was lagging)
+
 import { toggleSelectAll } from '../../../js/actions/statsActions'
 // this replaces all the records in the playerRecords array
 import { updatePlayers } from '../../../js/actions/statsActions'
@@ -93,13 +94,29 @@ class PlayerSelector extends Component {
                     win= "Win"
                     players.wins.push(win)
                 }
+
+                players.losses = players.losses || []
+                if(gameInfo[0].available === true && game.win !== "Tie" && game.win !== gameInfo[0].team){
+                    let loss= "Loss"
+                    players.losses.push(loss)
+                }
+
+                players.ties = players.ties || []
+                if(gameInfo[0].available === true && game.win === "Tie"){
+                    let tie= "Tie"
+                    players.ties.push(tie)
+                }
                 
                 return players
                 }, {});
                     
             let gamePlayedFromArray = playerReduced.gamesPlayed.length
             let winsFromArray = playerReduced.wins.length
+            let lossesFromArray = playerReduced.losses.length
+            let tiesFromArray = playerReduced.ties.length
             let winPercent = gamePlayedFromArray > 0 ? Math.floor((playerReduced.wins.length / playerReduced.gamesPlayed.length) * 100) : "N/A"
+            let lossPercent = gamePlayedFromArray > 0 ? Math.floor((playerReduced.losses.length / playerReduced.gamesPlayed.length) * 100) : "N/A"
+            let tiePercent = gamePlayedFromArray > 0 ? Math.floor((playerReduced.ties.length / playerReduced.gamesPlayed.length) * 100) : "N/A"
             let goalsFromArray = playerReduced.goals.reduce((a,b) => a + b, 0)
             let assistsFromArray = playerReduced.assists.reduce((a, b) => a + b, 0)
             let gpg = gamePlayedFromArray > 0 ? parseFloat((goalsFromArray / gamePlayedFromArray)) : "N/A"
@@ -107,12 +124,16 @@ class PlayerSelector extends Component {
             
             playerReduced.gamesPlayed = gamePlayedFromArray
             playerReduced.wins = winsFromArray
+            playerReduced.losses = lossesFromArray
+            playerReduced.ties = tiesFromArray
+            // If the numbers are not integers, they are truncated 
             playerReduced.winPercent = winPercent
+            playerReduced.lossPercent = lossPercent
+            playerReduced.tiePercent = tiePercent
             playerReduced.goals = goalsFromArray 
             playerReduced.assists = assistsFromArray
-            playerReduced.gpg = gpg
-            playerReduced.apg = apg
-            
+            playerReduced.gpg = !Number.isInteger(gpg) ? gpg.toFixed(3) : gpg
+            playerReduced.apg = !Number.isInteger(apg) ? apg.toFixed(3) : apg
             this.props.addPlayerStatObject( playerReduced )
             arrayOfplayer.push(playerReduced)
             }
@@ -124,7 +145,11 @@ class PlayerSelector extends Component {
                     assists: "N/A",
                     membershipStatus: broomballer.membershipStatus,
                     winPercent: "N/A",
+                    lossPercent: "N/A",
+                    tiePercent: "N/A",
                     win: "N/A",
+                    loss: "N/A",
+                    tie: "N/A",
                     gpg: "N/A",
                     apg: "N/A",
                     _id: broomballer._id
@@ -180,8 +205,6 @@ class PlayerSelector extends Component {
                 if (gamesPlayed.length > 0) {
                 let playerReduced = gamesPlayed.reduce((players, game) => {
                     let gameInfo = game.players.filter(player => player._id === broomballer._id).map(player => player.gameInfo)
-                    let win;
-                    let available;
                     players.name = broomballer.name
                     players._id = broomballer._id
                     players.membershipStatus = broomballer.membershipStatus
@@ -189,7 +212,7 @@ class PlayerSelector extends Component {
                     
                     players.gamesPlayed = players.gamesPlayed || []
                     if(gameInfo[0].available === true){
-                        available = 1
+                        let available = 1
                         players.gamesPlayed.push(available)
                     }
                     
@@ -205,16 +228,32 @@ class PlayerSelector extends Component {
                     
                     players.wins = players.wins || []
                     if(gameInfo[0].available === true && game.win === gameInfo[0].team){
-                        win= "Win"
+                        let win= "Win"
                         players.wins.push(win)
                     }
-                    
+
+                    players.losses = players.losses || []
+                    if(gameInfo[0].available === true && game.win !== "Tie" && game.win !== gameInfo[0].team){
+                        let loss= "Loss"
+                        players.losses.push(loss)
+                    }
+
+                    players.ties = players.ties || []
+                    if(gameInfo[0].available === true && game.win === "Tie"){
+                        let tie= "Tie"
+                        players.ties.push(tie)
+                    }
+
                     return players
                     }, {});
                         
                 let gamePlayedFromArray = playerReduced.gamesPlayed.length
                 let winsFromArray = playerReduced.wins.length
+                let lossesFromArray = playerReduced.losses.length
+                let tiesFromArray = playerReduced.ties.length
                 let winPercent = gamePlayedFromArray > 0 ? Math.floor((playerReduced.wins.length / playerReduced.gamesPlayed.length) * 100) : "N/A"
+                let lossPercent = gamePlayedFromArray > 0 ? Math.floor((playerReduced.losses.length / playerReduced.gamesPlayed.length) * 100) : "N/A"
+                let tiePercent = gamePlayedFromArray > 0 ? Math.floor((playerReduced.ties.length / playerReduced.gamesPlayed.length) * 100) : "N/A"
                 let goalsFromArray = playerReduced.goals.reduce((a,b) => a + b, 0)
                 let assistsFromArray = playerReduced.assists.reduce((a, b) => a + b, 0)
                 let gpg = gamePlayedFromArray > 0 ? parseFloat((goalsFromArray / gamePlayedFromArray)) : "N/A"
@@ -222,12 +261,16 @@ class PlayerSelector extends Component {
                 
                 playerReduced.gamesPlayed = gamePlayedFromArray
                 playerReduced.wins = winsFromArray
+                playerReduced.losses = lossesFromArray
+                playerReduced.ties = tiesFromArray
                 playerReduced.winPercent = winPercent
+                playerReduced.lossPercent = lossPercent
+                playerReduced.tiePercent = tiePercent
                 playerReduced.goals = goalsFromArray 
                 playerReduced.assists = assistsFromArray
-                playerReduced.gpg = gpg
-                playerReduced.apg = apg
-                
+                playerReduced.gpg = !Number.isInteger(gpg) ? gpg.toFixed(3) : gpg
+                playerReduced.apg = !Number.isInteger(apg) ? apg.toFixed(3) : apg
+
                 transformedArrayForCards.push( playerReduced )
                 }
                 else {
@@ -238,7 +281,11 @@ class PlayerSelector extends Component {
                         assists: "N/A",
                         membershipStatus: broomballer.membershipStatus,
                         winPercent: "N/A",
+                        lossPercent: "N/A",
+                        tiePercent: "N/A",
                         win: "N/A",
+                        loss: "N/A",
+                        tie: "N/A",
                         gpg: "N/A",
                         apg: "N/A",
                         _id: broomballer._id
@@ -269,6 +316,8 @@ class PlayerSelector extends Component {
         let assistsArray = []
         let gamesPlayedArray = []
         let winPercentArray = []
+        let lossPercentArray = []
+        let tiePercentArray = []
         let gpgArray = []
         let apgArray = []
         arrayOfPlayers.forEach(e => {
@@ -277,6 +326,8 @@ class PlayerSelector extends Component {
             assistsArray.push(e.assists);
             gamesPlayedArray.push(e.gamesPlayed);
             winPercentArray.push(e.winPercent);
+            lossPercentArray.push(e.lossPercent);
+            tiePercentArray.push(e.tiePercent);
             gpgArray.push(e.gpg);
             apgArray.push(e.apg);
         })

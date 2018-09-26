@@ -37,8 +37,9 @@ class Showcase extends Component {
                         label: "Goals",
                         data: performance.map(game => game.goals),
                         backgroundColor: 'rgba(255, 99, 132, 0.6)',
-                        borderColor: 'rgba(172,173,178,1)',
+                        borderColor: 'rgba(255, 99, 132, 0.6)',
                         borderWidth: 1,
+                        fill: false,
                         hoverBackgroundColor: 'rgba(255, 99, 132, 0.6)',
                         hoverBorderColor: 'rgba(255, 99, 132, 0.6)',
                         lineTension: 0,
@@ -47,8 +48,9 @@ class Showcase extends Component {
                         label: "Assists",
                         data: performance.map(game => game.assists),
                         backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                        borderColor: 'rgba(172,173,178,1)',
+                        borderColor: 'rgba(54, 162, 235, 0.6)',
                         borderWidth: 1,
+                        fill: false,
                         hoverBackgroundColor: 'rgba(54, 162, 235, 0.6)',
                         hoverBorderColor: 'rgba(54, 162, 235, 0.6)',
                         lineTension: 0,
@@ -89,7 +91,9 @@ class Showcase extends Component {
                                     <div className="player_name">{object.name} <span className="position_dot"> <FontAwesomeIcon icon="circle" className={"dot_" + object.preferredPosition} /> </span></div>
                                     <div className="player_data">
                                         <p><span className="entry">Games Played:</span> <span className="value">{object.gamesPlayed}</span>/{this.props.selectedGames.length}</p>
-                                        <p><span className="entry">Games Won:</span> <span className="value">{ object.winPercent !== "N/A" ? object.winPercent + "%" : object.winPercent } </span> </p>
+                                        <p><span className="entry">W/L/T:</span> <span className="value">{ object.winPercent !== "N/A" ? object.winPercent + "%" : object.winPercent } - { object.lossPercent !== "N/A" ? object.lossPercent + "%" : object.lossPercent } - { object.tiePercent !== "N/A" ? object.tiePercent + "%" : object.tiePercent } </span> </p>
+                                        {/* <p><span className="entry">Games Lost:</span> <span className="value">{ object.lossPercent !== "N/A" ? object.lossPercent + "%" : object.lossPercent } </span> </p>
+                                        <p><span className="entry">Games Tied:</span> <span className="value">{ object.tiePercent !== "N/A" ? object.tiePercent + "%" : object.tiePercent } </span> </p> */}
                                         <p><span className="entry">Goals:</span> <span className="value">{object.gamesPlayed !== 0 ? object.goals : "N/A"}</span>
                                         <br/><span className="addendum"> –– per game: <span className="value">{object.gamesPlayed !== 0 ? object.gpg : "N/A"}</span></span></p>
                                         <p><span className="entry">Assists:</span> <span className="value">{object.gamesPlayed !== 0 ? object.assists : "N/A"}</span>

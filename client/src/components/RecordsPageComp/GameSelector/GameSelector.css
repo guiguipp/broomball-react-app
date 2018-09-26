@@ -19,3 +19,8 @@
 .game_action_icon {
     margin-left: 10px;
 }
+
+.record_list_of_games{
+    text-align: center;
+    padding: 0 3% 4%
+}

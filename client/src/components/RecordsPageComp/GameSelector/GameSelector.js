@@ -145,13 +145,29 @@ class GameSelector extends Component {
                             win= "Win"
                             players.wins.push(win)
                         }
+
+                        players.losses = players.losses || []
+                        if(gameInfo[0].available === true && game.win !== "Tie" && game.win !== gameInfo[0].team){
+                            let loss= "Loss"
+                            players.losses.push(loss)
+                        }
+
+                        players.ties = players.ties || []
+                        if(gameInfo[0].available === true && game.win === "Tie"){
+                            let tie= "Tie"
+                            players.ties.push(tie)
+                        }
                     
                         return players
                         }, {});
                         
                         let gamePlayedFromArray = playerReduced.gamesPlayed ? playerReduced.gamesPlayed.length : 0 
-                        let winsFromArray = playerReduced.wins ? playerReduced.wins.length : 0
+                        let winsFromArray = playerReduced.wins.length
+                        let lossesFromArray = playerReduced.losses.length
+                        let tiesFromArray = playerReduced.ties.length
                         let winPercent = gamePlayedFromArray > 0 ? Math.floor((playerReduced.wins.length / playerReduced.gamesPlayed.length) * 100) : "N/A"
+                        let lossPercent = gamePlayedFromArray > 0 ? Math.floor((playerReduced.losses.length / playerReduced.gamesPlayed.length) * 100) : "N/A"
+                        let tiePercent = gamePlayedFromArray > 0 ? Math.floor((playerReduced.ties.length / playerReduced.gamesPlayed.length) * 100) : "N/A"
                         let goalsFromArray = playerReduced.goals ? playerReduced.goals.reduce((a,b) => a + b, 0) : 0
                         let assistsFromArray = playerReduced.assists ? playerReduced.assists.reduce((a, b) => a + b, 0) : 0
                         let gpg = gamePlayedFromArray > 0 ? parseFloat((goalsFromArray / gamePlayedFromArray)) : "N/A"
@@ -159,11 +175,15 @@ class GameSelector extends Component {
 
                         playerReduced.gamesPlayed = gamePlayedFromArray
                         playerReduced.wins = winsFromArray
+                        playerReduced.losses = lossesFromArray
+                        playerReduced.ties = tiesFromArray
                         playerReduced.winPercent = winPercent
+                        playerReduced.lossPercent = lossPercent
+                        playerReduced.tiePercent = tiePercent
                         playerReduced.goals = goalsFromArray 
                         playerReduced.assists = assistsFromArray
-                        playerReduced.gpg = gpg
-                        playerReduced.apg = apg
+                        playerReduced.gpg = !Number.isInteger(gpg) ? gpg.toFixed(3) : gpg
+                        playerReduced.apg = !Number.isInteger(apg) ? apg.toFixed(3) : apg
                         
                         transformedArrayForCards.push(playerReduced)
                     }
@@ -236,7 +256,7 @@ class GameSelector extends Component {
                         </div>
                     </div>
                     <div className="content">
-                        <div className={"list_of_games " + this.props.listOfGames}>
+                        <div className={"record_list_of_games " + this.props.listOfGames}>
                                 {this.props.allGames.length > 0 ?
                                     this.props.allGames
                                     .map(game => this.props.selectedGames.indexOf(game) === -1 ? 
