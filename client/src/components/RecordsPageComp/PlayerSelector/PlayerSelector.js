@@ -14,7 +14,7 @@ import { toggleSelectAll } from '../../../js/actions/statsActions'
 import { updatePlayers } from '../../../js/actions/statsActions'
 // this merges newly created records with already existing records in the playerRecords array
 import { batchCardUpdate } from '../../../js/actions/statsActions'
-
+// this is used to send data to the chartData object from which data is pulled to create the chart
 import { batchChartUpdate } from '../../../js/actions/statsActions'
 import { batchUnselect } from '../../../js/actions/statsActions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -39,8 +39,10 @@ class PlayerSelector extends Component {
         let newAssists = this.props.chartData.datasets[1].data.slice(0, indexOfRemovedPlayer).concat(this.props.chartData.datasets[1].data.slice(indexOfRemovedPlayer + 1));
         let newGames = this.props.chartData.datasets[2].data.slice(0, indexOfRemovedPlayer).concat(this.props.chartData.datasets[2].data.slice(indexOfRemovedPlayer + 1));
         let newWins = this.props.chartData.datasets[3].data.slice(0, indexOfRemovedPlayer).concat(this.props.chartData.datasets[3].data.slice(indexOfRemovedPlayer + 1));
-        let newGpg = this.props.chartData.datasets[4].data.slice(0, indexOfRemovedPlayer).concat(this.props.chartData.datasets[4].data.slice(indexOfRemovedPlayer + 1));
-        let newApg = this.props.chartData.datasets[5].data.slice(0, indexOfRemovedPlayer).concat(this.props.chartData.datasets[5].data.slice(indexOfRemovedPlayer + 1));
+        let newLosses = this.props.chartData.datasets[4].data.slice(0, indexOfRemovedPlayer).concat(this.props.chartData.datasets[4].data.slice(indexOfRemovedPlayer + 1));
+        let newTies = this.props.chartData.datasets[5].data.slice(0, indexOfRemovedPlayer).concat(this.props.chartData.datasets[5].data.slice(indexOfRemovedPlayer + 1));
+        let newGpg = this.props.chartData.datasets[6].data.slice(0, indexOfRemovedPlayer).concat(this.props.chartData.datasets[6].data.slice(indexOfRemovedPlayer + 1));
+        let newApg = this.props.chartData.datasets[7].data.slice(0, indexOfRemovedPlayer).concat(this.props.chartData.datasets[7].data.slice(indexOfRemovedPlayer + 1));
         
         let newData = {
             labels: newLabels,
@@ -49,8 +51,10 @@ class PlayerSelector extends Component {
                 {...this.props.chartData.datasets[1], data: newAssists}, // assists
                 {...this.props.chartData.datasets[2], data: newGames}, // Games
                 {...this.props.chartData.datasets[3], data: newWins}, // wins
-                {...this.props.chartData.datasets[4], data: newGpg}, // gpg
-                {...this.props.chartData.datasets[5], data: newApg}, // apg
+                {...this.props.chartData.datasets[4], data: newLosses}, // Losses
+                {...this.props.chartData.datasets[5], data: newTies}, // Ties
+                {...this.props.chartData.datasets[6], data: newGpg}, // gpg
+                {...this.props.chartData.datasets[7], data: newApg}, // apg
                 ]
         }
 
@@ -132,8 +136,8 @@ class PlayerSelector extends Component {
             playerReduced.tiePercent = tiePercent
             playerReduced.goals = goalsFromArray 
             playerReduced.assists = assistsFromArray
-            playerReduced.gpg = !Number.isInteger(gpg) ? gpg.toFixed(3) : gpg
-            playerReduced.apg = !Number.isInteger(apg) ? apg.toFixed(3) : apg
+            if (gpg !== "N/A") { playerReduced.gpg = Number.isInteger(gpg) ? gpg : gpg.toFixed(3) } else {playerReduced.gpg = gpg} 
+            if (apg !== "N/A") { playerReduced.apg = Number.isInteger(apg) ? apg : apg.toFixed(3) } else {playerReduced.apg = apg} 
             this.props.addPlayerStatObject( playerReduced )
             arrayOfplayer.push(playerReduced)
             }
@@ -246,7 +250,6 @@ class PlayerSelector extends Component {
 
                     return players
                     }, {});
-                        
                 let gamePlayedFromArray = playerReduced.gamesPlayed.length
                 let winsFromArray = playerReduced.wins.length
                 let lossesFromArray = playerReduced.losses.length
@@ -309,7 +312,7 @@ class PlayerSelector extends Component {
         this.props.selectedPlayers.filter(player => player.membershipStatus === type).forEach(broomballer => this.unselectPlayer(broomballer));
         this.selectAndTransform(this.props.selectedPlayers.filter(player => player.membershipStatus !== type), "unselect")
     }
-
+    // this is how we initialize what is sent to chartData. The index of the array of objects in the datasets nested object comes from the reducer, and needs to stay consistent across functions (0 = Goals object, 1 = Assist object, etc.)
     addBatchChartData(arrayOfPlayers) {
         let labels = []
         let goalsArray = []
@@ -334,13 +337,87 @@ class PlayerSelector extends Component {
 
         let newObject = {
             labels: labels.concat(this.props.chartData.labels),
+            // For performance reason, it is better to re-initiate the data than to use the ... operator to merge new with existing
             datasets: [
-                {...this.props.chartData.datasets[0], data: goalsArray.concat(this.props.chartData.datasets[0].data)},
-                {...this.props.chartData.datasets[1], data: assistsArray.concat(this.props.chartData.datasets[1].data)},
-                {...this.props.chartData.datasets[2], data: gamesPlayedArray.concat(this.props.chartData.datasets[2].data)},
-                {...this.props.chartData.datasets[3], data: winPercentArray.concat(this.props.chartData.datasets[3].data)},
-                {...this.props.chartData.datasets[4], data: gpgArray.concat(this.props.chartData.datasets[4].data)},
-                {...this.props.chartData.datasets[5], data: apgArray.concat(this.props.chartData.datasets[5].data)}
+                {
+                    label: "Goals",
+                    data: goalsArray.concat(this.props.chartData.datasets[0].data),
+                    backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                    borderColor: 'rgba(172,173,178,1)',
+                    borderWidth: 1,
+                    hoverBackgroundColor: 'rgba(255, 99, 132, 0.6)',
+                    hoverBorderColor: 'rgba(255, 99, 132, 0.6)',
+                },
+                {
+                    label: "Assists",
+                    data: assistsArray.concat(this.props.chartData.datasets[1].data),
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    borderColor: 'rgba(172,173,178,1)',
+                    borderWidth: 1,
+                    hoverBackgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    hoverBorderColor: 'rgba(54, 162, 235, 0.6)',
+                    barThickness: 15,
+                },
+                {
+                    label: "Games",
+                    data: gamesPlayedArray.concat(this.props.chartData.datasets[2].data),
+                    backgroundColor: 'rgba(255, 206, 86, 0.6)',
+                    borderColor: 'rgba(172,173,178,1)',
+                    borderWidth: 1,
+                    hoverBackgroundColor: 'rgba(255, 206, 86, 0.6)',
+                    hoverBorderColor: 'rgba(255, 206, 86, 0.6)',
+                    barThickness: 15,
+                },
+                {
+                    label: "Wins (%)",
+                    data: winPercentArray.concat(this.props.chartData.datasets[3].data),
+                    backgroundColor: 'rgba(75,192,192,0.6)',
+                    borderColor: 'rgba(172,173,178,1)',
+                    borderWidth: 1,
+                    hoverBackgroundColor: 'rgba(75,192,192,0.6)',
+                    hoverBorderColor: 'rgba(75,192,192,0.6)',
+                    barThickness: 15,
+                },
+                {
+                    label: "Losses (%)",
+                    data: lossPercentArray.concat(this.props.chartData.datasets[4].data),
+                    backgroundColor: '#d3b8ae',
+                    borderColor: 'rgba(172,173,178,1)',
+                    borderWidth: 1,
+                    hoverBackgroundColor: '#d3b8ae',
+                    hoverBorderColor: '#d3b8ae',
+                    barThickness: 15,
+                },
+                {
+                    label: "Ties (%)",
+                    data: tiePercentArray.concat(this.props.chartData.datasets[5].data),
+                    backgroundColor: '#ff8a65',
+                    borderColor: 'rgba(172,173,178,1)',
+                    borderWidth: 1,
+                    hoverBackgroundColor: '#ff8a65',
+                    hoverBorderColor: '#ff8a65',
+                    barThickness: 15,
+                },
+                {
+                    label: "GPG",
+                    data: gpgArray.concat(this.props.chartData.datasets[6].data),
+                    backgroundColor: 'rgba(153,102,255,0.6)',
+                    borderColor: 'rgba(172,173,178,1)',
+                    borderWidth: 1,
+                    hoverBackgroundColor: 'rgba(153,102,255,0.6)',
+                    hoverBorderColor: 'rgba(153,102,255,0.6)',
+                    barThickness: 15,
+                },
+                {
+                    label: "APG",
+                    data: apgArray.concat(this.props.chartData.datasets[7].data),
+                    backgroundColor: 'rgba(255, 159, 64, 0.6)',
+                    borderColor: 'rgba(172,173,178,1)',
+                    borderWidth: 1,
+                    hoverBackgroundColor: 'rgba(255, 159, 64, 0.6)',
+                    hoverBorderColor: 'rgba(255, 159, 64, 0.6)',
+                    options: {barThickness: 100},
+                },
                 ]
         }
         this.props.batchChartUpdate(newObject)
@@ -352,6 +429,8 @@ class PlayerSelector extends Component {
         let assistsArray = []
         let gamesPlayedArray = []
         let winPercentArray = []
+        let lossPercentArray = []
+        let tiePercentArray = []
         let gpgArray = []
         let apgArray = []
         arrayOfPlayers.forEach(e => {
@@ -360,6 +439,8 @@ class PlayerSelector extends Component {
             assistsArray.push(e.assists);
             gamesPlayedArray.push(e.gamesPlayed);
             winPercentArray.push(e.winPercent);
+            lossPercentArray.push(e.lossPercent);
+            tiePercentArray.push(e.tiePercent);
             gpgArray.push(e.gpg);
             apgArray.push(e.apg);
         })
@@ -370,9 +451,11 @@ class PlayerSelector extends Component {
                 {...this.props.chartData.datasets[0], data: goalsArray},
                 {...this.props.chartData.datasets[1], data: assistsArray},
                 {...this.props.chartData.datasets[2], data: gamesPlayedArray},
-                {...this.props.chartData.datasets[3], data: winPercentArray},
-                {...this.props.chartData.datasets[4], data: gpgArray},
-                {...this.props.chartData.datasets[5], data: apgArray}
+                {...this.props.chartData.datasets[3], data: winPercentArray.concat(this.props.chartData.datasets[3].data)},
+                {...this.props.chartData.datasets[4], data: lossPercentArray.concat(this.props.chartData.datasets[4].data)},
+                {...this.props.chartData.datasets[5], data: tiePercentArray.concat(this.props.chartData.datasets[5].data)},
+                {...this.props.chartData.datasets[6], data: gpgArray.concat(this.props.chartData.datasets[6].data)},
+                {...this.props.chartData.datasets[7], data: apgArray.concat(this.props.chartData.datasets[7].data)}
                 ]
         }
         this.props.batchChartUpdate(newObject)

@@ -182,8 +182,8 @@ class GameSelector extends Component {
                         playerReduced.tiePercent = tiePercent
                         playerReduced.goals = goalsFromArray 
                         playerReduced.assists = assistsFromArray
-                        playerReduced.gpg = !Number.isInteger(gpg) ? gpg.toFixed(3) : gpg
-                        playerReduced.apg = !Number.isInteger(apg) ? apg.toFixed(3) : apg
+                        if (gpg !== "N/A") { playerReduced.gpg = Number.isInteger(gpg) ? gpg : gpg.toFixed(3) } else {playerReduced.gpg = gpg} 
+                        if (apg !== "N/A") { playerReduced.apg = Number.isInteger(apg) ? apg : apg.toFixed(3) } else {playerReduced.apg = apg} 
                         
                         transformedArrayForCards.push(playerReduced)
                     }
@@ -221,6 +221,8 @@ class GameSelector extends Component {
         let assistsArray = []
         let gamesPlayedArray = []
         let winPercentArray = []
+        let lossPercentArray = []
+        let tiePercentArray = []
         let gpgArray = []
         let apgArray = []
         arrayOfPlayers.forEach(e => {
@@ -229,6 +231,8 @@ class GameSelector extends Component {
             assistsArray.push(e.assists);
             gamesPlayedArray.push(e.gamesPlayed);
             winPercentArray.push(e.winPercent);
+            lossPercentArray.push(e.lossPercent);
+            tiePercentArray.push(e.tiePercent);
             gpgArray.push(e.gpg);
             apgArray.push(e.apg);
         })
@@ -236,12 +240,95 @@ class GameSelector extends Component {
         let newObject = {
             labels: labels,
             datasets: [
-                {...this.props.chartData.datasets[0], data: goalsArray},
+                // This is causing performance issues (reduxDevTools crashing)
+                /*{...this.props.chartData.datasets[0], data: goalsArray},
                 {...this.props.chartData.datasets[1], data: assistsArray},
                 {...this.props.chartData.datasets[2], data: gamesPlayedArray},
                 {...this.props.chartData.datasets[3], data: winPercentArray},
-                {...this.props.chartData.datasets[4], data: gpgArray},
-                {...this.props.chartData.datasets[5], data: apgArray}
+                {...this.props.chartData.datasets[4], data: lossPercentArray},
+                {...this.props.chartData.datasets[5], data: tiePercentArray},
+                {...this.props.chartData.datasets[6], data: gpgArray},
+                {...this.props.chartData.datasets[7], data: apgArray}*/
+                // we are reinitializing the "metadata" instead
+                {
+                    label: "Goals",
+                    data: goalsArray,
+                    backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                    borderColor: 'rgba(172,173,178,1)',
+                    borderWidth: 1,
+                    hoverBackgroundColor: 'rgba(255, 99, 132, 0.6)',
+                    hoverBorderColor: 'rgba(255, 99, 132, 0.6)',
+                },
+                {
+                    label: "Assists",
+                    data: assistsArray,
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    borderColor: 'rgba(172,173,178,1)',
+                    borderWidth: 1,
+                    hoverBackgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    hoverBorderColor: 'rgba(54, 162, 235, 0.6)',
+                    barThickness: 15,
+                },
+                {
+                    label: "Games",
+                    data: gamesPlayedArray,
+                    backgroundColor: 'rgba(255, 206, 86, 0.6)',
+                    borderColor: 'rgba(172,173,178,1)',
+                    borderWidth: 1,
+                    hoverBackgroundColor: 'rgba(255, 206, 86, 0.6)',
+                    hoverBorderColor: 'rgba(255, 206, 86, 0.6)',
+                    barThickness: 15,
+                },
+                {
+                    label: "Wins (%)",
+                    data: winPercentArray,
+                    backgroundColor: 'rgba(75,192,192,0.6)',
+                    borderColor: 'rgba(172,173,178,1)',
+                    borderWidth: 1,
+                    hoverBackgroundColor: 'rgba(75,192,192,0.6)',
+                    hoverBorderColor: 'rgba(75,192,192,0.6)',
+                    barThickness: 15,
+                },
+                {
+                    label: "Losses (%)",
+                    data: lossPercentArray,
+                    backgroundColor: '#d3b8ae',
+                    borderColor: 'rgba(172,173,178,1)',
+                    borderWidth: 1,
+                    hoverBackgroundColor: '#d3b8ae',
+                    hoverBorderColor: '#d3b8ae',
+                    barThickness: 15,
+                },
+                {
+                    label: "Ties (%)",
+                    data: tiePercentArray,
+                    backgroundColor: '#ff8a65',
+                    borderColor: 'rgba(172,173,178,1)',
+                    borderWidth: 1,
+                    hoverBackgroundColor: '#ff8a65',
+                    hoverBorderColor: '#ff8a65',
+                    barThickness: 15,
+                },
+                {
+                    label: "GPG",
+                    data: gpgArray,
+                    backgroundColor: 'rgba(153,102,255,0.6)',
+                    borderColor: 'rgba(172,173,178,1)',
+                    borderWidth: 1,
+                    hoverBackgroundColor: 'rgba(153,102,255,0.6)',
+                    hoverBorderColor: 'rgba(153,102,255,0.6)',
+                    barThickness: 15,
+                },
+                {
+                    label: "APG",
+                    data: apgArray,
+                    backgroundColor: 'rgba(255, 159, 64, 0.6)',
+                    borderColor: 'rgba(172,173,178,1)',
+                    borderWidth: 1,
+                    hoverBackgroundColor: 'rgba(255, 159, 64, 0.6)',
+                    hoverBorderColor: 'rgba(255, 159, 64, 0.6)',
+                    options: {barThickness: 100},
+                },
                 ]
         }
         this.props.batchChartUpdate(newObject)
