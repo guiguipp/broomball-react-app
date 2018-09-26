@@ -17,6 +17,10 @@ import {
     SORT_GAMES_DESC,
     SORT_WINS_ASC,
     SORT_WINS_DESC,
+    SORT_LOSSES_ASC,
+    SORT_LOSSES_DESC,
+    SORT_TIES_ASC,
+    SORT_TIES_DESC,
     SORT_GOALS_ASC,
     SORT_GOALS_DESC, 
     SORT_GPG_ASC,
@@ -68,6 +72,10 @@ const initialState = {
             gpgAsc: "inactive",
             winsDesc: "inactive",
             winsAsc: "inactive",
+            lossesDesc: "inactive",
+            lossesAsc: "inactive",
+            tiesDesc: "inactive",
+            tiesAsc: "inactive",
             assistsDesc: "inactive",
             assistsAsc: "inactive",
             apgDesc: "inactive",
@@ -75,6 +83,8 @@ const initialState = {
             azTab: "selected_tab",
             gamesTab: "unselected_tab",
             winsTab: "unselected_tab",
+            lossesTab: "unselected_tab",
+            tiesTab: "unselected_tab",
             goalsTab: "unselected_tab",
             gpgTab: "unselected_tab",
             assistsTab: "unselected_tab",
@@ -316,6 +326,34 @@ export default function(state = initialState, action) {
             ...state,
             sortingOptions: action.payload,
             filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player.winPercent !== "N/A"), "winPercent").reverse(),
+        }
+
+        case SORT_LOSSES_ASC:
+        return {
+            ...state,
+            sortingOptions: action.payload,
+            filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player.lossPercent !== "N/A"), "lossPercent")
+        }
+
+        case SORT_LOSSES_DESC:
+        return {
+            ...state,
+            sortingOptions: action.payload,
+            filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player.lossPercent !== "N/A"), "lossPercent").reverse(),
+        }
+
+        case SORT_TIES_ASC:
+        return {
+            ...state,
+            sortingOptions: action.payload,
+            filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player.tiePercent !== "N/A"), "tiePercent")
+        }
+
+        case SORT_TIES_DESC:
+        return {
+            ...state,
+            sortingOptions: action.payload,
+            filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player.tiePercent !== "N/A"), "tiePercent").reverse(),
         }
 
         case SORT_GOALS_ASC:

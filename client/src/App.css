@@ -186,6 +186,18 @@
     visibility: visible;
 }
 
+.Defense {
+    color: #fbc02d;
+}
+
+.Forward {
+    color: #b39ddb;
+}
+
+.Goalie {
+    color: #5d4037;
+}
+
 /* Mobile screen responsiveness in app.css */
 /* stats transitioning */
 @media only screen and (max-width: 1276px) {

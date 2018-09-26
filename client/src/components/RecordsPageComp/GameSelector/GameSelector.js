@@ -60,24 +60,45 @@ class GameSelector extends Component {
                             players.wins.push(win)
                         }
                         
+                        players.losses = players.losses || []
+                        if(gameInfo[0].available === true && game.win !== "Tie" && game.win !== gameInfo[0].team){
+                            let loss= "Loss"
+                            players.losses.push(loss)
+                        }
+
+                        players.ties = players.ties || []
+                        if(gameInfo[0].available === true && game.win === "Tie"){
+                            let tie= "Tie"
+                            players.ties.push(tie)
+                        }
+
                         return players
                         }, {});
                         // this line errors if the player is a ten-bucker who didn't play in the remaining games
-                        let gamePlayedFromArray = playerReduced.gamesPlayed.length
+                        let gamePlayedFromArray = playerReduced.gamesPlayed ? playerReduced.gamesPlayed.length : 0 
                         let winsFromArray = playerReduced.wins.length
+                        let lossesFromArray = playerReduced.losses.length
+                        let tiesFromArray = playerReduced.ties.length
                         let winPercent = gamePlayedFromArray > 0 ? Math.floor((playerReduced.wins.length / playerReduced.gamesPlayed.length) * 100) : "N/A"
-                        let goalsFromArray = playerReduced.goals.reduce((a,b) => a + b, 0)
-                        let assistsFromArray = playerReduced.assists.reduce((a, b) => a + b, 0)
+                        let lossPercent = gamePlayedFromArray > 0 ? Math.floor((playerReduced.losses.length / playerReduced.gamesPlayed.length) * 100) : "N/A"
+                        let tiePercent = gamePlayedFromArray > 0 ? Math.floor((playerReduced.ties.length / playerReduced.gamesPlayed.length) * 100) : "N/A"
+                        let goalsFromArray = playerReduced.goals ? playerReduced.goals.reduce((a,b) => a + b, 0) : 0
+                        let assistsFromArray = playerReduced.assists ? playerReduced.assists.reduce((a, b) => a + b, 0) : 0
                         let gpg = gamePlayedFromArray > 0 ? parseFloat((goalsFromArray / gamePlayedFromArray)) : "N/A"
                         let apg = gamePlayedFromArray > 0 ? parseFloat((assistsFromArray / gamePlayedFromArray)) : "N/A"
 
                         playerReduced.gamesPlayed = gamePlayedFromArray
                         playerReduced.wins = winsFromArray
+                        playerReduced.losses = lossesFromArray
+                        playerReduced.ties = tiesFromArray
                         playerReduced.winPercent = winPercent
+                        playerReduced.lossPercent = lossPercent
+                        playerReduced.tiePercent = tiePercent
                         playerReduced.goals = goalsFromArray 
                         playerReduced.assists = assistsFromArray
-                        playerReduced.gpg = gpg
-                        playerReduced.apg = apg
+                        if (gpg !== "N/A") { playerReduced.gpg = Number.isInteger(gpg) ? gpg : gpg.toFixed(3) } else {playerReduced.gpg = gpg} 
+                        if (apg !== "N/A") { playerReduced.apg = Number.isInteger(apg) ? apg : apg.toFixed(3) } else {playerReduced.apg = apg} 
+                        
             
                         playersForRecords.push(playerReduced)
                         }
@@ -89,7 +110,11 @@ class GameSelector extends Component {
                                 assists: "N/A",
                                 membershipStatus: broomballer.membershipStatus,
                                 winPercent: "N/A",
+                                lossPercent: "N/A",
+                                tiePercent: "N/A",
                                 win: "N/A",
+                                loss: "N/A",
+                                tie: "N/A",
                                 gpg: "N/A",
                                 apg: "N/A",
                                 _id: broomballer._id
@@ -195,7 +220,11 @@ class GameSelector extends Component {
                             assists: "N/A",
                             membershipStatus: broomballer.membershipStatus,
                             winPercent: "N/A",
+                            lossPercent: "N/A",
+                            tiePercent: "N/A",
                             win: "N/A",
+                            loss: "N/A",
+                            tie: "N/A",
                             gpg: "N/A",
                             apg: "N/A",
                             _id: broomballer._id
