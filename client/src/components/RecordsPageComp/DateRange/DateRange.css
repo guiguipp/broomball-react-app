@@ -1,21 +1,3 @@
-#in-line {
-    margin-left: 22%;
-}
-#schedule_game {
-    margin-left: 5%;
-}
-input {
-    text-align: center;
-    color: #DE733A;
-    font-weight: lighter;
-    width: 150%;
-    padding: 3%;
-    border-style: solid;
-    border-color: grey;
-    border-width: 1px;
-    background-color: beige;
-    box-shadow: 3px 4px 8px 0px rgba(0, 0, 0, 0.2);
-}
 #range_submit {
     margin: 5% 0% 0% 91%;
 }
@@ -28,4 +10,9 @@ input {
 .calendar_alignment{
     margin: 0 0 0 10%;
     width: 25%;
+}
+.react-datepicker__close-icon {
+    position: absolute;
+    top: 50%;
+    left: 150%;
 }

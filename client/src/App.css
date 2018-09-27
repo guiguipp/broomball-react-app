@@ -285,6 +285,9 @@
         width: 120%;
         font-size: x-small;
     }
+    .react-datepicker__close-icon {
+        left: 125%;
+    }
 }
 /* the drafter can no longer hold 3 columns (but if we resize before, it effects iPhone 6s */
 @media only screen and (max-width: 735px) {

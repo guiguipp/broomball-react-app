@@ -13,7 +13,7 @@ class DateRange extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            date: "",
+            
         }
         this.handleChangeStart = this.handleChangeStart.bind(this);
         this.handleChangeEnd = this.handleChangeEnd.bind(this);
@@ -36,8 +36,6 @@ class DateRange extends Component {
         event.preventDefault()
         let startDate = moment(this.state.startDate).format("YYYY-MM-DD")
         let endDate = moment(this.state.endDate).format("YYYY-MM-DD")
-        console.log("Start Date: ", startDate)
-        console.log("End date: ", endDate)
         this.props.selectDateRange(startDate, endDate)
     }
 
@@ -55,6 +53,7 @@ class DateRange extends Component {
                             startDate={this.state.startDate}
                             endDate={this.state.endDate}
                             onChange={this.handleChangeStart}
+                            isClearable={true}
                         />
 
                         <DatePicker
@@ -64,8 +63,12 @@ class DateRange extends Component {
                             startDate={this.state.startDate}
                             endDate={this.state.endDate}
                             onChange={this.handleChangeEnd}
+                            isClearable={true}
                         />
-                            <button id="range_submit" className="content_button btn contrast_color" name="submit" type="submit" >Submit</button>
+                            <div className="date_range_options">
+                                <button id="range_submit" className="content_button btn contrast_color" name="submit" type="submit" >Submit</button>
+                            </div>
+
                         </div>
                     </form>
                 </div>

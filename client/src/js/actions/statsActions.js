@@ -307,6 +307,9 @@ export const removePlayerStatObject = (player) => dispatch => {
 
 export const selectDateRange = (start, end) => dispatch => {
     console.log("Start: ", start, "\nEnd: ", end)
+    console.log(typeof start)
+    if (start === "Invalid date") {start = "2000-01-01"}
+    if (end === "Invalid date") {end = moment().format("YYYY-MM-DD")}
     dispatch({
         type: SET_DATE_RANGE,
         payload: {

@@ -417,7 +417,7 @@ export default function(state = initialState, action) {
         return {
             ...state,
             dateRange: action.payload,
-            gamesForRecords: state.gamesForRecords.filter(game => game._id >= action.payload.from && game._id <= action.payload.to)
+            gamesForRecords: state.pastGamesFromAPI.filter(game => game._id >= action.payload.from && game._id <= action.payload.to)
         }
         /*
         case SET_CHART_DATA:

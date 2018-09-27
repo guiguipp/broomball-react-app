@@ -372,9 +372,16 @@ class GameSelector extends Component {
                         </div>
                     </div>
                     <div className="content">
+                    <div className={this.props.listOfGames + " select_all"}>
+                            <div className="button_options_first_set">
+                                <button className={"btn record_game_button all_button " + this.props.allGamesSelection} onClick={() => this.selectAllGames(this.props.memberSelection)}> {this.props.memberSelection === "unselected_game" ? "Select" : "Unselect"} All Games </button>
+                            </div>
+                            
+                        </div>
+
                         <div className={"record_list_of_games " + this.props.listOfGames}>
-                                {this.props.allGames.length > 0 ?
-                                    this.props.allGames
+                                {this.props.gamesForRecords.length > 0 ?
+                                    this.props.gamesForRecords
                                     .map(game => this.props.selectedGames.indexOf(game) === -1 ? 
                                     (
                                         <button key={game._id} className="btn unselected_game record_game_button" onClick={() => this.selectGame(game)}> {game._id} <FontAwesomeIcon icon="plus" className="game_action_icon"/> </button>
@@ -401,8 +408,8 @@ Games.propTypes = {
 const mapStateToProps = state => ({
     selectedGames: state.stats.selectedGames,
     unselectedGames: state.stats.unselectedGames,
-    allGames: state.stats.gamesForRecords,
-    listOfGames: state.stats.listOfGames,
+    gamesForRecords: state.stats.gamesForRecords, 
+    listOfGames: state.stats.listOfGames, // to toggle the visibility
     selectedPlayers: state.stats.selectedPlayers,
     chartData: state.stats.chartData
 })
