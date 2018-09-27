@@ -271,8 +271,8 @@ class PlayerSelector extends Component {
                 playerReduced.tiePercent = tiePercent
                 playerReduced.goals = goalsFromArray 
                 playerReduced.assists = assistsFromArray
-                playerReduced.gpg = !Number.isInteger(gpg) ? gpg.toFixed(3) : gpg
-                playerReduced.apg = !Number.isInteger(apg) ? apg.toFixed(3) : apg
+                if (gpg !== "N/A") { playerReduced.gpg = Number.isInteger(gpg) ? gpg : gpg.toFixed(3) } else {playerReduced.gpg = gpg} 
+                if (apg !== "N/A") { playerReduced.apg = Number.isInteger(apg) ? apg : apg.toFixed(3) } else {playerReduced.apg = apg} 
 
                 transformedArrayForCards.push( playerReduced )
                 }

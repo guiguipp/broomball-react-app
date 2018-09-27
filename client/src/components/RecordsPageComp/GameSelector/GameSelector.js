@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { getGamesForRecords } from '../../../js/actions/statsActions'
 import { selectGame } from '../../../js/actions/statsActions'
 import { unselectGame } from '../../../js/actions/statsActions'
+import { selectAllGames } from '../../../js/actions/statsActions'
+import { unselectAllGames } from '../../../js/actions/statsActions'
 import { toggleViews } from '../../../js/actions/statsActions'
 
 import { updatePlayers } from '../../../js/actions/statsActions'
@@ -130,7 +132,7 @@ class GameSelector extends Component {
     }
     
     selectGame(game) {
-        this.props.selectGame(game)
+        this.markAsSelected(game)
         /*  Adapting the reducer originally created in PlayerSelector */
         let transformedArrayForCards = []
         // if the game is added after players have been selected
@@ -232,6 +234,127 @@ class GameSelector extends Component {
                         transformedArrayForCards.push(playerWithoutRecord)
                     }
                 })        
+            // preventing the data to send before the array is complete
+            if (transformedArrayForCards.length === this.props.selectedPlayers.length) {
+                this.props.updatePlayers( transformedArrayForCards )
+                this.replaceBatchChartData( transformedArrayForCards )
+                }
+            }
+    }
+
+    gameSelection(arrayOfGames) {
+        // this function takes an array of games so that it can be used for both individual and batch select
+        // this array is all the games for which records need to be created. 
+        
+        // marks the selected games as such 
+        arrayOfGames.forEach(game => this.markAsSelected(game))
+        // need a function that marks non selected games as such
+        
+        /*  Adapting the reducer originally created in PlayerSelector */
+        let transformedArrayForCards = []
+        // if the game is added after players have been selected
+            if (this.props.selectedPlayers.length > 0) {
+                // We will create record for each player * each game selected
+                this.props.selectedPlayers.forEach((broomballer) => {
+                    console.log("Broomballer: ", broomballer)
+                // we map/filter all games selected to create record for each game played. If the player didn't play any game, we create an empty "N/A" record instead
+                let gamesPlayed = arrayOfGames.filter(game => game.players.filter(player => player._id === broomballer._id )[0])
+                console.log("gamesPlayed: ", gamesPlayed, "\nShould not error if broomballer played no game")
+                // If the broomballer played any game 
+                if (gamesPlayed.length > 0) {
+                    let playerReduced = gamesPlayed.reduce((players, game) => {
+                        let gameInfo = game.players.filter(player => player._id === broomballer._id).map(player => player.gameInfo)
+                        console.log("gameInfo: ", gameInfo, "\nShould be an array of one gameInfo (we extract the index 0)")
+                        let win;
+                        let available;
+                        players.name = broomballer.name
+                        players._id = broomballer._id
+                        players.membershipStatus = broomballer.membershipStatus
+                        players.preferredPosition = broomballer.preferredPosition
+                        
+                        players.gamesPlayed = players.gamesPlayed || []
+                        if(gameInfo[0].available === true){
+                            available = 1
+                            players.gamesPlayed.push(available)
+                        }
+                        
+                        players.goals = players.goals || []
+                        if(gameInfo[0].available === true) {
+                            players.goals.push(gameInfo[0].goals)
+                        }
+                        
+                        players.assists = players.assists || []
+                        if (gameInfo[0].available === true) {
+                            players.assists.push(gameInfo[0].assists)
+                        }
+                        
+                        players.wins = players.wins || []
+                        if(gameInfo[0].available === true && game.win === gameInfo[0].team){
+                            win= "Win"
+                            players.wins.push(win)
+                        }
+
+                        players.losses = players.losses || []
+                        if(gameInfo[0].available === true && game.win !== "Tie" && game.win !== gameInfo[0].team){
+                            let loss= "Loss"
+                            players.losses.push(loss)
+                        }
+
+                        players.ties = players.ties || []
+                        if(gameInfo[0].available === true && game.win === "Tie"){
+                            let tie= "Tie"
+                            players.ties.push(tie)
+                        }
+                    
+                        return players
+                        }, {});
+                        
+                        let gamePlayedFromArray = playerReduced.gamesPlayed ? playerReduced.gamesPlayed.length : 0 
+                        let winsFromArray = playerReduced.wins.length
+                        let lossesFromArray = playerReduced.losses.length
+                        let tiesFromArray = playerReduced.ties.length
+                        let winPercent = gamePlayedFromArray > 0 ? Math.floor((playerReduced.wins.length / playerReduced.gamesPlayed.length) * 100) : "N/A"
+                        let lossPercent = gamePlayedFromArray > 0 ? Math.floor((playerReduced.losses.length / playerReduced.gamesPlayed.length) * 100) : "N/A"
+                        let tiePercent = gamePlayedFromArray > 0 ? Math.floor((playerReduced.ties.length / playerReduced.gamesPlayed.length) * 100) : "N/A"
+                        let goalsFromArray = playerReduced.goals ? playerReduced.goals.reduce((a,b) => a + b, 0) : 0
+                        let assistsFromArray = playerReduced.assists ? playerReduced.assists.reduce((a, b) => a + b, 0) : 0
+                        let gpg = gamePlayedFromArray > 0 ? parseFloat((goalsFromArray / gamePlayedFromArray)) : "N/A"
+                        let apg = gamePlayedFromArray > 0 ? parseFloat((assistsFromArray / gamePlayedFromArray)) : "N/A"
+
+                        playerReduced.gamesPlayed = gamePlayedFromArray
+                        playerReduced.wins = winsFromArray
+                        playerReduced.losses = lossesFromArray
+                        playerReduced.ties = tiesFromArray
+                        playerReduced.winPercent = winPercent
+                        playerReduced.lossPercent = lossPercent
+                        playerReduced.tiePercent = tiePercent
+                        playerReduced.goals = goalsFromArray 
+                        playerReduced.assists = assistsFromArray
+                        if (gpg !== "N/A") { playerReduced.gpg = Number.isInteger(gpg) ? gpg : gpg.toFixed(3) } else {playerReduced.gpg = gpg} 
+                        if (apg !== "N/A") { playerReduced.apg = Number.isInteger(apg) ? apg : apg.toFixed(3) } else {playerReduced.apg = apg} 
+                        
+                        transformedArrayForCards.push(playerReduced)
+                    }    
+                else {
+                    let playerWithoutRecord = {
+                        name: broomballer.name,
+                        gamesPlayed: 0,
+                        goals: "N/A",
+                        assists: "N/A",
+                        membershipStatus: broomballer.membershipStatus,
+                        winPercent: "N/A",
+                        lossPercent: "N/A",
+                        tiePercent: "N/A",
+                        win: "N/A",
+                        loss: "N/A",
+                        tie: "N/A",
+                        gpg: "N/A",
+                        apg: "N/A",
+                        _id: broomballer._id
+                    }
+                    transformedArrayForCards.push(playerWithoutRecord)
+                }
+            })        
             // preventing the data to send before the array is complete
             if (transformedArrayForCards.length === this.props.selectedPlayers.length) {
                 this.props.updatePlayers( transformedArrayForCards )
@@ -363,6 +486,34 @@ class GameSelector extends Component {
         this.props.batchChartUpdate(newObject)
     }
 
+    selectAllGames(status){
+        this.props.selectAllGames(status)
+        // we send the whole array of games in the time span to the gameSelection function
+        this.gameSelection(this.props.gamesForRecords)
+        
+    }
+    unselectAllGames(){
+        this.props.unselectAllGames()
+        this.props.gamesForRecords.forEach(game => this.props.unselectGame(game))
+        this.gameSelection([])
+    }
+    // When we hit the "Select All Games", we need to make sure the game has not already been selected
+    // otherwise it might be sent twice 
+    markAsSelected(game) {
+        let arrayOfIds = this.props.selectedGames.map(gamesSelected => gamesSelected._id)
+        if ( !arrayOfIds.includes(game._id) ){
+            this.props.selectGame(game)
+        }
+    }
+
+    markAsUnselected(game) {
+        let arrayOfIds = this.props.unselectedGames.map(gamesUnselected => gamesUnselected._id)
+        console.log("ids of games already unselected: ", arrayOfIds)
+        if ( !arrayOfIds.includes(game._id) ){
+            this.props.unselectGame(game)
+        }
+    }
+
     render() {
         return (
                 <div className="full">
@@ -373,8 +524,12 @@ class GameSelector extends Component {
                     </div>
                     <div className="content">
                     <div className={this.props.listOfGames + " select_all"}>
-                            <div className="button_options_first_set">
-                                <button className={"btn record_game_button all_button " + this.props.allGamesSelection} onClick={() => this.selectAllGames(this.props.memberSelection)}> {this.props.memberSelection === "unselected_game" ? "Select" : "Unselect"} All Games </button>
+                            <div className="button_options_third_set">
+                                {this.props.allGamesSelection === "unselected_game" ? 
+                                    <button className={"btn record_game_button all_button " + this.props.allGamesSelection} onClick={() => this.selectAllGames(this.props.allGamesSelection)}> Select All Games <FontAwesomeIcon icon="plus" className="game_action_icon"/> </button>
+                                    :
+                                    <button className={"btn record_game_button all_button " + this.props.allGamesSelection} onClick={() => this.unselectAllGames()}> Select All Games <FontAwesomeIcon icon="plus" className="game_action_icon"/> </button>
+                                }
                             </div>
                             
                         </div>
@@ -383,12 +538,9 @@ class GameSelector extends Component {
                                 {this.props.gamesForRecords.length > 0 ?
                                     this.props.gamesForRecords
                                     .map(game => this.props.selectedGames.indexOf(game) === -1 ? 
-                                    (
-                                        <button key={game._id} className="btn unselected_game record_game_button" onClick={() => this.selectGame(game)}> {game._id} <FontAwesomeIcon icon="plus" className="game_action_icon"/> </button>
-                                    )
-                                    : (
-                                        <button key={game._id} className="btn selected_game record_game_button" onClick={() => this.unselectGame(game)}> {game._id} <FontAwesomeIcon icon="times" className="game_action_icon"/> </button>
-                                    )
+                                    (<button key={game._id} className="btn unselected_game record_game_button" onClick={() => this.gameSelection([game, ...this.props.selectedGames])}> {game._id} <FontAwesomeIcon icon="plus" className="game_action_icon"/> </button>)
+                                    : 
+                                    (<button key={game._id} className="btn selected_game record_game_button" onClick={() => this.unselectGame(game)}> {game._id} <FontAwesomeIcon icon="times" className="game_action_icon"/> </button>)
                                 )
                                 : <p className="no_game">There is currently no game to display</p> 
                             }
@@ -411,7 +563,8 @@ const mapStateToProps = state => ({
     gamesForRecords: state.stats.gamesForRecords, 
     listOfGames: state.stats.listOfGames, // to toggle the visibility
     selectedPlayers: state.stats.selectedPlayers,
-    chartData: state.stats.chartData
+    chartData: state.stats.chartData,
+    allGamesSelection: state.stats.allGamesSelection
 })
 
-export default connect(mapStateToProps, { getGamesForRecords, selectGame, unselectGame, toggleViews, updatePlayers, batchChartUpdate }) (GameSelector)
+export default connect(mapStateToProps, { getGamesForRecords, selectGame, unselectGame, selectAllGames, unselectAllGames, toggleViews, updatePlayers, batchChartUpdate }) (GameSelector)

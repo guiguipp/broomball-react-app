@@ -37,6 +37,8 @@ import {
     BATCH_UNSELECT,
     TOGGLE_POSITIONS,
     TOGGLE_PLAYER_MODAL,
+    BATCH_GAMES,
+    UNSELECT_ALL_GAMES
     } from '../actions/types';
 
 import _ from "underscore"
@@ -191,7 +193,8 @@ const initialState = {
         positionVisibility: "all"
         },
     playerModal: false,
-    playerModalData: {}
+    playerModalData: {},
+    allGamesSelection: "unselected_game"
     }
 
 export default function(state = initialState, action) {
@@ -467,7 +470,19 @@ export default function(state = initialState, action) {
             playerModal: action.payload.status,
             playerModalData: action.payload.data
         }
+        case BATCH_GAMES:
+        return {
+            ...state, 
+            allGamesSelection: action.payload === "unselected_game" ? "selected_game" : "unselected_game"
+        }
 
+        case UNSELECT_ALL_GAMES:
+        return {
+            ...state, 
+            selectedGames: initialState.selectedGames,
+            unselectedGames: state.pastGamesFromAPI,
+            allGamesSelection: "unselected_game"
+        }
         default:
         return state;
     }

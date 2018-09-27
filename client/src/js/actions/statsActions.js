@@ -36,7 +36,9 @@ import {
     BATCH_CHART_UPDATE,
     BATCH_UNSELECT,
     TOGGLE_POSITIONS,
-    TOGGLE_PLAYER_MODAL, 
+    TOGGLE_PLAYER_MODAL,
+    BATCH_GAMES, 
+    UNSELECT_ALL_GAMES
 } from './types';
 
 import API from "../../utils/API"
@@ -306,8 +308,6 @@ export const removePlayerStatObject = (player) => dispatch => {
 }
 
 export const selectDateRange = (start, end) => dispatch => {
-    console.log("Start: ", start, "\nEnd: ", end)
-    console.log(typeof start)
     if (start === "Invalid date") {start = "2000-01-01"}
     if (end === "Invalid date") {end = moment().format("YYYY-MM-DD")}
     dispatch({
@@ -1424,5 +1424,19 @@ export const togglePlayerModal = (newStatus, data) => dispatch => {
             status: newStatus,
             data: data
         }
+    })
+}
+
+export const selectAllGames = (status) => dispatch => {
+    console.log("Status in statsActions.js : ", status)
+    dispatch({
+        type: BATCH_GAMES,
+        payload: status,
+    })
+}
+
+export const unselectAllGames = () => dispatch => {
+    dispatch({
+        type: UNSELECT_ALL_GAMES,
     })
 }
