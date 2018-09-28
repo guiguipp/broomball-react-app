@@ -7,6 +7,7 @@ import DateSelector from "../../components/RecordsPageComp/DateSelector"
 import GameSelector from "../../components/RecordsPageComp/GameSelector"
 import PlayerSelector from "../../components/RecordsPageComp/PlayerSelector"
 import Showcase from "../../components/RecordsPageComp/Showcase"
+import Filters from "../../components/RecordsPageComp/Filters"
 import DataChart from "../../components/RecordsPageComp/DataChart"
 
 import "./Records.css";
@@ -38,6 +39,10 @@ render() {
 
             <div className= "row">
                 < Showcase />
+            </div>
+
+            <div className= "row">
+                < Filters />
             </div>
         </div>
     </div>

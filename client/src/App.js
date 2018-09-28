@@ -31,10 +31,12 @@ import {
   faLongArrowAltDown, 
   faCircle,
   faLock,
-  faUnlockAlt
+  faUnlockAlt,
+  // faSquare,
+  faCheckSquare
   } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faChevronUp, faChevronDown, faMinusCircle, faTimesCircle, faArrowAltCircleRight, faArrowCircleLeft, faAngleRight, faPlusCircle, faMinusCircle, faTimes, faPlus, faCaretDown, faCaretRight, faLongArrowAltUp, faLongArrowAltDown, faCircle, faLock, faUnlockAlt)
+library.add(faChevronUp, faChevronDown, faMinusCircle, faTimesCircle, faArrowAltCircleRight, faArrowCircleLeft, faAngleRight, faPlusCircle, faMinusCircle, faTimes, faPlus, faCaretDown, faCaretRight, faLongArrowAltUp, faLongArrowAltDown, faCircle, faLock, faUnlockAlt, /* faSquare,*/ faCheckSquare)
 
 
 

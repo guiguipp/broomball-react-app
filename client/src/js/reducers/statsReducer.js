@@ -35,10 +35,11 @@ import {
     BATCH_CARD_UPDATE,
     BATCH_CHART_UPDATE,
     BATCH_UNSELECT,
-    TOGGLE_POSITIONS,
+    // TOGGLE_POSITIONS,
     TOGGLE_PLAYER_MODAL,
     BATCH_GAMES,
-    UNSELECT_ALL_GAMES
+    UNSELECT_ALL_GAMES, 
+    FILTER_PLAYER_RECORDS
     } from '../actions/types';
 
 import _ from "underscore"
@@ -293,98 +294,98 @@ export default function(state = initialState, action) {
         return {
             ...state,
             sortingOptions: action.payload,
-            filteredPlayerRecords: _.sortBy(state.playerRecords, "name").reverse()
+            filteredPlayerRecords: _.sortBy(state.filteredPlayerRecords, "name").reverse()
         }
 
         case SORT_AZ_DESC:
         return {
             ...state,
             sortingOptions: action.payload,
-            filteredPlayerRecords: _.sortBy(state.playerRecords, "name"),
+            filteredPlayerRecords: _.sortBy(state.filteredPlayerRecords, "name"),
         }
 
         case SORT_GAMES_ASC:
         return {
             ...state,
             sortingOptions: action.payload,
-            filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player.gamesPlayed !== "N/A"), "gamesPlayed")
+            filteredPlayerRecords: _.sortBy(state.playerRfilteredPlayerRecordsecords.filter(player => player.gamesPlayed !== "N/A"), "gamesPlayed")
         }
 
         case SORT_GAMES_DESC:
         return {
             ...state,
             sortingOptions: action.payload,
-            filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player.gamesPlayed !== "N/A"), "gamesPlayed").reverse()
+            filteredPlayerRecords: _.sortBy(state.filteredPlayerRecords.filter(player => player.gamesPlayed !== "N/A"), "gamesPlayed").reverse()
         }
 
         case SORT_WINS_ASC:
         return {
             ...state,
             sortingOptions: action.payload,
-            filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player.winPercent !== "N/A"), "winPercent")
+            filteredPlayerRecords: _.sortBy(state.filteredPlayerRecords.filter(player => player.winPercent !== "N/A"), "winPercent")
         }
 
         case SORT_WINS_DESC:
         return {
             ...state,
             sortingOptions: action.payload,
-            filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player.winPercent !== "N/A"), "winPercent").reverse(),
+            filteredPlayerRecords: _.sortBy(state.filteredPlayerRecords.filter(player => player.winPercent !== "N/A"), "winPercent").reverse(),
         }
 
         case SORT_LOSSES_ASC:
         return {
             ...state,
             sortingOptions: action.payload,
-            filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player.lossPercent !== "N/A"), "lossPercent")
+            filteredPlayerRecords: _.sortBy(state.filteredPlayerRecords.filter(player => player.lossPercent !== "N/A"), "lossPercent")
         }
 
         case SORT_LOSSES_DESC:
         return {
             ...state,
             sortingOptions: action.payload,
-            filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player.lossPercent !== "N/A"), "lossPercent").reverse(),
+            filteredPlayerRecords: _.sortBy(state.filteredPlayerRecords.filter(player => player.lossPercent !== "N/A"), "lossPercent").reverse(),
         }
 
         case SORT_TIES_ASC:
         return {
             ...state,
             sortingOptions: action.payload,
-            filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player.tiePercent !== "N/A"), "tiePercent")
+            filteredPlayerRecords: _.sortBy(state.filteredPlayerRecords.filter(player => player.tiePercent !== "N/A"), "tiePercent")
         }
 
         case SORT_TIES_DESC:
         return {
             ...state,
             sortingOptions: action.payload,
-            filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player.tiePercent !== "N/A"), "tiePercent").reverse(),
+            filteredPlayerRecords: _.sortBy(state.filteredPlayerRecords.filter(player => player.tiePercent !== "N/A"), "tiePercent").reverse(),
         }
 
         case SORT_GOALS_ASC:
         return {
             ...state,
             sortingOptions: action.payload,
-            filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player.goals !== "N/A"), "goals"),
+            filteredPlayerRecords: _.sortBy(state.filteredPlayerRecords.filter(player => player.goals !== "N/A"), "goals"),
         }
         
         case SORT_GOALS_DESC:
         return {
             ...state,
             sortingOptions: action.payload,
-            filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player.goals !== "N/A"), "goals").reverse(),
+            filteredPlayerRecords: _.sortBy(state.filteredPlayerRecords.filter(player => player.goals !== "N/A"), "goals").reverse(),
         }
         
         case SORT_ASSISTS_ASC:
         return {
             ...state,
             sortingOptions: action.payload,
-            filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player.assists !== "N/A"), "assists"),
+            filteredPlayerRecords: _.sortBy(state.filteredPlayerRecords.filter(player => player.assists !== "N/A"), "assists"),
         }
         
         case SORT_ASSISTS_DESC:
         return {
             ...state,
             sortingOptions: action.payload,
-            filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player.assists !== "N/A"), "assists").reverse(),
+            filteredPlayerRecords: _.sortBy(state.filteredPlayerRecords.filter(player => player.assists !== "N/A"), "assists").reverse(),
         }
 
 
@@ -392,28 +393,28 @@ export default function(state = initialState, action) {
         return {
             ...state,
             sortingOptions: action.payload,
-            filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player.gpg !== "N/A"), "gpg")
+            filteredPlayerRecords: _.sortBy(state.filteredPlayerRecords.filter(player => player.gpg !== "N/A"), "gpg")
         }
 
         case SORT_GPG_DESC:
         return {
             ...state,
             sortingOptions: action.payload,
-            filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player.gpg !== "N/A"), "gpg").reverse(),
+            filteredPlayerRecords: _.sortBy(state.filteredPlayerRecords.filter(player => player.gpg !== "N/A"), "gpg").reverse(),
         }
 
         case SORT_APG_ASC:
         return {
             ...state,
             sortingOptions: action.payload,
-            filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player.apg !== "N/A"), "apg"),
+            filteredPlayerRecords: _.sortBy(state.filteredPlayerRecords.filter(player => player.apg !== "N/A"), "apg"),
         }
 
         case SORT_APG_DESC:
         return {
             ...state,
             sortingOptions: action.payload,
-            filteredPlayerRecords: _.sortBy(state.playerRecords.filter(player => player.apg !== "N/A"), "apg").reverse(),
+            filteredPlayerRecords: _.sortBy(state.filteredPlayerRecords.filter(player => player.apg !== "N/A"), "apg").reverse(),
         }
 
         case SET_DATE_RANGE:
@@ -458,11 +459,11 @@ export default function(state = initialState, action) {
             playerRecords: _.sortBy(state.playerRecords.filter(player => player.membershipStatus !== action.payload), "name")
         }
 
-        case TOGGLE_POSITIONS:
-        return {
-            ...state, 
-            selectors: action.payload
-        }
+        // case TOGGLE_POSITIONS:
+        // return {
+        //     ...state, 
+        //     selectors: action.payload
+        // }
 
         case TOGGLE_PLAYER_MODAL:
         return {
@@ -482,6 +483,13 @@ export default function(state = initialState, action) {
             selectedGames: initialState.selectedGames,
             unselectedGames: state.pastGamesFromAPI,
             allGamesSelection: "unselected_game"
+        }
+
+        case FILTER_PLAYER_RECORDS:
+        return {
+            ...state,
+            sortingOptions: initialState.sortingOptions,
+            filteredPlayerRecords: action.payload.operator === "only" ? _.sortBy(state.playerRecords.filter(player => player.preferredPosition === action.payload.playerType),"name") : _.sortBy(state.playerRecords.filter(player => player.preferredPosition !== action.payload.playerType),"name") 
         }
         default:
         return state;

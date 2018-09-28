@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { toggleViews } from "../../../js/actions/statsActions"
 import { toggleSortOptions } from "../../../js/actions/statsActions"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { togglePositions } from "../../../js/actions/statsActions"
+// import { togglePositions } from "../../../js/actions/statsActions"
 import { togglePlayerModal } from "../../../js/actions/statsActions"
 // import { dataForPlayerModal } from "../../../js/actions/statsActions"
 
@@ -19,9 +19,9 @@ class Showcase extends Component {
     toggleSort(tab, currentStatus, ascArrow){
         this.props.toggleSortOptions(tab, currentStatus, ascArrow)
     }
-    selectByPosition(position) {
-        this.props.togglePositions(position)
-    }
+    // selectByPosition(position) {
+    //     this.props.togglePositions(position)
+    // }
     showPlayerStats(playerName, playerID){
         console.log("PlayerID: ", playerID)
         let noGameInfo = {assists: 0, available: false, darkPickNum: 0, goals: 0, team: "N/A", whitePickNum: 0}
@@ -105,13 +105,6 @@ class Showcase extends Component {
                             </div>
                             )}
                             ) : null }
-                            <div className={this.props.sortOptionsDisplay + " select_all"}>
-                                <div className="button_options_second_set">
-                                    <button className={"btn record_player_button hide_button " + this.props.forwardSelection} onClick={() => this.selectByPosition(this.props.forwardSelection)} > {this.props.positionVisibility === "Forward" ? "Unhide" : "Hide"} Offense</button>
-                                    <button className={"btn record_player_button hide_button " + this.props.goalieSelection} onClick={() => this.selectByPosition(this.props.goalieSelection)} > {this.props.positionVisibility === "Goalie" ? "Unhide" : "Hide"} Goalies</button>
-                                    <button className={"btn record_player_button hide_button " + this.props.defenseSelection} onClick={() => this.selectByPosition(this.props.defenseSelection)} > {this.props.positionVisibility === "Defense" ? "Unhide" : "Hide"} Defense</button>
-                                </div>
-                            </div>
                     </div>
                 </div>
                 <PlayerStatsModal isOpen={this.props.playerModal} />
@@ -133,5 +126,5 @@ const mapStateToProps = state => ({
     playerModal: state.stats.playerModal
 })
 
-export default connect(mapStateToProps, { toggleViews, toggleSortOptions, togglePositions, togglePlayerModal, /*dataForPlayerModal*/ }) (Showcase)
+export default connect(mapStateToProps, { toggleViews, toggleSortOptions, /*togglePositions,*/ togglePlayerModal, /*dataForPlayerModal*/ }) (Showcase)
 

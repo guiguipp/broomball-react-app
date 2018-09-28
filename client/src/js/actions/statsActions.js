@@ -35,10 +35,11 @@ import {
     BATCH_CARD_UPDATE,
     BATCH_CHART_UPDATE,
     BATCH_UNSELECT,
-    TOGGLE_POSITIONS,
+    // TOGGLE_POSITIONS,
     TOGGLE_PLAYER_MODAL,
     BATCH_GAMES, 
-    UNSELECT_ALL_GAMES
+    UNSELECT_ALL_GAMES, 
+    FILTER_PLAYER_RECORDS
 } from './types';
 
 import API from "../../utils/API"
@@ -1359,64 +1360,6 @@ export const updatePlayers = (players) => dispatch => {
     })
 }
 
-export const togglePositions = (data) => dispatch => {
-    // console.log("data in togglePositions statsActions.js", data)
-    switch (data) {
-        case "selected_defense":
-        case "selected_forward":
-        case "selected_goalie":
-        dispatch({
-            type: TOGGLE_POSITIONS,
-            payload: {
-                forwardSelection: "unselected_forward",
-                goalieSelection: "unselected_goalie",
-                defenseSelection: "unselected_defense",
-                positionVisibility: "All",
-            }
-        })
-        break;
-
-        case "unselected_forward":
-        dispatch({
-            type: TOGGLE_POSITIONS,
-            payload: {
-                forwardSelection: "selected_forward",
-                goalieSelection: "unselected_goalie",
-                defenseSelection: "unselected_defense",
-                positionVisibility: "Forward",
-                }
-            })
-        break; 
-        
-        case "unselected_defense":
-        dispatch({
-            type: TOGGLE_POSITIONS,
-            payload: {
-                forwardSelection: "unselected_forward",
-                goalieSelection: "unselected_goalie",
-                defenseSelection: "selected_defense",
-                positionVisibility: "Defense",
-                }
-            })
-        break;
-
-        case "unselected_goalie":
-        dispatch({
-            type: TOGGLE_POSITIONS,
-            payload: {
-                forwardSelection: "unselected_forward",
-                goalieSelection: "selected_goalie",
-                defenseSelection: "unselected_defense",
-                positionVisibility: "Goalie",
-                }
-            })
-        break;
-
-        default:
-        return;
-    }
-}
-
 export const togglePlayerModal = (newStatus, data) => dispatch => {
     dispatch({
         type: TOGGLE_PLAYER_MODAL,
@@ -1428,7 +1371,6 @@ export const togglePlayerModal = (newStatus, data) => dispatch => {
 }
 
 export const selectAllGames = (status) => dispatch => {
-    console.log("Status in statsActions.js : ", status)
     dispatch({
         type: BATCH_GAMES,
         payload: status,
@@ -1438,5 +1380,66 @@ export const selectAllGames = (status) => dispatch => {
 export const unselectAllGames = () => dispatch => {
     dispatch({
         type: UNSELECT_ALL_GAMES,
+    })
+}
+
+export const filterPlayerRecords = (object) => dispatch => {
+    // console.log("object received in statsActions.js: ", object)
+    console.log(object.offense, object.defense, object.goalie)
+    let operator;
+    let playerType;
+
+    if (object.offense === "unselected") {
+        if (object.defense === "unselected") {
+            if (object.goalie === "unselected") {
+                operator = "null";
+                playerType = "null";
+            }
+            else {
+                operator = "only";
+                playerType = "Goalie";
+            }
+        }
+        else {
+            if (object.goalie === "unselected") {
+                operator = "only";
+                playerType = "Defense";
+            }
+            else {
+                operator = "but";
+                playerType = "Forward"
+            }
+        }
+    }
+    else {
+        if (object.defense === "unselected") {
+            if (object.goalie === "unselected") {
+                operator = "only";
+                playerType = "Forward";
+            }
+            else {
+                operator = "but";
+                playerType = "Defense";
+            }
+        }
+        else {
+            if (object.goalie === "unselected") {
+                operator = "but"
+                playerType = "Goalie"
+            }
+            else {
+                operator = "null"
+                playerType = "null"
+            }
+        }
+
+    }
+    console.log("Operator: ", operator, "\nplayerType: ", playerType)
+    dispatch({
+        type: FILTER_PLAYER_RECORDS,
+        payload: {
+            operator: operator,
+            playerType: playerType
+        }
     })
 }
