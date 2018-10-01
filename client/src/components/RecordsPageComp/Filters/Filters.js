@@ -82,9 +82,9 @@ class Filters extends Component {
                     <div className="filter_panel">
                         <h3 className="filter_name">Players</h3>
                         <ul className="check_list">
-                            <li>{this.state.offense === "selected" ? <FontAwesomeIcon icon="check-square" className="checkbox" onClick={()=> this.playerSelection("offense", this.state.offense)}/> : <FontAwesomeIcon icon={faSquare} className="checkbox" onClick={()=> this.playerSelection("offense", this.state.offense)}/>}  Offense Players</li>
-                            <li>{this.state.defense === "selected" ? <FontAwesomeIcon icon="check-square" className="checkbox" onClick={()=> this.playerSelection("defense", this.state.defense)}/> : <FontAwesomeIcon icon={faSquare} className="checkbox" onClick={()=> this.playerSelection("defense", this.state.defense)}/>}  Defense Players</li>
-                            <li>{this.state.goalie === "selected" ? <FontAwesomeIcon icon="check-square" className="checkbox" onClick={()=> this.playerSelection("goalie", this.state.goalie)}/> : <FontAwesomeIcon icon={faSquare} className="checkbox" onClick={()=> this.playerSelection("goalie", this.state.goalie)}/>}  Goalies</li>
+                            <li className="filter_item" onClick={()=> this.playerSelection("offense", this.state.offense)}>{this.state.offense === "selected" ? <FontAwesomeIcon icon="check-square" className="checkbox"/> : <FontAwesomeIcon icon={faSquare} className="checkbox"/>}  Offense Players</li>
+                            <li className="filter_item" onClick={()=> this.playerSelection("defense", this.state.defense)}>{this.state.defense === "selected" ? <FontAwesomeIcon icon="check-square" className="checkbox" /> : <FontAwesomeIcon icon={faSquare} className="checkbox" />}  Defense Players</li>
+                            <li className="filter_item" onClick={()=> this.playerSelection("goalie", this.state.goalie)}>{this.state.goalie === "selected" ? <FontAwesomeIcon icon="check-square" className="checkbox" /> : <FontAwesomeIcon icon={faSquare} className="checkbox" />}  Goalies</li>
                             
                         </ul>
                         

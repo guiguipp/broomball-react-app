@@ -4,11 +4,10 @@ import { connect } from 'react-redux';
 import { toggleViews } from "../../../js/actions/statsActions"
 import { toggleSortOptions } from "../../../js/actions/statsActions"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { togglePositions } from "../../../js/actions/statsActions"
 import { togglePlayerModal } from "../../../js/actions/statsActions"
-// import { dataForPlayerModal } from "../../../js/actions/statsActions"
-
 import PlayerStatsModal from "../PlayerStatsModal"
+
+import _ from "underscore"
 
 import "./Showcase.css";
 
@@ -19,23 +18,34 @@ class Showcase extends Component {
     toggleSort(tab, currentStatus, ascArrow){
         this.props.toggleSortOptions(tab, currentStatus, ascArrow)
     }
-    // selectByPosition(position) {
-    //     this.props.togglePositions(position)
-    // }
+    
     showPlayerStats(playerName, playerID){
-        console.log("PlayerID: ", playerID)
-        let noGameInfo = {assists: 0, available: false, darkPickNum: 0, goals: 0, team: "N/A", whitePickNum: 0}
-        // mapping the gameInfo nested Object for each game selected
-        let performance = this.props.selectedGames.map(game => game.players.filter(player => player._id === playerID)).map(array => array[0] ? array[0].gameInfo : noGameInfo)
-        // creating a ChartJS object:
+        // we need to filter games that the player has played to show relevant stats
+        // we have sorted the gamesSelected array chronologically for convenience
+        let playerStats = this.props.gamesInChronoOrder.reduce((broomballer, game) => {
+            broomballer.name = playerName
+            broomballer.gamesPlayed = broomballer.gamesPlayed || []
+            broomballer.goals = broomballer.goals || []
+            broomballer.assists = broomballer.assists || []
+            if (game.players.filter(player => player._id === playerID && player.gameInfo.available === true).length !== 0) {
+                broomballer.gamesPlayed.push(game._id)
+                // we filter the array of players with the matching ID (it creates a remapped array of one element if applicable, 
+                // gameInfo, therefore the data we want is at index 0 of gameInfo)
+                let gameInfo = game.players.filter(player => player._id === playerID).map(player => player.gameInfo)
+                broomballer.goals.push( gameInfo[0].goals )
+                broomballer.assists.push( gameInfo[0].assists )
+            }            
+            return broomballer
+            }, {});
+        // creating the ChartJS object:    
         let playerInfo = {
             name: playerName,
             data: {
-                labels: this.props.selectedGames.map(game => game._id),
+                labels: playerStats.gamesPlayed,
                 datasets: [
                     {
                         label: "Goals",
-                        data: performance.map(game => game.goals),
+                        data: playerStats.goals,
                         backgroundColor: 'rgba(255, 99, 132, 0.6)',
                         borderColor: 'rgba(255, 99, 132, 0.6)',
                         borderWidth: 1,
@@ -46,7 +56,7 @@ class Showcase extends Component {
                     },
                     {
                         label: "Assists",
-                        data: performance.map(game => game.assists),
+                        data: playerStats.assists,
                         backgroundColor: 'rgba(54, 162, 235, 0.6)',
                         borderColor: 'rgba(54, 162, 235, 0.6)',
                         borderWidth: 1,
@@ -58,6 +68,7 @@ class Showcase extends Component {
                 ]
             }
         };
+        // sending the data to the modal
         this.props.togglePlayerModal(true, playerInfo)
     }
     
@@ -94,8 +105,6 @@ class Showcase extends Component {
                                     <div className="player_data">
                                         <p><span className="entry">Games Played:</span> <span className="value">{object.gamesPlayed}</span>/{this.props.selectedGames.length}</p>
                                         <p><span className="entry">W/L/T:</span> <span className="value">{ object.winPercent !== "N/A" ? object.winPercent + "%" : object.winPercent } - { object.lossPercent !== "N/A" ? object.lossPercent + "%" : object.lossPercent } - { object.tiePercent !== "N/A" ? object.tiePercent + "%" : object.tiePercent } </span> </p>
-                                        {/* <p><span className="entry">Games Lost:</span> <span className="value">{ object.lossPercent !== "N/A" ? object.lossPercent + "%" : object.lossPercent } </span> </p>
-                                        <p><span className="entry">Games Tied:</span> <span className="value">{ object.tiePercent !== "N/A" ? object.tiePercent + "%" : object.tiePercent } </span> </p> */}
                                         <p><span className="entry">Goals:</span> <span className="value">{object.gamesPlayed !== 0 ? object.goals : "N/A"}</span>
                                         <br/><span className="addendum"> –– per game: <span className="value">{object.gamesPlayed !== 0 ? object.gpg : "N/A"}</span></span></p>
                                         <p><span className="entry">Assists:</span> <span className="value">{object.gamesPlayed !== 0 ? object.assists : "N/A"}</span>
@@ -115,6 +124,7 @@ class Showcase extends Component {
 
 const mapStateToProps = state => ({
     selectedGames: state.stats.selectedGames,
+    gamesInChronoOrder: _.sortBy(state.stats.selectedGames,"_id"),
     selectedPlayers: state.stats.selectedPlayers,
     sortOptionsDisplay: state.stats.sortOptionsDisplay,
     playerRecords: state.stats.filteredPlayerRecords,
@@ -123,8 +133,8 @@ const mapStateToProps = state => ({
     defenseSelection: state.stats.selectors.defenseSelection,
     goalieSelection: state.stats.selectors.goalieSelection,
     positionVisibility: state.stats.selectors.positionVisibility,
-    playerModal: state.stats.playerModal
+    playerModal: state.stats.playerModal,
 })
 
-export default connect(mapStateToProps, { toggleViews, toggleSortOptions, /*togglePositions,*/ togglePlayerModal, /*dataForPlayerModal*/ }) (Showcase)
+export default connect(mapStateToProps, { toggleViews, toggleSortOptions, togglePlayerModal, }) (Showcase)
 

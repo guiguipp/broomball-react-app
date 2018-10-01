@@ -308,7 +308,7 @@ export default function(state = initialState, action) {
         return {
             ...state,
             sortingOptions: action.payload,
-            filteredPlayerRecords: _.sortBy(state.playerRfilteredPlayerRecordsecords.filter(player => player.gamesPlayed !== "N/A"), "gamesPlayed")
+            filteredPlayerRecords: _.sortBy(state.filteredPlayerRecords.filter(player => player.gamesPlayed !== "N/A"), "gamesPlayed")
         }
 
         case SORT_GAMES_DESC:

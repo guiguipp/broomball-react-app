@@ -1359,7 +1359,7 @@ export const updatePlayers = (players) => dispatch => {
         payload: players
     })
 }
-
+// data is sent to the modal in showcase.js
 export const togglePlayerModal = (newStatus, data) => dispatch => {
     dispatch({
         type: TOGGLE_PLAYER_MODAL,
@@ -1384,8 +1384,6 @@ export const unselectAllGames = () => dispatch => {
 }
 
 export const filterPlayerRecords = (object) => dispatch => {
-    // console.log("object received in statsActions.js: ", object)
-    console.log(object.offense, object.defense, object.goalie)
     let operator;
     let playerType;
 
@@ -1434,7 +1432,6 @@ export const filterPlayerRecords = (object) => dispatch => {
         }
 
     }
-    console.log("Operator: ", operator, "\nplayerType: ", playerType)
     dispatch({
         type: FILTER_PLAYER_RECORDS,
         payload: {
