@@ -39,7 +39,8 @@ import {
     TOGGLE_PLAYER_MODAL,
     BATCH_GAMES,
     UNSELECT_ALL_GAMES, 
-    FILTER_PLAYER_RECORDS
+    FILTER_PLAYER_RECORDS,
+    TOGGLE_FILTERS
     } from '../actions/types';
 
 import _ from "underscore"
@@ -195,8 +196,13 @@ const initialState = {
         },
     playerModal: false,
     playerModalData: {},
-    allGamesSelection: "unselected_game"
-    }
+    allGamesSelection: "unselected_game",
+    filters: {
+            offense: "selected",
+            defense: "selected",
+            goalie: "selected",
+    },
+}
 
 export default function(state = initialState, action) {
     switch(action.type) {
@@ -232,7 +238,8 @@ export default function(state = initialState, action) {
             ...state,
             selectedGames: [...state.selectedGames, action.payload],
             unselectedGames: state.unselectedGames.filter(game => game._id !== action.payload._id),
-            sortingOptions: initialState.sortingOptions
+            sortingOptions: initialState.sortingOptions,
+            filters: initialState.filters
         }
 
         case REMOVE_GAME_FROM_SELECTED:
@@ -240,7 +247,8 @@ export default function(state = initialState, action) {
             ...state,
             selectedGames: state.selectedGames.filter(game => game._id !== action.payload._id),
             unselectedGames: [...state.unselectedGames, action.payload],
-            sortingOptions: initialState.sortingOptions
+            sortingOptions: initialState.sortingOptions,
+            filters: initialState.filters
         }
 
         case ADD_PLAYER_TO_SELECTED:
@@ -249,6 +257,7 @@ export default function(state = initialState, action) {
             selectedPlayers: [...state.selectedPlayers, action.payload.selected],
             unselectedPlayers: state.unselectedPlayers.filter(player => player._id !== action.payload.selected._id),
             sortingOptions: initialState.sortingOptions,
+            filters: initialState.filters
         }
 
         case REMOVE_PLAYER_FROM_SELECTED:
@@ -256,7 +265,8 @@ export default function(state = initialState, action) {
             ...state,
             selectedPlayers: state.selectedPlayers.filter(player => player._id !== action.payload.selected._id),
             unselectedPlayers: [...state.unselectedPlayers, action.payload.selected],
-            sortingOptions: initialState.sortingOptions
+            sortingOptions: initialState.sortingOptions,
+            filters: initialState.filters
         }
         
         case TOGGLE_RECORDS_VIEWS:
@@ -490,6 +500,12 @@ export default function(state = initialState, action) {
             ...state,
             sortingOptions: initialState.sortingOptions,
             filteredPlayerRecords: action.payload.operator === "only" ? _.sortBy(state.playerRecords.filter(player => player.preferredPosition === action.payload.playerType),"name") : _.sortBy(state.playerRecords.filter(player => player.preferredPosition !== action.payload.playerType),"name") 
+        }
+
+        case TOGGLE_FILTERS:
+        return {
+            ...state,
+            filters: action.payload
         }
         default:
         return state;

@@ -5,11 +5,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSquare } from '@fortawesome/free-regular-svg-icons'
 import { toggleViews } from '../../../js/actions/statsActions'
 import { filterPlayerRecords } from '../../../js/actions/statsActions'
+import { enableFilter } from '../../../js/actions/statsActions'
 
 
 import "./Filters.css";
 
 class Filters extends Component {
+    /*
     constructor(props){
         super(props);
         this.state = {
@@ -17,44 +19,45 @@ class Filters extends Component {
             defense: "selected",
             goalie: "selected"
         }
-    }
+    }*/
+
     playerSelection(setting, status){
         // console.log("setting: ", setting, "status: ", status)
         switch (setting) {
             case "offense":
             if (status === "selected") {
-                this.setState({...this.state, offense: "unselected"})
-                this.props.filterPlayerRecords({...this.state, offense: "unselected"})
+                this.props.enableFilter({offense: "unselected", defense: this.props.defense, goalie: this.props.goalie})
+                this.props.filterPlayerRecords({offense: "unselected", defense: this.props.defense, goalie: this.props.goalie})
             }
             else {
-                this.setState({...this.state, offense: "selected"})
-                this.props.filterPlayerRecords({...this.state, offense: "selected"})
+                this.props.enableFilter({offense: "selected", defense: this.props.defense, goalie: this.props.goalie})
+                this.props.filterPlayerRecords({offense: "selected", defense: this.props.defense, goalie: this.props.goalie})
 
             }
             break;
 
             case "defense":
             if (status === "selected") {
-                this.setState({...this.state, defense: "unselected"})
-                this.props.filterPlayerRecords({...this.state, defense: "unselected"})
+                this.props.enableFilter({defense: "unselected", offense: this.props.offense, goalie: this.props.goalie})
+                this.props.filterPlayerRecords({defense: "unselected", offense: this.props.offense, goalie: this.props.goalie})
 
             }
             else {
-                this.setState({...this.state, defense: "selected"})
-                this.props.filterPlayerRecords({...this.state, defense: "selected"})
+                this.props.enableFilter({defense: "selected", offense: this.props.offense, goalie: this.props.goalie})
+                this.props.filterPlayerRecords({defense: "selected", offense: this.props.offense, goalie: this.props.goalie})
 
             }
             break;
 
             case "goalie":
             if (status === "selected") {
-                this.setState({...this.state, goalie: "unselected"})
-                this.props.filterPlayerRecords({...this.state, goalie: "unselected"})
+                this.props.enableFilter({goalie: "unselected", defense: this.props.defense, offense: this.props.offense})
+                this.props.filterPlayerRecords({goalie: "unselected", defense: this.props.defense, offense: this.props.offense})
 
             }
             else {
-                this.setState({...this.state, goalie: "selected"})
-                this.props.filterPlayerRecords({...this.state, goalie: "selected"})
+                this.props.enableFilter({goalie: "selected", defense: this.props.defense, offense: this.props.offense})
+                this.props.filterPlayerRecords({goalie: "selected", defense: this.props.defense, offense: this.props.offense})
 
             }
             break;
@@ -82,9 +85,9 @@ class Filters extends Component {
                     <div className="filter_panel">
                         <h3 className="filter_name">Players</h3>
                         <ul className="check_list">
-                            <li className="filter_item" onClick={()=> this.playerSelection("offense", this.state.offense)}>{this.state.offense === "selected" ? <FontAwesomeIcon icon="check-square" className="checkbox"/> : <FontAwesomeIcon icon={faSquare} className="checkbox"/>}  Offense Players</li>
-                            <li className="filter_item" onClick={()=> this.playerSelection("defense", this.state.defense)}>{this.state.defense === "selected" ? <FontAwesomeIcon icon="check-square" className="checkbox" /> : <FontAwesomeIcon icon={faSquare} className="checkbox" />}  Defense Players</li>
-                            <li className="filter_item" onClick={()=> this.playerSelection("goalie", this.state.goalie)}>{this.state.goalie === "selected" ? <FontAwesomeIcon icon="check-square" className="checkbox" /> : <FontAwesomeIcon icon={faSquare} className="checkbox" />}  Goalies</li>
+                            <li className="filter_item" onClick={()=> this.playerSelection("offense",  this.props.offense)}>{ this.props.offense === "selected" ? <FontAwesomeIcon icon="check-square" className="checkbox"/> : <FontAwesomeIcon icon={faSquare} className="checkbox"/>}  Offense Players</li>
+                            <li className="filter_item" onClick={()=> this.playerSelection("defense",  this.props.defense)}>{ this.props.defense === "selected" ? <FontAwesomeIcon icon="check-square" className="checkbox" /> : <FontAwesomeIcon icon={faSquare} className="checkbox" />}  Defense Players</li>
+                            <li className="filter_item" onClick={()=> this.playerSelection("goalie",  this.props.goalie)}>{ this.props.goalie === "selected" ? <FontAwesomeIcon icon="check-square" className="checkbox" /> : <FontAwesomeIcon icon={faSquare} className="checkbox" />}  Goalies</li>
                             
                         </ul>
                         
@@ -102,7 +105,10 @@ const mapStateToProps = state => ({
     datePickers: state.stats.datePickers,
     selectedGames: state.stats.selectedGames,
     selectedPlayers: state.stats.selectedPlayers,
-    sortOptionsDisplay: state.stats.sortOptionsDisplay
+    sortOptionsDisplay: state.stats.sortOptionsDisplay,
+    offense: state.stats.filters.offense,
+    defense: state.stats.filters.defense,
+    goalie: state.stats.filters.goalie,
 })
 
-export default connect(mapStateToProps, { toggleViews, filterPlayerRecords }) (Filters)
+export default connect(mapStateToProps, { toggleViews, filterPlayerRecords, enableFilter }) (Filters)

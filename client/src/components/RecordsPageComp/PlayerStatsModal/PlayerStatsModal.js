@@ -12,8 +12,8 @@ class PlayerStatsModal extends Component {
     
     render() {
         return (
-            <div>
-                <Modal isOpen={this.props.playerModal} toggle={this.toggle}>
+            <div className="player_modal">
+                <Modal isOpen={this.props.playerModal} toggle={this.toggle} centered={true} size={"lg"}>
                     <ModalHeader className="modal_header"> {this.props.playerModalData.name} </ModalHeader>
                     <ModalBody>
                         <Line

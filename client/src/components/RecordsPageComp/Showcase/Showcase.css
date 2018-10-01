@@ -114,7 +114,7 @@
     text-align: center;
 }
 
-.unselected_forward {
+/* .unselected_forward {
     color: #b39ddb;
     border-style: solid;
     border-color: #b39ddb;
@@ -151,7 +151,7 @@
 .selected_defense {
     background: #fbc02d;
     color: white;
-}
+} */
 
 .wrapping_card_div {
     display: inline;

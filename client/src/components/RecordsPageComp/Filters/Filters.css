@@ -3,18 +3,12 @@
     font-size: larger;
 }
 .filter_panel {
-    width: 40%;
-    border-style: dashed;
-    border-width: thin;
+    width: 40%;    
     border-radius: 20px;
-    border-color: teal;
     padding: 1%;
     color: teal;
 }
-.filter_panel:hover {
-    background: teal;
-    color: white;
-}
+
 .filter_name {
     text-align: center;
     font-family: boogaloo, cursive;
@@ -27,9 +21,4 @@
     padding: 3%;
     border-radius: 10px;
     width: 65%;
-}
-
-.filter_item:hover{
-    background: white;
-    color: teal;
 }

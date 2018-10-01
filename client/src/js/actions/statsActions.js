@@ -39,7 +39,8 @@ import {
     TOGGLE_PLAYER_MODAL,
     BATCH_GAMES, 
     UNSELECT_ALL_GAMES, 
-    FILTER_PLAYER_RECORDS
+    FILTER_PLAYER_RECORDS,
+    TOGGLE_FILTERS
 } from './types';
 
 import API from "../../utils/API"
@@ -1439,4 +1440,11 @@ export const filterPlayerRecords = (object) => dispatch => {
             playerType: playerType
         }
     })
+}
+
+export const enableFilter = (object) => dispatch => {
+    dispatch({
+        type: TOGGLE_FILTERS,
+        payload: object
+        })
 }
