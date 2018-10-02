@@ -39,8 +39,8 @@ import {
     TOGGLE_PLAYER_MODAL,
     BATCH_GAMES, 
     UNSELECT_ALL_GAMES, 
-    FILTER_PLAYER_RECORDS,
-    TOGGLE_FILTERS
+    FILTER_PLAYER_RECORDS_BY_TYPE,
+    FILTER_PLAYER_RECORDS_BY_GAMES,
 } from './types';
 
 import API from "../../utils/API"
@@ -1384,7 +1384,7 @@ export const unselectAllGames = () => dispatch => {
     })
 }
 
-export const filterPlayerRecords = (object) => dispatch => {
+export const filterPlayerRecordsByType = (object) => dispatch => {
     let operator;
     let playerType;
 
@@ -1434,17 +1434,19 @@ export const filterPlayerRecords = (object) => dispatch => {
 
     }
     dispatch({
-        type: FILTER_PLAYER_RECORDS,
+        type: FILTER_PLAYER_RECORDS_BY_TYPE,
         payload: {
             operator: operator,
-            playerType: playerType
+            playerType: playerType,
+            playerFilters: object
         }
     })
 }
 
-export const enableFilter = (object) => dispatch => {
+export const filterPlayerRecordsByGames = (object) => dispatch => {
+    console.log("object received in filterGames statsActions.js: ", object)
     dispatch({
-        type: TOGGLE_FILTERS,
+        type: FILTER_PLAYER_RECORDS_BY_GAMES,
         payload: object
         })
 }

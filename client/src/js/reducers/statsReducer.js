@@ -39,8 +39,8 @@ import {
     TOGGLE_PLAYER_MODAL,
     BATCH_GAMES,
     UNSELECT_ALL_GAMES, 
-    FILTER_PLAYER_RECORDS,
-    TOGGLE_FILTERS
+    FILTER_PLAYER_RECORDS_BY_TYPE,
+    FILTER_PLAYER_RECORDS_BY_GAMES
     } from '../actions/types';
 
 import _ from "underscore"
@@ -197,10 +197,14 @@ const initialState = {
     playerModal: false,
     playerModalData: {},
     allGamesSelection: "unselected_game",
-    filters: {
+    playerFilters: {
             offense: "selected",
             defense: "selected",
-            goalie: "selected",
+            goalie: "selected"
+    },
+    gameFilters: {
+            operator: "+",
+            gamePercent: "0",
     },
 }
 
@@ -239,7 +243,8 @@ export default function(state = initialState, action) {
             selectedGames: [...state.selectedGames, action.payload],
             unselectedGames: state.unselectedGames.filter(game => game._id !== action.payload._id),
             sortingOptions: initialState.sortingOptions,
-            filters: initialState.filters
+            playerFilters: initialState.playerFilters,
+            gameFilters: initialState.playerFilters
         }
 
         case REMOVE_GAME_FROM_SELECTED:
@@ -248,7 +253,8 @@ export default function(state = initialState, action) {
             selectedGames: state.selectedGames.filter(game => game._id !== action.payload._id),
             unselectedGames: [...state.unselectedGames, action.payload],
             sortingOptions: initialState.sortingOptions,
-            filters: initialState.filters
+            playerFilters: initialState.playerFilters,
+            gameFilters: initialState.gameFilters,
         }
 
         case ADD_PLAYER_TO_SELECTED:
@@ -257,7 +263,8 @@ export default function(state = initialState, action) {
             selectedPlayers: [...state.selectedPlayers, action.payload.selected],
             unselectedPlayers: state.unselectedPlayers.filter(player => player._id !== action.payload.selected._id),
             sortingOptions: initialState.sortingOptions,
-            filters: initialState.filters
+            playerFilters: initialState.playerFilters,
+            gameFilters: initialState.gameFilters,
         }
 
         case REMOVE_PLAYER_FROM_SELECTED:
@@ -266,7 +273,8 @@ export default function(state = initialState, action) {
             selectedPlayers: state.selectedPlayers.filter(player => player._id !== action.payload.selected._id),
             unselectedPlayers: [...state.unselectedPlayers, action.payload.selected],
             sortingOptions: initialState.sortingOptions,
-            filters: initialState.filters
+            playerFilters: initialState.playerFilters,
+            gameFilters: initialState.gameFilters
         }
         
         case TOGGLE_RECORDS_VIEWS:
@@ -433,14 +441,6 @@ export default function(state = initialState, action) {
             dateRange: action.payload,
             gamesForRecords: state.pastGamesFromAPI.filter(game => game._id >= action.payload.from && game._id <= action.payload.to)
         }
-        /*
-        case SET_CHART_DATA:
-        return {
-            ...state,
-            // chartData: action.payload,
-            // curatedChartData: action.payload,
-            // chartingOptions: initialState.chartingOptions
-        }*/
         
         case TOGGLE_SELECT_ALL:
         return {
@@ -469,12 +469,6 @@ export default function(state = initialState, action) {
             playerRecords: _.sortBy(state.playerRecords.filter(player => player.membershipStatus !== action.payload), "name")
         }
 
-        // case TOGGLE_POSITIONS:
-        // return {
-        //     ...state, 
-        //     selectors: action.payload
-        // }
-
         case TOGGLE_PLAYER_MODAL:
         return {
             ...state, 
@@ -494,19 +488,25 @@ export default function(state = initialState, action) {
             unselectedGames: state.pastGamesFromAPI,
             allGamesSelection: "unselected_game"
         }
-
-        case FILTER_PLAYER_RECORDS:
+        // Currently, the gameFilters and playerFilters cannot operate simultaneously. Therefore, playing with one should reset the other (to avoid confusion) 
+        case FILTER_PLAYER_RECORDS_BY_TYPE:
         return {
             ...state,
+            gameFilters: initialState.gameFilters,
             sortingOptions: initialState.sortingOptions,
+            playerFilters: action.payload.playerFilters,
             filteredPlayerRecords: action.payload.operator === "only" ? _.sortBy(state.playerRecords.filter(player => player.preferredPosition === action.payload.playerType),"name") : _.sortBy(state.playerRecords.filter(player => player.preferredPosition !== action.payload.playerType),"name") 
         }
 
-        case TOGGLE_FILTERS:
+        case FILTER_PLAYER_RECORDS_BY_GAMES:
         return {
             ...state,
-            filters: action.payload
+            playerFilters: initialState.playerFilters,
+            sortingOptions: initialState.sortingOptions,
+            gameFilters: action.payload,
+            filteredPlayerRecords: action.payload.operator === "-" ? _.sortBy(state.playerRecords.filter(player => player.gamesPlayed < state.selectedGames.length * action.payload.gamePercent / 100), "name") : _.sortBy(state.playerRecords.filter(player => player.gamesPlayed > state.selectedGames.length * action.payload.gamePercent / 100), "name")
         }
+
         default:
         return state;
     }
