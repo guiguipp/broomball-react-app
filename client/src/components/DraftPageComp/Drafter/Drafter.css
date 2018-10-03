@@ -14,6 +14,47 @@
     height: 2.75em;
 }
 
+.fa-arrow-circle-left {
+    animation-duration: 0.7s;
+    animation-name: slideright;
+    animation-direction: alternate;
+    animation-iteration-count: 4;
+}
+
+.fa-arrow-alt-circle-right {
+    animation-duration: 0.7s;
+    animation-name: slideleft;
+    animation-direction: alternate;
+    animation-iteration-count: 4;
+}
+
+.leaning_right_div > .fa-arrow-alt-circle-right {
+    animation: unset;
+}
+
+.leaning_left_div > .fa-arrow-circle-left {
+    animation: unset;
+}
+
+
+@keyframes slideright {
+    from {
+        margin-right: 0%
+    }
+    to {
+        margin-right: 7%
+    }
+}
+
+@keyframes slideleft {
+    from {
+        margin-left: 0%
+    }
+    to {
+        margin-left: 7%
+    }
+}
+
 .arrows {
     font-size: 200%;
     position: relative;
@@ -57,11 +98,24 @@
     margin: 10px 0% 10px 8px;
     min-width: 150px;
     height: 2.75em;
+    /* transition: margin 0.9s; */
 }
 
-.player_picking:hover{
-    margin-right: 5%;
-    margin-left: 6%;
+.player_picking:hover {
+    animation-duration: 0.9s;
+    animation-name: slidearrow;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes slidearrow {
+    from {
+        margin: 10px 0% 10px 8px;
+    }
+
+    to {
+        margin: 10px 11% 10px 12%;
+    }
 }
 
 .pick_arrow {
@@ -98,4 +152,12 @@
     position: relative;
     left: -8%;
     margin-top: 2%
+}
+
+.player_picking_div:first-child > .sorter > .up_arrow {
+    color: white;
+}
+
+.player_picking_div:last-child > .sorter > .down_arrow {
+    color: white;
 }

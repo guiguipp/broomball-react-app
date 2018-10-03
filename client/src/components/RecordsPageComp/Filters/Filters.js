@@ -91,7 +91,7 @@ class Filters extends Component {
                     </div>
                     
                     <div className="filter_panel">
-                        <h3 className="filter_name">Performance</h3>
+                        <h3 className="filter_name">Attendance</h3>
                             <ul className="check_list">
                                 <li className="filter_item">Played 
                                 <select className="custom-select" name="operator" onChange={(event) => this.gameSelection(event)} value= {this.props.operator}>

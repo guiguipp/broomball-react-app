@@ -495,6 +495,7 @@ export default function(state = initialState, action) {
             gameFilters: initialState.gameFilters,
             sortingOptions: initialState.sortingOptions,
             playerFilters: action.payload.playerFilters,
+            // "only", means that the players have to match a certain condition (hence: "==="), "but", means that matching players should be filtered out ("!==")
             filteredPlayerRecords: action.payload.operator === "only" ? _.sortBy(state.playerRecords.filter(player => player.preferredPosition === action.payload.playerType),"name") : _.sortBy(state.playerRecords.filter(player => player.preferredPosition !== action.payload.playerType),"name") 
         }
 

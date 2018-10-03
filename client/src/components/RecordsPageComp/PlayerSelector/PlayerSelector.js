@@ -199,7 +199,7 @@ class PlayerSelector extends Component {
             return;
         }
     }
-    // this function marks all players in the array as selected, creates an array of objects in the playerRecords reducer, 
+    // this function marks all players in the array as selected (via this.markAsSelected), creates an array of objects in the playerRecords reducer, 
     // and sends data to be handled by setChartData accordingly (=> selected players are created properly for Chartjs package)
     selectAndTransform(array, type) {
         let transformedArrayForCards = []
@@ -263,6 +263,7 @@ class PlayerSelector extends Component {
                 let apg = gamePlayedFromArray > 0 ? parseFloat((assistsFromArray / gamePlayedFromArray)) : "N/A"
                 
                 playerReduced.gamesPlayed = gamePlayedFromArray
+                // should also store the arrays for stats purposes... ?
                 playerReduced.wins = winsFromArray
                 playerReduced.losses = lossesFromArray
                 playerReduced.ties = tiesFromArray
