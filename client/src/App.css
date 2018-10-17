@@ -61,7 +61,7 @@
     background-color: white;
     color: #EA8D47;
     border-style: solid;
-    border-color: #EA8D47;
+    border-color: rgb(151, 111, 80);
     border-width: 1px;
 }
 .negative_color:active {
@@ -208,19 +208,6 @@
         padding: 3%
     }
 }
-
-/* CSS animation no longer render well */
-/* @media only screen and (max-width: 1011px) {
-    .leaning_right_div > .fa-arrow-alt-circle-right {
-        animation: unset;
-    }
-    
-    .leaning_left_div > .fa-arrow-circle-left {
-        animation: unset;
-    }
-    
-} */
-
 @media only screen and (max-width: 970px) {
 /* the score board element needs to downsize from two to one table */
     .tables_container {

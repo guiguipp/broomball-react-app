@@ -6,15 +6,24 @@ import { editPlayer } from '../../../js/actions/playerActions'
 import { resetTabs } from '../../../js/actions/playerActions'
 import { updateField } from '../../../js/actions/playerActions'
 
+import { loadState } from "../../sessionStorage"
 import "./Form.css";
 
 class Form extends Component {
     
     constructor(props) {
         super(props);
+        this.state = {
+            createPlayer: false
+        }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
+    }
+
+    componentDidMount() {
+        const privileges = loadState()
+        this.setState(privileges)
     }
     handleCancel(event) {
         event.preventDefault()
@@ -58,6 +67,7 @@ class Form extends Component {
     render() {
         return (
             <div className="form_container container">
+            {this.state.createPlayer === true ? 
                 <div className="row">
                     <form onSubmit={this.handleSubmit}>
                         <div className="field">
@@ -128,7 +138,10 @@ class Form extends Component {
                         <button type="submit" value="Submit" className="contrast_color"> Submit </button>
                         <button type="cancel" value="Cancel" className="contrast_color" onClick={(event) => this.handleCancel(event)} > Cancel </button>
                     </form>
-                </div>
+                </div> : 
+            <div className="unfortunately">
+                <p>Login as an admin to add a player!</p>
+            </div> }
             </div>
             )
         }
@@ -151,8 +164,3 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps, { addPlayer, editPlayer, resetTabs, updateField }) (Form)
-
-// do it without needing to reset... can it work?
-// reset player when submitted
-// HAVE TO GET RID OF THE TWO "PLAYER" OBJECTS FROM TWO DIFFERENT REDUCERS...
-// Make the list pretty

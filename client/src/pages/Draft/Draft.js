@@ -10,10 +10,23 @@ import Drafter from "../../components/DraftPageComp/Drafter"
 import GameOptionsBottom from "../../components/DraftPageComp/GameOptionsBottom"
 import GameOptionsTop from "../../components/DraftPageComp/GameOptionsTop"
 import Locker from "../../components/Locker"
+import { loadState } from "../../components/sessionStorage"
 
 import "./Draft.css";
 
 class Draft extends Component { 
+constructor(props) {
+    super(props);
+    this.state = {
+        changeLock: false
+    }
+}
+
+componentDidMount() {
+    const privileges = loadState()
+    this.setState(privileges)
+}
+
 toggleGamesFunc(currentlyShowing) {
     this.props.toggleGames(currentlyShowing)
 }
@@ -40,7 +53,7 @@ render() {
         </div>
         <div className={"main_main " + this.props.visibility.bottom}>
             <GameOptionsBottom />
-            <Locker />
+            {this.state.changeLock === true ? <Locker /> : null }
         </div>
     </div>
     )

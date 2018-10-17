@@ -78,6 +78,10 @@
     color: red;
 }
 
+.remove_pick:hover {
+    color: red;
+}
+
 .unavailable {
     background-color: #ACADB2;
     margin-left: -15px;
@@ -134,7 +138,26 @@
     position: relative;
     left: 5px;
     top: -10px;
-    font-size: 200%
+    font-size: 200%;
+    
+}
+
+@keyframes arrowup {
+    from {
+        top: -10px;
+    }
+    to {
+        top: -25px;
+    }
+
+}
+.up_arrow:hover {
+    color: #fbc02d;
+    animation-name: arrowup;
+    animation-duration: 1s;
+    animation-delay: 0.2s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
 }
 
 .down_arrow {
@@ -143,6 +166,26 @@
     left: -23px;
     top: 22px;
     font-size: 200%;
+    
+}
+
+@keyframes arrowdown {
+    from {
+        top: 22px;
+    }
+    to {
+        top: 37px;
+    }
+
+}
+
+.down_arrow:hover {
+    color: #fbc02d;
+    animation-name: arrowdown;
+    animation-duration: 1s;
+    animation-delay: 0.2s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
 }
 
 .player_picking_div {

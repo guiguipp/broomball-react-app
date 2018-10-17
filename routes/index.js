@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const apiRoutes = require("./api");
+const authentication = require("./authentication")
 
 // https://enable-cors.org/server_expressjs.html
 // https://stackoverflow.com/questions/7067966/how-to-allow-cors
@@ -14,5 +15,6 @@ router.use(allowCrossDomain)
 
 // all routes coming from the api folder will start with /api/
 router.use("/api", apiRoutes)
+router.use("/", authentication)
 
 module.exports = router;

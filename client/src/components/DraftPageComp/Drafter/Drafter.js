@@ -10,10 +10,23 @@ import { setPick } from '../../../js/actions/gameActions'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowAltCircleRight } from '@fortawesome/free-regular-svg-icons'
+import { loadState } from "../../sessionStorage"
 import "./Drafter.css";
 
 
 class Drafter extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            draftTeams: false,
+            changeAvailability: false,
+        }
+    }
+    componentDidMount() {
+        const privileges = loadState()
+        console.log("Data from SessionStorage: ", privileges )
+        this.setState(privileges)
+    }
     
     setUnavailable(playerID, playerStatus) {
         let gameId = this.props.draft._id
@@ -186,8 +199,8 @@ class Drafter extends Component {
                                     return (
                                         <div className="player_div leaning_right_div" key={player._id}>
                                             <button className="content_button player_button leaning_right_color">{player.name}</button>
-                                            <FontAwesomeIcon icon="times-circle" className={"remove remove_player " + this.props.lockStatus} onClick={() => this.setUnavailable(player._id, player.membershipStatus)} />
-                                            <FontAwesomeIcon icon={faArrowAltCircleRight} className={"arrows " + this.props.lockStatus} onClick={() => this.assignTeam(player._id, "N/A")} />
+                                            {this.state.changeAvailability === true ? <FontAwesomeIcon icon="times-circle" className={"remove remove_player " + this.props.lockStatus} onClick={() => this.setUnavailable(player._id, player.membershipStatus)} /> : null }
+                                            {this.state.draftTeams === true ? <FontAwesomeIcon icon={faArrowAltCircleRight} className={"arrows " + this.props.lockStatus} onClick={() => this.assignTeam(player._id, "N/A")} /> : null }
                                         </div>
                                         )
                                         })
@@ -201,10 +214,10 @@ class Drafter extends Component {
                             .map(player => {
                                 return (
                                     <div className="player_div leaning_center_div" key={player._id}>
-                                        <FontAwesomeIcon icon="arrow-circle-left" className={"arrows " + this.props.lockStatus} onClick={() => this.assignTeam(player._id, "Dark")} />
+                                        {this.state.draftTeams === true ? <FontAwesomeIcon icon="arrow-circle-left" className={"arrows " + this.props.lockStatus} onClick={() => this.assignTeam(player._id, "Dark")} /> : null }
                                         <button className="content_button player_button plain_color">{player.name}</button>
-                                        <FontAwesomeIcon icon="times-circle" className={"remove remove_player " + this.props.lockStatus} onClick={() => this.setUnavailable(player._id, player.membershipStatus)} />
-                                        <FontAwesomeIcon icon={faArrowAltCircleRight} className={"arrows " + this.props.lockStatus} onClick={() => this.assignTeam(player._id, "White")} />
+                                        {this.state.changeAvailability === true ? <FontAwesomeIcon icon="times-circle" className={"remove remove_player " + this.props.lockStatus} onClick={() => this.setUnavailable(player._id, player.membershipStatus)} /> : null }
+                                        {this.state.draftTeams === true ? <FontAwesomeIcon icon={faArrowAltCircleRight} className={"arrows " + this.props.lockStatus} onClick={() => this.assignTeam(player._id, "White")} /> : null }
                                     </div>
                                     )
                                     })
@@ -215,7 +228,7 @@ class Drafter extends Component {
                             .map(player => {
                                 return (
                                     <div className="player_div" key={player._id}>   
-                                        <button className="content_button player_button unavailable" onClick={() => this.makeAvailable(player._id)}>{player.name}</button>
+                                        <button className="content_button player_button unavailable" onClick={() => this.state.changeAvailability === true ? this.makeAvailable(player._id) : null } >{player.name}</button>
                                     </div>
                                     )
                                     })
@@ -226,7 +239,7 @@ class Drafter extends Component {
                             .map(player => {
                                 return (
                                     <div className="player_div" key={player._id}>   
-                                        <button className="content_button player_button negative_color" onClick={() => this.addTenBuckerToDraft(player)}>{player.name}</button>
+                                        <button className="content_button player_button negative_color" onClick={() => this.state.changeAvailability === true ? this.addTenBuckerToDraft(player) : null }>{player.name}</button>
                                     </div>
                                     )
                                     })
@@ -243,9 +256,9 @@ class Drafter extends Component {
                                     .map(player => {
                                         return (
                                             <div className="player_div leaning_left_div" key={player._id}>
-                                                <FontAwesomeIcon icon="arrow-circle-left" className={"arrows " + this.props.lockStatus} size="2x" onClick={() => this.assignTeam(player._id, "N/A")} />
+                                                {this.state.draftTeams === true ? <FontAwesomeIcon icon="arrow-circle-left" className={"arrows " + this.props.lockStatus} size="2x" onClick={() => this.assignTeam(player._id, "N/A")} /> : null }
                                                 <button className={"content_button player_button leaning_left_color "}>{player.name}</button>
-                                                <FontAwesomeIcon icon="times-circle" className={"remove remove_player " + this.props.lockStatus} onClick={() => this.setUnavailable(player._id, player.membershipStatus)} />
+                                                {this.state.changeAvailability === true ? <FontAwesomeIcon icon="times-circle" className={"remove remove_player " + this.props.lockStatus} onClick={() => this.setUnavailable(player._id, player.membershipStatus)} /> : null }
                                             </div>
                                             )
                                             })

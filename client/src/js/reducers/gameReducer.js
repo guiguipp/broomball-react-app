@@ -94,6 +94,7 @@ export default function(state = initialState, action) {
         case GET_GAME:
         return {
             ...state,
+            draftMode: initialState.draftMode,
             gameDate: action.payload.game._id,
             draft: action.payload.game,
             // This hides the locker if 
@@ -115,20 +116,6 @@ export default function(state = initialState, action) {
         return {
             ...state,
             draft: action.payload.game,
-            /*No longer sure why we would re-initiate the ten-buckers after editing a game?
-            this makes the list of ten-buckers to bug after auto-drafting 
-            notPlayingNonMembers: initialState.notPlayingNonMembers,
-            playingNonMembers: initialState.playingNonMembers,
-            showingNonPlayingTenBuckers: "Show",
-            showingUnavailableMembers: "Show",
-            */
-            // Every time the game is updated, it checks if the locker (via the noStatsMessage state) can be shown
-            /*
-            visibility: {
-                gameStats: action.payload.gameStats,
-                noStatsMessage: action.payload.noStatsMessage,
-                ...state.visibiliy
-            }*/
         }
         
         case RESET:

@@ -5,11 +5,24 @@ import { editGameInfo } from '../../../js/actions/gameActions'
 // import { deletePlayer } from '../../../js/actions/playerActions'
 // import { editForm } from '../../../js/actions/playerActions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { loadState } from "../../sessionStorage"
 import "./ScoreBoard.css"
 
 import Locker from "../../Locker"
 
 class ScoreBoard extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            editScore: false,
+            changeLock: false
+        }
+    }
+    componentDidMount() {
+        const privileges = loadState()
+        console.log("Data from SessionStorage: ", privileges )
+        this.setState(privileges)
+    }
     
     logStat(playerID, type, currentValue){
         let gameId = this.props.game._id
@@ -147,17 +160,17 @@ class ScoreBoard extends Component {
                                                     </td>
                                                     <td className="player_stats stats_data">
                                                         <div className="stats">
-                                                            <FontAwesomeIcon icon="plus-circle" className={"darker_icon stats_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"add_goal_dark",player.gameInfo.goals)} />
+                                                            {this.state.editScore === true ? <FontAwesomeIcon icon="plus-circle" className={"darker_icon stats_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"add_goal_dark",player.gameInfo.goals)} /> : null }
                                                             <div className={player.gameInfo.goals > 0 ? "nice" : null + " data"}>{player.gameInfo.goals}</div> 
-                                                            <FontAwesomeIcon icon="minus-circle" className={"darker_icon stats_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"substract_goal_dark",player.gameInfo.goals)}  />
+                                                            {this.state.editScore === true ? <FontAwesomeIcon icon="minus-circle" className={"darker_icon stats_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"substract_goal_dark",player.gameInfo.goals)} />  : null }
                                                         </div>
                                                     </td>
 
                                                     <td className="player_stats stats_data">
                                                         <div className="stats">
-                                                            <FontAwesomeIcon icon="plus-circle" className={"lighter_icon stats_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"add_assist",player.gameInfo.assists)} />
+                                                            {this.state.editScore === true ? <FontAwesomeIcon icon="plus-circle" className={"lighter_icon stats_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"add_assist",player.gameInfo.assists)} />  : null }
                                                             <div className={player.gameInfo.assists > 0 ? "good" : null + " data"}>{player.gameInfo.assists}</div> 
-                                                            <FontAwesomeIcon icon="minus-circle" className={"lighter_icon stats_icon " + this.props.lockStatus}  onClick={()=> this.logStat(player._id,"substract_assist",player.gameInfo.assists)} />
+                                                            {this.state.editScore === true ? <FontAwesomeIcon icon="minus-circle" className={"lighter_icon stats_icon " + this.props.lockStatus}  onClick={()=> this.logStat(player._id,"substract_assist",player.gameInfo.assists)} /> : null }
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -188,17 +201,17 @@ class ScoreBoard extends Component {
                                                         </td>
                                                         <td className="player_stats stats_data">
                                                             <div className="stats">
-                                                                <FontAwesomeIcon icon="plus-circle" size="2x" className={"darker_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"add_goal_white",player.gameInfo.goals)} />
+                                                                {this.state.editScore === true ? <FontAwesomeIcon icon="plus-circle" size="2x" className={"darker_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"add_goal_white",player.gameInfo.goals)} /> : null }
                                                                 <div className={player.gameInfo.goals > 0 ? "nice" : null + " data"}>{player.gameInfo.goals}</div> 
-                                                                <FontAwesomeIcon icon="minus-circle" size="2x" className={"darker_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"substract_goal_white",player.gameInfo.goals)}  />
+                                                                {this.state.editScore === true ? <FontAwesomeIcon icon="minus-circle" size="2x" className={"darker_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"substract_goal_white",player.gameInfo.goals)} /> : null }
                                                             </div>
                                                         </td>
 
                                                         <td className="player_stats stats_data">
                                                             <div className="stats">
-                                                                <FontAwesomeIcon icon="plus-circle" size="2x" className={"lighter_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"add_assist",player.gameInfo.assists)} />
+                                                                {this.state.editScore === true ? <FontAwesomeIcon icon="plus-circle" size="2x" className={"lighter_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"add_assist",player.gameInfo.assists)} /> : null }
                                                                 <div className={player.gameInfo.assists > 0 ? "good" : null + " data"}>{player.gameInfo.assists}</div> 
-                                                                <FontAwesomeIcon icon="minus-circle" size="2x" className={"lighter_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"substract_assist",player.gameInfo.assists)} />
+                                                                {this.state.editScore === true ? <FontAwesomeIcon icon="minus-circle" size="2x" className={"lighter_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"substract_assist",player.gameInfo.assists)} /> : null }
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -211,7 +224,7 @@ class ScoreBoard extends Component {
                             </div>
                         </div>    
                     </div>    
-                <Locker />
+                {this.state.changeLock === true ? <Locker /> : null }
         </span>
         )
     }

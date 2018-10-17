@@ -7,6 +7,7 @@ import Draft from "./pages/Draft";
 import Player from "./pages/Player";
 import Stats from "./pages/Stats";
 import Records from "./pages/Records";
+import Login from "./pages/Login";
 import './App.css';
 
 // Redux 
@@ -50,6 +51,7 @@ const App = () => (
           <Route path="/Player" component={Player} />
           <Route path="/Stats" component={Stats} />
           <Route path="/Records" component={Records} />
+          <Route path="/Login" component={Login} />
           <Route path="/*" component={Home} />
         </Switch>
       </div>

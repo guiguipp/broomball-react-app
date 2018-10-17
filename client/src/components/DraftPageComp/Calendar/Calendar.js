@@ -5,23 +5,29 @@ import { addGame } from '../../../js/actions/gameActions'
 import { fetchPlayers } from '../../../js/actions/playerActions'
 // see doc: https://www.npmjs.com/package/react-datepicker
 import DatePicker from "react-datepicker";
-
+import { loadState } from "../../sessionStorage"
 import "react-datepicker/dist/react-datepicker.css"
 import "./Calendar.css";
 
 
 const moment = require("moment");
+
 class Calendar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            date: ""
+            date: "",
+            createGame: false
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+    
     componentDidMount() {
         this.props.fetchPlayers()
+        const privileges = loadState()
+        console.log("Data from SessionStorage: ", privileges )
+        this.setState(...this.state, privileges)
         }
 
     handleChange(date) {
@@ -64,9 +70,14 @@ class Calendar extends Component {
                                     value={this.state.value}
                                     />
                             </div>
-                            <div className="submit_button">
-                                <button id="date_submit" className="btn contrast_color content_button" name="submit" type="submit" >Submit</button>
-                            </div>
+                            { 
+                            this.state.createGame === true 
+                            ?
+                                <div className="submit_button">
+                                    <button id="date_submit" className="btn contrast_color content_button" name="submit" type="submit" >Submit</button>
+                                </div> 
+                            : 
+                                null }
                         </div>
                     </form>
                 </div>

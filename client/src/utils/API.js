@@ -6,8 +6,18 @@ let currentURL = window.location.origin
 if (currentURL === "http://localhost:3000") {
     currentURL = "http://localhost:8080"
     } 
+// For Passport.js: 
+/* Server sends SetCookie header then the browser handle to store it, and then the cookie is sent with requests made to 
+the same server inside a Cookie HTTP header.
+https://stackoverflow.com/questions/45536831/node-express-passport-req-user-undefined-but-works-in-postman
 
-
+const config = {
+    withCredentials: true,
+    headers: {
+        "Content-Type": "application/json",
+    }
+}
+*/
 export default {
     getGames: () => {       
         const url = currentURL + "/api/game/"
@@ -29,7 +39,6 @@ export default {
         const url = currentURL + "/api/game/" + gameId
         return axios.put(url, { data })
         },
-
     getPlayers: () => {
         const url = currentURL + "/api/player/"
         return axios.get(url)
@@ -45,5 +54,15 @@ export default {
     deletePlayer: (id) => {
         const url = currentURL + "/api/player/" + id
         return axios.delete(url)
-    }
+    },
+    addNewUser: (userData) => {
+        const url = currentURL + "/users"
+        return axios.post(url, {userData})
+    },
+    authenticateUser: (mode, userData) => {
+        const url = currentURL + "/login"
+        if (mode === "local") {
+            return axios.post(url, userData)
+        }
+        }
     }

@@ -4,13 +4,23 @@ import { connect } from 'react-redux';
 import { fetchPlayers } from '../../../js/actions/playerActions'
 import { deletePlayer } from '../../../js/actions/playerActions'
 import { editForm } from '../../../js/actions/playerActions'
+import { loadState } from '../../sessionStorage'
 
 import "./MemberList.css"
 
 class MemberList extends Component {
-
+    constructor(props) {
+        super(props);
+        this.state = {
+            editMember: false,
+            deleteMember: false,
+        }
+    }
+    
     componentDidMount() {
         this.props.fetchPlayers()
+        const privileges = loadState()
+        this.setState(privileges)
         }
     
     deletePlayer(id){
@@ -32,8 +42,8 @@ class MemberList extends Component {
                                 <tr key={player._id}> 
                                     <td className="player_table">{player.name}</td>
                                     <td className="player_table"> 
-                                        <button className="content_button darker_color button_space_playerList" onClick={()=> this.sendPlayerToEditForm(player)}>Edit</button>
-                                        <button className="content_button negative_color button_space_playerList" onClick={()=> this.deletePlayer(player._id)}>Delete</button> 
+                                        {this.state.editMember === true ? <button className="content_button darker_color button_space_playerList" onClick={()=> this.sendPlayerToEditForm(player)}>Edit</button> : null }
+                                        {this.state.deleteMember === true ? <button className="content_button negative_color button_space_playerList" onClick={()=> this.deletePlayer(player._id)}>Delete</button> : null }
                                     </td>
                                 </tr>
                                 )

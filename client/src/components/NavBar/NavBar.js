@@ -18,6 +18,7 @@ class NavBar extends Component {
                             <a className="nav-item nav-link" href="/Draft">Draft</a>
                             <a className="nav-item nav-link" href="/Stats">Stats</a>
                             <a className="nav-item nav-link" href="/Records">Records</a>
+                            <a className="nav-item nav-link" href="/Login">Login</a> {/* Will change depending on state*/}
                         </div>
                     </div>
                     </div>

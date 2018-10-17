@@ -7,31 +7,52 @@
 const express = require("express" );
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-
+require("dotenv").config()
 const path = require('path');
+const session = require("express-session")
+const MongoStore = require('connect-mongo')(session);
+
+
 // Sets up the Express App
 // =============================================================
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-// CORS issues
-// const cors = require('cors')
-// app.use(cors())
-
 // logging the requests
 const morgan = require("morgan");
 app.use(morgan("dev"));
 
-const URL = process.env.MONGODB_URI || "mongodb://localhost/summit_broomball"
-
 // DB connection
-mongoose.connect(URL, { autoIndex: false});
+let development = {
+    username: process.env.DB_USER,
+    password: process.env.DB_PWD,
+}
+
+const URL = process.env.MONGODB_URI || "mongodb://"+ development.username + ":" + development.password + "@localhost:27017/summit_broomball"
+
+mongoose.connect(URL, { autoIndex: false, useNewUrlParser: true});
 console.log("URL used: ", URL)
 const db = mongoose.connection
 
 // handle mongo errors
 db.on("error", console.error.bind(console,"Connection error"));
 db.once("open", () => console.log("connected to the DB collection 'summit_broomball'") )
+
+// setting up passport: 
+const passport = require("./passport")
+app.use(passport.initialize());
+app.use(passport.session())
+
+
+// use sessions for tracking logins
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: new MongoStore({
+        mongooseConnection: db,
+    }),
+}));
 
 
 // Sets up the Express app to handle data parsing
@@ -44,7 +65,6 @@ app.use(bodyParser.json());
 // =============================================================
 const routes = require("./routes")
 app.use(routes);
-
 
 if (process.env.NODE_ENV === 'production') {
     // Serve any static files

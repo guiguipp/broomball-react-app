@@ -5,14 +5,23 @@ import { fetchGames } from '../../../js/actions/gameActions'
 import { getGame } from '../../../js/actions/gameActions'
 import { deleteGame } from '../../../js/actions/gameActions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { loadState } from "../../sessionStorage"
 import "./GameList.css";
 
 class GameList extends Component {
-
+    constructor(props) {
+        super(props);
+        this.state = {
+            deleteGame: false
+        }
+    }
     componentDidMount() {
         this.props.fetchGames();
+        const privileges = loadState()
+        console.log("Data from SessionStorage: ", privileges )
+        this.setState(privileges)
     }
-
+    
     getGameInfo = (gameId) => {
         this.props.getGame(gameId);
     }
@@ -34,7 +43,7 @@ class GameList extends Component {
                             .map(game =>
                                 <div key={game._id}>
                                     <button className="content_button btn game_button default_color " onClick={() =>this.getGameInfo(game._id)}> {game._id} </button> 
-                                    <FontAwesomeIcon icon="times-circle" className={"remove remove_game"} onClick={() => this.deleteGameFunc(game._id)} />
+                                    {this.state.deleteGame === true ? <FontAwesomeIcon icon="times-circle" className={"remove remove_game"} onClick={() => this.deleteGameFunc(game._id)} /> : null }
                                 </div>
                                 )
                             :
@@ -47,7 +56,7 @@ class GameList extends Component {
                             .map(game => 
                                 <div key={game._id}>
                                     <button className="content_button btn game_button default_color" onClick={() =>this.getGameInfo(game._id)}> {game._id} </button> 
-                                    <FontAwesomeIcon icon="times-circle" className={"remove remove_game"} onClick={() => this.deleteGameFunc(game._id)} />
+                                    {this.state.deleteGame === true ? <FontAwesomeIcon icon="times-circle" className={"remove remove_game"} onClick={() => this.deleteGameFunc(game._id)} /> : null }
                                 </div>
                                 )
                             :

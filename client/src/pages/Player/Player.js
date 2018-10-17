@@ -11,7 +11,7 @@ import TenBuckerList from "../../components/PlayerPageComp/TenBuckerList/"
 
 import "./Player.css";
 
-class Player extends Component { 
+class Player extends Component {
 
 toggleStatus(id, currentStatus) {
     // converting the # of the tab to its index
