@@ -46,7 +46,7 @@ app.use(passport.session())
 
 // use sessions for tracking logins
 app.use(session({
-    secret: process.env.SESSION_SECRET,
+    secret: "sdkfsiogioe8903274ht89rhgn439",
     resave: false,
     saveUninitialized: false,
     store: new MongoStore({
