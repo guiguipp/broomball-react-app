@@ -85,20 +85,27 @@
     color: white;
 }
 /* greys */
-/*.dark_grey:hover {
+.dark_grey {
     background-color: #7d7e83;
     border-color: black;
 }
 
-.regular_grey:hover {
+.regular_grey {
     background-color: #acadb2;
-    border-color: black;
+    color: white;
+    border-color: #7d7e83;
+    filter: blur(0.25px);
+    font-weight: lighter;
 }
 
-.light_grey:hover {
+.light_grey {
     background-color: #dedfe4;
     border-color: black;
-}*/
+    color: black;
+    filter: blur(0.25px);
+    border-color: #acadb2;
+    font-weight: lighter;
+}
 /* "Main" Theme */
 .main_main {
     background: #FFFFFF;

@@ -12,7 +12,7 @@ class GameList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            deleteGame: false
+            deleteGame: true
         }
     }
     componentDidMount() {

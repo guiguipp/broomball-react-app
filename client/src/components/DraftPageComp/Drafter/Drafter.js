@@ -18,8 +18,8 @@ class Drafter extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            draftTeams: false,
-            changeAvailability: false,
+            draftTeams: true,
+            changeAvailability: true,
         }
     }
     componentDidMount() {

@@ -31,7 +31,7 @@ let development = {
 const URL = process.env.MONGODB_URI || "mongodb://"+ development.username + ":" + development.password + "@localhost:27017/summit_broomball"
 
 mongoose.connect(URL, { autoIndex: false, useNewUrlParser: true});
-console.log("URL used: ", URL)
+console.log(URL," (connected)")
 const db = mongoose.connection
 
 // handle mongo errors

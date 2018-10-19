@@ -17,7 +17,7 @@ class Calendar extends Component {
         super(props);
         this.state = {
             date: "",
-            createGame: false
+            createGame: true
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -60,7 +60,8 @@ class Calendar extends Component {
                 </div>
 
                 <div>
-                    <form className="game_form" onSubmit={this.handleSubmit} >
+                {this.state.createGame === true 
+                    ? <form className="game_form" onSubmit={this.handleSubmit} >
                         <div id="in-line">
                             <div className="calendar_component">
                                 <DatePicker 
@@ -70,16 +71,14 @@ class Calendar extends Component {
                                     value={this.state.value}
                                     />
                             </div>
-                            { 
-                            this.state.createGame === true 
-                            ?
+                            
                                 <div className="submit_button">
                                     <button id="date_submit" className="btn contrast_color content_button" name="submit" type="submit" >Submit</button>
                                 </div> 
-                            : 
-                                null }
+                            
                         </div>
-                    </form>
+                        </form> 
+                    : <p className="no_game">Login as an admin to schedule games and create team line-ups!</p> }
                 </div>
             </div>
             )

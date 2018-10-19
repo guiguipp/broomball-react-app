@@ -14,7 +14,7 @@ class Form extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            createPlayer: false
+            createPlayer: true
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -140,7 +140,7 @@ class Form extends Component {
                     </form>
                 </div> : 
             <div className="unfortunately">
-                <p>Login as an admin to add a player!</p>
+                <p className="no_game">Login as an admin to add players!</p>
             </div> }
             </div>
             )

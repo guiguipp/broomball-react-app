@@ -1,12 +1,19 @@
 const User = require('../../models/user');
-
+// const express = require('express')
+// const app = express()
+const flash = require("connect-flash")
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const router = require("express").Router()
 
-const flash = require("connect-flash")
+// connect Flash
 router.use(flash());
-
+router.use(function (req, res, next) {
+    res.locals.success_msg = req.flash("success_msg");
+    res.locals.error_msg = req.flash("error_msg");
+    res.locals.error = req.flash("error");
+    next();
+})
 passport.use(new LocalStrategy
     (function(username, password, done) {
         console.log("username in LocalStrategy: ", username)
