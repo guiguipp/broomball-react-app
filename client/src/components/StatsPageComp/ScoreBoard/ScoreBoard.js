@@ -14,8 +14,8 @@ class ScoreBoard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            editScore: false,
-            changeLock: false
+            editScore: true,
+            changeLock: true
         }
     }
     componentDidMount() {

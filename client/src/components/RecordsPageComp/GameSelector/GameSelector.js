@@ -12,7 +12,6 @@ import { updatePlayers } from '../../../js/actions/statsActions'
 import { batchChartUpdate } from '../../../js/actions/statsActions'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
 import "./GameSelector.css";
 
 class GameSelector extends Component {
