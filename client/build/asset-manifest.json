@@ -1,7 +1,16 @@
 {
-  "main.css": "static/css/main.4d1307cf.css",
-  "main.css.map": "static/css/main.4d1307cf.css.map",
-  "main.js": "static/js/main.78f34a47.js",
-  "main.js.map": "static/js/main.78f34a47.js.map",
-  "static/media/logo_sm.jpeg": "static/media/logo_sm.afca9f0c.jpeg"
+  "main.css": "/static/css/main.1e75e8c2.chunk.css",
+  "main.js": "/static/js/main.aa9b248a.chunk.js",
+  "main.js.map": "/static/js/main.aa9b248a.chunk.js.map",
+  "static/css/1.9025f29e.chunk.css": "/static/css/1.9025f29e.chunk.css",
+  "static/js/1.fe99a7b1.chunk.js": "/static/js/1.fe99a7b1.chunk.js",
+  "static/js/1.fe99a7b1.chunk.js.map": "/static/js/1.fe99a7b1.chunk.js.map",
+  "runtime~main.js": "/static/js/runtime~main.229c360f.js",
+  "runtime~main.js.map": "/static/js/runtime~main.229c360f.js.map",
+  "static/css/main.1e75e8c2.chunk.css.map": "/static/css/main.1e75e8c2.chunk.css.map",
+  "static/media/logo_sm.jpeg": "/static/media/logo_sm.afca9f0c.jpeg",
+  "static/css/1.9025f29e.chunk.css.map": "/static/css/1.9025f29e.chunk.css.map",
+  "index.html": "/index.html",
+  "precache-manifest.c572d759c0a99d4266643a2032a2df84.js": "/precache-manifest.c572d759c0a99d4266643a2032a2df84.js",
+  "service-worker.js": "/service-worker.js"
 }

@@ -18,7 +18,7 @@ class Draft extends Component {
 constructor(props) {
     super(props);
     this.state = {
-        changeLock: false
+        changeLock: true
     }
 }
 
@@ -59,7 +59,6 @@ render() {
     )
     }
 }
-// export default Draft;
 
 const mapStateToProps = state => ({
     showing: state.display.showing,

@@ -21,6 +21,12 @@ class GameList extends Component {
         console.log("Data from SessionStorage: ", privileges )
         this.setState(privileges)
     }
+
+    /* 
+    componentDidUpdate() {
+        console.log(this.state)
+    } 
+    */
     
     getGameInfo = (gameId) => {
         this.props.getGame(gameId);

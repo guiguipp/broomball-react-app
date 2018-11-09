@@ -2,6 +2,8 @@
 import React from 'react';
 // React router
 import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
+
+// const Home = React.lazy(() => import("./pages/Home"));
 import Home from "./pages/Home";
 import Draft from "./pages/Draft";
 import Player from "./pages/Player";
@@ -38,19 +40,19 @@ import {
   } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faChevronUp, faChevronDown, faMinusCircle, faTimesCircle, faArrowAltCircleRight, faArrowCircleLeft, faAngleRight, faPlusCircle, faMinusCircle, faTimes, faPlus, faCaretDown, faCaretRight, faLongArrowAltUp, faLongArrowAltDown, faCircle, faLock, faUnlockAlt, /* faSquare,*/ faCheckSquare)
-
-
+// const Records = React.lazy(() => import('./pages/Records'));
 
 const App = () => (
   <Provider store={store}>
     <Router>
       <div>
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" render={Home} />
           <Route path="/Draft" component={Draft} />
           <Route path="/Player" component={Player} />
           <Route path="/Stats" component={Stats} />
           <Route path="/Records" component={Records} />
+          {/* <Route path="/Records" render={() => (<Suspense fallback={<div>Loading...</div>}> <Records /></Suspense>)}/> */}
           <Route path="/Login" component={Login} />
           <Route path="/*" component={Home} />
         </Switch>

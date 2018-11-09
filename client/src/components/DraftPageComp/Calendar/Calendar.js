@@ -27,7 +27,9 @@ class Calendar extends Component {
         this.props.fetchPlayers()
         const privileges = loadState()
         console.log("Data from SessionStorage: ", privileges )
-        this.setState(...this.state, privileges)
+        
+            this.setState(...this.state.date, privileges)
+        
         }
 
     handleChange(date) {
