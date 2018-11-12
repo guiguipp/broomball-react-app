@@ -10,7 +10,7 @@ import Player from "./pages/Player";
 import Stats from "./pages/Stats";
 import Records from "./pages/Records";
 import Login from "./pages/Login";
-import './App.css';
+import './styles/css/App.css';
 
 // Redux 
 import { Provider } from 'react-redux'
