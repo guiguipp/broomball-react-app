@@ -1,117 +1,172 @@
-/* Dark brown: #260e04 */
+$colors: (
+    whitey: #FFFFFF,
+    blueish: #007bff,
+    blackey: #000000,
+
+    defense: #b2ebf2,
+    forward: #dcedc8,
+    goalie: #ffecb3,
+
+    default-gradient: linear-gradient(70deg, #DE733A,#EA8D47),
+    contrast-gradient: linear-gradient(160deg, teal, #17a2b8),
+    dark-gradient: linear-gradient(70deg, #FF5D00,#DE733A),
+    light-gradient: linear-gradient(70deg, #EA8D47,#ffbe75),
+    
+    negative-border: rgb(151, 111, 80),
+
+    leaning_right_orange_gradient: linear-gradient(70deg, #DE733A,#EA8D47),
+    leaning_left_orange_gradient: linear-gradient(70deg, #EA8D47, #DE733A),
+    plain_orange-gradient: linear-gradient(0deg, #EA8D47, #DE733A),
+
+    orange: #DE733A,
+    light-orange: lighten(#DE733A, 20%),
+    dark-orange: darken(#DE733A, 20%),
+    
+    brown: #260e04,
+    light-brown: lighten(#260e04, 20%),
+    dark-brown: darken(#260e04, 20%),
+
+    grey: #acadb2,
+    light-grey: lighten(#acadb2, 20%),
+    dark-grey: darken(#acadb2, 20%),
+
+);
+
+@function color($color-name) {
+    @return map-get($colors, $color-name)
+};
+
+$font-stack: (
+    primary: #{'Yellowtail', "Brush Script MT", "Brush Script Std", cursive},
+    secondary: #{'boogaloo', Impact, Charcoal, sans-serif,}
+);
+
+@function font($font-name) {
+    @return map-get($font-stack, $font-name)
+};
+
+$black-box-shadow: 3px 4px 8px 0px rgba(0, 0, 0, 0.2);
+$dark-font-shadow: (-1px -1px 0 color(brown), 1px -1px 0 color(brown), -1px 1px 0 color(brown), 1px 1px 0 color(brown));
+$orange-font-shadow: (-1px -1px 0 color(orange), 1px -1px 0 color(orange), -1px 1px 0 color(orange), 1px 1px 0 color(orange),
+);
+
+$small-width: 100px;
+$small-radius: 5px;
+$border-regular: 0.5px;
+$light-blur: 0.25px;
+
 .content_button {
-    box-shadow: 3px 4px 8px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: $black-box-shadow;
+    border-radius: $small-radius;
+    min-width: $small-width;
     text-align: center;
-    border-radius: 5px;
-    min-width: 100px;
-}
-/* Color themes (=> app.css) */
-/* default */
-.default_color {
-    background: linear-gradient(70deg, #DE733A,#EA8D47);
-    color: white;
 }
 
+/* default */
+.default_color {
+    background: color(default-gradient);
+    color: color(whitey);
+}
 .default_color:active {
-    background: white;
-    color: #DE733A;
+    background: color(whitey);
+    color: color(default);
     border-style: solid;
-    border-color: #260e04;
-    border-width: 0.5px;
+    border-color: color(brown);
+    border-width: $border-regular;
 }
 /* contrast */
 .contrast_color {
-    background: linear-gradient(160deg, teal, #17a2b8);
-    color: white;
+    background: color(contrast-gradient);
+    color: color(whitey);
 }
 .contrast_color:active {
-    background: white;
-    color: #007bff;
+    background:color(whitey);
+    color: color(blueish);
     border-style: solid;
-    border-color: #260e04;
-    border-width: 0.5px;
+    border-color: color(brown);
+    border-width: $border-regular
 }
 /* darker */
 .darker_color {
-    background: linear-gradient(70deg, #FF5D00,#DE733A);
-    color: white;    
+    background: color(dark-gradient);
+    color: color(whitey);    
 }
 .darker_color:active {
-    background: white;
-    color: #FF5D00;
+    background: color(whitey);
+    color: color(orange);
     border-style: solid;
-    border-color: #260e04;
+    border-color: font(brown);
     border-width: 0.5px;
 }
 /* lighter */
 .lighter_color {
-    background: linear-gradient(70deg, #EA8D47,#ffbe75);
-    border-right-color: #ffbe75;
-    color: white;    
+    background: color(light-gradient);
+    border-right-color: color(light-orange);
+    color: color(whitey);    
 }
 .lighter_color:active {
-    background: white;
-    color: #EA8D47;
+    background: color(whitey);
+    color: color(orange);
     border-style: solid;
-    border-color: #260e04;
-    border-width: 0.5px;
+    border-color: color(brown);
+    border-width: $border-regular;
 }
 /* negative */
 .negative_color {
-    background-color: white;
-    color: #EA8D47;
+    background-color: color(whitey);
+    color: color(orange);
     border-style: solid;
-    border-color: rgb(151, 111, 80);
-    border-width: 1px;
+    border-color: color(negative-border);
+    border-width: $border-regular * 2;
 }
 .negative_color:active {
-    background: #EA8D47;
-    color: white;
+    background: color(orange);
+    color: color(whitey);
     border-style: solid;
-    border-color: #260e04;
-    border-width: 0.5px;
+    border-color: color(brown);
+    border-width: $border-regular;
 }
 
 .leaning_right_color {
-    background: linear-gradient(70deg, #DE733A,#EA8D47);
-    color: white;
+    background: color(leaning_right_orange_gradient);
+    color: color(whitey);
 }
 .leaning_left_color {
-    background: linear-gradient(70deg, #EA8D47, #DE733A);
-    color: white;
+    background: color(leaning_left_orange_gradient);
+    color: color(whitey);
 }
 .plain_color{
-    background: linear-gradient(0deg, #EA8D47, #DE733A);
-    color: white;
+    background: color(plain_orange-gradient);
+    color: color(whitey);
 }
 /* greys */
 .dark_grey {
-    background-color: #7d7e83;
-    border-color: black;
+    background-color: color(dark-grey);
+    border-color: color(blackey);
 }
 
 .regular_grey {
-    background-color: #acadb2;
-    color: white;
-    border-color: #7d7e83;
-    filter: blur(0.25px);
+    background-color: color(grey);
+    color: color(whitey);
+    border-color: color(dark-grey);
+    filter: blur($light-blur);
     font-weight: lighter;
 }
 
 .light_grey {
-    background-color: #dedfe4;
-    border-color: black;
-    color: black;
-    filter: blur(0.25px);
-    border-color: #acadb2;
+    background-color: color(light-grey);
+    border-color: color(blackey);
+    color: color(blackey);
+    filter: blur($light-blur);
+    border-color: color(grey);
     font-weight: lighter;
 }
 /* "Main" Theme */
 .main_main {
-    background: #FFFFFF;
-    border-color: black;
+    background: color(whitey);
+    border-color: color(blackey);
     border-style: solid;
-    border-width: 1px;
+    border-width: $border-regular * 2;
     width: 70%;
     min-width: 300px;
     margin: auto;
@@ -120,48 +175,39 @@
     margin-bottom: 3%;
 }
 .h1_main {
-    color: #260e04;
-    text-shadow: 
-        -1px -1px 0 #EA8D47, 
-        1px -1px 0 #EA8D47, 
-        -1px 1px 0 #EA8D47, 
-        1px 1px 0 #EA8D47;
-    
-    font-family: 'Yellowtail', "Brush Script MT", "Brush Script Std", cursive;
-    text-align: center;
+    color: color(brown);
+    text-shadow: $orange-font-shadow;
+    font-family: font(primary);
     font-size: 312%;
+    text-align: center;
     position: relative;
     margin-bottom: 6%;
 }
 
 .h1_alternate {
-    color: white;
-    text-shadow: 
-        -1px -1px 0 #260e04, 
-        1px -1px 0 #260e04, 
-        -1px 1px 0 #260e04, 
-        1px 1px 0 #260e04;
-    font-family: 'Yellowtail', "Brush Script MT", "Brush Script Std", cursive;
+    color: color(whitey);
+    text-shadow: $dark-font-shadow;
+    font-family: font(primary);
     text-align: center;
     font-size: 312%;
     position: relative;
     margin-bottom: 6%;
 }
 .h1_negative {
-    color: black;
+    color: color(blackey);
 }
 .h2_main {
-    font-family: 'boogaloo', Impact, Charcoal, sans-serif;
+    font-family: font(secondary);
     font-size: 150%;
     margin-bottom: 10%;
     text-align: center;
-    color: #260e04;
+    color: color(brown);
     /* margin-left: -5%; */
 }
 
 .h2_alternate {
     color: white;
-    font-family: 'boogaloo', Impact, Charcoal, sans-serif;
+    font-family: font(secondary);
     font-size: 150%;
     margin-bottom: 10%;
     text-align: center;
@@ -170,10 +216,10 @@
 
 /* "Alternate" theme */
 .main_alternate {
-    background: #EA8D47;
-    border-color: white;
+    background: color(orange);
+    border-color: color(whitey);
     border-style: solid;
-    border-width: 1px;
+    border-width: $border-regular * 2;
     width: 70%;
     min-width: 300px;
     margin-left: 15%;
@@ -194,15 +240,15 @@
 }
 
 .Defense {
-    color: #fbc02d;
+    color: color(defense);
 }
 
 .Forward {
-    color: #b39ddb;
+    color: color(forward)
 }
 
 .Goalie {
-    color: #5d4037;
+    color: color(goalie)
 }
 
 /* Mobile screen responsiveness in app.css */
