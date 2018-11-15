@@ -4,12 +4,12 @@ import React from 'react';
 import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
 
 // const Home = React.lazy(() => import("./pages/Home"));
-import Home from "./pages/Home";
-import Draft from "./pages/Draft";
-import Player from "./pages/Player";
-import Stats from "./pages/Stats";
-import Records from "./pages/Records";
-import Login from "./pages/Login";
+import Home from "./pages/HomePage.js";
+import Draft from "./pages/DraftPage.js";
+import Player from "./pages/PlayerPage.js";
+import Stats from "./pages/StatsPage.js";
+import Records from "./pages/RecordsPage.js";
+import Login from "./pages/LoginPage.js";
 import './styles/css/App.css';
 
 // Redux 
