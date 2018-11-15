@@ -7,8 +7,8 @@ const middleware = [thunk]
 
 // createStore is the function for creating the Redux store.
 
-// since it crashes on Safari
-if (window.navigator.userAgent.includes('Chrome')) {
+// since it crashes on Safari, and Chrome in incognito mode, we only install Redux DevTools on Chrome in Dev Mode
+if (window.navigator.userAgent.includes('Chrome') && window.location.origin === "http://localhost:3000/") {
     var store = createStore(
         rootReducer, 
         initialState, 

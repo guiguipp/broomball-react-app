@@ -7,7 +7,7 @@ import "./NavBar.css";
 class NavBar extends Component {
     render() {
         return (
-            <div>
+            <nav>
                 <div className="pos-f-t">
                     <div className="collapse" id="navbarToggleExternalContent">
                         <div className="bg-dark p-4">
@@ -28,7 +28,7 @@ class NavBar extends Component {
                         </button>
                     </nav>
                     </div>
-            </div>
+            </nav>
             )
         }
 }

@@ -43,13 +43,14 @@
   background: #FFFFFF;
   color: #DE733A;
   border-style: solid;
+  border-color: #260e04;
   border-width: 0.5px;
 }
 
 /* lighter */
 .lighter_color {
-  background: linear-gradient(70deg, #EA8D47, #ffbe75);
   border-right-color: #edb191;
+  background: linear-gradient(70deg, #EA8D47, #ffbe75);
   color: #FFFFFF;
 }
 
@@ -63,11 +64,11 @@
 
 /* negative */
 .negative_color {
-  background-color: #FFFFFF;
-  color: #DE733A;
   border-style: solid;
   border-color: #976f50;
   border-width: 1px;
+  background: #FFFFFF;
+  color: #DE733A;
 }
 
 .negative_color:active {
@@ -133,46 +134,22 @@
   margin-bottom: 3%;
 }
 
-.h1_main {
+.main_main h1 {
   color: #260e04;
   text-shadow: -1px -1px 0 #DE733A, 1px -1px 0 #DE733A, -1px 1px 0 #DE733A, 1px 1px 0 #DE733A;
-  font-family: Yellowtail, Brush Script MT, Brush Script Std, cursive;
   font-size: 312%;
   text-align: center;
   position: relative;
   margin-bottom: 6%;
-}
-
-.h1_alternate {
-  color: #FFFFFF;
-  text-shadow: -1px -1px 0 #260e04, 1px -1px 0 #260e04, -1px 1px 0 #260e04, 1px 1px 0 #260e04;
   font-family: Yellowtail, Brush Script MT, Brush Script Std, cursive;
-  text-align: center;
-  font-size: 312%;
-  position: relative;
-  margin-bottom: 6%;
 }
 
-.h1_negative {
-  color: #000000;
-}
-
-.h2_main {
+.main_main h2 {
   font-family: boogaloo, Impact, Charcoal, sans-serif;
   font-size: 150%;
   margin-bottom: 10%;
   text-align: center;
   color: #260e04;
-  /* margin-left: -5%; */
-}
-
-.h2_alternate {
-  color: white;
-  font-family: boogaloo, Impact, Charcoal, sans-serif;
-  font-size: 150%;
-  margin-bottom: 10%;
-  text-align: center;
-  /* margin-left: -5%; */
 }
 
 /* "Alternate" theme */
@@ -187,6 +164,24 @@
   padding: 5% 0;
   /* for testing purposes (this is in draft.css) */
   margin-bottom: 200px;
+}
+
+.main_alternate h1 {
+  color: #FFFFFF;
+  text-shadow: -1px -1px 0 #260e04, 1px -1px 0 #260e04, -1px 1px 0 #260e04, 1px 1px 0 #260e04;
+  font-size: 312%;
+  text-align: center;
+  position: relative;
+  margin-bottom: 6%;
+  font-family: Yellowtail, Brush Script MT, Brush Script Std, cursive;
+}
+
+.main_alternate h2 {
+  color: white;
+  font-family: boogaloo, Impact, Charcoal, sans-serif;
+  font-size: 150%;
+  margin-bottom: 10%;
+  text-align: center;
 }
 
 .hidden {
@@ -210,6 +205,23 @@
 
 .Goalie {
   color: #ffecb3;
+}
+
+.lock {
+  min-height: 40px;
+  margin: 60px 10px 0px 10px;
+}
+
+.locked {
+  color: white;
+  background: orange;
+  border-color: white;
+}
+
+.unlocked {
+  color: orange;
+  background: white;
+  border-color: orange;
 }
 
 /* Mobile screen responsiveness in app.css */

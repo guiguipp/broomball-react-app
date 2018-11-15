@@ -1,0 +1,140 @@
+.tab_centering {
+  width: 70%;
+  min-width: 300px;
+  margin: auto;
+  padding: 5% 0 0;
+}
+
+.tab {
+  width: 33.33%;
+  min-width: 100px;
+  height: 10%;
+  min-height: 30px;
+  padding: 1%;
+  text-align: center;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.full_tab_size {
+  width: 80%;
+}
+
+.show {
+  background: white;
+  border-left-style: solid;
+  border-top-style: solid;
+  border-right-style: solid;
+  border-width: 1px;
+}
+
+.hide {
+  background: #ffbe75;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  color: #565656;
+  border-left-color: #EA8D47;
+  border-left-style: solid;
+  border-left-width: 1px;
+  border-right-color: #EA8D47;
+  border-right-style: solid;
+  border-right-width: 1px;
+  border-top-color: #EA8D47;
+}
+
+.passive_tab {
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: black;
+  color: #EA8D47;
+}
+
+.main_for_tab {
+  background: #FFFFFF;
+  border-left-style: solid;
+  border-right-style: solid;
+  border-bottom-style: solid;
+  border-color: black;
+  border-width: 1px;
+  width: 70%;
+  min-width: 300px;
+  margin: auto;
+  padding: 5% 0;
+  margin-bottom: 200px;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.visible {
+  visibility: visible;
+}
+
+.full_size {
+  width: 100%;
+}
+
+#range_submit {
+  margin: 5% 0% 0% 91%;
+}
+
+label {
+  color: #565656;
+  text-shadow: -0.1px -0.1px 0 #DE733A, 0.1px -0.1px 0 #DE733A, -0.1px 0.1px 0 #DE733A, 0.1px 0.1px 0 #DE733A;
+  display: inline-block;
+  margin-bottom: .5rem;
+  margin: 3% 16% 3% 1%;
+}
+
+.form_container {
+  width: 100%;
+  margin: auto;
+  padding: 0 20%;
+}
+
+.field {
+  margin: 2% 0% 5%;
+}
+
+input {
+  margin: 1% 5% 1% 5%;
+}
+
+/* table formatting */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  padding: 8px;
+}
+
+th {
+  text-align: center;
+}
+
+td {
+  text-align: left;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+thead > th {
+  font-variant: small-caps;
+  font-weight: bold;
+}
+
+.player_table {
+  text-align: center;
+  position: relative;
+  left: 10%;
+}
+
+.button_space_playerList {
+  margin: 5px 5px 5px 20px;
+}
+/*# sourceMappingURL=player.css.map */

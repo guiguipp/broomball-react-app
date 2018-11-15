@@ -61,71 +61,85 @@ $light-blur: 0.25px;
     min-width: $small-width;
     text-align: center;
 }
+// THEMES
+@mixin theme($bkCol, $col, $activeBkCol, $activeCol, $activeBorderStyle, $activeBorderCol, $activeBorderWidth ) {
+    background: $bkCol;    
+    color: $col;
+    &:active {
+        background: $activeBkCol;
+        color: $activeCol;
+        border-style: $activeBorderStyle;
+        border-color: $activeBorderCol;
+        border-width: $activeBorderWidth;
+        @content
+    }
+};
 
 /* default */
 .default_color {
-    background: color(default-gradient);
-    color: color(whitey);
-}
-.default_color:active {
-    background: color(whitey);
-    color: color(default);
-    border-style: solid;
-    border-color: color(brown);
-    border-width: $border-regular;
-}
+    @include theme(
+        color(default-gradient), 
+        color(whitey),
+        color(whitey),
+        color(default),
+        solid,
+        color(brown),
+        $border-regular
+        )
+    }
 /* contrast */
 .contrast_color {
-    background: color(contrast-gradient);
-    color: color(whitey);
-}
-.contrast_color:active {
-    background:color(whitey);
-    color: color(blueish);
-    border-style: solid;
-    border-color: color(brown);
-    border-width: $border-regular
+    @include theme(
+        color(contrast-gradient),
+        color(whitey),
+        color(whitey),
+        color(blueish),
+        solid,
+        color(brown),
+        $border-regular,
+    )
 }
 /* darker */
 .darker_color {
-    background: color(dark-gradient);
-    color: color(whitey);    
-}
-.darker_color:active {
-    background: color(whitey);
-    color: color(orange);
-    border-style: solid;
-    border-color: font(brown);
-    border-width: 0.5px;
+    @include theme(
+        color(dark-gradient),
+        color(whitey),
+        color(whitey),
+        color(orange),
+        solid,
+        color(brown),
+        $border-regular
+    )
 }
 /* lighter */
 .lighter_color {
-    background: color(light-gradient);
     border-right-color: color(light-orange);
-    color: color(whitey);    
-}
-.lighter_color:active {
-    background: color(whitey);
-    color: color(orange);
-    border-style: solid;
-    border-color: color(brown);
-    border-width: $border-regular;
-}
+    @include theme(
+        color(light-gradient),
+        color(whitey),    
+        color(whitey),
+        color(orange),
+        solid,
+        color(brown),
+        $border-regular,
+    )  
+};
 /* negative */
 .negative_color {
-    background-color: color(whitey);
-    color: color(orange);
     border-style: solid;
     border-color: color(negative-border);
     border-width: $border-regular * 2;
+    @include theme(
+        color(whitey),
+        color(orange),
+        color(orange),
+        color(whitey),
+        solid,
+        color(brown),
+        $border-regular,
+    )
 }
-.negative_color:active {
-    background: color(orange);
-    color: color(whitey);
-    border-style: solid;
-    border-color: color(brown);
-    border-width: $border-regular;
-}
+
 
 .leaning_right_color {
     background: color(leaning_right_orange_gradient);
@@ -144,7 +158,6 @@ $light-blur: 0.25px;
     background-color: color(dark-grey);
     border-color: color(blackey);
 }
-
 .regular_grey {
     background-color: color(grey);
     color: color(whitey);
@@ -152,7 +165,6 @@ $light-blur: 0.25px;
     filter: blur($light-blur);
     font-weight: lighter;
 }
-
 .light_grey {
     background-color: color(light-grey);
     border-color: color(blackey);
@@ -173,45 +185,24 @@ $light-blur: 0.25px;
     padding: 5% 0;
     /* for testing purposes (this is in draft.css) */
     margin-bottom: 3%;
-}
-.h1_main {
-    color: color(brown);
-    text-shadow: $orange-font-shadow;
-    font-family: font(primary);
-    font-size: 312%;
-    text-align: center;
-    position: relative;
-    margin-bottom: 6%;
-}
 
-.h1_alternate {
-    color: color(whitey);
-    text-shadow: $dark-font-shadow;
-    font-family: font(primary);
-    text-align: center;
-    font-size: 312%;
-    position: relative;
-    margin-bottom: 6%;
-}
-.h1_negative {
-    color: color(blackey);
-}
-.h2_main {
-    font-family: font(secondary);
-    font-size: 150%;
-    margin-bottom: 10%;
-    text-align: center;
-    color: color(brown);
-    /* margin-left: -5%; */
-}
+    h1 {
+        color: color(brown);
+        text-shadow: $orange-font-shadow;
+        font-size: 312%;
+        text-align: center;
+        position: relative;
+        margin-bottom: 6%;
+        font-family: font(primary);
+    }
 
-.h2_alternate {
-    color: white;
-    font-family: font(secondary);
-    font-size: 150%;
-    margin-bottom: 10%;
-    text-align: center;
-    /* margin-left: -5%; */
+    h2 {
+        font-family: font(secondary);
+        font-size: 150%;
+        margin-bottom: 10%;
+        text-align: center;
+        color: color(brown);
+        }
 }
 
 /* "Alternate" theme */
@@ -226,6 +217,24 @@ $light-blur: 0.25px;
     padding: 5% 0;
     /* for testing purposes (this is in draft.css) */
     margin-bottom: 200px;
+
+    h1 {
+        color: color(whitey);
+        text-shadow: $dark-font-shadow;
+        font-size: 312%;
+        text-align: center;
+        position: relative;
+        margin-bottom: 6%;
+        font-family: font(primary);
+    }
+
+    h2 {
+        color: white;
+        font-family: font(secondary);
+        font-size: 150%;
+        margin-bottom: 10%;
+        text-align: center;
+    }
 }
 
 .hidden {
@@ -249,6 +258,23 @@ $light-blur: 0.25px;
 
 .Goalie {
     color: color(goalie)
+}
+
+// Locker
+.lock {
+    min-height: 40px;
+    margin: 60px 10px 0px 10px;
+}
+.locked {
+    color: white;
+    background: orange;
+    border-color: white;
+}
+
+.unlocked {
+    color: orange;
+    background: white;
+    border-color: orange;
 }
 
 /* Mobile screen responsiveness in app.css */
