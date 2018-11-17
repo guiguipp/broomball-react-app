@@ -19,7 +19,7 @@ $colors: (
     plain_orange-gradient: linear-gradient(0deg, #EA8D47, #DE733A),
 
     orange: #DE733A,
-    light-orange: lighten(#DE733A, 20%),
+    light-orange: #ffbe75,
     dark-orange: darken(#DE733A, 20%),
     
     brown: #260e04,
@@ -45,12 +45,70 @@ $font-stack: (
     @return map-get($font-stack, $font-name)
 };
 
+$h1-font-sizes: (
+    null: 40px,
+    480px: 45px,
+    640px: 55px,
+    1024px: 60px,
+);
+
+$h2-font-sizes: (
+    null: 25px,
+    480px: 27px,
+    640px: 31px,
+    1024px: 35px,
+);
+
+$p-font-sizes: (
+    null: 20px,
+    1024px: 35px,
+);
+
+
+@mixin font-size($fs-map) {
+    @each $fs-breakpoint, $fs-font-size in $fs-map {
+        @if $fs-breakpoint == null {
+        font-size: $fs-font-size;
+        }
+        @else {
+            @media screen and (min-width: $fs-breakpoint) {
+                font-size: $fs-font-size;
+                }
+            }
+        }
+    }
+
+$screen-sm: 480px;
+$screen-md: 768px;
+// $screen-lg: 992px;
+$screen-xl: 1024px;
+
+// Small devices
+@mixin sm {
+    @media (min-width: #{$screen-sm}) {
+        @content;
+    }
+}
+// Medium devices
+@mixin md {
+    @media (min-width: #{$screen-md}) {
+        @content;
+    }
+}
+
+@mixin xl {
+    @media (min-width: #{$screen-xl}) {
+        @content;
+    }
+}
+
 $black-box-shadow: 3px 4px 8px 0px rgba(0, 0, 0, 0.2);
 $dark-font-shadow: (-1px -1px 0 color(brown), 1px -1px 0 color(brown), -1px 1px 0 color(brown), 1px 1px 0 color(brown));
 $orange-font-shadow: (-1px -1px 0 color(orange), 1px -1px 0 color(orange), -1px 1px 0 color(orange), 1px 1px 0 color(orange),
 );
 
 $small-width: 100px;
+$small-height: 30px;
 $small-radius: 5px;
 $border-regular: 0.5px;
 $light-blur: 0.25px;
@@ -59,7 +117,9 @@ $light-blur: 0.25px;
     box-shadow: $black-box-shadow;
     border-radius: $small-radius;
     min-width: $small-width;
+    min-height: $small-height;
     text-align: center;
+    border-style: unset;
 }
 // THEMES
 @mixin theme($bkCol, $col, $activeBkCol, $activeCol, $activeBorderStyle, $activeBorderCol, $activeBorderWidth ) {
@@ -78,13 +138,13 @@ $light-blur: 0.25px;
 /* default */
 .default_color {
     @include theme(
-        color(default-gradient), 
-        color(whitey),
-        color(whitey),
-        color(default),
-        solid,
-        color(brown),
-        $border-regular
+        color(default-gradient),    // background-color
+        color(whitey),              // color
+        color(whitey),              // :active background-color
+        color(orange),            // :active color
+        solid,                      // :active border style
+        color(brown),             // :actve border column
+        $border-regular             // :active border width
         )
     }
 /* contrast */
@@ -150,8 +210,15 @@ $light-blur: 0.25px;
     color: color(whitey);
 }
 .plain_color{
-    background: color(plain_orange-gradient);
-    color: color(whitey);
+    @include theme(
+        color(plain_orange-gradient),
+        color(whitey),
+        color(whitey),
+        color(orange),
+        solid,
+        color(orange),
+        $border-regular
+    )
 }
 /* greys */
 .dark_grey {
@@ -179,31 +246,35 @@ $light-blur: 0.25px;
     border-color: color(blackey);
     border-style: solid;
     border-width: $border-regular * 2;
-    width: 70%;
+    width: 95%;
     min-width: 300px;
     margin: auto;
     padding: 5% 0;
     /* for testing purposes (this is in draft.css) */
     margin-bottom: 3%;
-
-    h1 {
+    
+    @include md {
+        width: 80%;
+    };
+    @include xl {
+        width: 70%;
+    };
+}
+.h1_main {
         color: color(brown);
         text-shadow: $orange-font-shadow;
-        font-size: 312%;
         text-align: center;
         position: relative;
-        margin-bottom: 6%;
         font-family: font(primary);
     }
 
-    h2 {
+.h2_main {
         font-family: font(secondary);
-        font-size: 150%;
         margin-bottom: 10%;
         text-align: center;
         color: color(brown);
         }
-}
+
 
 /* "Alternate" theme */
 .main_alternate {
@@ -217,23 +288,49 @@ $light-blur: 0.25px;
     padding: 5% 0;
     /* for testing purposes (this is in draft.css) */
     margin-bottom: 200px;
-
-    h1 {
+}
+.h1_alternate {
         color: color(whitey);
         text-shadow: $dark-font-shadow;
-        font-size: 312%;
         text-align: center;
         position: relative;
-        margin-bottom: 6%;
         font-family: font(primary);
     }
 
-    h2 {
+.h2_alternate {
         color: white;
         font-family: font(secondary);
-        font-size: 150%;
-        margin-bottom: 10%;
         text-align: center;
+    }
+
+h1 {
+    margin-bottom: 6%;
+    @include font-size($h1-font-sizes);
+
+}
+
+h2 {
+    @include font-size($h2-font-sizes)
+}
+
+img {
+    width: 100%;
+    @include md {
+        width: 75%;
+    };
+    @include xl {
+        width: 50%;
+    }
+}
+
+button {
+    font-size: 12px;
+    border-radius: $border-regular * 2;
+    @include sm {
+        font-size: 14px;
+    }
+    @include md {
+        font-size: 18px;
     }
 }
 
@@ -261,293 +358,464 @@ $light-blur: 0.25px;
 }
 
 // Locker
+.lock_icons_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr
+}
+
 .lock {
+    width: 35%;
+    min-width: 55px;
+    max-width: 100px;
     min-height: 40px;
     margin: 60px 10px 0px 10px;
 }
+.left_lock {
+    justify-self: right;
+}
+
+.right_lock {
+    justify-self: left;
+}
 .locked {
-    color: white;
-    background: orange;
-    border-color: white;
+    justify-self: right;
+    @include theme (
+        color(light-gradient),
+        color(whitey),
+        color(whitey),
+        color(light-orange),
+        solid,
+        color(light-orange),
+        $border-regular
+    )
+    
 }
-
 .unlocked {
-    color: orange;
-    background: white;
-    border-color: orange;
+    border-style: solid;
+    border-color: color(light-orange);
+    border-width: $border-regular;
+    @include theme (
+        color(whitey),
+        color(light-orange),
+        color(light-orange),
+        color(whitey),
+        solid,
+        color(whitey),
+        $border-regular
+    )
 }
 
-/* Mobile screen responsiveness in app.css */
-/* stats transitioning */
-@media only screen and (max-width: 1276px) {
-    .main_main {
-        width: 90%;
+// Draft Page
+// Calendar
+#in-line {
+    margin: 0 auto 10%;
+    padding: 0 12%;
+}
+
+input {
+    color: color(orange);
+    text-align: center;
+    font-weight: lighter;
+    width: 150%;
+    padding: 3%;
+    border-style: solid;
+    border-color: grey;
+    border-width: 1px;
+    background-color: beige;
+    box-shadow: 3px 4px 8px 0px rgba(0, 0, 0, 0.2);
+}
+#date_submit {
+    margin-top: 2%;
+    padding: 2%;
+}
+
+.calendar_component {
+    margin-left: -2%;
+    padding-top: 3%;
+}
+
+.organizer {
+    display: grid;
+    grid-template-columns: 1fr;
+    @include md {
+        grid-template-columns: 1fr 1fr;
     }
-    .main_padded {
-        padding: 3%
+    
+}
+// drafter
+.player_div {
+    text-align: center;
+    width: 120%;
+    position: relative;
+    left: -8%;
+}
+
+.player_button {   
+    width: 35%;
+    min-width: $small-width;
+    max-width: 200px;
+    margin: 10px -8px 10px 8px;
+    height: 2.75em;
+}
+
+.fa-arrow-circle-left {
+    animation-duration: 0.7s;
+    animation-name: slideright;
+    animation-direction: alternate;
+    animation-iteration-count: 4;
+}
+
+.fa-arrow-alt-circle-right {
+    animation-duration: 0.7s;
+    animation-name: slideleft;
+    animation-direction: alternate;
+    animation-iteration-count: 4;
+}
+
+.leaning_right_div > .fa-arrow-alt-circle-right {
+    animation: unset;
+}
+
+.leaning_left_div > .fa-arrow-circle-left {
+    animation: unset;
+}
+
+
+@keyframes slideright {
+    from {
+        margin-right: 0%
+    }
+    to {
+        margin-right: 7%
     }
 }
-@media only screen and (max-width: 970px) {
-/* the score board element needs to downsize from two to one table */
-    .tables_container {
-        display: block;
+
+@keyframes slideleft {
+    from {
+        margin-left: 0%
     }
-    .stats_icon {
-        font-size: 180%
+    to {
+        margin-left: 7%
     }
-    .null, .nice, .good {
-        margin: 0 7%;
-        padding: 4%;
+}
+
+.arrows {
+    font-size: 200%;
+    position: relative;
+    top: 0.2em;
+    color: color(brown);
+}
+
+.arrows:hover {
+    color:  color(blueish)
+}
+
+.remove_player {
+    position: relative;
+    top: -17px;
+    left: -3px;
+    font-size: 130%;
+    color: #260e04;
+}
+
+.remove_player:hover {
+    color: red;
+}
+
+.remove_pick:hover {
+    color: red;
+}
+
+.unavailable {
+    margin-left: -15px;
+    @include theme (
+        color(grey),
+        color(whitey),
+        color(whitey),
+        color(dark-grey),
+        solid,
+        color(blackey),
+        $border-regular
+    )
+}
+
+.black_small_screen {
+    @include theme(
+        color(dark-grey),           // background-color
+        color(whitey),              // color
+        color(whitey),              // :active background-color
+        color(dark-grey),            // :active color
+        solid,                      // :active border style
+        color(dark-grey),             // :actve border column
+        $border-regular             // :active border width
+        )
+}
+
+.white_small_screen {
+    @include theme(
+        color(light-grey),          // background-color
+        color(blackey),             // color
+        color(blackey),             // :active background-color
+        color(light-grey),            // :active color
+        solid,                      // :active border style
+        color(ligh),             // :actve border column
+        $border-regular             // :active border width
+        )
+}
+
+.negative_color {
+    margin-left: -15px;
+}
+
+.sorter {
+    display: inline-block;
+}
+
+.player_picking {   
+    width: 55%;
+    max-width: 250px;
+    margin: 10px 0% 10px 8px;
+    min-width: 150px;
+    height: 2.75em;
+    /* transition: margin 0.9s; */
+}
+
+.player_picking:hover {
+    animation-duration: 0.9s;
+    animation-name: slidearrow;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes slidearrow {
+    from {
+        margin: 10px 0% 10px 8px;
     }
-    table {
-        margin-bottom: 7%;
+
+    to {
+        margin: 10px 11% 10px 12%;
+    }
+}
+
+.pick_arrow {
+    position: relative;
+    right: -4%;
+}
+
+.remove_pick {
+    position: relative;
+    top: -20px;
+    right: 5px;
+}
+
+.up_arrow {
+    color: color(blueish);
+    position: relative;
+    left: 5px;
+    top: -10px;
+    font-size: 200%;
+    
+}
+
+@keyframes arrowup {
+    from {
+        top: -10px;
+    }
+    to {
+        top: -25px;
     }
 
 }
-@media only screen and (max-width: 991px){
-    .content_button, .game_button, .contrast_color, .player_button {
-        font-size: 80%;
-        min-width: 60px;
+.up_arrow:hover {
+    color: color(light-orange);
+    animation-name: arrowup;
+    animation-duration: 1s;
+    animation-delay: 0.2s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+.down_arrow {
+    color:color(light-blue);
+    position: relative;
+    left: -23px;
+    top: 22px;
+    font-size: 200%;
+    
+}
+
+@keyframes arrowdown {
+    from {
+        top: 22px;
     }
-    .draft_option, .pick_option {
-        font-size: 80%;
-        min-width: 20%;
+    to {
+        top: 37px;
     }
-    .player_button {
-        width: 35%;
-    }
-    .player_picking {
-        width: 35%;
-    }
+
+}
+
+.down_arrow:hover {
+    color: color(light-orange);
+    animation-name: arrowdown;
+    animation-duration: 1s;
+    animation-delay: 0.2s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+.player_picking_div {
+    text-align: center;
+    width: 120%;
+    min-width: 200px;
+    position: relative;
+    left: -8%;
+    margin-top: 2%
+}
+
+.player_picking_div:first-child > .sorter > .up_arrow {
+    color: white;
+}
+
+.player_picking_div:last-child > .sorter > .down_arrow {
+    color: white;
+}
+
+// general aspect 
+.change_list_display {
+    margin: 7% auto -3% auto;
+    padding: 1% 2%;
+    border-style: unset;
+    border-radius: $small-radius;
+    min-height: 30px;
+    min-width: 150px;
+}
+.game_options {
+    min-width: 150px;
+    width: 55%;
+}
+
+.game_options_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr
+}
+
+// GameList
+.game_button {
+    width: 40%;
+    margin: 2% 0% 6%;
+    padding: 2%;
+
+}
+
+.show_games {
+    min-width: 50px;
+    text-align: center;
+}
+.remove_game {
+    position: relative;
+    font-size: 125%;
+    top: -12px;
+    left: -12px;
+}
+.remove_game:hover {
+    color: red;
+}
+.list-management {
+    overflow: scroll;
+    max-height: 200px;
+    padding: 3% 0%;
+    margin: auto;
+    width: 70%;
+}
+.no_game {
+    border-style: solid;
+    text-align: center;
+    border-width: 1px;
+    border-color: color(light-orange);
+    opacity: 0.7;
+    color: color(light-orange);
+    font-family: font(secondary);
+    font-size: 150%;
+    margin: 0px 10% 0% 10%;
+    padding: 3% 2% 3% 2%;
+}
+/* for the date picker */
+.react-datepicker__navigation--next {
+    right: 0px;
+    border-left-color: #ccc;
+    top: 0px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.react-datepicker__navigation--previous {
+    left: 0px;
+    border-right-color: #ccc;
+    top: 0px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+// GameOptionsBottom
+.buffer {
+    width: 33%;
+}
+.pick_option {
+    width: 13%;
+    margin: auto;
+}
+.draft_option {
+    width: 17%;
+    margin: auto;
+}
+.reduced_container {
+    width: 100%;
+    padding: 0px;
+    text-align: center;
+}
+
+// SmallScreenDrafter
+.small_screen_team_names_header {
+    display : grid;
+    grid-template-columns: 1fr 1fr;
+
     .arrows {
-        font-size: 180%;
-    }
-    .change_list_display {
-        margin: 1% auto -3% auto;
-    }
-    .game_options {
-        width: 25%;
-    }
-
-}
-@media only screen and (max-width: 840px) {
-    .draft_option, .pick_option {
-        font-size: 70%;
-        min-width: 20%;
-    }
-}
-/* the Player Record cards become too narrow. Let's have 3 per row instead of 4 */
-@media only screen and (max-width: 740px) {
-    .h1_main, .h1_alternate, .h1_negative {
-        font-size: 200%;
-    }
-    .h2_main, .h2_alternate, .h2_negative {
-        font-size: 120%;
-    }
-    .h3_main, .h3_alternate, .h3_negative, .header_h3 {
-        font-size: 150%;
-    }
-    .player_card {
-        width: 30%;
-    }
-    .record_player_button, .record_game_button {
-        min-width: unset;
-        width: 25%;
         font-size: 80%;
-    }
-    .all_button, .hide_button {
-        min-width: 155px;
-    }
-    input {
-        height: 25px;
-        width: 120%;
-        font-size: x-small;
-    }
-    .react-datepicker__close-icon {
-        left: 125%;
+        position: unset;
+        padding: 0 2%;
+        color: color(brown);
     }
 }
-/* the drafter can no longer hold 3 columns (but if we resize before, it effects iPhone 6s */
-@media only screen and (max-width: 735px) {
-    .col_no_bootstrap {
-        width: 25%;
-    }
-    .remove_game {
-        left: -3%;
-        top: -20px;
-    }
-    .game_button:first-child {
-        margin-top: 3%;
-    }
+.sstnhd h1 {
+    text-align: left;
 }
-/* Game data too hard to read */
-@media only screen and (max-width: 690px) {
-    .past_game_button {
-        min-width: unset;
-        width: 25%;
-    }
+
+.sstnhw h1 {
+    text-align: right;
 }
-/* the Player Record cards become too narrow. Let's have 2 per row instead of 3 */
-@media only screen and (max-width: 580px) {
-    .player_card {
-        width: 37%;
-        margin: 2% 5%;
-        font-size: 70%;
-        min-height: unset;
-        height: 160px;
-    }
-    .record_player_button, .record_game_button {
-        width: 35%;
-        font-size: 70%;
-    }
-    .tab_button, .game_button, .change_list_display, #date_submit {
-        font-size: 70%;
-    }
-    .game_button{
-        width: 45%;
-    }
-    .game_action_icon, .player_action_icon {
-        margin-left: 5px;
-    }
-    /* Re-adjust Drafter */
-    .drafter_mode {
-        display: block;
-    }
-    .leaning_right_div {
-        margin-left: -13%;
-    }
-    .leaning_left_div {
-        margin-left: 28%;
-    }
-    .leaning_center_div {
-        margin-left: 11%;
-    }
-    .col_no_bootstrap {
-        width: 85%;
-    }
-    .unpicked_list_header {
-        margin-left: 25%;
-    }
-    .picked_list_header {
-        margin-bottom: 6%; 
-    }
-    .game_options {
-        width: unset;
-    }
+
+.small_teams {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
-/* The pick headers no longer align */
-@media only screen and (max-width: 561px) {
-    .picked_list_header {
-        margin-bottom: 8%;
-        padding-top: 15%;
-    }
+.sm_dark {
+    transform: rotate(90deg)
 }
-/* The picker drops  */
-@media only screen and (max-width: 480px) {
-    .set_picks_col, ranks_col {
-        width: 7%;
-    }
-    .set_picks_col {
-        margin-left: -10%;
-    }
-    .pick_col_header {
-        height: 110px;
-        font-size: 150%;
-        text-shadow: unset;
-    }
-    .picked_list_header {
-        padding-top: unset;
-    }
-    .game_options_container {
-        padding: 0 5%;
-    }
-    .pick_option {
-        padding: 1%;
-        font-size: 50%;
-        height: 30px;
-        min-width: unset;
-        width: 25%;
-    }
+.sm_white {
+    transform: rotate(270deg)
 }
-/* The scoreboard becomes too hard to read */
-@media only screen and (max-width: 430px) {
-    .stats_icon {
-        font-size: 130%;
-    }
-    td {
-        padding: unset;
-    }
-    .table_container, .stats {
-        min-width: unset;
-    }
-    /* The calendar and list of games need to be displayed on top of one another */
-    .organizer {
-        display: block;
-        }
-    .game_form {
-        margin-left: 14%;
-        margin-bottom: 10%;
-    }
-    #schedule_game {
-        margin-left: unset;
-    }
-    .list-management {
-        padding: 2% 0;
-        margin-top: -15px;
-    }
-    .game_button {
-        width: 34%;
-        margin-left: 5%;
-    }
-    .change_list_display {
-        margin-top: 3%;
-    }
-    .game_options {
-        min-width: unset;
-    }
-    .game_date {
-        margin-top: 7%;
-    }
-    .content_button {
-        min-width: unset;
-    }
-    .game_options_container {
-        padding: 3%;
-    }
-    .pick_option, .draft_option {
-        margin: auto;
-        min-width: 21%;
-        font-size: 60%;
-    }
-    .lock {
-        margin: 3% 5%;
-        width: 15%
-    }
-    .pick_option {
-        width: 20%;
-    }
+.small_screen_arrows {
+    font-size: 150%;
+    position: relative;
+    animation-name: upanddown;
+    animation-delay: 1.2s;
+    animation-iteration-count: 4;
+    animation-direction: alternate;
 }
-@media only screen and (max-width: 400px) {
-    .past_game_button {
-        width: 30%;
+@keyframes upanddown {
+    from {
+        top: -15px;
     }
-}
-/* the Player Record cards become too narrow. Let's have 1 per row instead of 2 */
-@media only screen and (max-width: 370px) {
-    .player_card {
-        width: 50%;
-        margin: 2% 21%;
-        font-size: 70%;
-        min-height: unset;
-        height: 160px;
-        }
-    .pick_col_header {
-        display: none;
-    }
-    .game_options_container {
-        display: block;
-    }
-    .pick_option {
-        margin: 2%;
+    to {
+        top: 5px;
     }
 }

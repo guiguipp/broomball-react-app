@@ -327,29 +327,29 @@ class GameOptionsBottom extends Component {
         return (
             <div className={"row " + this.props.visibility.bottom}>
                 <div className={this.props.visibility.bottom + " reduced_container"}>
-                        <div className="row game_options_container">
+                        <div className="game_options_container">
                             
-                                <button className="content_button btn lighter_color pick_option" onClick={() => this.toggleMode(this.props.draftMode, "Dark")}>{this.props.pickButtons.left}</button> 
-                            
-                            
-                            
-                                <button className="content_button btn contrast_color pick_option" onClick={() => this.resetTeams(this.props.gameDate)}>Reset</button> 
+                                <button className="content_button lighter_color pick_option" onClick={() => this.toggleMode(this.props.draftMode, "Dark")}>{this.props.pickButtons.left}</button> 
                             
                             
                             
-                                <button className="content_button btn lighter_color pick_option" onClick={() => this.toggleMode(this.props.draftMode, "White")}>{this.props.pickButtons.right}</button> 
+                                <button className="content_button contrast_color pick_option" onClick={() => this.resetTeams(this.props.gameDate)}>Reset</button> 
+                            
+                            
+                            
+                                <button className="content_button lighter_color pick_option" onClick={() => this.toggleMode(this.props.draftMode, "White")}>{this.props.pickButtons.right}</button> 
                             
                         </div>
                         <br />
-                        <div className={"row " + this.props.visibility.top + " game_options_container"}>
+                        <div className={this.props.visibility.top + " game_options_container"}>
                             
-                                <button className="content_button btn darker_color draft_option" onClick={()=> this.autodraft(this.props.gameDate)} >Autodraft</button> 
-                            
-                            
-                                <button className="content_button btn darker_color draft_option" onClick={()=> this.alternateDraft(this.props.gameDate)}>Alternate Draft</button> 
+                                <button className="content_button darker_color draft_option" onClick={()=> this.autodraft(this.props.gameDate)} >Autodraft</button> 
                             
                             
-                                <button className="content_button btn darker_color draft_option" onClick={() => this.serpentineDraft(this.props.gameDate)}>Serpentine Draft</button> 
+                                <button className="content_button darker_color draft_option" onClick={()=> this.alternateDraft(this.props.gameDate)}>Alternate Draft</button> 
+                            
+                            
+                                <button className="content_button darker_color draft_option" onClick={() => this.serpentineDraft(this.props.gameDate)}>Serpentine Draft</button> 
                             
                         </div>
                     </div>

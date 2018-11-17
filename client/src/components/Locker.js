@@ -17,13 +17,13 @@ class Locker extends Component {
 
     render() {
         return (
-            <div className={this.props.visibility.bottom === "visible" ? "visible row " : "hidden row"}>
-                <div className="container">
-                    <div className="row">    
-                        <div className="col text-center lock_icons_container">
-                            <button className={this.props.lockStatus === "visible" ? "locked content_button lock" : "unlocked content_button lock"} onClick={() => this.unlockGame(this.props.gameDate)}><FontAwesomeIcon icon="unlock-alt" /></button> 
-                            <button className={this.props.lockStatus === "visible" ? "unlocked content_button lock" : "locked content_button lock"} onClick={() => this.lockGame(this.props.gameDate)}><FontAwesomeIcon icon="lock"/></button> 
-                        </div>
+            <div className={this.props.visibility.bottom === "visible" ? "visible" : "hidden"}>
+                <div className="text-center lock_icons_container">
+                    <div className="left_lock">
+                        <button className={this.props.lockStatus === "visible" ? "locked content_button lock" : "unlocked content_button lock"} onClick={() => this.unlockGame(this.props.gameDate)}><FontAwesomeIcon icon="unlock-alt" /></button> 
+                    </div>
+                    <div className="right_lock">
+                        <button className={this.props.lockStatus === "visible" ? "unlocked content_button lock" : "locked content_button lock"} onClick={() => this.lockGame(this.props.gameDate)}><FontAwesomeIcon icon="lock"/></button> 
                     </div>
                 </div>
             </div>

@@ -74,7 +74,7 @@ class Calendar extends Component {
                             </div>
                             
                                 <div className="submit_button">
-                                    <button id="date_submit" className="btn contrast_color content_button" name="submit" type="submit" >Submit</button>
+                                    <button id="date_submit" className="contrast_color content_button" name="submit" type="submit" >Submit</button>
                                 </div> 
                             
                         </div>

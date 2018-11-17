@@ -1,0 +1,267 @@
+/* Mobile screen responsiveness in app.css */
+/* stats transitioning */
+@media only screen and (max-width: 1276px) {
+    .main_main {
+        width: 90%;
+    }
+    .main_padded {
+        padding: 3%
+    }
+}
+@media only screen and (max-width: 970px) {
+/* the score board element needs to downsize from two to one table */
+    .tables_container {
+        display: block;
+    }
+    .stats_icon {
+        font-size: 180%
+    }
+    .null, .nice, .good {
+        margin: 0 7%;
+        padding: 4%;
+    }
+    table {
+        margin-bottom: 7%;
+    }
+
+}
+@media only screen and (max-width: 991px){
+    .content_button, .game_button, .contrast_color, .player_button {
+        font-size: 80%;
+        min-width: 60px;
+    }
+    .draft_option, .pick_option {
+        font-size: 80%;
+        min-width: 20%;
+    }
+    .player_button {
+        width: 35%;
+    }
+    .player_picking {
+        width: 35%;
+    }
+    .arrows {
+        font-size: 180%;
+    }
+    .change_list_display {
+        margin: 1% auto -3% auto;
+    }
+    .game_options {
+        width: 25%;
+    }
+
+}
+@media only screen and (max-width: 840px) {
+    .draft_option, .pick_option {
+        font-size: 70%;
+        min-width: 20%;
+    }
+}
+
+
+/* the Player Record cards become too narrow. Let's have 3 per row instead of 4 */
+@media only screen and (max-width: 740px) {
+    .player_card {
+        width: 30%;
+    }
+    .record_player_button, .record_game_button {
+        min-width: unset;
+        width: 25%;
+        font-size: 80%;
+    }
+    .all_button, .hide_button {
+        min-width: 155px;
+    }
+    input {
+        height: 25px;
+        width: 120%;
+        font-size: x-small;
+    }
+    .react-datepicker__close-icon {
+        left: 125%;
+    }
+}
+/* the drafter can no longer hold 3 columns (but if we resize before, it effects iPhone 6s */
+@media only screen and (max-width: 735px) {
+    .col_no_bootstrap {
+        width: 25%;
+    }
+    .remove_game {
+        left: -3%;
+        top: -20px;
+    }
+    .game_button:first-child {
+        margin-top: 3%;
+    }
+}
+/* Game data too hard to read */
+@media only screen and (max-width: 690px) {
+    .past_game_button {
+        min-width: unset;
+        width: 25%;
+    }
+}
+/* the Player Record cards become too narrow. Let's have 2 per row instead of 3 */
+@media only screen and (max-width: 580px) {
+    .player_card {
+        width: 37%;
+        margin: 2% 5%;
+        font-size: 70%;
+        min-height: unset;
+        height: 160px;
+    }
+    .record_player_button, .record_game_button {
+        width: 35%;
+        font-size: 70%;
+    }
+    .tab_button, .game_button, .change_list_display, #date_submit {
+        font-size: 70%;
+    }
+    .game_button{
+        width: 45%;
+    }
+    .game_action_icon, .player_action_icon {
+        margin-left: 5px;
+    }
+    /* Re-adjust Drafter */
+    .drafter_mode {
+        display: block;
+    }
+    .leaning_right_div {
+        margin-left: -13%;
+    }
+    .leaning_left_div {
+        margin-left: 28%;
+    }
+    .leaning_center_div {
+        margin-left: 11%;
+    }
+    .col_no_bootstrap {
+        width: 85%;
+    }
+    .unpicked_list_header {
+        margin-left: 25%;
+    }
+    .picked_list_header {
+        margin-bottom: 6%; 
+    }
+    .game_options {
+        width: unset;
+    }
+}
+/* The pick headers no longer align */
+@media only screen and (max-width: 561px) {
+    .picked_list_header {
+        margin-bottom: 8%;
+        padding-top: 15%;
+    }
+}
+/* The picker drops  */
+@media only screen and (max-width: 480px) {
+    .set_picks_col, ranks_col {
+        width: 7%;
+    }
+    .set_picks_col {
+        margin-left: -10%;
+    }
+    .pick_col_header {
+        height: 110px;
+        font-size: 150%;
+        text-shadow: unset;
+    }
+    .picked_list_header {
+        padding-top: unset;
+    }
+    .game_options_container {
+        padding: 0 5%;
+    }
+    .pick_option {
+        padding: 1%;
+        font-size: 50%;
+        height: 30px;
+        min-width: unset;
+        width: 25%;
+    }
+}
+/* The scoreboard becomes too hard to read */
+@media only screen and (max-width: 430px) {
+    .stats_icon {
+        font-size: 130%;
+    }
+    td {
+        padding: unset;
+    }
+    .table_container, .stats {
+        min-width: unset;
+    }
+    /* The calendar and list of games need to be displayed on top of one another */
+    .organizer {
+        display: block;
+        }
+    .game_form {
+        margin-left: 14%;
+        margin-bottom: 10%;
+    }
+    #schedule_game {
+        margin-left: unset;
+    }
+    .list-management {
+        padding: 2% 0;
+        margin-top: -15px;
+    }
+    .game_button {
+        width: 34%;
+        margin-left: 5%;
+    }
+    .change_list_display {
+        margin-top: 3%;
+    }
+    .game_options {
+        min-width: unset;
+    }
+    .game_date {
+        margin-top: 7%;
+    }
+    .content_button {
+        min-width: unset;
+    }
+    .game_options_container {
+        padding: 3%;
+    }
+    .pick_option, .draft_option {
+        margin: auto;
+        min-width: 21%;
+        font-size: 60%;
+    }
+    .lock {
+        margin: 3% 5%;
+        width: 15%
+    }
+    .pick_option {
+        width: 20%;
+    }
+}
+@media only screen and (max-width: 400px) {
+    .past_game_button {
+        width: 30%;
+    }
+}
+/* the Player Record cards become too narrow. Let's have 1 per row instead of 2 */
+@media only screen and (max-width: 370px) {
+    .player_card {
+        width: 50%;
+        margin: 2% 21%;
+        font-size: 70%;
+        min-height: unset;
+        height: 160px;
+        }
+    .pick_col_header {
+        display: none;
+    }
+    .game_options_container {
+        display: block;
+    }
+    .pick_option {
+        margin: 2%;
+    }
+}
