@@ -17,6 +17,10 @@ class SmallScreenDrafter extends Component {
         this.state = {
             draftTeams: true,
             changeAvailability: true,
+            draftedDark: 0,
+            draftedWhite: 0,
+            undrafted: 0
+            
         }
     }
     componentDidMount() {
@@ -86,16 +90,15 @@ class SmallScreenDrafter extends Component {
             <main>
                 <div className="col_no_bootstrap undraft_players">
                     <h1 className="h1_alternate col_header game_date">{this.props.gameDate}</h1>
+                    {this.props.undrafted !== 0 ? 
                     <div className="small_screen_team_names_header">
                         <div className="sstnh sstnhd">
-                            
                             <h1 className="h1_main col_header"> <FontAwesomeIcon icon="arrow-circle-left" className="arrows "/> Dark</h1>
                         </div>
                         <div className="sstnh sstnhw">
                             <h1 className="h1_main col_header">White <FontAwesomeIcon icon={faArrowAltCircleRight} className="arrows " /></h1> 
-                            
                         </div>
-                    </div>
+                    </div> : null }
 
                     {this.props.draft.players ? (this.props.draft.players
                         .filter(player => player.gameInfo.available === true && player.gameInfo.team === "N/A")
@@ -136,7 +139,7 @@ class SmallScreenDrafter extends Component {
                 </div>
                 <div className="small_teams">
                     <div className="col_no_bootstrap dark_draft_players">
-                        <h1 className="h1_alternate col_header"><br/>Dark</h1>
+                    {this.props.draftedDark || this.props.draftedWhite !== 0 ? <h1 className="h1_alternate col_header"><br/>Dark</h1> : null}
                         <div>
                             {this.props.draft.players ? (this.props.draft.players
                                     .filter(player => player.gameInfo.available === true && player.gameInfo.team === "Dark")
@@ -155,7 +158,7 @@ class SmallScreenDrafter extends Component {
                     </div>
                     
                     <div className="col_no_bootstrap white_draft_players">
-                        <h1 className="h1_alternate col_header"><br/>White</h1>
+                        {this.props.draftedDark || this.props.draftedWhite !== 0 ? <h1 className="h1_alternate col_header"><br/>White</h1> : null}
                         <div>
                         {this.props.draft.players ? (this.props.draft.players
                                 .filter(player => player.gameInfo.available === true && player.gameInfo.team === "White")
@@ -188,6 +191,9 @@ Games.propTypes = {
 
 const mapStateToProps = state => ({
     draft: state.games.draft,
+    draftedDark: state.games.draft.players ? state.games.draft.players.filter(player => player.gameInfo.team === "Dark").length : 0,
+    draftedWhite: state.games.draft.players ? state.games.draft.players.filter(player => player.gameInfo.team === "White").length : 0,
+    undrafted: state.games.draft.players ? state.games.draft.players.filter(player => player.gameInfo.team === "N/A" && player.gameInfo.available === true).length : 0,
     gameDate: state.games.gameDate,
     unavailableMembers: state.games.unavailableMembers,
     notPlayingNonMembers: state.games.notPlayingNonMembers,

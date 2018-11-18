@@ -24,7 +24,7 @@ class NavBar extends Component {
                     </div>
                     <nav className="navbar bg">
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <img className="toggler_img" src={SmallLogo} alt="logo" />
+                            <img className="toggler_img" src={SmallLogo} alt="logo" />
                         </button>
                     </nav>
                     </div>

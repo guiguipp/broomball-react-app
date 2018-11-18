@@ -1,3 +1,4 @@
+// Colors
 $colors: (
     whitey: #FFFFFF,
     blueish: #007bff,
@@ -36,48 +37,24 @@ $colors: (
     @return map-get($colors, $color-name)
 };
 
-$font-stack: (
-    primary: #{'Yellowtail', "Brush Script MT", "Brush Script Std", cursive},
-    secondary: #{'boogaloo', Impact, Charcoal, sans-serif,}
-);
+// variables
+$black-box-shadow: 3px 4px 8px 0px rgba(0, 0, 0, 0.2);
+// $black-font-shadow: -1px -1px 0 #260e04, 1px -1px 0 #260e04, -1px 1px 0 #260e04, 1px 1px 0 #260e04;
+$dark-font-shadow: (-1px -1px 0 color(brown), 1px -1px 0 color(brown), -1px 1px 0 color(brown), 1px 1px 0 color(brown));
+$orange-font-shadow: (-1px -1px 0 color(orange), 1px -1px 0 color(orange), -1px 1px 0 color(orange), 1px 1px 0 color(orange));
+$orange-title-shadow: (-0.5px -0.5px 0 color(orange), 0.5px -0.5px 0 color(orange), -0.5px 0.5px 0 color(orange), 0.5px 0.5px 0 color(orange));
 
-@function font($font-name) {
-    @return map-get($font-stack, $font-name)
-};
+$small-width: 100px;
+$small-height: 30px;
+$small-radius: 5px;
+$border-regular: 0.5px;
+$light-blur: 0.25px;
+$button-min-width-xs: 120px;
+$button-max-width-xs: 120px;
+$button-max-width-sm: 180px;
+$button-max-width-md: 220px;
 
-$h1-font-sizes: (
-    null: 40px,
-    480px: 45px,
-    640px: 55px,
-    1024px: 60px,
-);
-
-$h2-font-sizes: (
-    null: 25px,
-    480px: 27px,
-    640px: 31px,
-    1024px: 35px,
-);
-
-$p-font-sizes: (
-    null: 20px,
-    1024px: 35px,
-);
-
-
-@mixin font-size($fs-map) {
-    @each $fs-breakpoint, $fs-font-size in $fs-map {
-        @if $fs-breakpoint == null {
-        font-size: $fs-font-size;
-        }
-        @else {
-            @media screen and (min-width: $fs-breakpoint) {
-                font-size: $fs-font-size;
-                }
-            }
-        }
-    }
-
+// Screen Resizing
 $screen-sm: 480px;
 $screen-md: 768px;
 // $screen-lg: 992px;
@@ -102,25 +79,7 @@ $screen-xl: 1024px;
     }
 }
 
-$black-box-shadow: 3px 4px 8px 0px rgba(0, 0, 0, 0.2);
-$dark-font-shadow: (-1px -1px 0 color(brown), 1px -1px 0 color(brown), -1px 1px 0 color(brown), 1px 1px 0 color(brown));
-$orange-font-shadow: (-1px -1px 0 color(orange), 1px -1px 0 color(orange), -1px 1px 0 color(orange), 1px 1px 0 color(orange),
-);
 
-$small-width: 100px;
-$small-height: 30px;
-$small-radius: 5px;
-$border-regular: 0.5px;
-$light-blur: 0.25px;
-
-.content_button {
-    box-shadow: $black-box-shadow;
-    border-radius: $small-radius;
-    min-width: $small-width;
-    min-height: $small-height;
-    text-align: center;
-    border-style: unset;
-}
 // THEMES
 @mixin theme($bkCol, $col, $activeBkCol, $activeCol, $activeBorderStyle, $activeBorderCol, $activeBorderWidth ) {
     background: $bkCol;    
@@ -144,7 +103,7 @@ $light-blur: 0.25px;
         color(orange),            // :active color
         solid,                      // :active border style
         color(brown),             // :actve border column
-        $border-regular             // :active border width
+        $border-regular,             // :active border width
         )
     }
 /* contrast */
@@ -199,8 +158,6 @@ $light-blur: 0.25px;
         $border-regular,
     )
 }
-
-
 .leaning_right_color {
     background: color(leaning_right_orange_gradient);
     color: color(whitey);
@@ -240,6 +197,19 @@ $light-blur: 0.25px;
     border-color: color(grey);
     font-weight: lighter;
 }
+
+.Defense {
+    color: color(defense);
+}
+
+.Forward {
+    color: color(forward)
+}
+
+.Goalie {
+    color: color(goalie)
+}
+
 /* "Main" Theme */
 .main_main {
     background: color(whitey);
@@ -250,7 +220,6 @@ $light-blur: 0.25px;
     min-width: 300px;
     margin: auto;
     padding: 5% 0;
-    /* for testing purposes (this is in draft.css) */
     margin-bottom: 3%;
     
     @include md {
@@ -260,22 +229,6 @@ $light-blur: 0.25px;
         width: 70%;
     };
 }
-.h1_main {
-        color: color(brown);
-        text-shadow: $orange-font-shadow;
-        text-align: center;
-        position: relative;
-        font-family: font(primary);
-    }
-
-.h2_main {
-        font-family: font(secondary);
-        margin-bottom: 10%;
-        text-align: center;
-        color: color(brown);
-        }
-
-
 /* "Alternate" theme */
 .main_alternate {
     background: color(orange);
@@ -286,22 +239,115 @@ $light-blur: 0.25px;
     min-width: 300px;
     margin-left: 15%;
     padding: 5% 0;
-    /* for testing purposes (this is in draft.css) */
     margin-bottom: 200px;
 }
-.h1_alternate {
-        color: color(whitey);
-        text-shadow: $dark-font-shadow;
-        text-align: center;
-        position: relative;
-        font-family: font(primary);
+
+// Fonts
+$font-stack: (
+    primary: #{'Yellowtail', "Brush Script MT", "Brush Script Std", cursive},
+    secondary: #{'boogaloo', Impact, Charcoal, sans-serif,},
+    button: #{'Roboto', "Helvetica Neue",}
+);
+
+@function font($font-name) {
+    @return map-get($font-stack, $font-name)
+};
+
+$h1-font-sizes: (
+    null: 40px,
+    480px: 45px,
+    640px: 55px,
+    1024px: 60px,
+);
+
+$h2-font-sizes: (
+    null: 25px,
+    480px: 27px,
+    640px: 31px,
+    1024px: 35px,
+);
+
+$p-font-sizes: (
+    null: 20px,
+    1024px: 35px,
+);
+
+
+@mixin font-size($fs-map) {
+    @each $fs-breakpoint, $fs-font-size in $fs-map {
+        @if $fs-breakpoint == null {
+        font-size: $fs-font-size;
+        }
+        @else {
+            @media screen and (min-width: $fs-breakpoint) {
+                font-size: $fs-font-size;
+                }
+            }
+        }
+    }
+.h1_main {
+    color: color(brown);
+    text-shadow: $orange-font-shadow;
+    text-align: center;
+    position: relative;
+    font-family: font(primary);
+}
+
+.h2_main {
+    font-family: font(secondary);
+    margin-bottom: 10%;
+    text-align: center;
+    color: color(brown);
     }
 
-.h2_alternate {
-        color: white;
-        font-family: font(secondary);
-        text-align: center;
+.h3_main {
+    font-family: font(secondary);
+    color: color(brown);
+    text-shadow: $orange-font-shadow;
+    font-family: font(primary);
+    text-align: left;
+    font-size: 300%;
+    margin: 3% 0% 1%;
     }
+
+.h1_alternate {
+    color: color(whitey);
+    text-shadow: $dark-font-shadow;
+    text-align: center;
+    position: relative;
+    font-family: font(primary);
+}
+
+.h2_alternate {
+    color: white;
+    font-family: font(secondary);
+    text-align: center;
+}
+
+.h3_alternate {
+    color: white;
+    text-shadow: $dark-font-shadow;
+    font-family: font(primary);
+    text-align: left;
+    padding-left: 3%;
+    font-size: 250%;
+    margin-bottom: 3%;
+}
+
+/*
+.h3_alternate {
+    color: white;
+    text-shadow: -1px -1px 0 #260e04, 1px -1px 0 #260e04, -1px 1px 0 #260e04, 1px 1px 0 #260e04;
+    font-family: 'Yellowtail', cursive;
+    text-align: left;
+    padding-left: 3%;
+    font-size: 250%;
+    margin-bottom: 3%;
+}
+
+.h3_main {
+    
+}*/
 
 h1 {
     margin-bottom: 6%;
@@ -313,24 +359,30 @@ h2 {
     @include font-size($h2-font-sizes)
 }
 
-img {
-    width: 100%;
-    @include md {
-        width: 75%;
-    };
-    @include xl {
-        width: 50%;
-    }
-}
+
+
+
 
 button {
+    font-family: font(button);
     font-size: 12px;
-    border-radius: $border-regular * 2;
+    min-height: 35px;
+    width: 55%;
+    min-width: $button-min-width-xs;
+    max-width: $button-max-width-xs;
+    text-align: center;
+    // padding: 2%;
+    border-style: unset;
+    border-radius: $small-radius;
+    box-shadow: $black-box-shadow;
     @include sm {
         font-size: 14px;
     }
     @include md {
         font-size: 18px;
+        min-height: 45px;
+        width: 75%;
+        max-width: $button-max-width-md;
     }
 }
 
@@ -343,18 +395,6 @@ button {
 
 .visible {
     visibility: visible;
-}
-
-.Defense {
-    color: color(defense);
-}
-
-.Forward {
-    color: color(forward)
-}
-
-.Goalie {
-    color: color(goalie)
 }
 
 // Locker
@@ -515,7 +555,7 @@ input {
     top: -17px;
     left: -3px;
     font-size: 130%;
-    color: #260e04;
+    color: color(brown);
 }
 
 .remove_player:hover {
@@ -544,9 +584,9 @@ input {
         color(dark-grey),           // background-color
         color(whitey),              // color
         color(whitey),              // :active background-color
-        color(dark-grey),            // :active color
+        color(dark-grey),           // :active color
         solid,                      // :active border style
-        color(dark-grey),             // :actve border column
+        color(dark-grey),           // :actve border column
         $border-regular             // :active border width
         )
 }
@@ -556,9 +596,9 @@ input {
         color(light-grey),          // background-color
         color(blackey),             // color
         color(blackey),             // :active background-color
-        color(light-grey),            // :active color
+        color(light-grey),          // :active color
         solid,                      // :active border style
-        color(ligh),             // :actve border column
+        color(ligh),                // :actve border column
         $border-regular             // :active border width
         )
 }
@@ -570,7 +610,7 @@ input {
 .sorter {
     display: inline-block;
 }
-
+// Picker Module
 .player_picking {   
     width: 55%;
     max-width: 250px;
@@ -583,7 +623,7 @@ input {
 .player_picking:hover {
     animation-duration: 0.9s;
     animation-name: slidearrow;
-    animation-iteration-count: infinite;
+    animation-iteration-count: 4;
     animation-direction: alternate;
 }
 
@@ -604,8 +644,43 @@ input {
 
 .remove_pick {
     position: relative;
-    top: -20px;
-    right: 5px;
+    top: -14px;
+    left: 0px;
+}
+.pick_number {
+    background: color(brown);
+    color: color(whitey);
+    width: 25px;
+    height: 25px;
+    border-radius: 100%;
+    font-weight: bold;
+    font-variant: small-caps;
+    text-align: center;
+    position: relative;
+    top: 12px;
+    left: 5px;
+
+}
+.sm_remove_pick {
+    position: relative;
+    top: 10px;
+    left: 5px;
+    font-size: 130%;
+    text-align: center;
+}
+.pick_name_button {
+    justify-self: center;
+}
+
+.sorting-down {
+    position: relative;
+    top: 10px;
+    left: 22px;
+}
+.sorting-up {
+    position: relative;
+    top: 0px;
+    left: -5px;
 }
 
 .up_arrow {
@@ -616,7 +691,10 @@ input {
     font-size: 200%;
     
 }
-
+.sm_up_arrow {
+    color: color(blueish);
+    font-size: 200%;
+}
 @keyframes arrowup {
     from {
         top: -10px;
@@ -641,7 +719,10 @@ input {
     left: -23px;
     top: 22px;
     font-size: 200%;
-    
+}
+.sm_down_arrow {
+    color: color(blueish);
+    font-size: 200%;
 }
 
 @keyframes arrowdown {
@@ -664,25 +745,47 @@ input {
 }
 
 .player_picking_div {
-    text-align: center;
-    width: 120%;
-    min-width: 200px;
-    position: relative;
-    left: -8%;
-    margin-top: 2%
+    display: grid;
+    grid-template-columns: 15% 10% 50% 10% 15%;
+    height: 55px;
 }
 
-.player_picking_div:first-child > .sorter > .up_arrow {
-    color: white;
+.player_picking_div:first-child {
+    .sorter {
+        .up_arrow {
+            color: color(whitey)
+        }
+    }
+    .sorting-up {
+        .sm_up_arrow {
+            color: color(whitey)
+        }
+    }
 }
-
-.player_picking_div:last-child > .sorter > .down_arrow {
-    color: white;
+.player_picking_div:last-child {
+    .sorter {
+        .down_arrow {
+            color: color(whitey)
+        }
+    }
+    .sorting-down {
+        .sm_down_arrow {
+            color: color(whitey)
+        }
+    }
+}
+.player_to_pick_div {
+    width: 80%;
+    margin: auto;
+}
+.pick_arrow_plus {
+    margin-left: 3%;
+    font-size: 160%;
 }
 
 // general aspect 
 .change_list_display {
-    margin: 7% auto -3% auto;
+    margin: 7% auto 3% auto;
     padding: 1% 2%;
     border-style: unset;
     border-radius: $small-radius;
@@ -696,15 +799,34 @@ input {
 
 .game_options_container {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr
+    grid-template-columns: 1fr 1fr 1fr;
+    button {
+        min-width: $button-min-width-xs * 0.75;
+        max-width: $button-max-width-xs;
+        @include md {
+            width: 75%;
+            max-width: $button-max-width-md;
+        }
+    }
+}
+
+.button_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    button {
+        min-width: 100px;
+        height: 40px;
+        justify-self: center;
+        @include md {
+            height: 60px;
+        }
+    }
 }
 
 // GameList
 .game_button {
-    width: 40%;
+    font-weight: bold;
     margin: 2% 0% 6%;
-    padding: 2%;
-
 }
 
 .show_games {
@@ -730,12 +852,12 @@ input {
 .no_game {
     border-style: solid;
     text-align: center;
-    border-width: 1px;
+    border-width: $border-regular * 2;
     border-color: color(light-orange);
     opacity: 0.7;
     color: color(light-orange);
     font-family: font(secondary);
-    font-size: 150%;
+    font-size: 130%;
     margin: 0px 10% 0% 10%;
     padding: 3% 2% 3% 2%;
 }
@@ -768,7 +890,8 @@ input {
     margin: auto;
 }
 .reduced_container {
-    width: 100%;
+    width: 90%;
+    margin: auto;
     padding: 0px;
     text-align: center;
 }
@@ -817,5 +940,55 @@ input {
     }
     to {
         top: 5px;
+    }
+}
+// Picker
+.ranks_col {
+    margin-bottom: 7%;
+}
+// Navbar
+nav button {
+    box-shadow: unset;
+}
+.navbar {
+    margin-bottom: 3%;
+}
+
+.navbar-toggler {
+    margin-left: 73%;
+    margin-top: 3%;
+    height: 90px;
+    @include md {
+        height: 115px;
+    };
+    @include xl {
+        height: 130px;
+    }
+}
+
+.nav-link {
+    font-family: font(secondary);
+    font-size: 125%;
+    color: #ffbe75;
+}
+
+.nav-link:hover {
+    color: #17a2b8;
+}
+
+.nav_title {
+    font-family: font(primary);
+    font-size: 200%;
+    color: color(whitey);
+    text-shadow: $orange-title-shadow;
+}
+
+img {
+    width: 80%;
+    @include md {
+        width: 115px;
+    };
+    @include xl {
+        width: 130px;
     }
 }
