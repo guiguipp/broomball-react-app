@@ -15,8 +15,6 @@ import GameOptionsTop from "../components/DraftPageComp/GameOptionsTop.js"
 import Locker from "../components/Locker.js"
 import { loadState } from "../components/sessionStorage"
 
-import "../styles/css/draft.css";
-
 const screenSize = window.innerWidth
 class Draft extends Component { 
 constructor(props) {
@@ -43,7 +41,7 @@ render() {
         <NavBar />
         <div className="main_main"> 
             <h1 className="h1_main">Draft Teams</h1>
-            <div className= "row organizer">
+            <div className= "organizer">
                 <div className="col"><Calendar/></div>
                 <div className="col"><GameList/></div>
             </div>
@@ -55,7 +53,7 @@ render() {
             <GameOptionsTop />
         </div>
         <div className={"main_main " + this.props.visibility.main}>
-            {this.props.draftMode === "Draft" ? screenSize > 900 ? <Drafter /> : <SmallScreenDrafter /> : screenSize > 500 ? <Picker /> : <SmallScreenPicker />}
+            {this.props.draftMode === "Draft" ? screenSize > 767 ? <Drafter /> : <SmallScreenDrafter /> : screenSize > 500 ? <Picker /> : <SmallScreenPicker />}
         </div>
         <div className={"main_main " + this.props.visibility.bottom}>
             <GameOptionsBottom />

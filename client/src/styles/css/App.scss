@@ -39,7 +39,6 @@ $colors: (
 
 // variables
 $black-box-shadow: 3px 4px 8px 0px rgba(0, 0, 0, 0.2);
-// $black-font-shadow: -1px -1px 0 #260e04, 1px -1px 0 #260e04, -1px 1px 0 #260e04, 1px 1px 0 #260e04;
 $dark-font-shadow: (-1px -1px 0 color(brown), 1px -1px 0 color(brown), -1px 1px 0 color(brown), 1px 1px 0 color(brown));
 $orange-font-shadow: (-1px -1px 0 color(orange), 1px -1px 0 color(orange), -1px 1px 0 color(orange), 1px 1px 0 color(orange));
 $orange-title-shadow: (-0.5px -0.5px 0 color(orange), 0.5px -0.5px 0 color(orange), -0.5px 0.5px 0 color(orange), 0.5px 0.5px 0 color(orange));
@@ -56,8 +55,9 @@ $button-max-width-md: 220px;
 
 // Screen Resizing
 $screen-sm: 480px;
+$screen-mm: 670px;
 $screen-md: 768px;
-// $screen-lg: 992px;
+$screen-lg: 992px;
 $screen-xl: 1024px;
 
 // Small devices
@@ -66,9 +66,23 @@ $screen-xl: 1024px;
         @content;
     }
 }
+// Mid-medium devices
+@mixin mm {
+    @media (min-width: #{$screen-mm}) {
+        @content;
+    }
+}
+
 // Medium devices
 @mixin md {
     @media (min-width: #{$screen-md}) {
+        @content;
+    }
+}
+
+// larger devices
+@mixin lg {
+    @media (min-width: #{$screen-lg}) {
         @content;
     }
 }
@@ -221,10 +235,15 @@ $screen-xl: 1024px;
     margin: auto;
     padding: 5% 0;
     margin-bottom: 3%;
-    
+
     @include md {
+        width: 90%;
+    };
+    
+    @include lg {
         width: 80%;
     };
+
     @include xl {
         width: 70%;
     };
@@ -255,8 +274,8 @@ $font-stack: (
 
 $h1-font-sizes: (
     null: 40px,
-    480px: 45px,
-    640px: 55px,
+    480px: 40px,
+    640px: 45px,
     1024px: 60px,
 );
 
@@ -334,34 +353,14 @@ $p-font-sizes: (
     margin-bottom: 3%;
 }
 
-/*
-.h3_alternate {
-    color: white;
-    text-shadow: -1px -1px 0 #260e04, 1px -1px 0 #260e04, -1px 1px 0 #260e04, 1px 1px 0 #260e04;
-    font-family: 'Yellowtail', cursive;
-    text-align: left;
-    padding-left: 3%;
-    font-size: 250%;
-    margin-bottom: 3%;
-}
-
-.h3_main {
-    
-}*/
-
 h1 {
     margin-bottom: 6%;
     @include font-size($h1-font-sizes);
-
 }
 
 h2 {
     @include font-size($h2-font-sizes)
 }
-
-
-
-
 
 button {
     font-family: font(button);
@@ -379,10 +378,12 @@ button {
         font-size: 14px;
     }
     @include md {
-        font-size: 18px;
-        min-height: 45px;
-        width: 75%;
+        font-size: 16px;
+        min-height: 40px;
         max-width: $button-max-width-md;
+    }
+    @include xl {
+        font-size: 18px;
     }
 }
 
@@ -491,11 +492,14 @@ input {
 }
 
 .player_button {   
-    width: 35%;
+    // width: 35%;
     min-width: $small-width;
     max-width: 200px;
     margin: 10px -8px 10px 8px;
     height: 2.75em;
+    // @include md {
+    //     width: 55%;
+    // }
 }
 
 .fa-arrow-circle-left {
@@ -556,14 +560,9 @@ input {
     left: -3px;
     font-size: 130%;
     color: color(brown);
-}
-
-.remove_player:hover {
-    color: red;
-}
-
-.remove_pick:hover {
-    color: red;
+    &:hover {
+        color: red;
+    }
 }
 
 .unavailable {
@@ -610,21 +609,32 @@ input {
 .sorter {
     display: inline-block;
 }
+
 // Picker Module
+.picker_mode {
+    @include md {
+        display: grid;
+        grid-template-columns: 50% 50%;
+    }
+}
+
+.pick_col_header {
+    @include md {
+        height: 100px;
+    }
+}
 .player_picking {   
     width: 55%;
     max-width: 250px;
     margin: 10px 0% 10px 8px;
     min-width: 150px;
     height: 2.75em;
-    /* transition: margin 0.9s; */
-}
-
-.player_picking:hover {
-    animation-duration: 0.9s;
-    animation-name: slidearrow;
-    animation-iteration-count: 4;
-    animation-direction: alternate;
+    &:hover {
+        animation-duration: 0.9s;
+        animation-name: slidearrow;
+        animation-iteration-count: 4;
+        animation-direction: alternate;
+    }
 }
 
 @keyframes slidearrow {
@@ -646,6 +656,9 @@ input {
     position: relative;
     top: -14px;
     left: 0px;
+    &:hover {
+        color: red;
+    }
 }
 .pick_number {
     background: color(brown);
@@ -695,6 +708,7 @@ input {
     color: color(blueish);
     font-size: 200%;
 }
+
 @keyframes arrowup {
     from {
         top: -10px;
@@ -714,7 +728,7 @@ input {
 }
 
 .down_arrow {
-    color:color(light-blue);
+    color:color(brown);
     position: relative;
     left: -23px;
     top: 22px;
@@ -744,10 +758,36 @@ input {
     animation-direction: alternate;
 }
 
+.list_of_unpicked_players {
+    @include md {
+        margin-left: 15%;
+    }
+}
+
+.list_of_picked_players {
+    @include md {
+        display: grid;
+        .player_button {
+            min-width: 150px;
+            margin: 0% auto;
+        }
+        .remove_pick {
+            position: relative;
+            top: -17px;
+            left: -10px;
+            font-size: 130%;
+        }
+    }
+}
+
 .player_picking_div {
     display: grid;
     grid-template-columns: 15% 10% 50% 10% 15%;
     height: 55px;
+    @include md {
+        display: unset;
+        margin: 3% auto;
+    }
 }
 
 .player_picking_div:first-child {
@@ -827,21 +867,30 @@ input {
 .game_button {
     font-weight: bold;
     margin: 2% 0% 6%;
+    @include md {
+        font-weight: unset;
+        margin: 5% 0% 10%;
+    }
 }
 
 .show_games {
     min-width: 50px;
     text-align: center;
 }
+
 .remove_game {
     position: relative;
     font-size: 125%;
     top: -12px;
     left: -12px;
+    @include md {
+        top: -20px;
+    }
+    &:hover {
+        color: red;
+    }
 }
-.remove_game:hover {
-    color: red;
-}
+
 .list-management {
     overflow: scroll;
     max-height: 200px;
@@ -860,6 +909,9 @@ input {
     font-size: 130%;
     margin: 0px 10% 0% 10%;
     padding: 3% 2% 3% 2%;
+    @include md {
+        margin: 0%;
+    }
 }
 /* for the date picker */
 .react-datepicker__navigation--next {
@@ -991,4 +1043,147 @@ img {
     @include xl {
         width: 130px;
     }
+}
+
+// Stats
+.table_container {
+    padding: 0 15px;
+}
+.tables_container {
+    @include lg {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+.stats_name {
+    font-variant: small-caps;
+    font-size: 115%;
+    padding-left: 10%;
+    @include md {
+        font-size: 145%;
+    }
+    @include lg {
+        font-size: 115%;
+    }
+}
+.darker_icon, .lighter_icon {
+    font-size: 155%;
+    @include sm {
+        font-size: 185%;
+    }
+    @include md {
+        font-size: 200%;
+    }
+    @include lg {
+        font-size: 185%;
+    }
+}
+.darker_icon {
+    color: color(orange);
+}
+
+.lighter_icon {
+    color: color(light-orange);
+}
+
+.data {
+    border-style: solid;
+    border-width: $border-regular *2;
+    background: color(whitey);
+    height: 50px;
+    margin: 0 3%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+thead > tr, .stats_row {
+    height: 60px;
+    display: grid;
+    grid-template-columns: minmax(100px, 300px) minmax(100px, 170px) minmax(100px, 170px);
+    align-items: center;
+}
+
+.stats {
+    text-align: center;
+    display: grid;
+    grid-template-columns: 30% 40% 30%;
+    align-items: center;
+}
+
+.nice, .good {
+    border-width: $border-regular * 4;
+    font-weight: bold;
+    background: color(whitey);
+}
+
+.nice {
+    border-color: color(orange);
+}
+
+.good {
+    border-color: color(orange);
+}
+
+.fa-plus-circle.darker_icon, .fa-plus-circle.lighter_icon, .fa-minus-circle.darker_icon, .fa-minus-circle.lighter_icon {
+    justify-self: center;
+}
+
+.full {
+    width: 100%;
+}
+
+.list_of_games {
+    padding: 5%;
+}
+
+.no_stats_message{
+    margin: auto;
+}
+
+// Past Game List
+.list_of_games {
+    width: 100%;
+    padding: 0 5% 0 5%;
+    margin-top: -5%;
+}
+.past_game_button {
+    width: 15%;
+    min-width: 130px;
+    margin: 5% 0% 3% 5%;
+    font-size: 14px;
+    height: 35px;
+}
+.past_game_button:last-child {
+    margin-bottom: 15%;
+}
+
+.month_game_played {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    button {
+        justify-self: center;
+    }
+    @include sm {
+        grid-template-columns: 1fr 1fr 1fr;        
+    }
+    @include mm {
+        grid-template-columns: 1fr 1fr 1fr 1fr;        
+    }
+    @include lg {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;        
+    }
+}
+.games_per_year {
+    border-style: solid;
+    border-width: $border-regular * 2;
+    border-color: color(grey);
+    padding-top: 2%;
+}
+
+.hide_year_button {
+    text-align: right;
+    position: relative;
+    top: -50px;
+    color: color(orange);
 }

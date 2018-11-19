@@ -32,7 +32,7 @@ class PastGameList extends Component {
     renderGames(object) {
         return Object.values(object).map((game, i) => {
             return (
-                <button key={game._id} className="btn past_game_button contrast_color" onClick={()=> this.getGameInfo(game._id)}> {game._id} </button>
+                    <button key={game._id} className="past_game_button contrast_color" onClick={()=> this.getGameInfo(game._id)}> {game._id} </button>
                 )
             })
         }
@@ -42,8 +42,9 @@ class PastGameList extends Component {
             return (
                 <div key= {i}>
                     <h3 className="h3_alternate">{key}:</h3>
-
-                    {this.renderGames(value)}
+                    <div className="month_game_played">
+                        {this.renderGames(value)}
+                    </div>
                 </div>
                 )
             })

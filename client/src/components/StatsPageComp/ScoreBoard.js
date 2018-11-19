@@ -138,8 +138,8 @@ class ScoreBoard extends Component {
             <span className="full">
                 <div>
                     <h1 className="h1_main">{this.props.game._id}</h1>
-                    <div className="row tables_container">
-                        <div className="col table_container">
+                    <div className="tables_container">
+                        <div className="table_container">
                             <h1 className="h1_alternate">Dark<br/>{this.props.game.goals_dark}</h1>
                             <table>
                                 <thead>
@@ -160,7 +160,7 @@ class ScoreBoard extends Component {
                                                     <td className="player_stats stats_data">
                                                         <div className="stats">
                                                             {this.state.editScore === true ? <FontAwesomeIcon icon="plus-circle" className={"darker_icon stats_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"add_goal_dark",player.gameInfo.goals)} /> : null }
-                                                            <div className={player.gameInfo.goals > 0 ? "nice" : null + " data"}>{player.gameInfo.goals}</div> 
+                                                            <div className={player.gameInfo.goals > 0 ? "nice data" : null + " data"}>{player.gameInfo.goals}</div> 
                                                             {this.state.editScore === true ? <FontAwesomeIcon icon="minus-circle" className={"darker_icon stats_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"substract_goal_dark",player.gameInfo.goals)} />  : null }
                                                         </div>
                                                     </td>
@@ -168,7 +168,7 @@ class ScoreBoard extends Component {
                                                     <td className="player_stats stats_data">
                                                         <div className="stats">
                                                             {this.state.editScore === true ? <FontAwesomeIcon icon="plus-circle" className={"lighter_icon stats_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"add_assist",player.gameInfo.assists)} />  : null }
-                                                            <div className={player.gameInfo.assists > 0 ? "good" : null + " data"}>{player.gameInfo.assists}</div> 
+                                                            <div className={player.gameInfo.assists > 0 ? "good data" : null + " data"}>{player.gameInfo.assists}</div> 
                                                             {this.state.editScore === true ? <FontAwesomeIcon icon="minus-circle" className={"lighter_icon stats_icon " + this.props.lockStatus}  onClick={()=> this.logStat(player._id,"substract_assist",player.gameInfo.assists)} /> : null }
                                                         </div>
                                                     </td>
@@ -180,7 +180,7 @@ class ScoreBoard extends Component {
                                     </tbody>
                                 </table>
                             </div>
-                            <div className="col table_container">
+                            <div className="table_container">
                                 <h1 className="h1_alternate">White<br/>{this.props.game.goals_white}</h1>
                                 <table>
                                     <thead>
@@ -201,7 +201,7 @@ class ScoreBoard extends Component {
                                                         <td className="player_stats stats_data">
                                                             <div className="stats">
                                                                 {this.state.editScore === true ? <FontAwesomeIcon icon="plus-circle" size="2x" className={"darker_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"add_goal_white",player.gameInfo.goals)} /> : null }
-                                                                <div className={player.gameInfo.goals > 0 ? "nice" : null + " data"}>{player.gameInfo.goals}</div> 
+                                                                <div className={player.gameInfo.goals > 0 ? "nice data" : null + " data"}>{player.gameInfo.goals}</div> 
                                                                 {this.state.editScore === true ? <FontAwesomeIcon icon="minus-circle" size="2x" className={"darker_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"substract_goal_white",player.gameInfo.goals)} /> : null }
                                                             </div>
                                                         </td>
@@ -209,7 +209,7 @@ class ScoreBoard extends Component {
                                                         <td className="player_stats stats_data">
                                                             <div className="stats">
                                                                 {this.state.editScore === true ? <FontAwesomeIcon icon="plus-circle" size="2x" className={"lighter_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"add_assist",player.gameInfo.assists)} /> : null }
-                                                                <div className={player.gameInfo.assists > 0 ? "good" : null + " data"}>{player.gameInfo.assists}</div> 
+                                                                <div className={player.gameInfo.assists > 0 ? "good data" : null + " data"}>{player.gameInfo.assists}</div> 
                                                                 {this.state.editScore === true ? <FontAwesomeIcon icon="minus-circle" size="2x" className={"lighter_icon " + this.props.lockStatus} onClick={()=> this.logStat(player._id,"substract_assist",player.gameInfo.assists)} /> : null }
                                                             </div>
                                                         </td>
