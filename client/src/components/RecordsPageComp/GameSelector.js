@@ -410,9 +410,9 @@ class GameSelector extends Component {
                     <div className={this.props.listOfGames + " select_all"}>
                             <div className="button_options_third_set">
                                 {this.props.allGamesSelection === "unselected_game" ? 
-                                    <button className={"btn record_game_button all_button " + this.props.allGamesSelection} onClick={() => this.selectAllGames(this.props.allGamesSelection)}> Select All Games <FontAwesomeIcon icon="plus" className="game_action_icon"/> </button>
+                                    <button className={"record_game_button all_button " + this.props.allGamesSelection} onClick={() => this.selectAllGames(this.props.allGamesSelection)}> Games <FontAwesomeIcon icon="plus" className="game_action_icon"/> </button>
                                     :
-                                    <button className={"btn record_game_button all_button " + this.props.allGamesSelection} onClick={() => this.unselectAllGames()}> Select All Games <FontAwesomeIcon icon="plus" className="game_action_icon"/> </button>
+                                    <button className={"record_game_button all_button " + this.props.allGamesSelection} onClick={() => this.unselectAllGames()}> Games <FontAwesomeIcon icon="times" className="game_action_icon"/> </button>
                                 }
                             </div>
                             
@@ -422,9 +422,9 @@ class GameSelector extends Component {
                                 {this.props.gamesForRecords.length > 0 ?
                                     this.props.gamesForRecords
                                     .map(game => this.props.selectedGames.indexOf(game) === -1 ? 
-                                    (<button key={game._id} className="btn unselected_game record_game_button" onClick={() => this.gameSelection([game, ...this.props.selectedGames])}> {game._id} <FontAwesomeIcon icon="plus" className="game_action_icon"/> </button>)
+                                    (<button key={game._id} className="unselected_game record_game_button" onClick={() => this.gameSelection([game, ...this.props.selectedGames])}> {game._id} <FontAwesomeIcon icon="plus" className="game_action_icon"/> </button>)
                                     : 
-                                    (<button key={game._id} className="btn selected_game record_game_button" onClick={() => this.unselectGame(game)}> {game._id} <FontAwesomeIcon icon="times" className="game_action_icon"/> </button>)
+                                    (<button key={game._id} className="selected_game record_game_button" onClick={() => this.unselectGame(game)}> {game._id} <FontAwesomeIcon icon="times" className="game_action_icon"/> </button>)
                                 )
                                 : <p className="no_game">There is currently no game to display</p> 
                             }

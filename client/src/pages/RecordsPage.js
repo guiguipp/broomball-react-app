@@ -9,9 +9,6 @@ import PlayerSelector from "../components/RecordsPageComp/PlayerSelector.js"
 import Showcase from "../components/RecordsPageComp/Showcase.js"
 import Filters from "../components/RecordsPageComp/Filters.js"
 import DataChart from "../components/RecordsPageComp/DataChart.js"
-
-import "../styles/css/records.css";
-
 class Records extends Component { 
 
 render() {
@@ -21,29 +18,29 @@ render() {
         <div className="main_main main_padded"> 
             <h1 className="h1_main">League Records</h1>
             
-            <div className= "row">
+            <section>
                 < DateSelector />
-            </div>
+            </section>
             
-            <div className= "row">
+            <section>
                 < GameSelector />
-            </div>
+            </section>
             
-            <div className= "row">
+            <section>
                 < PlayerSelector />
-            </div>
+            </section>
             
-            <div className= "row">
+            <section>
                 < DataChart />
-            </div>
+            </section>
 
-            <div className= "row">
+            <section>
                 < Showcase />
-            </div>
+            </section>
 
-            <div className= "row">
+            <section>
                 < Filters />
-            </div>
+            </section>
         </div>
     </div>
     )

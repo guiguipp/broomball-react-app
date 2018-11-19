@@ -480,8 +480,8 @@ class PlayerSelector extends Component {
                     <div className="content">
                         <div className={this.props.listOfPlayers + " select_all"}>
                             <div className="button_options_first_set">
-                                <button className={"btn record_player_button all_button " + this.props.memberSelection} onClick={() => this.selectAllPlayers(this.props.memberSelection)}> {this.props.memberSelection === "unselected_member" ? "Select" : "Unselect"} All Members </button>
-                                <button className={"btn record_player_button all_button " + this.props.tenBuckerSelection} onClick={() => this.selectAllPlayers(this.props.tenBuckerSelection)}> {this.props.tenBuckerSelection === "unselected_non_member" ? "Select" : "Unselect"} All Ten Buckers </button>
+                                <button className={"record_player_button all_button " + this.props.memberSelection} onClick={() => this.selectAllPlayers(this.props.memberSelection)}> Members {this.props.memberSelection === "unselected_member" ? <FontAwesomeIcon icon="plus" className="player_action_icon"/> : <FontAwesomeIcon icon="times" className="player_action_icon"/>}</button>
+                                <button className={"record_player_button all_button " + this.props.tenBuckerSelection} onClick={() => this.selectAllPlayers(this.props.tenBuckerSelection)}> Ten Buckers {this.props.tenBuckerSelection === "unselected_non_member" ? <FontAwesomeIcon icon="plus" className="player_action_icon"/> : <FontAwesomeIcon icon="times" className="player_action_icon"/>}</button>
                             </div>
                             
                         </div>
@@ -490,18 +490,18 @@ class PlayerSelector extends Component {
                                     this.props.allPlayers
                                     .filter(player => player.membershipStatus === "Member")
                                     .map(player => this.props.selectedPlayers.indexOf(player) === -1 ? 
-                                    (<button key={player._id} className="btn unselected_member record_player_button" onClick={() => this.selectPlayer(player)}> {player.name} <FontAwesomeIcon icon="plus" className="player_action_icon"/> </button>)
+                                    (<button key={player._id} className="unselected_member record_player_button" onClick={() => this.selectPlayer(player)}> {player.name} <FontAwesomeIcon icon="plus" className="player_action_icon"/> </button>)
                                     : 
-                                    (<button key={player._id} className="btn selected_member record_player_button" onClick={() => this.unselectPlayer(player)}> {player.name} <FontAwesomeIcon icon="times" className="player_action_icon"/> </button>)
+                                    (<button key={player._id} className="selected_member record_player_button" onClick={() => this.unselectPlayer(player)}> {player.name} <FontAwesomeIcon icon="times" className="player_action_icon"/> </button>)
                                 ) : <p className="no_game">There is currently no player to display</p> 
                                 }
                                 {this.props.allPlayers.length > 0 ?
                                     this.props.allPlayers
                                     .filter(player => player.membershipStatus !== "Member" && this.props.arrayOfTenBuckersID.includes(player._id))
                                     .map(player => this.props.selectedPlayers.indexOf(player) === -1 ? 
-                                    (<button key={player._id} className="btn unselected_non_member record_player_button" onClick={() => this.selectPlayer(player)}> {player.name} <FontAwesomeIcon icon="plus" className="player_action_icon"/> </button>)
+                                    (<button key={player._id} className="unselected_non_member record_player_button" onClick={() => this.selectPlayer(player)}> {player.name} <FontAwesomeIcon icon="plus" className="player_action_icon"/> </button>)
                                     : 
-                                    (<button key={player._id} className="btn selected_non_member record_player_button" onClick={() => this.unselectPlayer(player)}> {player.name} <FontAwesomeIcon icon="times" className="player_action_icon"/> </button>)
+                                    (<button key={player._id} className="selected_non_member record_player_button" onClick={() => this.unselectPlayer(player)}> {player.name} <FontAwesomeIcon icon="times" className="player_action_icon"/> </button>)
                                 ) : <p className="no_game">There is currently no player to display</p> 
                                 }
                         </div>
