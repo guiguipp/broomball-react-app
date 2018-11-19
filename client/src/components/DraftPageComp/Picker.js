@@ -126,8 +126,8 @@ class Drafter extends Component {
     render() {
         return (
             <main>
-                <div className="row picker_mode"> 
-                    <div className="col col_no_bootstrap set_picks_col">
+                <div className="picker_mode"> 
+                    <div className="col_no_bootstrap set_picks_col">
                         <h1 className="h1_main pick_col_header unpicked_list_header">Set {this.props.draftMode} Picks</h1>
                         <div className="list_of_unpicked_players">
                         {/* Mapping the unranked Players */}
@@ -144,7 +144,7 @@ class Drafter extends Component {
                         }
                         </div>
                     </div>
-                        <div className="col col_no_bootstrap ranks_col">
+                        <div className="col_no_bootstrap ranks_col">
                             <h1 className="h1_main pick_col_header picked_list_header">Ranks</h1>
                             {/* mapping the ranked available players */}
                             <div className="list_of_picked_players">

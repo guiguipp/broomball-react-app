@@ -107,10 +107,6 @@ table {
   width: 100%;
 }
 
-td, th {
-  padding: 8px;
-}
-
 th {
   text-align: center;
 }

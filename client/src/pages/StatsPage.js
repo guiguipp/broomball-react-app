@@ -9,8 +9,6 @@ import PastGameList from "../components/StatsPageComp/PastGamesList.js"
 import ScoreBoard from "../components/StatsPageComp/ScoreBoard.js"
 import NoStatsBoard from "../components/StatsPageComp/NoStatsBoard.js"
 
-import "../styles/css/stats.css";
-
 class Stats extends Component {         
 render() {
     return (
