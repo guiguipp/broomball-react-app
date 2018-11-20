@@ -19,6 +19,9 @@ import { batchChartUpdate } from '../../js/actions/statsActions'
 import { batchUnselect } from '../../js/actions/statsActions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
+import { createCardsArray } from "./curateData"
+import { createChartData } from "./curateData"
+
 class PlayerSelector extends Component {
 
     componentDidMount() {
@@ -28,138 +31,19 @@ class PlayerSelector extends Component {
     unselectPlayer(player) {
         this.props.unselectPlayer(player)
         this.props.removePlayerStatObject(player)
-        // removing the player from the chart dataset
-        let indexOfRemovedPlayer = this.props.chartData.labels.indexOf(player.name)
-        // removing all the info for this player. We need a new array
-        let newLabels = this.props.chartData.labels.slice(0,indexOfRemovedPlayer).concat(this.props.chartData.labels.slice(indexOfRemovedPlayer + 1))
-        
-        let newGoals = this.props.chartData.datasets[0].data.slice(0, indexOfRemovedPlayer).concat(this.props.chartData.datasets[0].data.slice(indexOfRemovedPlayer + 1));
-        let newAssists = this.props.chartData.datasets[1].data.slice(0, indexOfRemovedPlayer).concat(this.props.chartData.datasets[1].data.slice(indexOfRemovedPlayer + 1));
-        let newGames = this.props.chartData.datasets[2].data.slice(0, indexOfRemovedPlayer).concat(this.props.chartData.datasets[2].data.slice(indexOfRemovedPlayer + 1));
-        let newWins = this.props.chartData.datasets[3].data.slice(0, indexOfRemovedPlayer).concat(this.props.chartData.datasets[3].data.slice(indexOfRemovedPlayer + 1));
-        let newLosses = this.props.chartData.datasets[4].data.slice(0, indexOfRemovedPlayer).concat(this.props.chartData.datasets[4].data.slice(indexOfRemovedPlayer + 1));
-        let newTies = this.props.chartData.datasets[5].data.slice(0, indexOfRemovedPlayer).concat(this.props.chartData.datasets[5].data.slice(indexOfRemovedPlayer + 1));
-        let newGpg = this.props.chartData.datasets[6].data.slice(0, indexOfRemovedPlayer).concat(this.props.chartData.datasets[6].data.slice(indexOfRemovedPlayer + 1));
-        let newApg = this.props.chartData.datasets[7].data.slice(0, indexOfRemovedPlayer).concat(this.props.chartData.datasets[7].data.slice(indexOfRemovedPlayer + 1));
-        
-        let newData = {
-            labels: newLabels,
-            datasets: [
-                {...this.props.chartData.datasets[0], data: newGoals}, // goals
-                {...this.props.chartData.datasets[1], data: newAssists}, // assists
-                {...this.props.chartData.datasets[2], data: newGames}, // Games
-                {...this.props.chartData.datasets[3], data: newWins}, // wins
-                {...this.props.chartData.datasets[4], data: newLosses}, // Losses
-                {...this.props.chartData.datasets[5], data: newTies}, // Ties
-                {...this.props.chartData.datasets[6], data: newGpg}, // gpg
-                {...this.props.chartData.datasets[7], data: newApg}, // apg
-                ]
+        if ( this.props.selectedGamesNum > 0 ) {
+            let newObject = createChartData(this.props.selectedPlayers.filter(broomballer => broomballer._id !== player._id ))
+            this.props.batchChartUpdate(newObject)
+        } else {
+            console.log("Handle case: \nPlayer is removed, no game selected")
         }
-
-        this.props.batchChartUpdate(newData)
-
     }
-    // select individual player
-    // if duplicate, see how to remove
+    
     selectPlayer(broomballer) {
-        let arrayOfplayer = []
         this.markAsSelected(broomballer)
-        let gamesPlayed = this.props.selectedGames.filter(game => game.players.filter(player => player._id === broomballer._id )[0])
-        if (gamesPlayed.length > 0) {
-            let playerReduced = gamesPlayed.reduce((players, game) => {
-                let gameInfo = game.players.filter(player => player._id === broomballer._id).map(player => player.gameInfo)
-                let win;
-                let available;
-                players.name = broomballer.name
-                players._id = broomballer._id
-                players.membershipStatus = broomballer.membershipStatus
-                players.preferredPosition = broomballer.preferredPosition
-                
-                players.gamesPlayed = players.gamesPlayed || []
-                if(gameInfo[0].available === true){
-                    available= 1
-                    players.gamesPlayed.push(available)
-                }
-                
-                players.goals = players.goals || []
-                if(gameInfo[0].available === true) {
-                    players.goals.push(gameInfo[0].goals)
-                }
-                
-                players.assists = players.assists || []
-                if (gameInfo[0].available === true) {
-                    players.assists.push(gameInfo[0].assists)
-                }
-                
-                players.wins = players.wins || []
-                if(gameInfo[0].available === true && game.win === gameInfo[0].team){
-                    win= "Win"
-                    players.wins.push(win)
-                }
-
-                players.losses = players.losses || []
-                if(gameInfo[0].available === true && game.win !== "Tie" && game.win !== gameInfo[0].team){
-                    let loss= "Loss"
-                    players.losses.push(loss)
-                }
-
-                players.ties = players.ties || []
-                if(gameInfo[0].available === true && game.win === "Tie"){
-                    let tie= "Tie"
-                    players.ties.push(tie)
-                }
-                
-                return players
-                }, {});
-                    
-            let gamePlayedFromArray = playerReduced.gamesPlayed.length
-            let winsFromArray = playerReduced.wins.length
-            let lossesFromArray = playerReduced.losses.length
-            let tiesFromArray = playerReduced.ties.length
-            let winPercent = gamePlayedFromArray > 0 ? Math.floor((playerReduced.wins.length / playerReduced.gamesPlayed.length) * 100) : "N/A"
-            let lossPercent = gamePlayedFromArray > 0 ? Math.floor((playerReduced.losses.length / playerReduced.gamesPlayed.length) * 100) : "N/A"
-            let tiePercent = gamePlayedFromArray > 0 ? Math.floor((playerReduced.ties.length / playerReduced.gamesPlayed.length) * 100) : "N/A"
-            let goalsFromArray = playerReduced.goals.reduce((a,b) => a + b, 0)
-            let assistsFromArray = playerReduced.assists.reduce((a, b) => a + b, 0)
-            let gpg = gamePlayedFromArray > 0 ? parseFloat((goalsFromArray / gamePlayedFromArray)) : "N/A"
-            let apg = gamePlayedFromArray > 0 ? parseFloat((assistsFromArray / gamePlayedFromArray)) : "N/A"
-            
-            playerReduced.gamesPlayed = gamePlayedFromArray
-            playerReduced.wins = winsFromArray
-            playerReduced.losses = lossesFromArray
-            playerReduced.ties = tiesFromArray
-            // If the numbers are not integers, they are truncated 
-            playerReduced.winPercent = winPercent
-            playerReduced.lossPercent = lossPercent
-            playerReduced.tiePercent = tiePercent
-            playerReduced.goals = goalsFromArray 
-            playerReduced.assists = assistsFromArray
-            if (gpg !== "N/A") { playerReduced.gpg = Number.isInteger(gpg) ? gpg : gpg.toFixed(3) } else {playerReduced.gpg = gpg} 
-            if (apg !== "N/A") { playerReduced.apg = Number.isInteger(apg) ? apg : apg.toFixed(3) } else {playerReduced.apg = apg} 
-            this.props.addPlayerStatObject( playerReduced )
-            arrayOfplayer.push(playerReduced)
-            }
-            else {
-                let playerWithoutRecord = {
-                    name: broomballer.name,
-                    gamesPlayed: 0,
-                    goals: "N/A",
-                    assists: "N/A",
-                    membershipStatus: broomballer.membershipStatus,
-                    winPercent: "N/A",
-                    lossPercent: "N/A",
-                    tiePercent: "N/A",
-                    win: "N/A",
-                    loss: "N/A",
-                    tie: "N/A",
-                    gpg: "N/A",
-                    apg: "N/A",
-                    _id: broomballer._id
-                }
-                this.props.addPlayerStatObject(playerWithoutRecord)
-                arrayOfplayer.push(playerWithoutRecord)
-            }
-            this.addBatchChartData(arrayOfplayer)
+        let cardsArray = createCardsArray(this.props.selectedPlayers.concat(broomballer), this.props.selectedGames)
+        this.props.updatePlayers( cardsArray )
+        this.addBatchChartData( cardsArray )
     }
 
     toggleViews(currentStatus){
@@ -199,265 +83,32 @@ class PlayerSelector extends Component {
     }
     // this function marks all players in the array as selected (via this.markAsSelected), creates an array of objects in the playerRecords reducer, 
     // and sends data to be handled by setChartData accordingly (=> selected players are created properly for Chartjs package)
-    selectAndTransform(array, type) {
-        let transformedArrayForCards = []
-            array.forEach(broomballer => {
-                let gamesPlayed = this.props.selectedGames.filter(game => game.players.filter(player => player._id === broomballer._id )[0])
-                if (type === "select") { this.markAsSelected(broomballer)}
-                if (gamesPlayed.length > 0) {
-                let playerReduced = gamesPlayed.reduce((players, game) => {
-                    let gameInfo = game.players.filter(player => player._id === broomballer._id).map(player => player.gameInfo)
-                    players.name = broomballer.name
-                    players._id = broomballer._id
-                    players.membershipStatus = broomballer.membershipStatus
-                    players.preferredPosition = broomballer.preferredPosition
-                    
-                    players.gamesPlayed = players.gamesPlayed || []
-                    if(gameInfo[0].available === true){
-                        let available = 1
-                        players.gamesPlayed.push(available)
-                    }
-                    
-                    players.goals = players.goals || []
-                    if(gameInfo[0].available === true) {
-                        players.goals.push(gameInfo[0].goals)
-                    }
-                    
-                    players.assists = players.assists || []
-                    if (gameInfo[0].available === true) {
-                        players.assists.push(gameInfo[0].assists)
-                    }
-                    
-                    players.wins = players.wins || []
-                    if(gameInfo[0].available === true && game.win === gameInfo[0].team){
-                        let win= "Win"
-                        players.wins.push(win)
-                    }
-
-                    players.losses = players.losses || []
-                    if(gameInfo[0].available === true && game.win !== "Tie" && game.win !== gameInfo[0].team){
-                        let loss= "Loss"
-                        players.losses.push(loss)
-                    }
-
-                    players.ties = players.ties || []
-                    if(gameInfo[0].available === true && game.win === "Tie"){
-                        let tie= "Tie"
-                        players.ties.push(tie)
-                    }
-
-                    return players
-                    }, {});
-                let gamePlayedFromArray = playerReduced.gamesPlayed.length
-                let winsFromArray = playerReduced.wins.length
-                let lossesFromArray = playerReduced.losses.length
-                let tiesFromArray = playerReduced.ties.length
-                let winPercent = gamePlayedFromArray > 0 ? Math.floor((playerReduced.wins.length / playerReduced.gamesPlayed.length) * 100) : "N/A"
-                let lossPercent = gamePlayedFromArray > 0 ? Math.floor((playerReduced.losses.length / playerReduced.gamesPlayed.length) * 100) : "N/A"
-                let tiePercent = gamePlayedFromArray > 0 ? Math.floor((playerReduced.ties.length / playerReduced.gamesPlayed.length) * 100) : "N/A"
-                let goalsFromArray = playerReduced.goals.reduce((a,b) => a + b, 0)
-                let assistsFromArray = playerReduced.assists.reduce((a, b) => a + b, 0)
-                let gpg = gamePlayedFromArray > 0 ? parseFloat((goalsFromArray / gamePlayedFromArray)) : "N/A"
-                let apg = gamePlayedFromArray > 0 ? parseFloat((assistsFromArray / gamePlayedFromArray)) : "N/A"
-                
-                playerReduced.gamesPlayed = gamePlayedFromArray
-                // should also store the arrays for stats purposes... ?
-                playerReduced.wins = winsFromArray
-                playerReduced.losses = lossesFromArray
-                playerReduced.ties = tiesFromArray
-                playerReduced.winPercent = winPercent
-                playerReduced.lossPercent = lossPercent
-                playerReduced.tiePercent = tiePercent
-                playerReduced.goals = goalsFromArray 
-                playerReduced.assists = assistsFromArray
-                if (gpg !== "N/A") { playerReduced.gpg = Number.isInteger(gpg) ? gpg : gpg.toFixed(3) } else {playerReduced.gpg = gpg} 
-                if (apg !== "N/A") { playerReduced.apg = Number.isInteger(apg) ? apg : apg.toFixed(3) } else {playerReduced.apg = apg} 
-
-                transformedArrayForCards.push( playerReduced )
-                }
-                else {
-                    let playerWithoutRecord = {
-                        name: broomballer.name,
-                        gamesPlayed: 0,
-                        goals: "N/A",
-                        assists: "N/A",
-                        membershipStatus: broomballer.membershipStatus,
-                        winPercent: "N/A",
-                        lossPercent: "N/A",
-                        tiePercent: "N/A",
-                        win: "N/A",
-                        loss: "N/A",
-                        tie: "N/A",
-                        gpg: "N/A",
-                        apg: "N/A",
-                        _id: broomballer._id
-                    }
-                    transformedArrayForCards.push( playerWithoutRecord )
-                }
-            })
-            // if the type is "select", the function will add the players to the existing records for chart (via addBatchChartData)
-            // otherwise, it will remove and replace them via the replace BatchChartData
-            if (type === "select") {
-                this.props.updatePlayers(transformedArrayForCards)
-                this.addBatchChartData(transformedArrayForCards)
-                }
-            else if (type === "unselect") {
-                this.replaceBatchChartData( transformedArrayForCards )
+    selectAndTransform(arrayOfPlayers, type) {
+        if (type === "select") {
+            arrayOfPlayers.forEach(broomballer => this.markAsSelected(broomballer))
+        }
+        let cardsArray = createCardsArray(arrayOfPlayers, this.props.selectedGames)
+        if (type === "select") {
+            this.props.updatePlayers( cardsArray )
+            this.addBatchChartData( cardsArray )
             }
+        else if (type === "unselect") {
+            this.addBatchChartData( cardsArray )
+        }
     }
+
     // this handles unselecting players depending on the membership type sent
     batchUnselect(type){
         this.props.batchUnselect(type);
         this.props.selectedPlayers.filter(player => player.membershipStatus === type).forEach(broomballer => this.unselectPlayer(broomballer));
         this.selectAndTransform(this.props.selectedPlayers.filter(player => player.membershipStatus !== type), "unselect")
     }
-    // this is how we initialize what is sent to chartData. The index of the array of objects in the datasets nested object comes from the reducer, and needs to stay consistent across functions (0 = Goals object, 1 = Assist object, etc.)
+
     addBatchChartData(arrayOfPlayers) {
-        let labels = []
-        let goalsArray = []
-        let assistsArray = []
-        let gamesPlayedArray = []
-        let winPercentArray = []
-        let lossPercentArray = []
-        let tiePercentArray = []
-        let gpgArray = []
-        let apgArray = []
-        arrayOfPlayers.forEach(e => {
-            labels.push(e.name);
-            goalsArray.push(e.goals);
-            assistsArray.push(e.assists);
-            gamesPlayedArray.push(e.gamesPlayed);
-            winPercentArray.push(e.winPercent);
-            lossPercentArray.push(e.lossPercent);
-            tiePercentArray.push(e.tiePercent);
-            gpgArray.push(e.gpg);
-            apgArray.push(e.apg);
-        })
-
-        let newObject = {
-            labels: labels.concat(this.props.chartData.labels),
-            // For performance reason, it is better to re-initiate the data than to use the ... operator to merge new with existing
-            datasets: [
-                {
-                    label: "Goals",
-                    data: goalsArray.concat(this.props.chartData.datasets[0].data),
-                    backgroundColor: 'rgba(255, 99, 132, 0.6)',
-                    borderColor: 'rgba(172,173,178,1)',
-                    borderWidth: 1,
-                    hoverBackgroundColor: 'rgba(255, 99, 132, 0.6)',
-                    hoverBorderColor: 'rgba(255, 99, 132, 0.6)',
-                },
-                {
-                    label: "Assists",
-                    data: assistsArray.concat(this.props.chartData.datasets[1].data),
-                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                    borderColor: 'rgba(172,173,178,1)',
-                    borderWidth: 1,
-                    hoverBackgroundColor: 'rgba(54, 162, 235, 0.6)',
-                    hoverBorderColor: 'rgba(54, 162, 235, 0.6)',
-                    barThickness: 15,
-                },
-                {
-                    label: "Games",
-                    data: gamesPlayedArray.concat(this.props.chartData.datasets[2].data),
-                    backgroundColor: 'rgba(255, 206, 86, 0.6)',
-                    borderColor: 'rgba(172,173,178,1)',
-                    borderWidth: 1,
-                    hoverBackgroundColor: 'rgba(255, 206, 86, 0.6)',
-                    hoverBorderColor: 'rgba(255, 206, 86, 0.6)',
-                    barThickness: 15,
-                },
-                {
-                    label: "Wins (%)",
-                    data: winPercentArray.concat(this.props.chartData.datasets[3].data),
-                    backgroundColor: 'rgba(75,192,192,0.6)',
-                    borderColor: 'rgba(172,173,178,1)',
-                    borderWidth: 1,
-                    hoverBackgroundColor: 'rgba(75,192,192,0.6)',
-                    hoverBorderColor: 'rgba(75,192,192,0.6)',
-                    barThickness: 15,
-                },
-                {
-                    label: "Losses (%)",
-                    data: lossPercentArray.concat(this.props.chartData.datasets[4].data),
-                    backgroundColor: '#d3b8ae',
-                    borderColor: 'rgba(172,173,178,1)',
-                    borderWidth: 1,
-                    hoverBackgroundColor: '#d3b8ae',
-                    hoverBorderColor: '#d3b8ae',
-                    barThickness: 15,
-                },
-                {
-                    label: "Ties (%)",
-                    data: tiePercentArray.concat(this.props.chartData.datasets[5].data),
-                    backgroundColor: '#ff8a65',
-                    borderColor: 'rgba(172,173,178,1)',
-                    borderWidth: 1,
-                    hoverBackgroundColor: '#ff8a65',
-                    hoverBorderColor: '#ff8a65',
-                    barThickness: 15,
-                },
-                {
-                    label: "GPG",
-                    data: gpgArray.concat(this.props.chartData.datasets[6].data),
-                    backgroundColor: 'rgba(153,102,255,0.6)',
-                    borderColor: 'rgba(172,173,178,1)',
-                    borderWidth: 1,
-                    hoverBackgroundColor: 'rgba(153,102,255,0.6)',
-                    hoverBorderColor: 'rgba(153,102,255,0.6)',
-                    barThickness: 15,
-                },
-                {
-                    label: "APG",
-                    data: apgArray.concat(this.props.chartData.datasets[7].data),
-                    backgroundColor: 'rgba(255, 159, 64, 0.6)',
-                    borderColor: 'rgba(172,173,178,1)',
-                    borderWidth: 1,
-                    hoverBackgroundColor: 'rgba(255, 159, 64, 0.6)',
-                    hoverBorderColor: 'rgba(255, 159, 64, 0.6)',
-                    options: {barThickness: 100},
-                },
-                ]
+        if ( this.props.selectedGamesNum > 0 ) {
+            let newObject = createChartData(arrayOfPlayers)
+            this.props.batchChartUpdate(newObject)
         }
-        this.props.batchChartUpdate(newObject)
-    }
-
-    replaceBatchChartData(arrayOfPlayers) {
-        let labels = []
-        let goalsArray = []
-        let assistsArray = []
-        let gamesPlayedArray = []
-        let winPercentArray = []
-        let lossPercentArray = []
-        let tiePercentArray = []
-        let gpgArray = []
-        let apgArray = []
-        arrayOfPlayers.forEach(e => {
-            labels.push(e.name);
-            goalsArray.push(e.goals);
-            assistsArray.push(e.assists);
-            gamesPlayedArray.push(e.gamesPlayed);
-            winPercentArray.push(e.winPercent);
-            lossPercentArray.push(e.lossPercent);
-            tiePercentArray.push(e.tiePercent);
-            gpgArray.push(e.gpg);
-            apgArray.push(e.apg);
-        })
-
-        let newObject = {
-            labels: labels,
-            datasets: [
-                {...this.props.chartData.datasets[0], data: goalsArray},
-                {...this.props.chartData.datasets[1], data: assistsArray},
-                {...this.props.chartData.datasets[2], data: gamesPlayedArray},
-                {...this.props.chartData.datasets[3], data: winPercentArray.concat(this.props.chartData.datasets[3].data)},
-                {...this.props.chartData.datasets[4], data: lossPercentArray.concat(this.props.chartData.datasets[4].data)},
-                {...this.props.chartData.datasets[5], data: tiePercentArray.concat(this.props.chartData.datasets[5].data)},
-                {...this.props.chartData.datasets[6], data: gpgArray.concat(this.props.chartData.datasets[6].data)},
-                {...this.props.chartData.datasets[7], data: apgArray.concat(this.props.chartData.datasets[7].data)}
-                ]
-        }
-        this.props.batchChartUpdate(newObject)
     }
 
     // Before sending the player to the selectPlayer action that will add it to the selectedPlayers array, we need to make sure the record does not already exist
@@ -514,7 +165,9 @@ class PlayerSelector extends Component {
 
 const mapStateToProps = state => ({
     selectedGames: state.stats.selectedGames,
+    selectedGamesNum: state.stats.selectedGames ? state.stats.selectedGames.length : 0,
     selectedPlayers: state.stats.selectedPlayers,
+    selectedPlayersNum: state.stats.selectedPlayers ? state.stats.selectedPlayers.length : 0,
     unselectedPlayers: state.stats.unselectedPlayers,
     memberSelection: state.stats.memberSelection,
     tenBuckerSelection: state.stats.tenBuckerSelection,

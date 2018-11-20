@@ -17,7 +17,7 @@ class Showcase extends Component {
     toggleSort(tab, currentStatus, ascArrow){
         this.props.toggleSortOptions(tab, currentStatus, ascArrow)
     }
-    
+    // Stats in Modal
     showPlayerStats(playerName, playerID){
         // we need to filter games that the player has played to show relevant stats
         // we have sorted the gamesSelected array chronologically for convenience
@@ -79,7 +79,7 @@ class Showcase extends Component {
                         <h3 className="header_h3 " onClick={()=> this.toggleViews(this.props.sortOptionsDisplay)}> {this.props.sortOptionsDisplay === "hidden" ? <FontAwesomeIcon icon="caret-right" className="header_icon"/> : <FontAwesomeIcon icon="caret-down" className="header_icon" />}Sorting Options</h3>
                     </div>
                 </div>
-                <div className={this.props.sortOptionsDisplay + " content "}>
+                <div className={this.props.sortOptionsDisplay !== "hidden" || this.props.numOfRecords > 0  ? "content visible" : "content hidden"}>
                     <div className={"list_of_options " + this.props.sortOptionsDisplay}>
                         
                             <button className={this.props.sortingOptions.azTab + " tab_button"} onClick={()=> this.toggleSort("az", this.props.sortingOptions.azTab, this.props.sortingOptions.alphaAsc)}>A-Z <span className="sort_action_icon"> <FontAwesomeIcon icon="long-arrow-alt-down" className={this.props.sortingOptions.alphaDesc + " sorting_arrow"} /> <FontAwesomeIcon icon="long-arrow-alt-up" className={this.props.sortingOptions.alphaAsc + " sorting_arrow"} /> </span> </button>
@@ -94,6 +94,7 @@ class Showcase extends Component {
                     
                     </div>
                     <div className="records ">
+                    
                     {this.props.playerRecords ? this.props.playerRecords.map(object => {
                         return (
                             <div key={object._id} className={object.preferredPosition === this.props.positionVisibility ? "hidden_card wrapping_card_div" : "visible wrapping_card_div" } onClick={()=> this.showPlayerStats(object.name, object._id)}>
@@ -126,6 +127,7 @@ const mapStateToProps = state => ({
     selectedPlayers: state.stats.selectedPlayers,
     sortOptionsDisplay: state.stats.sortOptionsDisplay,
     playerRecords: state.stats.filteredPlayerRecords,
+    numOfRecords: state.stats.filteredPlayerRecords ? state.stats.filteredPlayerRecords.length : 0,
     sortingOptions: state.stats.sortingOptions,
     forwardSelection: state.stats.selectors.forwardSelection,
     defenseSelection: state.stats.selectors.defenseSelection,
