@@ -32,7 +32,7 @@ $colors: (
 
     grey: #acadb2,
     light-grey: lighten(#acadb2, 20%),
-    dark-grey: darken(#acadb2, 20%),
+    dark-grey: rgb(86,86,86),
 
 );
 
@@ -257,11 +257,10 @@ $screen-xl: 1024px;
     border-color: color(whitey);
     border-style: solid;
     border-width: $border-regular * 2;
-    width: 70%;
-    min-width: 300px;
-    margin-left: 15%;
+    width: 90%;
+    // min-width: 300px;
+    margin: auto;
     padding: 5% 0;
-    margin-bottom: 200px;
 }
 
 // Fonts
@@ -854,8 +853,6 @@ input {
 }
 
 .button_container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
     button {
         min-width: 100px;
         height: 40px;
@@ -1058,7 +1055,7 @@ img {
         grid-template-columns: 1fr 1fr;
     }
 }
-.stats_name {
+.stats_name, .player_table_name {
     font-variant: small-caps;
     font-size: 115%;
     padding-left: 10%;
@@ -1081,6 +1078,10 @@ img {
         font-size: 185%;
     }
 }
+.score_header_tr {
+    text-align: center;
+}
+
 .darker_icon {
     color: color(orange);
 }
@@ -1648,4 +1649,159 @@ thead > tr, .stats_row {
     position: absolute;
     top: 50%;
     left: 150%;
+}
+
+// Player Page
+$table-width: 90%;
+$table-width-bg: 80%;
+$table-width-max: 700px;
+
+.tab_centering {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: end;
+    th {
+        width: 100%;
+    }
+}
+
+.tab {
+    height: 40px;
+    padding: 1%;
+    text-align: center;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.player_table_head {
+    width: $table-width;
+    margin: auto;
+    @include sm {
+        width: $table-width-bg;
+    }
+    @include md { 
+        max-width: $table-width-max;
+    }
+}
+
+.show {
+    background: color(whitey);
+    color: color(blackey);
+    border-style: solid solid none solid;
+    border-width: $border-regular * 2;
+    border-color: color(blackey) color(blackey) color(whitey) color(blackey);
+}
+
+.hide {
+    background: color(light-orange);
+    color: color(dark-grey);
+    border-color: color(orange) color(orange) color(blackey) color(orange);
+    border-style: none solid solid solid;
+    border-width: $border-regular * 2;
+}
+
+.passive_tab {
+    border-bottom-style: solid;
+    border-bottom-width: $border-regular * 2;
+    border-bottom-color: color(blackey);
+    color: color(orange);
+}
+
+.main_for_tab {
+    background: color(whitey);
+    border-style: none solid solid solid;
+    border-color: color(blackey);
+    border-width: $border-regular * 2;
+    margin: auto;
+    width: $table-width;
+    @include sm {
+        width: $table-width-bg;
+    }
+
+    @include md {
+        max-width: $table-width-max
+    }
+
+}
+
+.full_size {
+    width: 100%;
+}
+
+#range_submit {
+    margin: 5% 0% 0% 91%;
+}
+// form
+label {
+    color: rgb(86,86,86);
+    text-shadow: -0.1px -0.1px 0 #DE733A, 0.1px -0.1px 0 #DE733A, -0.1px 0.1px 0 #DE733A, 0.1px 0.1px 0 #DE733A;
+    display: inline-block;
+    margin-bottom: .5rem;
+    margin: 3% 16% 3% 1%;
+}
+.form_container {
+    width: 100%;
+    margin: auto;
+    padding: 0 20%;
+}
+.field {
+    margin: 2% 0% 5%;
+}
+input {
+    margin: 1% 5% 1% 5%;
+}
+
+// List
+/* table formatting */
+
+table {
+    border-collapse: collapse;
+    display: table;
+    tr:nth-child(even) {
+        background-color: color(light-grey);
+    }
+}
+.player_table {
+    width: 100%;
+}
+.player_table_name {
+    display: flex;
+    align-items: center;
+}
+.player_table_row {
+    padding: 5% 0%;
+    display: grid;
+    grid-template-columns: 30% 70%;
+    &:first-child {
+        padding-top: 7%;
+    }
+    @include md {
+        padding: 3% 0%; 
+    }
+
+    @include lg {
+        &:first-child {
+            padding: 5% 0 2%;
+        }
+        padding: 2% 0%; 
+    }
+    .player_manage_buttons {
+        display: grid;
+        justify-self: center;
+        @include sm {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+        button {
+            margin: 0 2%;
+        }
+    }
+}
+
+.field > input {
+    width: 100%;
+}
+
+.hidden.full_tab_size {
+    display: none;
 }

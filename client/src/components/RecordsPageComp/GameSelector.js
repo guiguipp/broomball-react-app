@@ -406,8 +406,8 @@ class GameSelector extends Component {
                             <h3 className="header_h3" onClick={()=> this.toggleViews(this.props.listOfGames)}> {this.props.listOfGames === "hidden" ? <FontAwesomeIcon icon="caret-right" className="header_icon"/> : <FontAwesomeIcon icon="caret-down" className="header_icon" />}Select Games</h3>
                         </div>
                     </div>
-                    <div className="content">
-                    <div className={this.props.listOfGames + " select_all"}>
+                    <div className={this.props.listOfGames + " content "}>
+                        <div className={this.props.listOfGames + " select_all"}>
                             <div className="button_options_third_set">
                                 {this.props.allGamesSelection === "unselected_game" ? 
                                     <button className={"record_game_button all_button " + this.props.allGamesSelection} onClick={() => this.selectAllGames(this.props.allGamesSelection)}> Games <FontAwesomeIcon icon="plus" className="game_action_icon"/> </button>
