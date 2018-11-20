@@ -143,7 +143,7 @@ class ScoreBoard extends Component {
                             <h1 className="h1_alternate">Dark<br/>{this.props.game.goals_dark}</h1>
                             <table>
                                 <thead>
-                                    <tr>
+                                    <tr className="score_header_tr">
                                         <th className="table_col_name">Player</th> 
                                         <th className="table_col_name">Goals</th>
                                         <th className="table_col_name">Assists</th>
@@ -182,9 +182,9 @@ class ScoreBoard extends Component {
                             </div>
                             <div className="table_container">
                                 <h1 className="h1_alternate">White<br/>{this.props.game.goals_white}</h1>
-                                <table>
+                                <table className="score_table">
                                     <thead>
-                                        <tr>
+                                        <tr className="score_header_tr">
                                             <th className="table_col_name">Player</th> 
                                             <th className="table_col_name">Goals</th>
                                             <th className="table_col_name">Assists</th>

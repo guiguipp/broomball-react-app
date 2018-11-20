@@ -477,7 +477,8 @@ class PlayerSelector extends Component {
                             <h3 className="header_h3" onClick={()=> this.toggleViews(this.props.listOfPlayers)}> {this.props.listOfPlayers === "hidden" ? <FontAwesomeIcon icon="caret-right" className="header_icon"/> : <FontAwesomeIcon icon="caret-down" className="header_icon" />}Select Players</h3>
                         </div>
                     </div>
-                    <div className="content">
+                    <div className="content ">
+                    {/* <div className={this.props.listOfPlayers + " content "}> */}
                         <div className={this.props.listOfPlayers + " select_all"}>
                             <div className="button_options_first_set">
                                 <button className={"record_player_button all_button " + this.props.memberSelection} onClick={() => this.selectAllPlayers(this.props.memberSelection)}> Members {this.props.memberSelection === "unselected_member" ? <FontAwesomeIcon icon="plus" className="player_action_icon"/> : <FontAwesomeIcon icon="times" className="player_action_icon"/>}</button>

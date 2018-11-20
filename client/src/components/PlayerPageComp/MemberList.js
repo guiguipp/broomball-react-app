@@ -33,13 +33,13 @@ class MemberList extends Component {
     render() {
         return (
             <div>
-                <table>
+                <table className="player_table">
                     <tbody>
                     {this.props.players.filter(player => player.membershipStatus === "Member").map(player => {
                             return (
-                                <tr key={player._id}> 
-                                    <td className="player_table">{player.name}</td>
-                                    <td className="player_table"> 
+                                <tr key={player._id} className="player_table_row"> 
+                                    <td className="player_table_data player_table_name">{player.name}</td>
+                                    <td className="player_table_data player_manage_buttons"> 
                                         {this.state.editMember === true ? <button className="content_button darker_color button_space_playerList" onClick={()=> this.sendPlayerToEditForm(player)}>Edit</button> : <button className="content_button light_grey button_space_playerList"> Edit </button>}
                                         {this.state.deleteMember === true ? <button className="content_button negative_color button_space_playerList" onClick={()=> this.deletePlayer(player._id)}>Delete</button> : <button className="content_button regular_grey button_space_playerList"> Delete </button> }
                                     </td>
