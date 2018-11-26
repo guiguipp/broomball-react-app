@@ -321,22 +321,22 @@ button {
       grid-template-columns: 1fr 1fr;
 }
 
+.lock_icons_container div:nth-of-type(1) {
+  -ms-grid-column-align: right;
+      justify-self: right;
+}
+
+.lock_icons_container div:nth-of-type(2) {
+  -ms-grid-column-align: left;
+      justify-self: left;
+}
+
 .lock {
   width: 35%;
   min-width: 55px;
   max-width: 100px;
   min-height: 40px;
   margin: 60px 10px 0px 10px;
-}
-
-.left_lock {
-  -ms-grid-column-align: right;
-      justify-self: right;
-}
-
-.right_lock {
-  -ms-grid-column-align: left;
-      justify-self: left;
 }
 
 .locked {
@@ -858,6 +858,13 @@ input {
   }
 }
 
+.button_container {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
+}
+
 .button_container button {
   min-width: 100px;
   height: 40px;
@@ -1238,17 +1245,10 @@ thead > tr, .stats_row {
   border-width: 2px;
   font-weight: bold;
   background: #FFFFFF;
-}
-
-.nice {
   border-color: #DE733A;
 }
 
-.good {
-  border-color: #DE733A;
-}
-
-.fa-plus-circle.darker_icon, .fa-plus-circle.lighter_icon, .fa-minus-circle.darker_icon, .fa-minus-circle.lighter_icon {
+td [class*="circle"] {
   -ms-grid-column-align: center;
       justify-self: center;
 }
@@ -1947,7 +1947,7 @@ thead > tr, .stats_row {
 }
 
 label {
-  color: #565656;
+  color: #acadb2;
   text-shadow: -0.1px -0.1px 0 #DE733A, 0.1px -0.1px 0 #DE733A, -0.1px 0.1px 0 #DE733A, 0.1px 0.1px 0 #DE733A;
   display: inline-block;
   margin-bottom: .5rem;

@@ -35,7 +35,7 @@ class GameSelector extends Component {
             this.props.batchChartUpdate(newObject)
 
         } else {
-            console.log("Handle this case: \nall games have been unselected")
+            console.log("All games have been unselected")
         }
     }
 
@@ -43,7 +43,6 @@ class GameSelector extends Component {
         // marks the selected games as such 
         arrayOfGames.forEach(game => this.markAsSelected(game))
         let cardsArray = createCardsArray(this.props.selectedPlayers, arrayOfGames)
-        console.log("cardsArray in gameSelection GameSelector.js: ", cardsArray)
         this.props.updatePlayers( cardsArray )
         
         if (this.props.selectedPlayersNum > 0) {
@@ -51,7 +50,7 @@ class GameSelector extends Component {
             this.props.batchChartUpdate(newObject)
         } else {
             // if no game is selected, have to wipe the chartData
-            console.log("Handle this case:\nno player selected")
+            console.log("No player selected")
         }
     }
 

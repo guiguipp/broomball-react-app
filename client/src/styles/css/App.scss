@@ -45,6 +45,7 @@ $black-box-shadow: 3px 4px 8px 0px rgba(0, 0, 0, 0.2);
 $dark-font-shadow: (-1px -1px 0 color(brown), 1px -1px 0 color(brown), -1px 1px 0 color(brown), 1px 1px 0 color(brown));
 $orange-font-shadow: (-1px -1px 0 color(orange), 1px -1px 0 color(orange), -1px 1px 0 color(orange), 1px 1px 0 color(orange));
 $orange-title-shadow: (-0.5px -0.5px 0 color(orange), 0.5px -0.5px 0 color(orange), -0.5px 0.5px 0 color(orange), 0.5px 0.5px 0 color(orange));
+$orange-subtle: (-0.1px -0.1px 0 color(orange), 0.1px -0.1px 0 color(orange), -0.1px 0.1px 0 color(orange), 0.1px 0.1px 0 color(orange));
 
 $small-width: 100px;
 $small-height: 30px;
@@ -403,7 +404,13 @@ button {
 // Locker
 .lock_icons_container {
     display: grid;
-    grid-template-columns: 1fr 1fr
+    grid-template-columns: 1fr 1fr;
+    div:nth-of-type(1) {
+        justify-self: right;
+    }
+    div:nth-of-type(2) {
+        justify-self: left;
+    }
 }
 
 .lock {
@@ -413,13 +420,7 @@ button {
     min-height: 40px;
     margin: 60px 10px 0px 10px;
 }
-.left_lock {
-    justify-self: right;
-}
 
-.right_lock {
-    justify-self: left;
-}
 .locked {
     justify-self: right;
     @include theme (
@@ -853,6 +854,8 @@ input {
 }
 
 .button_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     button {
         min-width: 100px;
         height: 40px;
@@ -1139,19 +1142,13 @@ thead > tr, .stats_row {
     border-width: $border-regular * 4;
     font-weight: bold;
     background: color(whitey);
-}
-
-.nice {
     border-color: color(orange);
 }
 
-.good {
-    border-color: color(orange);
-}
-
-.fa-plus-circle.darker_icon, .fa-plus-circle.lighter_icon, .fa-minus-circle.darker_icon, .fa-minus-circle.lighter_icon {
+td [class*="circle"] {
     justify-self: center;
-}
+};
+
 
 .full {
     width: 100%;
@@ -1761,8 +1758,8 @@ $table-width-max: 700px;
 }
 // form
 label {
-    color: rgb(86,86,86);
-    text-shadow: -0.1px -0.1px 0 #DE733A, 0.1px -0.1px 0 #DE733A, -0.1px 0.1px 0 #DE733A, 0.1px 0.1px 0 #DE733A;
+    color: color(grey);
+    text-shadow: $orange-subtle;
     display: inline-block;
     margin-bottom: .5rem;
     margin: 3% 16% 3% 1%;
