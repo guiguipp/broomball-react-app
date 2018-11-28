@@ -91,13 +91,14 @@ class LoginForm extends Component {
                                     />
                             </div>
                         ) : null}
-                        
-                        {this.props.in === "show" ? 
-                            <button type="submit" value="Log In" className="contrast_color"> Sign in </button> 
-                            :
-                            <button type="submit" value="submit" className="contrast_color"> Sign up </button>
-                        } 
-                        <button type="cancel" value="Cancel" className="contrast_color" onClick={(event) => this.handleCancel(event)} > Cancel </button>
+                        <div className="button_container">
+                            {this.props.in === "show" ? 
+                                <button type="submit" value="Log In" className="contrast_color"> Sign in </button> 
+                                :
+                                <button type="submit" value="submit" className="contrast_color"> Sign up </button>
+                            } 
+                            <button type="cancel" value="Cancel" className="contrast_color" onClick={(event) => this.handleCancel(event)} > Cancel </button>
+                        </div>
                     </form>
                 </div>
             </div>

@@ -85,8 +85,8 @@ class Drafter extends Component {
     render() {
         return (
             <main>
-                <div className="row drafter_mode">
-                    <div className="col col_no_bootstrap dark_draft_players">
+                <div className="drafter_mode">
+                    <div className="col_no_bootstrap dark_draft_players">
                         <h1 className="h1_main col_header"><br/>Dark</h1>
                         {this.props.draft.players ? (this.props.draft.players
                                 .filter(player => player.gameInfo.available === true && player.gameInfo.team === "Dark")
@@ -102,7 +102,7 @@ class Drafter extends Component {
                                 ) : (<p>Data has not loaded yet</p>)
                             }
                     </div>
-                    <div className="col col_no_bootstrap undraft_players">
+                    <div className="col_no_bootstrap undraft_players">
                     <h1 className="h1_alternate col_header game_date">{this.props.gameDate}<br/><br/></h1>
                         {this.props.draft.players ? (this.props.draft.players
                             .filter(player => player.gameInfo.available === true && player.gameInfo.team === "N/A")
@@ -143,7 +143,7 @@ class Drafter extends Component {
 
 
                     </div>
-                    <div className="col col_no_bootstrap white_drafted_players">
+                    <div className="col_no_bootstrap white_drafted_players">
                     
                     <h1 className="h1_main col_header"><br/>White</h1>
                         {this.props.draft.players ? (this.props.draft.players

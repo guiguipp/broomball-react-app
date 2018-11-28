@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { toggleTabStatus } from '../js/actions/playerActions';
 
-import NavBar from "../components/NavBar";
+import NavBar from "../components/NavBar.js";
 import Form from "../components/PlayerPageComp/Form.js";
 import MemberList from "../components/PlayerPageComp/MemberList.js"
 import TenBuckerList from "../components/PlayerPageComp/TenBuckerList.js"
@@ -14,7 +14,7 @@ class Player extends Component {
 toggleStatus(id, currentStatus) {
     // converting the # of the tab to its index
     let tabIndex = parseInt(id, 10) - 1
-    if(currentStatus === "hide") {
+    if(currentStatus === "hide_tab") {
         this.props.toggleTabStatus(tabIndex)
     }
 }

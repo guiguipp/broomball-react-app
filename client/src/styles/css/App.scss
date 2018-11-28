@@ -1,9 +1,9 @@
 // Colors
 $colors: (
-    whitey: #FFFFFF,
+    white: #FFFFFF,
     blue: teal,
     blueish: #007bff,
-    blackey: #000000,
+    black: #000000,
 
 
     defense: #b2ebf2,
@@ -46,6 +46,7 @@ $dark-font-shadow: (-1px -1px 0 color(brown), 1px -1px 0 color(brown), -1px 1px 
 $orange-font-shadow: (-1px -1px 0 color(orange), 1px -1px 0 color(orange), -1px 1px 0 color(orange), 1px 1px 0 color(orange));
 $orange-title-shadow: (-0.5px -0.5px 0 color(orange), 0.5px -0.5px 0 color(orange), -0.5px 0.5px 0 color(orange), 0.5px 0.5px 0 color(orange));
 $orange-subtle: (-0.1px -0.1px 0 color(orange), 0.1px -0.1px 0 color(orange), -0.1px 0.1px 0 color(orange), 0.1px 0.1px 0 color(orange));
+$orange-box: (0 0 15px rgba(222, 115, 58, 0.9));
 
 $small-width: 100px;
 $small-height: 30px;
@@ -102,7 +103,7 @@ $screen-xl: 1024px;
 @mixin theme($bkCol, $col, $activeBkCol, $activeCol, $activeBorderStyle, $activeBorderCol, $activeBorderWidth ) {
     background: $bkCol;    
     color: $col;
-    &:active {
+    &:active, &:focus {
         background: $activeBkCol;
         color: $activeCol;
         border-style: $activeBorderStyle;
@@ -116,8 +117,8 @@ $screen-xl: 1024px;
 .default_color {
     @include theme(
         color(default-gradient),    // background-color
-        color(whitey),              // color
-        color(whitey),              // :active background-color
+        color(white),              // color
+        color(white),              // :active background-color
         color(orange),            // :active color
         solid,                      // :active border style
         color(brown),             // :actve border column
@@ -128,20 +129,24 @@ $screen-xl: 1024px;
 .contrast_color {
     @include theme(
         color(contrast-gradient),
-        color(whitey),
-        color(whitey),
+        color(white),
+        color(white),
         color(blueish),
         solid,
         color(brown),
         $border-regular,
-    )
+    );
+    &:focus, &:active {
+        box-shadow: unset;
+        outline: 5px auto color(blue)
+    }
 }
 /* darker */
 .darker_color {
     @include theme(
         color(dark-gradient),
-        color(whitey),
-        color(whitey),
+        color(white),
+        color(white),
         color(orange),
         solid,
         color(brown),
@@ -153,8 +158,8 @@ $screen-xl: 1024px;
     border-right-color: color(light-orange);
     @include theme(
         color(light-gradient),
-        color(whitey),    
-        color(whitey),
+        color(white),    
+        color(white),
         color(orange),
         solid,
         color(brown),
@@ -167,10 +172,10 @@ $screen-xl: 1024px;
     border-color: color(negative-border);
     border-width: $border-regular * 2;
     @include theme(
-        color(whitey),
+        color(white),
         color(orange),
         color(orange),
-        color(whitey),
+        color(white),
         solid,
         color(brown),
         $border-regular,
@@ -178,17 +183,31 @@ $screen-xl: 1024px;
 }
 .leaning_right_color {
     background: color(leaning_right_orange_gradient);
-    color: color(whitey);
+    color: color(white);
+    &:focus, &:active {
+        background: color(white);
+        color: color(orange);
+        border-style: solid;
+        border-width: $border-regular * 2;
+        border-color: color(orange);
+    }
 }
 .leaning_left_color {
     background: color(leaning_left_orange_gradient);
-    color: color(whitey);
+    color: color(white);
+    &:focus, &:active {
+        background: color(white);
+        color: color(orange);
+        border-style: solid;
+        border-width: $border-regular * 2;
+        border-color: color(orange);
+    }
 }
 .plain_color{
     @include theme(
         color(plain_orange-gradient),
-        color(whitey),
-        color(whitey),
+        color(white),
+        color(white),
         color(orange),
         solid,
         color(orange),
@@ -198,19 +217,19 @@ $screen-xl: 1024px;
 /* greys */
 .dark_grey {
     background-color: color(dark-grey);
-    border-color: color(blackey);
+    border-color: color(black);
 }
 .regular_grey {
     background-color: color(grey);
-    color: color(whitey);
+    color: color(white);
     border-color: color(dark-grey);
     filter: blur($light-blur);
     font-weight: lighter;
 }
 .light_grey {
     background-color: color(light-grey);
-    border-color: color(blackey);
-    color: color(blackey);
+    border-color: color(black);
+    color: color(black);
     filter: blur($light-blur);
     border-color: color(grey);
     font-weight: lighter;
@@ -230,14 +249,14 @@ $screen-xl: 1024px;
 
 /* "Main" Theme */
 .main_main {
-    background: color(whitey);
-    border-color: color(blackey);
+    background: color(white);
+    border-color: color(black);
     border-style: solid;
     border-width: $border-regular * 2;
     width: 95%;
     min-width: 300px;
     margin: auto;
-    padding: 5% 0;
+    padding: 2% 0;
     margin-bottom: 3%;
 
     @include md {
@@ -255,13 +274,13 @@ $screen-xl: 1024px;
 /* "Alternate" theme */
 .main_alternate {
     background: color(orange);
-    border-color: color(whitey);
+    border-color: color(white);
     border-style: solid;
     border-width: $border-regular * 2;
     width: 90%;
     // min-width: 300px;
     margin: auto;
-    padding: 5% 0;
+    padding: 2% 0;
 }
 
 // Fonts
@@ -333,7 +352,7 @@ $p-font-sizes: (
     }
 
 .h1_alternate {
-    color: color(whitey);
+    color: color(white);
     text-shadow: $dark-font-shadow;
     text-align: center;
     position: relative;
@@ -356,14 +375,21 @@ $p-font-sizes: (
     margin-bottom: 3%;
 }
 
+h1, h2, h3 {
+    font-weight: 500;
+    line-height: 1.2;
+}
+
 h1 {
-    margin-bottom: 6%;
+    margin: 2% auto 7%;
+    display: block;
     @include font-size($h1-font-sizes);
 }
 
 h2 {
     @include font-size($h2-font-sizes)
 }
+
 
 button {
     font-family: font(button);
@@ -387,6 +413,10 @@ button {
     }
     @include xl {
         font-size: 18px;
+    }
+    &:focus, &:active {
+        box-shadow: $orange-box;
+        outline: 5px auto color(orange)
     }
 }
 
@@ -425,8 +455,8 @@ button {
     justify-self: right;
     @include theme (
         color(light-gradient),
-        color(whitey),
-        color(whitey),
+        color(white),
+        color(white),
         color(light-orange),
         solid,
         color(light-orange),
@@ -439,12 +469,12 @@ button {
     border-color: color(light-orange);
     border-width: $border-regular;
     @include theme (
-        color(whitey),
+        color(white),
         color(light-orange),
         color(light-orange),
-        color(whitey),
+        color(white),
         solid,
-        color(whitey),
+        color(white),
         $border-regular
     )
 }
@@ -461,12 +491,19 @@ input {
     text-align: center;
     font-weight: lighter;
     width: 150%;
+    max-width: 200px;
     padding: 3%;
     border-style: solid;
     border-color: grey;
     border-width: 1px;
     background-color: beige;
     box-shadow: 3px 4px 8px 0px rgba(0, 0, 0, 0.2);
+    @include mm {
+        max-width: 300px;
+    }
+    @include md {
+        max-width: 400px;
+    }
 }
 #date_submit {
     margin-top: 2%;
@@ -486,37 +523,36 @@ input {
     }
     
 }
+
+.game_options_bottom {
+    margin-top: 3%;
+}
+
 // drafter
+.drafter_mode {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
 .player_div {
     text-align: center;
     width: 120%;
     position: relative;
     left: -8%;
-}
-
-.player_button {   
-    // width: 35%;
-    min-width: $small-width;
-    max-width: 200px;
-    margin: 10px -8px 10px 8px;
-    height: 2.75em;
-    // @include md {
-    //     width: 55%;
-    // }
+    animation: slideBothArrows 0.7s 0ms ease-in-out 4 alternate;
 }
 
 .fa-arrow-circle-left {
-    animation-duration: 0.7s;
-    animation-name: slideright;
-    animation-direction: alternate;
-    animation-iteration-count: 4;
+    animation: slideright 0.7s 0ms ease-in-out 4 alternate;
+    &:hover {
+        animation-play-state: paused;
+    }
 }
 
 .fa-arrow-alt-circle-right {
-    animation-duration: 0.7s;
-    animation-name: slideleft;
-    animation-direction: alternate;
-    animation-iteration-count: 4;
+    animation: slideleft 0.7s 0ms ease-in-out 4 alternate;
+    &:hover {
+        animation-play-state: paused;
+    }
 }
 
 .leaning_right_div > .fa-arrow-alt-circle-right {
@@ -530,21 +566,30 @@ input {
 
 @keyframes slideright {
     from {
-        margin-right: 0%
+        left: 0%
     }
     to {
-        margin-right: 7%
+        left: -11%
     }
 }
 
 @keyframes slideleft {
     from {
-        margin-left: 0%
+        left: 0%
     }
     to {
-        margin-left: 7%
+        left: 11%
     }
 }
+
+.player_button {   
+    // width: 35%;
+    min-width: $small-width;
+    max-width: 200px;
+    margin: 10px -8px 10px 8px;
+    height: 2.75em;
+}
+
 
 .arrows {
     font-size: 200%;
@@ -572,11 +617,11 @@ input {
     margin-left: -15px;
     @include theme (
         color(grey),
-        color(whitey),
-        color(whitey),
+        color(white),
+        color(white),
         color(dark-grey),
         solid,
-        color(blackey),
+        color(black),
         $border-regular
     )
 }
@@ -584,8 +629,8 @@ input {
 .black_small_screen {
     @include theme(
         color(dark-grey),           // background-color
-        color(whitey),              // color
-        color(whitey),              // :active background-color
+        color(white),              // color
+        color(white),              // :active background-color
         color(dark-grey),           // :active color
         solid,                      // :active border style
         color(dark-grey),           // :actve border column
@@ -596,8 +641,8 @@ input {
 .white_small_screen {
     @include theme(
         color(light-grey),          // background-color
-        color(blackey),             // color
-        color(blackey),             // :active background-color
+        color(black),             // color
+        color(black),             // :active background-color
         color(light-grey),          // :active color
         solid,                      // :active border style
         color(ligh),                // :actve border column
@@ -633,10 +678,7 @@ input {
     min-width: 150px;
     height: 2.75em;
     &:hover {
-        animation-duration: 0.9s;
-        animation-name: slidearrow;
-        animation-iteration-count: 4;
-        animation-direction: alternate;
+        animation: slidearrow 0.9s 200ms ease-in-out 4 alternate;
     }
 }
 
@@ -665,7 +707,7 @@ input {
 }
 .pick_number {
     background: color(brown);
-    color: color(whitey);
+    color: color(white);
     width: 25px;
     height: 25px;
     border-radius: 100%;
@@ -723,11 +765,7 @@ input {
 }
 .up_arrow:hover {
     color: color(light-orange);
-    animation-name: arrowup;
-    animation-duration: 1s;
-    animation-delay: 0.2s;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
+    animation: arrowup 1s 200ms ease-in-out infinite alternate;
 }
 
 .down_arrow {
@@ -754,11 +792,7 @@ input {
 
 .down_arrow:hover {
     color: color(light-orange);
-    animation-name: arrowdown;
-    animation-duration: 1s;
-    animation-delay: 0.2s;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
+    animation: arrowdown 1s 0.2s ease-in-out infinite alternate;
 }
 
 .list_of_unpicked_players {
@@ -796,24 +830,24 @@ input {
 .player_picking_div:first-child {
     .sorter {
         .up_arrow {
-            color: color(whitey)
+            color: color(white)
         }
     }
     .sorting-up {
         .sm_up_arrow {
-            color: color(whitey)
+            color: color(white)
         }
     }
 }
 .player_picking_div:last-child {
     .sorter {
         .down_arrow {
-            color: color(whitey)
+            color: color(white)
         }
     }
     .sorting-down {
         .sm_down_arrow {
-            color: color(whitey)
+            color: color(white)
         }
     }
 }
@@ -864,6 +898,11 @@ input {
             height: 60px;
         }
     }
+}
+.game_toggle_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 // GameList
@@ -935,6 +974,8 @@ input {
     input {
         width: 100%;
         min-width: 200px;
+        min-height: 25px;
+
         @include sm {
             width: 130%;
             max-width: 260px;
@@ -1004,10 +1045,7 @@ input {
 .small_screen_arrows {
     font-size: 150%;
     position: relative;
-    animation-name: upanddown;
-    animation-delay: 1.2s;
-    animation-iteration-count: 4;
-    animation-direction: alternate;
+    animation: upanddown 1.2s ease-in-out 4 alternate;
 }
 @keyframes upanddown {
     from {
@@ -1021,52 +1059,7 @@ input {
 .ranks_col {
     margin-bottom: 7%;
 }
-// Navbar
-nav button {
-    box-shadow: unset;
-}
-.navbar {
-    margin-bottom: 3%;
-}
 
-.navbar-toggler {
-    margin-left: 73%;
-    margin-top: 3%;
-    height: 90px;
-    @include md {
-        height: 115px;
-    };
-    @include xl {
-        height: 130px;
-    }
-}
-
-.nav-link {
-    font-family: font(secondary);
-    font-size: 125%;
-    color: #ffbe75;
-}
-
-.nav-link:hover {
-    color: #17a2b8;
-}
-
-.nav_title {
-    font-family: font(primary);
-    font-size: 200%;
-    color: color(whitey);
-    text-shadow: $orange-title-shadow;
-}
-
-img {
-    width: 80%;
-    @include md {
-        width: 115px;
-    };
-    @include xl {
-        width: 130px;
-    }
-}
 
 // Stats
 .table_container {
@@ -1116,7 +1109,7 @@ img {
 .data {
     border-style: solid;
     border-width: $border-regular *2;
-    background: color(whitey);
+    background: color(white);
     height: 50px;
     margin: 0 3%;
     display: flex;
@@ -1141,7 +1134,7 @@ thead > tr, .stats_row {
 .nice, .good {
     border-width: $border-regular * 4;
     font-weight: bold;
-    background: color(whitey);
+    background: color(white);
     border-color: color(orange);
 }
 
@@ -1154,17 +1147,13 @@ td [class*="circle"] {
     width: 100%;
 }
 
-.list_of_games {
-    padding: 5%;
-}
-
 .no_stats_message{
     margin: auto;
 }
 
 // Past Game List
 .list_of_games {
-    width: 100%;
+    // width: 100%;
     padding: 0 5% 0 5%;
     margin-top: -5%;
 }
@@ -1435,7 +1424,7 @@ td [class*="circle"] {
 }
 
 .unselected_tab {
-    @include unselected(color(blue), color(whitey) )
+    @include unselected(color(blue), color(white) )
 }
 
 .list_of_options {
@@ -1464,7 +1453,7 @@ td [class*="circle"] {
 }
 
 .selected_tab {
-    @include selected(color(blue-gradient), color(whitey))
+    @include selected(color(blue-gradient), color(white))
 }
 
 .sort_action_icon {
@@ -1516,18 +1505,18 @@ td [class*="circle"] {
 }
 
 .selected_member {
-    @include selected(color(blue-gradient), color(whitey));
+    @include selected(color(blue-gradient), color(white));
 }
 .selected_non_member {
-    @include selected(color(plain_orange-gradient), color(whitey));
+    @include selected(color(plain_orange-gradient), color(white));
 }
 
 .unselected_member {
-    @include unselected(color(blue), color(whitey) )
+    @include unselected(color(blue), color(white) )
 }
 
 .unselected_non_member {
-    @include unselected(color(orange), color(whitey))
+    @include unselected(color(orange), color(white))
 }
 
 .player_action_icon {
@@ -1548,11 +1537,11 @@ td [class*="circle"] {
 }
 
 .selected_game {
-    @include selected(color(blue-gradient), color(whitey));
+    @include selected(color(blue-gradient), color(white));
 }
 
 .unselected_game {
-    @include unselected(color(blue), color(whitey))
+    @include unselected(color(blue), color(white))
 }
 
 .game_action_icon {
@@ -1685,9 +1674,25 @@ $table-width-max: 700px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     align-items: end;
-    th {
+}
+.two_tab_centering {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 90%;
+    margin: auto;
+    span {
+        height: 30px;
         width: 100%;
+        border-top-right-radius: 20px;
+        border-top-left-radius: 20px;
+        text-align: center;
+        padding-top: 7%;
     }
+    @include sm {
+        width: 80%;
+        max-width: 700px;
+    }
+
 }
 
 .tab {
@@ -1709,18 +1714,18 @@ $table-width-max: 700px;
     }
 }
 
-.show {
-    background: color(whitey);
-    color: color(blackey);
+.show_tab {
+    background: color(white);
+    color: color(black);
     border-style: solid solid none solid;
     border-width: $border-regular * 2;
-    border-color: color(blackey) color(blackey) color(whitey) color(blackey);
+    border-color: color(black) color(black) color(white) color(black);
 }
 
-.hide {
+.hide_tab {
     background: color(light-orange);
     color: color(dark-grey);
-    border-color: color(orange) color(orange) color(blackey) color(orange);
+    border-color: color(orange) color(orange) color(black) color(orange);
     border-style: none solid solid solid;
     border-width: $border-regular * 2;
 }
@@ -1728,16 +1733,16 @@ $table-width-max: 700px;
 .passive_tab {
     border-bottom-style: solid;
     border-bottom-width: $border-regular * 2;
-    border-bottom-color: color(blackey);
+    border-bottom-color: color(black);
     color: color(orange);
 }
 
 .main_for_tab {
-    background: color(whitey);
+    background: color(white);
     border-style: none solid solid solid;
-    border-color: color(blackey);
+    border-color: color(black);
     border-width: $border-regular * 2;
-    margin: auto;
+    margin: 0px auto;
     width: $table-width;
     @include sm {
         width: $table-width-bg;
@@ -1767,14 +1772,19 @@ label {
 .form_container {
     width: 100%;
     margin: auto;
-    padding: 0 20%;
+    padding: 1%;
+    input {
+        display: block;
+        margin: auto;
+        width: 100%;
+    }
 }
 .field {
     margin: 2% 0% 5%;
 }
-input {
-    margin: 1% 5% 1% 5%;
-}
+// input {
+//     margin: 1% 5% 1% 5%;
+// }
 
 // List
 /* table formatting */
@@ -1823,10 +1833,107 @@ table {
     }
 }
 
-.field > input {
-    width: 100%;
-}
 
 .hidden.full_tab_size {
     display: none;
 }
+
+// Navbar
+// [class^="main"] {
+//     margin-top: 300px;
+// }
+
+nav {
+    background: color(grey);
+    overflow: hidden;
+    // position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.darkNavBar {
+    background: #343a40;
+    a {
+        text-decoration: none;
+        background-color: transparent;
+    }
+    .hidden {
+        transition: visibility 0s linear 10ms, opacity 300ms;
+    }
+}
+.noShow {
+    height: 0px;
+    transition: all 200ms ease-in-out;
+}
+
+.show {
+    padding: 1.5rem;
+    height: 300px;
+    transition: all 200ms ease-in-out;
+}
+
+.nav-item .nav-link {
+    padding-right: 0;
+    padding-left: 0;
+}
+.nav-item {
+    display: block;
+    padding: .5rem 1rem;
+}
+.nav-link {
+    font-family: font(secondary);
+    font-size: 125%;
+    color: color(light-orange);
+    &:hover {
+        color: #17a2b8;
+    }
+}
+
+nav button {
+    box-shadow: unset;
+}
+.navbar {
+    margin-bottom: 3%;
+}
+
+.navbar-toggler {
+    background: color(grey);
+    margin-left: 73%;
+    margin-top: 3%;
+    height: 90px;
+    @include md {
+        height: 115px;
+    };
+    @include xl {
+        height: 130px;
+    }
+}
+
+.nav_title {
+    font-family: font(primary);
+    font-size: 200%;
+    color: color(white);
+    text-shadow: $orange-title-shadow;
+    margin-top: unset;
+    margin-bottom: 1%;
+    font-weight: unset;
+}
+.navbar-nav {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+img {
+    width: 80%;
+    @include md {
+        width: 115px;
+    };
+    @include xl {
+        width: 130px;
+    }
+}
+

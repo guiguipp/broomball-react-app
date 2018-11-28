@@ -12,7 +12,7 @@ const initialState = {
         playerLevel: "A+"
         },
 
-    tabs: ["show","hide","hide"],
+    tabs: ["show_tab","hide_tab","hide_tab"],
     panels: ["visible", "hidden", "hidden"],
     
     formMode: "Add"
@@ -50,7 +50,7 @@ export default function(state = initialState, action) {
         case SHOW_TAB:
         return {
             ...state,
-            tabs: state.tabs.map((tab, index) => {if(index !== action.payload) {return tab = "hide"} else {return tab = "show"}}),
+            tabs: state.tabs.map((tab, index) => {if(index !== action.payload) {return tab = "hide_tab"} else {return tab = "show_tab"}}),
             panels: state.panels.map((panel, index) => {if(index !== action.payload) {return panel = "hidden"} else {return panel = "visible"}})
         }
 
@@ -67,7 +67,7 @@ export default function(state = initialState, action) {
         return {
             ...state,
             formMode: "Edit",
-            tabs: ["hide","hide","show"],
+            tabs: ["hide_tab","hide_tab","show_tab"],
             panels: ["hidden", "hidden", "visible"],
             player: action.payload
         }

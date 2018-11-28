@@ -2,7 +2,7 @@ import React, { Component } from "react";
 // Redux
 import { connect } from 'react-redux';
 
-import NavBar from "../components/NavBar"
+import NavBar from "../components/NavBar.js"
 import DateSelector from "../components/RecordsPageComp/DateSelector.js"
 import GameSelector from "../components/RecordsPageComp/GameSelector.js"
 import PlayerSelector from "../components/RecordsPageComp/PlayerSelector.js"

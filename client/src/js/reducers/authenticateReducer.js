@@ -11,7 +11,7 @@ const initialState = {
         password: "",
         email: ""
         },
-    tabs: ["show","hide"], // this is used in the sign-in/sign-up user form
+    tabs: ["show_tab","hide_tab"], // this is used in the sign-in/sign-up user form
     // superAdminPrivileges: false,
     // adminPrivileges: false,
     // draftPrivileges: false,
@@ -34,7 +34,7 @@ export default function(state = initialState, action) {
         case SIGN_MODE:
         return {
             ...state,
-            tabs: state.tabs.map((tab, index) => {if(index !== action.payload) {return tab = "hide"} else {return tab = "show"}})
+            tabs: state.tabs.map((tab, index) => {if(index !== action.payload) {return tab = "hide_tab"} else {return tab = "show_tab"}})
         }
         
         default: 

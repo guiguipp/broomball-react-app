@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { toggleVisibility } from "../js/actions/statsActions"
 
-import NavBar from "../components/NavBar";
+import NavBar from "../components/NavBar.js";
 import PastGameList from "../components/StatsPageComp/PastGamesList.js"
 import ScoreBoard from "../components/StatsPageComp/ScoreBoard.js"
 import NoStatsBoard from "../components/StatsPageComp/NoStatsBoard.js"

@@ -133,9 +133,10 @@ class Form extends Component {
                                 onChange={(event) => this.handleChange(event)}
                                 />
                         </div>
-                        
-                        <button type="submit" value="Submit" className="contrast_color"> Submit </button>
-                        <button type="cancel" value="Cancel" className="contrast_color" onClick={(event) => this.handleCancel(event)} > Cancel </button>
+                        <div className="button_container">
+                            <button type="submit" value="Submit" className="contrast_color"> Submit </button>
+                            <button type="cancel" value="Cancel" className="contrast_color" onClick={(event) => this.handleCancel(event)} > Cancel </button>
+                        </div>
                     </form>
                 </div> : 
             <div className="unfortunately">
