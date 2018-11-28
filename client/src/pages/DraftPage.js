@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { toggleGames } from "../js/actions/displayActions"
 
-import NavBar from "../components/NavBar";
+import NavBar from "../components/NavBar.js";
 import GameList from "../components/DraftPageComp/GameList.js";
 import Calendar from "../components/DraftPageComp/Calendar.js";
 import Drafter from "../components/DraftPageComp/Drafter.js"
@@ -42,10 +42,10 @@ render() {
         <div className="main_main"> 
             <h1 className="h1_main">Draft Teams</h1>
             <div className= "organizer">
-                <div className="col"><Calendar/></div>
-                <div className="col"><GameList/></div>
+                <div><Calendar/></div>
+                <div><GameList/></div>
             </div>
-            <div className="row">
+            <div className="game_toggle_container">
                 <button className="contrast_color change_list_display" onClick={() => this.toggleGamesFunc(this.props.showing)}> {this.props.buttonMsg} Games</button>
             </div>
         </div>
