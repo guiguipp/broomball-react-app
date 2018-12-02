@@ -5,7 +5,7 @@ class NavBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            navDisplay: "noShow",
+            navDisplay: "noShowMenu",
             navItemsVisibility: "hidden",
         }
         this.handleScroll = this.handleScroll.bind(this);
@@ -20,12 +20,13 @@ class NavBar extends Component {
     }
 
     changeStatus(status) {
-        this.setState({ navDisplay: status === "noShow" ? "show" : "noShow", navItemsVisibility: status === "noShow" ? "visible" : "hidden" })
+        this.setState({ navDisplay: status === "noShowMenu" ? "showMenu" : "noShowMenu", navItemsVisibility: status === "noShowMenu" ? "visible" : "hidden" })
     }
 
     render() {
         return (
-            <nav className={this.state.scroll > this.state.height ? this.state.navDisplay + " stickyNav" : this.state.navDisplay + " nonStickyNav"}>
+            
+            <nav className={this.state.scroll > (this.state.height + 1)   ? this.state.navDisplay + " stickyNav" : this.state.navDisplay + " nonStickyNav"}>
                 <div className={this.state.navDisplay + " darkNavBar"}>
                     <h4 className={this.state.navItemsVisibility + " nav_title"}>Summit Broomball</h4>
                     <div className={this.state.navItemsVisibility + " navbar-nav"}>
@@ -39,9 +40,9 @@ class NavBar extends Component {
                 </div>
 
                 <div className="navbar bg">
-                    <button className="navbar-toggler" type="button">
-                        <img onClick={() => this.changeStatus(this.state.navDisplay)} className=" toggler_img" src={SmallLogo} alt="logo" />
-                    </button>
+                    {/* <button className="" > */}
+                        <img onClick={() => this.changeStatus(this.state.navDisplay)} className="navbar-toggler toggler_img" src={SmallLogo} alt="logo" type="button" />
+                    {/* </button> */}
                 </div>
             </nav>
             )

@@ -1,3 +1,9 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
 // Colors
 $colors: (
     white: #FFFFFF,
@@ -42,6 +48,7 @@ $colors: (
 
 // variables
 $black-box-shadow: 3px 4px 8px 0px rgba(0, 0, 0, 0.2);
+$grey-box-shadow: 0px 3px 3px color(grey);
 $dark-font-shadow: (-1px -1px 0 color(brown), 1px -1px 0 color(brown), -1px 1px 0 color(brown), 1px 1px 0 color(brown));
 $orange-font-shadow: (-1px -1px 0 color(orange), 1px -1px 0 color(orange), -1px 1px 0 color(orange), 1px 1px 0 color(orange));
 $orange-title-shadow: (-0.5px -0.5px 0 color(orange), 0.5px -0.5px 0 color(orange), -0.5px 0.5px 0 color(orange), 0.5px 0.5px 0 color(orange));
@@ -1783,12 +1790,10 @@ table {
     }
 }
 
-
 .hidden.full_tab_size {
     display: none;
 }
-// resizing from here
-
+// Custom collapsing NavBar
 nav {
     background: color(grey);
     overflow: hidden;
@@ -1796,33 +1801,38 @@ nav {
     width: 100%;
     z-index: 1;
     margin-bottom: 3%;
-    
-    button {
-        min-width: unset;
-        max-width: unset;
+    img { 
+        width: 70px;
+        position: relative;
+        float: right;
+        margin-right: 5%;
+        vertical-align: middle;
     }
 }
+
 .stickyNav {
     position: fixed;
     box-shadow: 0px 5px 10px grey;
 }
 
-.noShow.stickyNav {
+.noShowMenu.stickyNav {
     height: 80px;
-    button {
-        height: unset;
-        margin: unset;
-    }
     img {
-        width: 70px;
+        @include lg {
+            margin-right: 10%;
+        }
     }
 } 
 
-.noShow.nonStickyNav {
+.noShowMenu.nonStickyNav {
     padding-top: 3%;
     height: 80px;
+
     @include sm {
         height: 110px;
+        img {
+            width: 100px;
+        }
     }
     @include mm {
         height: 120px;
@@ -1840,32 +1850,22 @@ nav {
         height: 165px;
         img {
             width: 145px;
+            margin-right: 10%;
+        }
+    }
+    @include xl {
+        img {
+            margin-right: 15%;
         }
     }
 }
 
-.show.stickyNav, .show.nonStickyNav {
-    height: 500px;
+.showMenu.stickyNav, .showMenu.nonStickyNav {
+    height: 450px;
     padding: unset;
 }
-.navbar-toggler {
-    background: color(grey);
-    width: 40%;
-    
-    img {
-        width: 70px;
-        @include sm {
-            width: 80px;
-        }
-    }
-    @include md {
-        height: 115px;
-    };
-    @include xl {
-        height: 130px;
-    }
-}
 
+$MenuTransition: 0ms;
 
 .darkNavBar {
     background: #343a40;
@@ -1873,19 +1873,24 @@ nav {
         text-decoration: none;
         background-color: transparent;
     }
+    // The text disappears before the div, but not immediately (smoother)
     .hidden {
-        transition: visibility 0s linear 10ms, opacity 300ms;
+        transition: visibility 0s linear $MenuTransition * 0.2, opacity 300ms;
     }
 }
-.noShow {
-    height: 0px;
-    transition: all 200ms ease-in-out;
+
+.noShowMenu {
+    transition: all $MenuTransition ease-in-out;
 }
 
-.show {
+.noShowMenu.darkNavBar {
+    height: 0px;
+}
+
+.showMenu {
     padding: 1.5rem;
-    height: 300px;
-    transition: all 200ms ease-in-out;
+    height: 310px;
+    transition: all $MenuTransition ease-in-out;
 }
 
 .nav-item .nav-link {
@@ -1903,10 +1908,6 @@ nav {
     &:hover {
         color: #17a2b8;
     }
-}
-
-nav button {
-    box-shadow: unset;
 }
 
 .nav_title {
@@ -1936,3 +1937,70 @@ img {
     }
 }
 
+// Home Page
+.welcome_text {
+    text-align: justify;
+    font-family: 'Yellowtail', cursive;
+    color: #EA8D47;
+    font-size: 125%
+}
+.text_center {
+    text-align: center;
+    margin-top: 15%;
+}
+.menu_button {
+    width: 40%;
+    /* min-width: 120px; */
+    /* height: 45px; */
+    border-radius: 20px;
+}
+.instructions_div {
+    width: 100%;
+    margin-top: 3%;
+    text-align: center;
+}
+.page_div {
+    margin: 2% 2.5%;
+    width: 40%;
+    display: inline-grid;
+}
+.instruction {
+    text-align: center;
+}
+.instructions_text {
+    font-family: boogaloo;
+    font-size: 125%;
+    margin-bottom: 20%;
+    
+}
+// Login
+.auth_tab {
+    width: 50%;
+    min-width: 100px;
+    height: 10%;
+    min-height: 30px;
+    padding: 1%;
+    text-align: center;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+.show {
+background: white;
+border-left-style: solid;
+border-top-style: solid;
+border-right-style: solid;
+border-width: 1px;
+}
+.hide {
+background: #ffbe75;
+border-bottom-style: solid;
+border-bottom-width: 1px;
+color: rgb(86,86,86);
+border-left-color: #EA8D47;
+border-left-style: solid;
+border-left-width: 1px;
+border-right-color: #EA8D47;
+border-right-style: solid;
+border-right-width: 1px;
+border-top-color: #EA8D47;
+}

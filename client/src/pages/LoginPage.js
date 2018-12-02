@@ -6,8 +6,6 @@ import { toggleTabStatus } from "../js/actions/authenticateActions"
 import NavBar from "../components/NavBar.js";
 import LoginForm from "../components/LoginForm.js";
 
-// import "../styles/css/login.css";
-
 class Login extends Component { 
 
 
