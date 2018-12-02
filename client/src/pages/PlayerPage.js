@@ -25,15 +25,13 @@ render() {
         <NavBar />
         <main className="main_alternate">
             <h1 className="h1_alternate">Players</h1>
-            <table className="player_table_head">
-                <thead>
-                    <tr className="tab_centering">
-                        <th id="1" className={"tab " + this.props.tab1} onClick={() => this.toggleStatus("1", this.props.tab1) }> Members </th>
-                        <th id="2" className={"tab " + this.props.tab2} onClick={() => this.toggleStatus("2", this.props.tab2) }> Buckers </th>
-                        <th id="3" className={"tab " + this.props.tab3} onClick={() => this.toggleStatus("3", this.props.tab3) }> {this.props.formMode} </th>
-                    </tr>
-                </thead>
-            </table>
+            <div className="player_table_head">
+                    <div className="tab_centering">
+                        <span id="1" className={"tab " + this.props.tab1} onClick={() => this.toggleStatus("1", this.props.tab1) }> Members </span>
+                        <span id="2" className={"tab " + this.props.tab2} onClick={() => this.toggleStatus("2", this.props.tab2) }> Buckers </span>
+                        <span id="3" className={"tab " + this.props.tab3} onClick={() => this.toggleStatus("3", this.props.tab3) }> {this.props.formMode} </span>
+                    </div>
+            </div>
                 <section className= "main_for_tab">
                     <span className={this.props.panel1 + " full_tab_size"}> <MemberList /> </span> 
                     <span className={this.props.panel2 + " full_tab_size"}> <TenBuckerList /> </span> 

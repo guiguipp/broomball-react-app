@@ -71,7 +71,7 @@ export const getGamesForRecords = () => dispatch => {
 
 
 export const toggleVisibility = (currentState) => dispatch => {
-    if (currentState === "hidden") {
+    if (currentState === "dead") {
         dispatch({
             type: SHOW_GAMES_TO_STATS
             })
@@ -208,17 +208,17 @@ export const unselectPlayer = (player) => dispatch => {
         payload: {selected: player}
     })
 }
-
+// There has to be a better way to do this (based on the index, maybe?)
 export const toggleViews = (currentStatus, element) => dispatch => {
     if (currentStatus === "visible") {
         dispatch({
             type: TOGGLE_RECORDS_VIEWS,
             payload: {
-                dates: "hidden",
-                games: "hidden",
-                players: "hidden",
-                sort: "hidden",
-                chart: "hidden"
+                dates: "dead",
+                games: "dead",
+                players: "dead",
+                sort: "dead",
+                chart: "dead"
             }
         })}
     else {
@@ -228,10 +228,10 @@ export const toggleViews = (currentStatus, element) => dispatch => {
                 type: TOGGLE_RECORDS_VIEWS,
                 payload: {
                     dates: "visible",
-                    games: "hidden",
-                    players: "hidden",
-                    sort: "hidden",
-                    chart: "hidden"
+                    games: "dead",
+                    players: "dead",
+                    sort: "dead",
+                    chart: "dead"
                 }
             })
             
@@ -241,11 +241,11 @@ export const toggleViews = (currentStatus, element) => dispatch => {
                 dispatch({
                     type: TOGGLE_RECORDS_VIEWS,
                     payload: {
-                        dates: "hidden",
+                        dates: "dead",
                         games: "visible",
-                        players: "hidden",
-                        sort: "hidden",
-                        chart: "hidden"
+                        players: "dead",
+                        sort: "dead",
+                        chart: "dead"
                     }
                 })
             break;
@@ -254,11 +254,11 @@ export const toggleViews = (currentStatus, element) => dispatch => {
                 dispatch({
                         type: TOGGLE_RECORDS_VIEWS,
                         payload: {
-                            dates: "hidden",
-                            games: "hidden",
+                            dates: "dead",
+                            games: "dead",
                             players: "visible",
-                            sort: "hidden",
-                            chart: "hidden"
+                            sort: "dead",
+                            chart: "dead"
                         }
                     })
             break;
@@ -267,11 +267,11 @@ export const toggleViews = (currentStatus, element) => dispatch => {
             dispatch({
                 type: TOGGLE_RECORDS_VIEWS,
                 payload: {
-                    dates: "hidden",
-                    games: "hidden",
-                    players: "hidden",
+                    dates: "dead",
+                    games: "dead",
+                    players: "dead",
                     sort: "visible",
-                    chart: "hidden"
+                    chart: "dead"
                 }
             })
             break;
@@ -280,10 +280,10 @@ export const toggleViews = (currentStatus, element) => dispatch => {
             dispatch({
                 type: TOGGLE_RECORDS_VIEWS,
                 payload: {
-                    dates: "hidden",
-                    games: "hidden",
-                    players: "hidden",
-                    sort: "hidden",
+                    dates: "dead",
+                    games: "dead",
+                    players: "dead",
+                    sort: "dead",
                     chart: "visible"
                 }
             })

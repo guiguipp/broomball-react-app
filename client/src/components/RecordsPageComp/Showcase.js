@@ -76,10 +76,10 @@ class Showcase extends Component {
             <div className="full">
                 <div className="header">
                     <div>
-                        <h3 className="header_h3 " onClick={()=> this.toggleViews(this.props.sortOptionsDisplay)}> {this.props.sortOptionsDisplay === "hidden" ? <FontAwesomeIcon icon="caret-right" className="header_icon"/> : <FontAwesomeIcon icon="caret-down" className="header_icon" />}Sorting Options</h3>
+                        <h3 className="header_h3 " onClick={()=> this.toggleViews(this.props.sortOptionsDisplay)}> {this.props.sortOptionsDisplay === "dead" ? <FontAwesomeIcon icon="caret-right" className="header_icon"/> : <FontAwesomeIcon icon="caret-down" className="header_icon" />}Sorting Options</h3>
                     </div>
                 </div>
-                <div className={this.props.sortOptionsDisplay !== "hidden" || this.props.numOfRecords > 0  ? "content visible" : "content hidden"}>
+                <div className={this.props.sortOptionsDisplay !== "dead" && this.props.numOfRecords > 0  ? "content visible" : "content dead"}>
                     <div className={"list_of_options " + this.props.sortOptionsDisplay}>
                         
                             <button className={this.props.sortingOptions.azTab + " tab_button"} onClick={()=> this.toggleSort("az", this.props.sortingOptions.azTab, this.props.sortingOptions.alphaAsc)}>A-Z <span className="sort_action_icon"> <FontAwesomeIcon icon="long-arrow-alt-down" className={this.props.sortingOptions.alphaDesc + " sorting_arrow"} /> <FontAwesomeIcon icon="long-arrow-alt-up" className={this.props.sortingOptions.alphaAsc + " sorting_arrow"} /> </span> </button>
@@ -93,28 +93,29 @@ class Showcase extends Component {
                             <button className={this.props.sortingOptions.apgTab + " tab_button"} onClick={()=> this.toggleSort("apg", this.props.sortingOptions.apgTab, this.props.sortingOptions.apgAsc)}>APG <span className="sort_action_icon"> <FontAwesomeIcon icon="long-arrow-alt-down" className={this.props.sortingOptions.apgDesc + " sorting_arrow"} /> <FontAwesomeIcon icon="long-arrow-alt-up" className={this.props.sortingOptions.apgAsc + " sorting_arrow"} /> </span> </button>
                     
                     </div>
-                    <div className="records ">
-                    
-                    {this.props.playerRecords ? this.props.playerRecords.map(object => {
-                        return (
-                            <div key={object._id} className={object.preferredPosition === this.props.positionVisibility ? "hidden_card wrapping_card_div" : "visible wrapping_card_div" } onClick={()=> this.showPlayerStats(object.name, object._id)}>
-                                <div className={object.membershipStatus === "Member" ? "member_record player_card " : "non_member_record player_card"}>
-                                
-                                    <div className="player_name">{object.name} <span className="position_dot"> <FontAwesomeIcon icon="circle" className={object.preferredPosition} /> </span></div>
-                                    <div className="player_data">
-                                        <p><span className="entry">Games Played:</span> <span className="value">{object.gamesPlayed}</span>/{this.props.selectedGames.length}</p>
-                                        <p><span className="entry">W/L/T:</span> <span className="value">{ object.winPercent !== "N/A" ? object.winPercent + "%" : object.winPercent } - { object.lossPercent !== "N/A" ? object.lossPercent + "%" : object.lossPercent } - { object.tiePercent !== "N/A" ? object.tiePercent + "%" : object.tiePercent } </span> </p>
-                                        <p><span className="entry">Goals:</span> <span className="value">{object.gamesPlayed !== 0 ? object.goals : "N/A"}</span>
-                                        <br/><span className="addendum"> –– per game: <span className="value">{object.gamesPlayed !== 0 ? object.gpg : "N/A"}</span></span></p>
-                                        <p><span className="entry">Assists:</span> <span className="value">{object.gamesPlayed !== 0 ? object.assists : "N/A"}</span>
-                                        <br/><span className="addendum"> –– per game: <span className="value">{object.gamesPlayed !== 0 ? object.apg : "N/A"}</span></span></p>
-                                    </div>
+                </div>
+                <div className="records ">
+                
+                {this.props.playerRecords ? this.props.playerRecords.map(object => {
+                    return (
+                        <div key={object._id} className={object.preferredPosition === this.props.positionVisibility ? "hidden_card wrapping_card_div" : "visible wrapping_card_div" } onClick={()=> this.showPlayerStats(object.name, object._id)}>
+                            <div className={object.membershipStatus === "Member" ? "member_record player_card " : "non_member_record player_card"}>
+                            
+                                <div className="player_name">{object.name} <span className="position_dot"> <FontAwesomeIcon icon="circle" className={object.preferredPosition} /> </span></div>
+                                <div className="player_data">
+                                    <p><span className="entry">Games Played:</span> <span className="value">{object.gamesPlayed}</span>/{this.props.selectedGames.length}</p>
+                                    <p><span className="entry">W/L/T:</span> <span className="value">{ object.winPercent !== "N/A" ? object.winPercent + "%" : object.winPercent } - { object.lossPercent !== "N/A" ? object.lossPercent + "%" : object.lossPercent } - { object.tiePercent !== "N/A" ? object.tiePercent + "%" : object.tiePercent } </span> </p>
+                                    <p><span className="entry">Goals:</span> <span className="value">{object.gamesPlayed !== 0 ? object.goals : "N/A"}</span>
+                                    <br/><span className="addendum"> –– per game: <span className="value">{object.gamesPlayed !== 0 ? object.gpg : "N/A"}</span></span></p>
+                                    <p><span className="entry">Assists:</span> <span className="value">{object.gamesPlayed !== 0 ? object.assists : "N/A"}</span>
+                                    <br/><span className="addendum"> –– per game: <span className="value">{object.gamesPlayed !== 0 ? object.apg : "N/A"}</span></span></p>
                                 </div>
                             </div>
-                            )}
-                            ) : null }
-                    </div>
+                        </div>
+                        )}
+                        ) : null }
                 </div>
+                {/* </div> */}
                 <PlayerStatsModal isOpen={this.props.playerModal} />
             </div>
         )

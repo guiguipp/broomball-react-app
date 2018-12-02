@@ -29,9 +29,6 @@ class LoginForm extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        /* If a player is a goalie, their level needs to be set as "Goalie" */
-        
-        
         if (this.props.in === "show") {
             console.log("Sign-in mode activated")
             let user = {

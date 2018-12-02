@@ -100,42 +100,26 @@ $screen-xl: 1024px;
 
 
 // THEMES
-@mixin theme($bkCol, $col, $activeBkCol, $activeCol, $activeBorderStyle, $activeBorderCol, $activeBorderWidth ) {
-    background: $bkCol;    
-    color: $col;
+@mixin theme($gradient, $accent, $fallback) {
+    background: $gradient;    
+    color: $accent;
     &:active, &:focus {
-        background: $activeBkCol;
-        color: $activeCol;
-        border-style: $activeBorderStyle;
-        border-color: $activeBorderCol;
-        border-width: $activeBorderWidth;
+        background: $accent;
+        color: $fallback;
+        border-style: solid;
+        border-color: $fallback;
+        border-width: $border-regular;
         @content
     }
 };
 
 /* default */
 .default_color {
-    @include theme(
-        color(default-gradient),    // background-color
-        color(white),              // color
-        color(white),              // :active background-color
-        color(orange),            // :active color
-        solid,                      // :active border style
-        color(brown),             // :actve border column
-        $border-regular,             // :active border width
-        )
+    @include theme(color(default-gradient),color(white), color(orange))
     }
 /* contrast */
 .contrast_color {
-    @include theme(
-        color(contrast-gradient),
-        color(white),
-        color(white),
-        color(blueish),
-        solid,
-        color(brown),
-        $border-regular,
-    );
+    @include theme(color(contrast-gradient),color(white),color(blueish));
     &:focus, &:active {
         box-shadow: unset;
         outline: 5px auto color(blue)
@@ -143,76 +127,28 @@ $screen-xl: 1024px;
 }
 /* darker */
 .darker_color {
-    @include theme(
-        color(dark-gradient),
-        color(white),
-        color(white),
-        color(orange),
-        solid,
-        color(brown),
-        $border-regular
-    )
+    @include theme(color(dark-gradient),color(white),color(orange))
 }
 /* lighter */
 .lighter_color {
     border-right-color: color(light-orange);
-    @include theme(
-        color(light-gradient),
-        color(white),    
-        color(white),
-        color(orange),
-        solid,
-        color(brown),
-        $border-regular,
-    )  
+    @include theme(color(light-gradient),color(white),color(orange))  
 };
 /* negative */
 .negative_color {
     border-style: solid;
     border-color: color(negative-border);
     border-width: $border-regular * 2;
-    @include theme(
-        color(white),
-        color(orange),
-        color(orange),
-        color(white),
-        solid,
-        color(brown),
-        $border-regular,
-    )
+    @include theme(color(white),color(orange),color(white))
 }
 .leaning_right_color {
-    background: color(leaning_right_orange_gradient);
-    color: color(white);
-    &:focus, &:active {
-        background: color(white);
-        color: color(orange);
-        border-style: solid;
-        border-width: $border-regular * 2;
-        border-color: color(orange);
-    }
+    @include theme (color(leaning_right_orange_gradient), color(white), color(orange))
 }
 .leaning_left_color {
-    background: color(leaning_left_orange_gradient);
-    color: color(white);
-    &:focus, &:active {
-        background: color(white);
-        color: color(orange);
-        border-style: solid;
-        border-width: $border-regular * 2;
-        border-color: color(orange);
-    }
+    @include theme(color(leaning_left_orange_gradient),color(white),color(orange))
 }
 .plain_color{
-    @include theme(
-        color(plain_orange-gradient),
-        color(white),
-        color(white),
-        color(orange),
-        solid,
-        color(orange),
-        $border-regular
-    )
+    @include theme(color(plain_orange-gradient),color(white),color(orange))
 }
 /* greys */
 .dark_grey {
@@ -271,6 +207,7 @@ $screen-xl: 1024px;
         width: 70%;
     };
 }
+
 /* "Alternate" theme */
 .main_alternate {
     background: color(orange);
@@ -278,9 +215,17 @@ $screen-xl: 1024px;
     border-style: solid;
     border-width: $border-regular * 2;
     width: 90%;
-    // min-width: 300px;
     margin: auto;
     padding: 2% 0;
+    @include md {
+        width: 90%;
+    };
+    @include lg {
+        width: 80%;
+    };
+    @include xl {
+        width: 70%;
+    };
 }
 
 // Fonts
@@ -426,12 +371,15 @@ button {
     margin: 0px;
     padding: 0px;
 }
+.dead {
+    display: none;
+}
 
 .visible {
     visibility: visible;
 }
 
-// Locker
+// Lock
 .lock_icons_container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -453,30 +401,15 @@ button {
 
 .locked {
     justify-self: right;
-    @include theme (
-        color(light-gradient),
-        color(white),
-        color(white),
-        color(light-orange),
-        solid,
-        color(light-orange),
-        $border-regular
-    )
-    
+    background: color(light-gradient);
+    color: color(white);
 }
 .unlocked {
     border-style: solid;
     border-color: color(light-orange);
     border-width: $border-regular;
-    @include theme (
-        color(white),
-        color(light-orange),
-        color(light-orange),
-        color(white),
-        solid,
-        color(white),
-        $border-regular
-    )
+    background: color(white);
+    color: color(light-orange)
 }
 
 // Draft Page
@@ -503,6 +436,9 @@ input {
     }
     @include md {
         max-width: 400px;
+    }
+    @include lg {
+        font-size: 16px;
     }
 }
 #date_submit {
@@ -583,13 +519,11 @@ input {
 }
 
 .player_button {   
-    // width: 35%;
     min-width: $small-width;
     max-width: 200px;
     margin: 10px -8px 10px 8px;
-    height: 2.75em;
+    // height: 2.75em;
 }
-
 
 .arrows {
     font-size: 200%;
@@ -615,39 +549,15 @@ input {
 
 .unavailable {
     margin-left: -15px;
-    @include theme (
-        color(grey),
-        color(white),
-        color(white),
-        color(dark-grey),
-        solid,
-        color(black),
-        $border-regular
-    )
+    @include theme (color(grey),color(white),color(dark-grey))
 }
 
 .black_small_screen {
-    @include theme(
-        color(dark-grey),           // background-color
-        color(white),              // color
-        color(white),              // :active background-color
-        color(dark-grey),           // :active color
-        solid,                      // :active border style
-        color(dark-grey),           // :actve border column
-        $border-regular             // :active border width
-        )
+    @include theme(color(dark-grey), color(white), color(dark-grey));
 }
 
 .white_small_screen {
-    @include theme(
-        color(light-grey),          // background-color
-        color(black),             // color
-        color(black),             // :active background-color
-        color(light-grey),          // :active color
-        solid,                      // :active border style
-        color(ligh),                // :actve border column
-        $border-regular             // :active border width
-        )
+    @include theme(color(light-grey), color(black), color(light-grey));
 }
 
 .negative_color {
@@ -889,7 +799,15 @@ input {
 
 .button_container {
     display: grid;
+    margin: 10% auto;
     grid-template-columns: 1fr 1fr;
+    grid-column-gap: 5%;
+        :first-child {
+            justify-self: end;
+        }
+        :last-child {
+            justify-self: start;
+        }
     button {
         min-width: 100px;
         height: 40px;
@@ -898,6 +816,7 @@ input {
             height: 60px;
         }
     }
+
 }
 .game_toggle_container {
     display: flex;
@@ -956,6 +875,12 @@ input {
     }
 }
 /* for the date picker */
+.react-datepicker {
+    button {
+        min-height: unset;
+        min-width: unset;
+    }
+}
 .react-datepicker__navigation--next {
     right: 0px;
     border-left-color: #ccc;
@@ -1674,6 +1599,8 @@ $table-width-max: 700px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     align-items: end;
+    // position: relative;
+    // top: 10px;
 }
 .two_tab_centering {
     display: grid;
@@ -1681,12 +1608,20 @@ $table-width-max: 700px;
     width: 90%;
     margin: auto;
     span {
-        height: 30px;
         width: 100%;
+        height: 35px;
+        display: inherit;
+        align-items: center;
         border-top-right-radius: 20px;
         border-top-left-radius: 20px;
         text-align: center;
-        padding-top: 7%;
+        box-sizing: border-box;
+        @include sm {
+            height: 40px;
+        }
+        @include mm {
+            height: 45px;
+        }
     }
     @include sm {
         width: 80%;
@@ -1699,6 +1634,8 @@ $table-width-max: 700px;
     height: 40px;
     padding: 1%;
     text-align: center;
+    display: inherit;
+    align-items: center;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
 }
@@ -1739,6 +1676,7 @@ $table-width-max: 700px;
 
 .main_for_tab {
     background: color(white);
+    box-sizing: border-box;
     border-style: none solid solid solid;
     border-color: color(black);
     border-width: $border-regular * 2;
@@ -1762,9 +1700,22 @@ $table-width-max: 700px;
     margin: 5% 0% 0% 91%;
 }
 // form
+label, select {
+    font-size: 14px;
+    @include sm {
+        font-size: 16px;
+    }
+    @include mm {
+        font-size: 17px;
+    }
+    
+    @include md {
+        font-size: 18px;
+    }
+}
 label {
-    color: color(grey);
-    text-shadow: $orange-subtle;
+    color: color(dark-orange);
+    text-shadow: $black-box-shadow;
     display: inline-block;
     margin-bottom: .5rem;
     margin: 3% 16% 3% 1%;
@@ -1773,6 +1724,7 @@ label {
     width: 100%;
     margin: auto;
     padding: 1%;
+    
     input {
         display: block;
         margin: auto;
@@ -1782,9 +1734,7 @@ label {
 .field {
     margin: 2% 0% 5%;
 }
-// input {
-//     margin: 1% 5% 1% 5%;
-// }
+
 
 // List
 /* table formatting */
@@ -1837,20 +1787,85 @@ table {
 .hidden.full_tab_size {
     display: none;
 }
-
-// Navbar
-// [class^="main"] {
-//     margin-top: 300px;
-// }
+// resizing from here
 
 nav {
     background: color(grey);
     overflow: hidden;
-    // position: fixed;
     top: 0;
     width: 100%;
     z-index: 1;
+    margin-bottom: 3%;
+    
+    button {
+        min-width: unset;
+        max-width: unset;
+    }
 }
+.stickyNav {
+    position: fixed;
+    box-shadow: 0px 5px 10px grey;
+}
+
+.noShow.stickyNav {
+    height: 80px;
+    button {
+        height: unset;
+        margin: unset;
+    }
+    img {
+        width: 70px;
+    }
+} 
+
+.noShow.nonStickyNav {
+    padding-top: 3%;
+    height: 80px;
+    @include sm {
+        height: 110px;
+    }
+    @include mm {
+        height: 120px;
+        img {
+            width: 110px;
+        }
+    }
+    @include md {
+        height: 150px;
+        img {
+            width: 130px;
+        }
+    }
+    @include lg {
+        height: 165px;
+        img {
+            width: 145px;
+        }
+    }
+}
+
+.show.stickyNav, .show.nonStickyNav {
+    height: 500px;
+    padding: unset;
+}
+.navbar-toggler {
+    background: color(grey);
+    width: 40%;
+    
+    img {
+        width: 70px;
+        @include sm {
+            width: 80px;
+        }
+    }
+    @include md {
+        height: 115px;
+    };
+    @include xl {
+        height: 130px;
+    }
+}
+
 
 .darkNavBar {
     background: #343a40;
@@ -1892,22 +1907,6 @@ nav {
 
 nav button {
     box-shadow: unset;
-}
-.navbar {
-    margin-bottom: 3%;
-}
-
-.navbar-toggler {
-    background: color(grey);
-    margin-left: 73%;
-    margin-top: 3%;
-    height: 90px;
-    @include md {
-        height: 115px;
-    };
-    @include xl {
-        height: 130px;
-    }
 }
 
 .nav_title {

@@ -47,7 +47,7 @@ import _ from "underscore"
 const moment = require("moment");
 
 const initialState = {
-    visibility: "hidden",
+    visibility: "dead",
     message: "Teams have not been drafted for this team yet. Please come back later!",
     gamesForRecords: [],
     pastGamesFromAPI: [],
@@ -58,10 +58,10 @@ const initialState = {
     selectedPlayers: [],
     unselectedPlayers: [],
     datePickers: "visible",
-    listOfGames: "hidden",
-    listOfPlayers: "hidden", 
-    sortOptionsDisplay: "hidden",
-    chartDisplay: "hidden",
+    listOfGames: "dead",
+    listOfPlayers: "dead", 
+    sortOptionsDisplay: "dead",
+    chartDisplay: "dead",
     playerRecords: [],
     arrayOfTenBuckersID: [],
     sortingOptions:

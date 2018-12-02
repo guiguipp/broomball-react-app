@@ -6,8 +6,17 @@ class NavBar extends Component {
         super(props);
         this.state = {
             navDisplay: "noShow",
-            navItemsVisibility: "hidden"
+            navItemsVisibility: "hidden",
         }
+        this.handleScroll = this.handleScroll.bind(this);
+    }
+    handleScroll() {
+        this.setState({scroll: window.scrollY})
+    }
+    componentDidMount() {
+        const navbar = document.querySelector("nav")
+        this.setState({...this.state, top: navbar.offsetTop, height: navbar.offsetHeight})
+        window.addEventListener('scroll', this.handleScroll)
     }
 
     changeStatus(status) {
@@ -16,7 +25,7 @@ class NavBar extends Component {
 
     render() {
         return (
-            <nav>
+            <nav className={this.state.scroll > this.state.height ? this.state.navDisplay + " stickyNav" : this.state.navDisplay + " nonStickyNav"}>
                 <div className={this.state.navDisplay + " darkNavBar"}>
                     <h4 className={this.state.navItemsVisibility + " nav_title"}>Summit Broomball</h4>
                     <div className={this.state.navItemsVisibility + " navbar-nav"}>

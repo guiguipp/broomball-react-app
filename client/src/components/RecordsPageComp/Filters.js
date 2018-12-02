@@ -74,11 +74,11 @@ class Filters extends Component {
             <div className="full">
                 <div className="header">
                     <div>
-                        <h3 className="header_h3 " onClick={()=> this.toggleViews(this.props.sortOptionsDisplay)}> {this.props.sortOptionsDisplay === "hidden" ? <FontAwesomeIcon icon="caret-right" className="header_icon"/> : <FontAwesomeIcon icon="caret-down" className="header_icon" />}Filters</h3>
+                        <h3 className="header_h3 " onClick={()=> this.toggleViews(this.props.sortOptionsDisplay)}> {this.props.sortOptionsDisplay === "dead" ? <FontAwesomeIcon icon="caret-right" className="header_icon"/> : <FontAwesomeIcon icon="caret-down" className="header_icon" />}Filters</h3>
                     </div>
                 </div>
-            <div className="content">
-                <div className={"list_of_options " + this.props.sortOptionsDisplay}>
+            <div className={"content " + this.props.sortOptionsDisplay}>
+                <div className="list_of_options">
                     <div className="filter_panel">
                         <h3 className="filter_name">Players</h3>
                         <ul className="check_list">

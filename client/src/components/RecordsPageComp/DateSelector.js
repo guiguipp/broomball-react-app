@@ -21,7 +21,7 @@ class DateSelector extends Component {
                 <div className="full">
                     <div className="header">
                         <div>
-                            <h3 className="header_h3" onClick={()=> this.toggleViews(this.props.datePickers)}> {this.props.datePickers === "hidden" ? <FontAwesomeIcon icon="caret-right" className="header_icon"/> : <FontAwesomeIcon icon="caret-down" className="header_icon" />}Select Dates</h3>
+                            <h3 className="header_h3" onClick={()=> this.toggleViews(this.props.datePickers)}> {this.props.datePickers === "dead" ? <FontAwesomeIcon icon="caret-right" className="header_icon"/> : <FontAwesomeIcon icon="caret-down" className="header_icon" />}Select Dates</h3>
                         </div>
                     </div>
                     <div className="content">

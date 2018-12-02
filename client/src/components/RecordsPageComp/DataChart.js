@@ -20,13 +20,13 @@ class DataChart extends Component {
                 <div className="full">
                     <div className="header">
                         <div>
-                            <h3 className="header_h3 " onClick={()=> this.toggleViews(this.props.chartDisplay)}> {this.props.chartDisplay === "hidden" ? <FontAwesomeIcon icon="caret-right" className="header_icon"/> : <FontAwesomeIcon icon="caret-down" className="header_icon" />}Show Chart</h3>
+                            <h3 className="header_h3 " onClick={()=> this.toggleViews(this.props.chartDisplay)}> {this.props.chartDisplay === "dead" ? <FontAwesomeIcon icon="caret-right" className="header_icon"/> : <FontAwesomeIcon icon="caret-down" className="header_icon" />}Show Chart</h3>
                         </div>
                     </div>
                     <div className="content">
                         
                         <div className={"chart " }>
-                            {this.props.chartData && this.props.chartDisplay !== "hidden" ?  
+                            {this.props.chartData && this.props.chartDisplay !== "dead" ?  
                             <div className="chartAreaWrapper">
                                 <HorizontalBar
                                     data={this.props.curatedChartData}

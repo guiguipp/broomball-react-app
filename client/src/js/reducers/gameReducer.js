@@ -36,11 +36,11 @@ const initialState = {
         team: "N/A"
     },
     visibility: {
-        top: "hidden",
-        main: "hidden",
-        bottom: "hidden",
-        gameStats: "hidden",
-        noStatsMessage: "hidden",
+        top: "dead",
+        main: "dead",
+        bottom: "dead",
+        gameStats: "dead",
+        noStatsMessage: "dead",
     },
     gameDate: "",
     draft: {},
