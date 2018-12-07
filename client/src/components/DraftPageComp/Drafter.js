@@ -86,7 +86,8 @@ class Drafter extends Component {
         return (
             <div className="universal_drafter">
                 <div className="col_no_bootstrap dark_drafted_players">
-                    <h1 className="h1_main col_header"><br/>Dark</h1>
+                    {this.props.draftedDark || this.props.draftedWhite !== 0 ? <h1 className="col_header"><br/>Dark</h1> : null}
+
                     {this.props.draft.players ? (this.props.draft.players
                             .filter(player => player.gameInfo.available === true && player.gameInfo.team === "Dark")
                             .map(player => {
@@ -102,7 +103,16 @@ class Drafter extends Component {
                         }
                 </div>
                 <div className="col_no_bootstrap undrafted_players">
-                <h1 className="h1_alternate col_header game_date">{this.props.gameDate}<br/><br/></h1>
+                <h1 className="game_date">{this.props.gameDate}<br/><br/></h1>
+                {this.props.undrafted !== 0 ? 
+                    <div className="small_screen_team_names_header">
+                        <div className="sstnh sstnhd">
+                            <h1 className="h1_main"> <FontAwesomeIcon icon="arrow-circle-left" className="arrows "/> Dark</h1>
+                        </div>
+                        <div className="sstnh sstnhw">
+                            <h1 className="h1_main">White <FontAwesomeIcon icon={faArrowAltCircleRight} className="arrows " /></h1> 
+                        </div>
+                    </div> : null }
                     {this.props.draft.players ? (this.props.draft.players
                         .filter(player => player.gameInfo.available === true && player.gameInfo.team === "N/A")
                         .map(player => {
@@ -144,7 +154,7 @@ class Drafter extends Component {
                 </div>
                 <div className="col_no_bootstrap white_drafted_players">
                 
-                <h1 className="h1_main col_header"><br/>White</h1>
+                {this.props.draftedDark || this.props.draftedWhite !== 0 ? <h1 className="col_header"><br/>White</h1> : null}
                     {this.props.draft.players ? (this.props.draft.players
                                 .filter(player => player.gameInfo.available === true && player.gameInfo.team === "White")
                                 .map(player => {
@@ -176,6 +186,9 @@ const mapStateToProps = state => ({
     gameDate: state.games.gameDate,
     unavailableMembers: state.games.unavailableMembers,
     notPlayingNonMembers: state.games.notPlayingNonMembers,
+    draftedDark: state.games.draft.players ? state.games.draft.players.filter(player => player.gameInfo.team === "Dark").length : 0,
+    draftedWhite: state.games.draft.players ? state.games.draft.players.filter(player => player.gameInfo.team === "White").length : 0,
+    undrafted: state.games.draft.players ? state.games.draft.players.filter(player => player.gameInfo.team === "N/A" && player.gameInfo.available === true).length : 0,
     gameInfo: state.games.gameInfo,
     lockStatus: state.games.lockStatus,
     draftMode: state.games.draftMode,

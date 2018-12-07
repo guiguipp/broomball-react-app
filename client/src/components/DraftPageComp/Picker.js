@@ -125,47 +125,49 @@ class Drafter extends Component {
 
     render() {
         return (
-            <main>
-                <div className="picker_mode"> 
-                    <div className="col_no_bootstrap set_picks_col">
-                        <h1 className="h1_main pick_col_header unpicked_list_header">Set {this.props.draftMode} Picks</h1>
-                        <div className="list_of_unpicked_players">
-                        {/* Mapping the unranked Players */}
-                        {this.props.unpicked ? (this.props.unpicked
-                            .map(player => {
-                                return (
-                                    <div className="player_picking_div" key={player._id}>
-                                        <button className="content_button player_picking lighter_color"  onClick={() => this.addPick(this.props.draftMode, player._id)} >{player.name}</button>
-                                        <FontAwesomeIcon icon="angle-right" className="pick_arrow arrows" onClick={() => this.addPick(this.props.draftMode, player._id)} />
-                                    </div>
-                                )
-                            } )
-                        ) : ( <p>Bogus data</p> )
-                        }
-                        </div>
+            <main className="universal_picker">
+                <div className="col_no_bootstrap set_picks_col">
+                    {this.props.unpicked.length > 0 ? <h1 className="h1_main pick_col_header unpicked_list_header">Set {this.props.draftMode} Picks</h1> : null}
+                    <div className="list_of_unpicked_players">
+                    {/* Mapping the unranked Players */}
+                    {this.props.unpicked ? (this.props.unpicked
+                        .map(player => {
+                            return (
+                                <div className="player_picking_div" key={player._id}>
+                                    <button className="content_button player_picking lighter_color"  onClick={() => this.addPick(this.props.draftMode, player._id)} >{player.name}</button>
+                                    <FontAwesomeIcon icon="angle-right" className="pick_arrow arrows" onClick={() => this.addPick(this.props.draftMode, player._id)} />
+                                    <FontAwesomeIcon icon="plus-circle" className="pick_arrow_plus arrows" onClick={() => this.addPick(this.props.draftMode, player._id)} />
+                                </div>
+                            )
+                        } )
+                    ) : null}
                     </div>
-                        <div className="col_no_bootstrap ranks_col">
-                            <h1 className="h1_main pick_col_header picked_list_header">Ranks</h1>
-                            {/* mapping the ranked available players */}
-                            <div className="list_of_picked_players">
-                            {this.props.picked ? (this.props.picked
-                                .map(player => {
-                                    return (    
-                                        <div className="player_picking_div" key={player._id}>
-                                            <button className="content_button player_button darker_color">{player.name}</button>
-                                            <FontAwesomeIcon icon="minus-circle" className="remove remove_pick" onClick={() => this.removePick(this.props.draftMode, player)} />
-                                            <div className="sorter"> 
-                                                <FontAwesomeIcon icon="chevron-up" className="up_arrow" onClick={() => this.rankOneUp(player)}/>
-                                                <FontAwesomeIcon icon="chevron-down" className="down_arrow" onClick={() => this.rankOneDown(player)}/>
-                                            </div>
-                                        </div>
-                                    )
-                                } )
-                            ) : ( <p>Bogus data</p> )
-                            }
-                            </div>
-                        </div> 
                 </div>
+                <div className="col_no_bootstrap ranks_col">
+                    {this.props.picked.length > 0 ? <h1 className="h1_main pick_col_header picked_list_header">Ranks</h1> : null}
+                    {/* mapping the ranked available players */}
+                    <div className="list_of_picked_players">
+                    {this.props.picked ? (this.props.picked
+                        .map(player => {
+                            return (    
+                                <div className="player_picking_div" key={player._id}>
+                                    {/* Actual # */}
+                                    <div className="pick_number">
+                                        {this.props.draftMode === "Dark" ? player.gameInfo.darkPickNum : player.gameInfo.whitePickNum}
+                                    </div>
+                                    <button className="content_button player_button darker_color">{player.name}</button>
+                                    <FontAwesomeIcon icon="minus-circle" className="remove remove_pick" onClick={() => this.removePick(this.props.draftMode, player)} />
+                                    {/* <div className="sorter">  */}
+                                        <FontAwesomeIcon icon="chevron-up" className="up_arrow" onClick={() => this.rankOneUp(player)}/>
+                                        <FontAwesomeIcon icon="chevron-down" className="down_arrow" onClick={() => this.rankOneDown(player)}/>
+                                    {/* </div> */}
+                                </div>
+                            )
+                        } )
+                    ) : ( <p>Bogus data</p> )
+                    }
+                    </div>
+                </div> 
             </main>
                 )
             }

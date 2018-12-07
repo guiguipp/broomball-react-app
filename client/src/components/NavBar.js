@@ -18,7 +18,8 @@ class NavBar extends Component {
 
     componentDidMount() {
         const navbar = document.querySelector("nav");
-        this.setState({...this.state, top: navbar.offsetTop, height: navbar.offsetHeight});
+        const totalHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+        this.setState({...this.state, top: navbar.offsetTop, height: navbar.offsetHeight, pageHeight: totalHeight});
         window.addEventListener('scroll', this.handleScroll);
         // checkAuthentication()
     }
@@ -30,7 +31,7 @@ class NavBar extends Component {
     render() {
         return (
             
-            <nav className={this.state.scroll > (this.state.height + 1)   ? this.state.navDisplay + " stickyNav" : null}>
+            <nav className={this.state.scroll > 81 ? this.state.navDisplay + " stickyNav" : null}>
                 <div className={this.state.navDisplay + " darkNavBar"}>
                     <h4 className={this.state.navItemsVisibility + " nav_title"}>Summit Broomball</h4>
                     <div className={this.state.navItemsVisibility + " navbar-nav"}>

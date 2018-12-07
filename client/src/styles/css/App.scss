@@ -148,14 +148,7 @@ $screen-xl: 1024px;
     border-width: $border-regular * 2;
     @include theme(color(white),color(orange),color(white))
 }
-/*
-.leaning_right_color {
-    @include theme (color(leaning_right_orange_gradient), color(white), color(orange))
-}
-.leaning_left_color {
-    @include theme(color(leaning_left_orange_gradient),color(white),color(orange))
-}
-*/
+
 .plain_color{
     @include theme(color(plain_orange-gradient),color(white),color(orange))
 }
@@ -480,17 +473,48 @@ input {
     grid-template-areas: 
     "undrafted undrafted undrafted undrafted undrafted undrafted undrafted undrafted undrafted"
     "drafted_dark drafted_dark drafted_dark drafted_dark   ...... drafted_white drafted_white drafted_white drafted_white";
-    
+    h1 {
+        margin: 2%;
+    }
+    br {
+        display:none;
+    }
+    .game_date, .col_header {
+        color: color(white);
+        text-shadow: $dark-font-shadow;
+        text-align: center;
+        position: relative;
+        font-family: font(primary);
+    }
+    .arrows, .remove {
+        font-size: 100%;
+    }
+    @include sm {
+        .arrows {
+            font-size: 150%;
+        }
+    }
     @include mm {
         grid-template-columns: repeat(3, 1fr);
         grid-gap: 10px;
         grid-template-areas: "drafted_dark undrafted drafted_white";
+        .small_screen_team_names_header {
+            display: none;
+        }
+        br {
+            display: unset;
+        }
+        h1 {
+            margin: 2% auto 7%;
+        }
+        .col_header {
+            color: color(brown);
+            text-shadow: $orange-font-shadow;
+            text-align: center;
+            position: relative;
+            font-family: font(primary);
+        }
     }
-    // .small_screen_arrows {
-    //     font-size: 150%;
-    //     position: relative;
-    //     animation: upanddown 1.2s ease-in-out 4 alternate;
-    // }
 }
 .undrafted_players {
     grid-area: undrafted;
@@ -520,7 +544,8 @@ input {
         border-style: solid;
         border-color: color(dark-grey);
         @include mm {
-            @include theme(color(leaning_left_orange_gradient),color(white),color(orange))
+            @include theme(color(leaning_left_orange_gradient),color(white),color(orange));
+            border-style: unset;
         }
     }
     .fa-arrow-circle-left {
@@ -541,17 +566,9 @@ input {
         top: 5px;
     }
 }
-/*
-.drafter_mode {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-}
-*/
+
 .player_div {
     text-align: center;
-    width: 120%;
-    position: relative;
-    left: -8%;
     animation: slideBothArrows 0.7s 0ms ease-in-out 4 alternate;
 }
 
@@ -568,16 +585,6 @@ input {
         animation-play-state: paused;
     }
 }
-/*
-.leaning_right_div > .fa-arrow-alt-circle-right {
-    animation: unset;
-}
-
-.leaning_left_div > .fa-arrow-circle-left {
-    animation: unset;
-}
-*/
-
 
 @keyframes slideright {
     from {
@@ -630,15 +637,6 @@ input {
     margin-left: -15px;
     @include theme (color(grey),color(white),color(dark-grey))
 }
-/*
-.black_small_screen {
-    @include theme(color(dark-grey), color(white), color(dark-grey));
-}*/
-/*
-.white_small_screen {
-    @include theme(color(light-grey), color(black), color(light-grey));
-}
-*/
 
 .negative_color {
     margin-left: -15px;
@@ -649,11 +647,135 @@ input {
 }
 
 // Picker Module
-.picker_mode {
-    @include md {
-        display: grid;
-        grid-template-columns: 50% 50%;
+.universal_picker {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas: 
+    "picked picked"
+    "unpicked unpicked";
+    .pick_arrow {
+        display: none;
     }
+    @include sm {
+        grid-template-areas: "unpicked picked";
+        .pick_arrow {
+            display: unset;
+        }
+
+    }
+}
+.set_picks_col {
+    grid-area: unpicked;
+}
+.ranks_col {
+    grid-area: picked;
+}
+
+.player_picking_div {
+    margin: 2%;
+}
+
+.list_of_picked_players>.player_picking_div {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 60px;
+    .player_button {
+        order: 3;
+        flex: auto;
+        justify-self: flex-end;
+        @include sm {
+            order: unset;
+        }
+    }
+    .remove {
+        order: 4;
+        @include sm {
+            order: unset;
+        }
+    }
+    @include sm {
+        justify-content: flex-end;
+    }
+    @include mm {
+        justify-content: center;
+    }
+}
+
+.pick_number {
+    order: 1;
+    color: color(brown);
+    background: color(white);
+    width: 20px;
+    height: 20px;
+    padding: 3px 2px 0px;
+    border-radius: 50%;
+    font-weight: bold;
+    font-variant: small-caps;
+    text-align: center;
+    opacity: 0.3;
+    &:hover, &:active {
+        background: color(brown);
+        color: color(white);
+    }
+    @include sm {
+        display: none;
+    }
+}
+
+.up_arrow {
+    order: 5;
+    color: color(blueish);
+    font-size: 200%;
+    align-self: flex-start;
+    &:hover {
+        color: color(light-orange);
+        animation: arrowup 1s 200ms ease-in-out 4 alternate;
+    };
+    @include sm {
+        order: unset;
+        position: relative;
+        left: 5px;
+        top: 0px;
+    }
+    
+}
+
+.down_arrow {
+    order: 2;
+    color:color(brown);
+    font-size: 200%;
+    align-self: flex-end;
+    &:hover {
+        color: color(light-orange);
+        animation: arrowdown 1s 200ms ease-in-out 4 alternate;
+    };
+    @include sm {
+        order: unset;
+        position: relative;
+        left: -23px;
+        top: 0px;
+    }
+}
+
+@keyframes arrowup {
+    from {
+        top: 0px;
+    }
+    to {
+        top: -15px;
+    }
+
+}
+
+@keyframes arrowdown {
+    from {
+        top: 0px;
+    }
+    to {
+        top: 15px;
+    }
+
 }
 
 .pick_col_header {
@@ -661,6 +783,7 @@ input {
         height: 100px;
     }
 }
+
 .player_picking {   
     width: 55%;
     max-width: 250px;
@@ -688,101 +811,14 @@ input {
 }
 
 .remove_pick {
-    position: relative;
-    top: -14px;
-    left: 0px;
+    align-self: flex-start;
     &:hover {
         color: red;
     }
 }
-.pick_number {
-    background: color(brown);
-    color: color(white);
-    width: 25px;
-    height: 25px;
-    border-radius: 100%;
-    font-weight: bold;
-    font-variant: small-caps;
-    text-align: center;
-    position: relative;
-    top: 12px;
-    left: 5px;
 
-}
-.sm_remove_pick {
-    position: relative;
-    top: 10px;
-    left: 5px;
-    font-size: 130%;
-    text-align: center;
-}
 .pick_name_button {
     justify-self: center;
-}
-
-.sorting-down {
-    position: relative;
-    top: 10px;
-    left: 22px;
-}
-.sorting-up {
-    position: relative;
-    top: 0px;
-    left: -5px;
-}
-
-.up_arrow {
-    color: color(blueish);
-    position: relative;
-    left: 5px;
-    top: -10px;
-    font-size: 200%;
-    
-}
-.sm_up_arrow {
-    color: color(blueish);
-    font-size: 200%;
-}
-
-@keyframes arrowup {
-    from {
-        top: -10px;
-    }
-    to {
-        top: -25px;
-    }
-
-}
-.up_arrow:hover {
-    color: color(light-orange);
-    animation: arrowup 1s 200ms ease-in-out infinite alternate;
-}
-
-.down_arrow {
-    color:color(brown);
-    position: relative;
-    left: -23px;
-    top: 22px;
-    font-size: 200%;
-}
-.sm_down_arrow {
-    color: color(blueish);
-    font-size: 200%;
-}
-
-@keyframes arrowdown {
-    from {
-        top: 22px;
-    }
-    to {
-        top: 37px;
-    }
-
-}
-
-.down_arrow:hover {
-    color: color(light-orange);
-    animation: arrowdown 1s 0.2s ease-in-out infinite alternate;
 }
 
 .list_of_unpicked_players {
@@ -791,56 +827,19 @@ input {
     }
 }
 
-.list_of_picked_players {
-    @include md {
-        display: grid;
-        .player_button {
-            min-width: 150px;
-            margin: 0% auto;
-        }
-        .remove_pick {
-            position: relative;
-            top: -17px;
-            left: -10px;
-            font-size: 130%;
-        }
-    }
-}
-
-.player_picking_div {
-    display: grid;
-    grid-template-columns: 15% 10% 50% 10% 15%;
-    height: 55px;
-    @include md {
-        display: unset;
-        margin: 3% auto;
-    }
-}
-
 .player_picking_div:first-child {
-    .sorter {
-        .up_arrow {
-            color: color(white)
-        }
-    }
-    .sorting-up {
-        .sm_up_arrow {
-            color: color(white)
-        }
+    .up_arrow {
+        color: color(white);
+        animation: unset;
     }
 }
 .player_picking_div:last-child {
-    .sorter {
-        .down_arrow {
-            color: color(white)
-        }
-    }
-    .sorting-down {
-        .sm_down_arrow {
-            color: color(white)
-        }
+    .down_arrow {
+        color: color(white);
+        animation: unset;
     }
 }
+
 .player_to_pick_div {
     width: 80%;
     margin: auto;
@@ -848,6 +847,10 @@ input {
 .pick_arrow_plus {
     margin-left: 3%;
     font-size: 160%;
+    align-self: baseline;
+    @include sm {
+        display: none;
+    }
 }
 
 // general aspect 
@@ -1052,20 +1055,13 @@ input {
     position: relative;
     animation: upanddown 1.2s ease-in-out 4 alternate;
 }
-/*
-@keyframes upanddown {
-    from {
-        top: -15px;
-    }
-    to {
-        top: 5px;
-    }
-}
-*/
+
 // Picker
+/*
 .ranks_col {
     margin-bottom: 7%;
 }
+*/
 
 
 // Stats
@@ -1220,7 +1216,6 @@ td [class*="circle"] {
 // Data Chart
 .chart{
     width: 75%;
-    /* height: 700px; */
     margin: auto;
 }
 
@@ -1883,7 +1878,7 @@ nav {
         margin-right: 5%;
         vertical-align: middle;
         @include sm {
-            width: 20%;
+            width: 15%;
             max-width: 170px;
         }
     }
@@ -1892,6 +1887,14 @@ nav {
 .stickyNav {
     position: fixed;
     box-shadow: 0px 5px 10px grey;
+    img {
+        width: 70px;
+        width: 70px;
+        position: relative;
+        float: right;
+        margin-right: 5%;
+        vertical-align: middle;
+    }
 }
 
 .noShowMenu.stickyNav {
