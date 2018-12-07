@@ -29,7 +29,7 @@ class LoginForm extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        if (this.props.in === "show") {
+        if (this.props.in === "show_tab") {
             console.log("Sign-in mode activated")
             let user = {
                 username: this.props.user.username,
@@ -89,7 +89,7 @@ class LoginForm extends Component {
                             </div>
                         ) : null}
                         <div className="button_container">
-                            {this.props.in === "show" ? 
+                            {this.props.in === "show_tab" ? 
                                 <button type="submit" value="Log In" className="contrast_color"> Sign in </button> 
                                 :
                                 <button type="submit" value="submit" className="contrast_color"> Sign up </button>

@@ -15,6 +15,6 @@ router.use(allowCrossDomain)
 
 // all routes coming from the api folder will start with /api/
 router.use("/api", apiRoutes)
-router.use("/", authentication)
+router.use("/auth", authentication)
 
 module.exports = router;

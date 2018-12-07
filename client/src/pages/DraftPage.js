@@ -7,7 +7,6 @@ import NavBar from "../components/NavBar.js";
 import GameList from "../components/DraftPageComp/GameList.js";
 import Calendar from "../components/DraftPageComp/Calendar.js";
 import Drafter from "../components/DraftPageComp/Drafter.js"
-import SmallScreenDrafter from "../components/DraftPageComp/SmallScreenDrafter.js"
 import Picker from "../components/DraftPageComp/Picker.js"
 import SmallScreenPicker from "../components/DraftPageComp/SmallScreenPicker.js"
 import GameOptionsBottom from "../components/DraftPageComp/GameOptionsBottom.js"
@@ -52,13 +51,13 @@ render() {
         <div className={"main_main " + this.props.visibility.top}>
             <GameOptionsTop />
         </div>
-        <div className={"main_main " + this.props.visibility.main}>
-            {this.props.draftMode === "Draft" ? screenSize > 767 ? <Drafter /> : <SmallScreenDrafter /> : screenSize > 500 ? <Picker /> : <SmallScreenPicker />}
-        </div>
-        <div className={"main_main " + this.props.visibility.bottom}>
+        <main className={"main_main " + this.props.visibility.main}>
+            {this.props.draftMode === "Draft" ? <Drafter /> : screenSize > 500 ? <Picker /> : <SmallScreenPicker />}
+        </main>
+        <footer className={"main_main " + this.props.visibility.bottom}>
             <GameOptionsBottom />
             {this.state.changeLock === true ? <Locker /> : null }
-        </div>
+        </footer>
     </div>
     )
     }

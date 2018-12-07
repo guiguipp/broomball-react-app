@@ -1,3 +1,5 @@
+import API from "../utils/API"
+
 /* https://egghead.io/lessons/javascript-redux-persisting-the-state-to-the-local-storage */
 
 export const loadState = () => {
@@ -19,4 +21,8 @@ export const saveState = (state) => {
     } catch (err) {
         console.log(err)
     }
+}
+// https://stackoverflow.com/questions/36486397/passport-login-and-persisting-session
+export const checkAuthentication = () => {
+    API.checkUser();
 }

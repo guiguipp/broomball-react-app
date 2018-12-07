@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import SmallLogo from "../components/images/logo_sm.jpeg"
+import { checkAuthentication } from "./sessionStorage"
 
 class NavBar extends Component {
     constructor(props) {
@@ -10,13 +11,16 @@ class NavBar extends Component {
         }
         this.handleScroll = this.handleScroll.bind(this);
     }
+
     handleScroll() {
         this.setState({scroll: window.scrollY})
     }
+
     componentDidMount() {
-        const navbar = document.querySelector("nav")
-        this.setState({...this.state, top: navbar.offsetTop, height: navbar.offsetHeight})
-        window.addEventListener('scroll', this.handleScroll)
+        const navbar = document.querySelector("nav");
+        this.setState({...this.state, top: navbar.offsetTop, height: navbar.offsetHeight});
+        window.addEventListener('scroll', this.handleScroll);
+        // checkAuthentication()
     }
 
     changeStatus(status) {
@@ -26,7 +30,7 @@ class NavBar extends Component {
     render() {
         return (
             
-            <nav className={this.state.scroll > (this.state.height + 1)   ? this.state.navDisplay + " stickyNav" : this.state.navDisplay + " nonStickyNav"}>
+            <nav className={this.state.scroll > (this.state.height + 1)   ? this.state.navDisplay + " stickyNav" : null}>
                 <div className={this.state.navDisplay + " darkNavBar"}>
                     <h4 className={this.state.navItemsVisibility + " nav_title"}>Summit Broomball</h4>
                     <div className={this.state.navItemsVisibility + " navbar-nav"}>
@@ -40,9 +44,7 @@ class NavBar extends Component {
                 </div>
 
                 <div className="navbar bg">
-                    {/* <button className="" > */}
-                        <img onClick={() => this.changeStatus(this.state.navDisplay)} className="navbar-toggler toggler_img" src={SmallLogo} alt="logo" type="button" />
-                    {/* </button> */}
+                        <img onClick={() => this.changeStatus(this.state.navDisplay)} className="navbar-toggler toggler_img" src={SmallLogo} alt="logo" type="button" />    
                 </div>
             </nav>
             )

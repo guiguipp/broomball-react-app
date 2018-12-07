@@ -84,84 +84,82 @@ class Drafter extends Component {
 
     render() {
         return (
-            <main>
-                <div className="drafter_mode">
-                    <div className="col_no_bootstrap dark_draft_players">
-                        <h1 className="h1_main col_header"><br/>Dark</h1>
-                        {this.props.draft.players ? (this.props.draft.players
-                                .filter(player => player.gameInfo.available === true && player.gameInfo.team === "Dark")
-                                .map(player => {
-                                    return (
-                                        <div className="player_div leaning_right_div" key={player._id}>
-                                            <button className="player_button leaning_right_color">{player.name}</button>
-                                            {this.state.changeAvailability === true ? <FontAwesomeIcon icon="times-circle" className={"remove remove_player " + this.props.lockStatus} onClick={() => this.setUnavailable(player._id, player.membershipStatus)} /> : null }
-                                            {this.state.draftTeams === true ? <FontAwesomeIcon icon={faArrowAltCircleRight} className={"arrows " + this.props.lockStatus} onClick={() => this.assignTeam(player._id, "N/A")} /> : null }
-                                        </div>
-                                        )
-                                        })
-                                ) : (<p>Data has not loaded yet</p>)
-                            }
-                    </div>
-                    <div className="col_no_bootstrap undraft_players">
-                    <h1 className="h1_alternate col_header game_date">{this.props.gameDate}<br/><br/></h1>
-                        {this.props.draft.players ? (this.props.draft.players
-                            .filter(player => player.gameInfo.available === true && player.gameInfo.team === "N/A")
+            <div className="universal_drafter">
+                <div className="col_no_bootstrap dark_drafted_players">
+                    <h1 className="h1_main col_header"><br/>Dark</h1>
+                    {this.props.draft.players ? (this.props.draft.players
+                            .filter(player => player.gameInfo.available === true && player.gameInfo.team === "Dark")
                             .map(player => {
                                 return (
-                                    <div className="player_div leaning_center_div" key={player._id}>
-                                        {this.state.draftTeams === true ? <FontAwesomeIcon icon="arrow-circle-left" className={"arrows " + this.props.lockStatus} onClick={() => this.assignTeam(player._id, "Dark")} /> : null }
-                                        <button className="player_button plain_color">{player.name}</button>
+                                    <div className="player_div" key={player._id}>
+                                        <button className="player_button">{player.name}</button>
                                         {this.state.changeAvailability === true ? <FontAwesomeIcon icon="times-circle" className={"remove remove_player " + this.props.lockStatus} onClick={() => this.setUnavailable(player._id, player.membershipStatus)} /> : null }
-                                        {this.state.draftTeams === true ? <FontAwesomeIcon icon={faArrowAltCircleRight} className={"arrows " + this.props.lockStatus} onClick={() => this.assignTeam(player._id, "White")} /> : null }
+                                        {this.state.draftTeams === true ? <FontAwesomeIcon icon={faArrowAltCircleRight} className={"arrows " + this.props.lockStatus} onClick={() => this.assignTeam(player._id, "N/A")} /> : null }
                                     </div>
                                     )
                                     })
                             ) : (<p>Data has not loaded yet</p>)
                         }
-
-                        {this.props.unavailableMembers ? (this.props.unavailableMembers
-                            .map(player => {
-                                return (
-                                    <div className="player_div" key={player._id}>   
-                                        <button className="player_button unavailable" onClick={() => this.state.changeAvailability === true ? this.makeAvailable(player._id) : null } >{player.name}</button>
-                                    </div>
-                                    )
-                                    })
-                            ) : (<p>Unable to retrieve unavailable Members</p>)
-                        }
-
-                        {this.props.notPlayingNonMembers ? (this.props.notPlayingNonMembers
-                            .map(player => {
-                                return (
-                                    <div className="player_div" key={player._id}>   
-                                        <button className="player_button negative_color" onClick={() => this.state.changeAvailability === true ? this.addTenBuckerToDraft(player) : null }>{player.name}</button>
-                                    </div>
-                                    )
-                                    })
-                            ) : (<p>Unable to retrieve Ten Buckers</p>)
-                        }
-
-
-                    </div>
-                    <div className="col_no_bootstrap white_drafted_players">
-                    
-                    <h1 className="h1_main col_header"><br/>White</h1>
-                        {this.props.draft.players ? (this.props.draft.players
-                                    .filter(player => player.gameInfo.available === true && player.gameInfo.team === "White")
-                                    .map(player => {
-                                        return (
-                                            <div className="player_div leaning_left_div" key={player._id}>
-                                                {this.state.draftTeams === true ? <FontAwesomeIcon icon="arrow-circle-left" className={"arrows " + this.props.lockStatus} size="2x" onClick={() => this.assignTeam(player._id, "N/A")} /> : null }
-                                                <button className={"player_button leaning_left_color "}>{player.name}</button>
-                                                {this.state.changeAvailability === true ? <FontAwesomeIcon icon="times-circle" className={"remove remove_player " + this.props.lockStatus} onClick={() => this.setUnavailable(player._id, player.membershipStatus)} /> : null }
-                                            </div>
-                                            )
-                                            })
-                                    ) : (<p>Data has not loaded yet</p>)
-                                }
-                    </div>
                 </div>
-            </main>
+                <div className="col_no_bootstrap undrafted_players">
+                <h1 className="h1_alternate col_header game_date">{this.props.gameDate}<br/><br/></h1>
+                    {this.props.draft.players ? (this.props.draft.players
+                        .filter(player => player.gameInfo.available === true && player.gameInfo.team === "N/A")
+                        .map(player => {
+                            return (
+                                <div className="player_div leaning_center_div" key={player._id}>
+                                    {this.state.draftTeams === true ? <FontAwesomeIcon icon="arrow-circle-left" className={"arrows " + this.props.lockStatus} onClick={() => this.assignTeam(player._id, "Dark")} /> : null }
+                                    <button className="player_button plain_color">{player.name}</button>
+                                    {this.state.changeAvailability === true ? <FontAwesomeIcon icon="times-circle" className={"remove remove_player " + this.props.lockStatus} onClick={() => this.setUnavailable(player._id, player.membershipStatus)} /> : null }
+                                    {this.state.draftTeams === true ? <FontAwesomeIcon icon={faArrowAltCircleRight} className={"arrows " + this.props.lockStatus} onClick={() => this.assignTeam(player._id, "White")} /> : null }
+                                </div>
+                                )
+                                })
+                        ) : (<p>Data has not loaded yet</p>)
+                    }
+
+                    {this.props.unavailableMembers ? (this.props.unavailableMembers
+                        .map(player => {
+                            return (
+                                <div className="player_div" key={player._id}>   
+                                    <button className="player_button unavailable" onClick={() => this.state.changeAvailability === true ? this.makeAvailable(player._id) : null } >{player.name}</button>
+                                </div>
+                                )
+                                })
+                        ) : (<p>Unable to retrieve unavailable Members</p>)
+                    }
+
+                    {this.props.notPlayingNonMembers ? (this.props.notPlayingNonMembers
+                        .map(player => {
+                            return (
+                                <div className="player_div" key={player._id}>   
+                                    <button className="player_button negative_color" onClick={() => this.state.changeAvailability === true ? this.addTenBuckerToDraft(player) : null }>{player.name}</button>
+                                </div>
+                                )
+                                })
+                        ) : (<p>Unable to retrieve Ten Buckers</p>)
+                    }
+
+
+                </div>
+                <div className="col_no_bootstrap white_drafted_players">
+                
+                <h1 className="h1_main col_header"><br/>White</h1>
+                    {this.props.draft.players ? (this.props.draft.players
+                                .filter(player => player.gameInfo.available === true && player.gameInfo.team === "White")
+                                .map(player => {
+                                    return (
+                                        <div className="player_div" key={player._id}>
+                                            {this.state.draftTeams === true ? <FontAwesomeIcon icon="arrow-circle-left" className={"arrows " + this.props.lockStatus} size="2x" onClick={() => this.assignTeam(player._id, "N/A")} /> : null }
+                                            <button className={"player_button"}>{player.name}</button>
+                                            {this.state.changeAvailability === true ? <FontAwesomeIcon icon="times-circle" className={"remove remove_player " + this.props.lockStatus} onClick={() => this.setUnavailable(player._id, player.membershipStatus)} /> : null }
+                                        </div>
+                                        )
+                                        })
+                                ) : (<p>Data has not loaded yet</p>)
+                            }
+                </div>
+            </div>
 
                 )
             }

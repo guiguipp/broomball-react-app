@@ -2,9 +2,11 @@ import {
     UPDATE_USER_FORM,
     ADD_NEW_USER,
     SIGN_MODE,
+    AUTHENTICATE
 } from "../actions/types"
 
 const initialState = {
+    connectionState: "Login",
     user: 
         {
         username: "",
@@ -35,6 +37,12 @@ export default function(state = initialState, action) {
         return {
             ...state,
             tabs: state.tabs.map((tab, index) => {if(index !== action.payload) {return tab = "hide_tab"} else {return tab = "show_tab"}})
+        }
+
+        case AUTHENTICATE:
+        return {
+            ...state,
+            connectionState: action.payload.data.logged === true ? "Logout" : "Login"
         }
         
         default: 

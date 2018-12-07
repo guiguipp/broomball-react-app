@@ -3,20 +3,21 @@ const LocalStrategy = require('./localStrategy');
 const User = require('../models/user');
 
 passport.serializeUser((user, done) => {
-    console.log('Passport Serialize');
+    console.log('Passport Serialize in passport > index');
     // console.log(user)
     done(null, user._id);
 });
 
 passport.deserializeUser((id, done) => {
-    // console.log('Deserialize');
+    console.log('Deserialize in passport > index');
     User.findById(
         id,
         (err, user) => {
+            if(err) {return done(err)}
             console.log('======= DESERIALIZE USER CALLED ======')
             console.log(user);
             console.log('--------------');
-            done(err, user);
+            done(null, user);
             },
         );
     });

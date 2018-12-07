@@ -54,7 +54,7 @@ const App = () => (
           <Route path="/Records" component={Records} />
           {/* <Route path="/Records" render={() => (<Suspense fallback={<div>Loading...</div>}> <Records /></Suspense>)}/> */}
           <Route path="/Login" component={Login} />
-          <Route path="/*" component={Home} />
+          <Route path="*" component={Home} />
         </Switch>
       </div>
     </Router>

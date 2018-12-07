@@ -18,6 +18,7 @@ const config = {
     }
 }
 */
+
 export default {
     getGames: () => {       
         const url = currentURL + "/api/game/"
@@ -60,9 +61,13 @@ export default {
         return axios.post(url, {userData})
     },
     authenticateUser: (mode, userData) => {
-        const url = currentURL + "/login"
+        const url = currentURL + "/auth/login"
         if (mode === "local") {
             return axios.post(url, userData)
         }
-        }
+    },
+    checkUser: () => {
+        const url = currentURL + "/auth/login"
+        return axios.get(url)
+    },
     }

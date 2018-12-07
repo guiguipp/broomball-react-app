@@ -148,12 +148,14 @@ $screen-xl: 1024px;
     border-width: $border-regular * 2;
     @include theme(color(white),color(orange),color(white))
 }
+/*
 .leaning_right_color {
     @include theme (color(leaning_right_orange_gradient), color(white), color(orange))
 }
 .leaning_left_color {
     @include theme(color(leaning_left_orange_gradient),color(white),color(orange))
 }
+*/
 .plain_color{
     @include theme(color(plain_orange-gradient),color(white),color(orange))
 }
@@ -472,10 +474,79 @@ input {
 }
 
 // drafter
+.universal_drafter {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    grid-template-areas: 
+    "undrafted undrafted undrafted undrafted undrafted undrafted undrafted undrafted undrafted"
+    "drafted_dark drafted_dark drafted_dark drafted_dark   ...... drafted_white drafted_white drafted_white drafted_white";
+    
+    @include mm {
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 10px;
+        grid-template-areas: "drafted_dark undrafted drafted_white";
+    }
+    // .small_screen_arrows {
+    //     font-size: 150%;
+    //     position: relative;
+    //     animation: upanddown 1.2s ease-in-out 4 alternate;
+    // }
+}
+.undrafted_players {
+    grid-area: undrafted;
+}
+.dark_drafted_players {
+    grid-area: drafted_dark;
+    button {
+        @include theme(color(dark-grey), color(white), color(dark-grey));
+        @include mm {
+                @include theme (color(leaning_right_orange_gradient), color(white), color(orange))
+            }
+    }
+    .fa-arrow-alt-circle-right {
+        transform: rotate(270deg);
+        animation: upanddown 1.2s ease-in-out 4 alternate;
+        @include mm {
+            animation: unset;
+            transform: unset;
+        }
+    }
+    
+}
+.white_drafted_players {
+    grid-area: drafted_white;
+    button {
+        @include theme(color(light-grey), color(black), color(light-grey));
+        border-style: solid;
+        border-color: color(dark-grey);
+        @include mm {
+            @include theme(color(leaning_left_orange_gradient),color(white),color(orange))
+        }
+    }
+    .fa-arrow-circle-left {
+        transform: rotate(90deg);
+        animation: upanddown 1.2s ease-in-out 4 alternate;
+        @include mm {
+            animation: unset;
+            transform: unset;
+        }
+
+    }
+}
+@keyframes upanddown {
+    from {
+        top: -15px;
+    }
+    to {
+        top: 5px;
+    }
+}
+/*
 .drafter_mode {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
 }
+*/
 .player_div {
     text-align: center;
     width: 120%;
@@ -497,7 +568,7 @@ input {
         animation-play-state: paused;
     }
 }
-
+/*
 .leaning_right_div > .fa-arrow-alt-circle-right {
     animation: unset;
 }
@@ -505,6 +576,7 @@ input {
 .leaning_left_div > .fa-arrow-circle-left {
     animation: unset;
 }
+*/
 
 
 @keyframes slideright {
@@ -558,14 +630,15 @@ input {
     margin-left: -15px;
     @include theme (color(grey),color(white),color(dark-grey))
 }
-
+/*
 .black_small_screen {
     @include theme(color(dark-grey), color(white), color(dark-grey));
-}
-
+}*/
+/*
 .white_small_screen {
     @include theme(color(light-grey), color(black), color(light-grey));
 }
+*/
 
 .negative_color {
     margin-left: -15px;
@@ -979,6 +1052,7 @@ input {
     position: relative;
     animation: upanddown 1.2s ease-in-out 4 alternate;
 }
+/*
 @keyframes upanddown {
     from {
         top: -15px;
@@ -987,6 +1061,7 @@ input {
         top: 5px;
     }
 }
+*/
 // Picker
 .ranks_col {
     margin-bottom: 7%;
@@ -1807,6 +1882,10 @@ nav {
         float: right;
         margin-right: 5%;
         vertical-align: middle;
+        @include sm {
+            width: 20%;
+            max-width: 170px;
+        }
     }
 }
 
@@ -1817,55 +1896,18 @@ nav {
 
 .noShowMenu.stickyNav {
     height: 80px;
-    img {
-        @include lg {
-            margin-right: 10%;
-        }
+    .navbar.bg > img {
+        margin-right: 10%;
+        width: 70px;
     }
 } 
 
-.noShowMenu.nonStickyNav {
-    padding-top: 3%;
-    height: 80px;
-
-    @include sm {
-        height: 110px;
-        img {
-            width: 100px;
-        }
-    }
-    @include mm {
-        height: 120px;
-        img {
-            width: 110px;
-        }
-    }
-    @include md {
-        height: 150px;
-        img {
-            width: 130px;
-        }
-    }
-    @include lg {
-        height: 165px;
-        img {
-            width: 145px;
-            margin-right: 10%;
-        }
-    }
-    @include xl {
-        img {
-            margin-right: 15%;
-        }
-    }
-}
-
-.showMenu.stickyNav, .showMenu.nonStickyNav {
+.showMenu.stickyNav {
     height: 450px;
     padding: unset;
 }
 
-$MenuTransition: 0ms;
+$MenuTransition: 200ms;
 
 .darkNavBar {
     background: #343a40;

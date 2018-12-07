@@ -2,6 +2,8 @@ const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const LocalStrategy = require('passport-local').Strategy;
 
+console.log("localStrategy running")
+
 const strategy = new LocalStrategy(
     {
         usernameField: 'userName',

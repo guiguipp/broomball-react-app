@@ -1,10 +1,10 @@
 import {
     UPDATE_USER_FORM,
     ADD_NEW_USER,
-    SIGN_MODE
+    SIGN_MODE,
+    AUTHENTICATE
 } from "./types"
 
-import { saveState } from "../../components/sessionStorage"
 
 import API from "../../utils/API"
 
@@ -42,11 +42,12 @@ export const authenticateUser = (method, user) => dispatch => {
         API.authenticateUser("local", user).then(res => {
             if (!res.data.errmsg) {
                 console.log("Response from authentication API: ", res.data)
-                // dispatch({
-                //     type: SETTING_USER_PRIVILEGES,
-                //     payload: res.data
-                // })
-                switch (res.data.privilege) {
+                window.location = res.data.redirectURI;
+                dispatch({
+                    type: AUTHENTICATE,
+                    payload: res.data
+                })
+                /*switch (res.data.privilege) {
                     case "SuperAdmin":
                     saveState({
                         SuperAdmin: true,
@@ -67,7 +68,7 @@ export const authenticateUser = (method, user) => dispatch => {
 
                     default:
                     return;
-                }
+                }*/
             }
         })
     }
