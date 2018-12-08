@@ -37,7 +37,7 @@ render() {
     return (
     <div>
         <NavBar />
-        <div className="main_main"> 
+        <main className="main_main"> 
             <h1 className="h1_main">Draft Teams</h1>
             <div className= "organizer">
                 <div><Calendar/></div>
@@ -46,7 +46,7 @@ render() {
             <div className="game_toggle_container">
                 <button className="contrast_color change_list_display" onClick={() => this.toggleGamesFunc(this.props.showing)}> {this.props.buttonMsg} Games</button>
             </div>
-        </div>
+        </main>
         <div className={"main_main " + this.props.visibility.top}>
             <GameOptionsTop />
         </div>
