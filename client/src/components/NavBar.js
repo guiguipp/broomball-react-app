@@ -31,7 +31,7 @@ class NavBar extends Component {
     render() {
         return (
             
-            <nav className={this.state.scroll > 81 ? this.state.navDisplay + " stickyNav" : null}>
+            <nav className={this.state.scroll > 10 ? this.state.navDisplay + " stickyNav" : this.state.navDisplay + " nonStickyNav"}>
                 <div className={this.state.navDisplay + " darkNavBar"}>
                     <h4 className={this.state.navItemsVisibility + " nav_title"}>Summit Broomball</h4>
                     <div className={this.state.navItemsVisibility + " navbar-nav"}>

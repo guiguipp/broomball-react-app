@@ -72,6 +72,7 @@ $screen-md: 768px;
 $screen-lg: 992px;
 $screen-xl: 1024px;
 
+
 // Small devices
 @mixin sm {
     @media (min-width: #{$screen-sm}) {
@@ -98,13 +99,12 @@ $screen-xl: 1024px;
         @content;
     }
 }
-
+// desktop
 @mixin xl {
     @media (min-width: #{$screen-xl}) {
         @content;
     }
 }
-
 
 // THEMES
 @mixin theme($gradient, $accent, $fallback) {
@@ -647,6 +647,13 @@ input {
 }
 
 // Picker Module
+.set_picks_col {
+    grid-area: unpicked;
+}
+.ranks_col {
+    grid-area: picked;
+}
+
 .universal_picker {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -663,12 +670,6 @@ input {
         }
 
     }
-}
-.set_picks_col {
-    grid-area: unpicked;
-}
-.ranks_col {
-    grid-area: picked;
 }
 
 .player_picking_div {
@@ -1815,7 +1816,6 @@ label {
 
 // List
 /* table formatting */
-
 table {
     border-collapse: collapse;
     display: table;
@@ -1870,117 +1870,177 @@ nav {
     top: 0;
     width: 100%;
     z-index: 1;
-    margin-bottom: 3%;
+    position: fixed;
     img { 
-        width: 70px;
         position: relative;
         float: right;
         margin-right: 5%;
         vertical-align: middle;
-        @include sm {
-            width: 15%;
-            max-width: 170px;
+        @include xl {
+            margin-right: 10%;
         }
     }
+}
+// Regardless of the nav sticking or not, when opened, should be big enough to show options
+nav.showMenu {
+    height: 400px;
+    box-shadow: 0px 5px 10px grey;
 }
 
 .stickyNav {
     position: fixed;
     box-shadow: 0px 5px 10px grey;
+    /* This is where the fixed Nav should resize smoothly*/
+    height: 80px;
+    transition: all 20ms ease-in-out;
     img {
-        width: 70px;
-        width: 70px;
+        height: 70px;
         position: relative;
         float: right;
         margin-right: 5%;
         vertical-align: middle;
     }
 }
-
-.noShowMenu.stickyNav {
-    height: 80px;
-    .navbar.bg > img {
-        margin-right: 10%;
-        width: 70px;
-    }
-} 
-
-.showMenu.stickyNav {
-    height: 450px;
-    padding: unset;
+// if the menu shows, the img should resize
+.showMenu>.navbar>img {
+    height: 70px;
 }
-
-$MenuTransition: 200ms;
-
-.darkNavBar {
-    background: #343a40;
-    a {
-        text-decoration: none;
-        background-color: transparent;
-    }
-    // The text disappears before the div, but not immediately (smoother)
-    .hidden {
-        transition: visibility 0s linear $MenuTransition * 0.2, opacity 300ms;
-    }
-}
-
-.noShowMenu {
-    transition: all $MenuTransition ease-in-out;
-}
-
-.noShowMenu.darkNavBar {
-    height: 0px;
-}
-
-.showMenu {
-    padding: 1.5rem;
-    height: 310px;
-    transition: all $MenuTransition ease-in-out;
-}
-
-.nav-item .nav-link {
-    padding-right: 0;
-    padding-left: 0;
-}
-.nav-item {
-    display: block;
-    padding: .5rem 1rem;
-}
-.nav-link {
-    font-family: font(secondary);
-    font-size: 125%;
-    color: color(light-orange);
-    &:hover {
-        color: #17a2b8;
+.showMenu.stickyNav, .showMenu.nonStickyNav {
+    .showMenu.darkNavBar {
+        background: #343a40;
+        a {
+            text-decoration: none;
+            background-color: transparent;
+        }
+        .nav-item .nav-link {
+            padding-right: 0;
+            padding-left: 0;
+        }
+        .nav-item {
+            display: block;
+            padding: .5rem 1rem;
+        }
+        .nav-link {
+            font-family: font(secondary);
+            font-size: 125%;
+            color: color(light-orange);
+            &:hover {
+                color: #17a2b8;
+            }
+            &:last-of-type {
+                margin-bottom: 10px;
+            }
+        }
+        .nav_title {
+            font-family: font(primary);
+            font-size: 200%;
+            color: color(white);
+            text-shadow: $orange-title-shadow;
+            margin-top: unset;
+            margin-bottom: 1%;
+            font-weight: unset;
+        }
+        .navbar-nav {
+            display: flex;
+            flex-direction: column;
+            padding-left: 0;
+            margin-bottom: 0;
+            list-style: none;
+        }
     }
 }
+// Navbar size
+$xsNavbar: 80px;
+$smNavbar: 120px;
+$mmNavbar: 140px;
+$mdNavbar: 150px;
+$lgNavbar: 155px;
+$xlNavbar: 160px;
+$mainTopMargin: 15px;
 
-.nav_title {
-    font-family: font(primary);
-    font-size: 200%;
-    color: color(white);
-    text-shadow: $orange-title-shadow;
-    margin-top: unset;
-    margin-bottom: 1%;
-    font-weight: unset;
-}
-.navbar-nav {
-    display: flex;
-    flex-direction: column;
-    padding-left: 0;
-    margin-bottom: 0;
-    list-style: none;
-}
 
-img {
-    width: 80%;
-    @include md {
-        width: 115px;
-    };
-    @include xl {
-        width: 130px;
+@mixin resizeNav($screenSize){
+    @if $screenSize == $screen-sm {
+        @media (min-width: $screenSize) {
+            nav {
+                height: $smNavbar;
+                img {
+                    height: $smNavbar - $mainTopMargin;
+                }
+            }
+            main:first-of-type {
+                margin-top: $smNavbar + $mainTopMargin;
+            }
+        }
+    } @else if $screenSize == $screen-mm {
+        @media (min-width: $screenSize) {
+            nav {
+                height: $mmNavbar;
+                img {
+                    height: $mmNavbar - $mainTopMargin;
+                }
+            }
+            main:first-of-type {
+                margin-top: $mmNavbar + $mainTopMargin;
+            }
+        } 
+    } @else if $screenSize == $screen-md {
+        @media (min-width: $screenSize) {
+            nav {
+                height: $mdNavbar;
+                img {
+                    height: $mdNavbar - $mainTopMargin;
+                }
+            }
+            main:first-of-type {
+                margin-top: $mdNavbar + $mainTopMargin;
+            }
+        } 
+    } @else if $screenSize == $screen-lg {
+        @media (min-width: $screenSize) {
+            nav {
+                height: $lgNavbar;
+                img {
+                    height: $lgNavbar - $mainTopMargin;
+                }
+            }
+            main:first-of-type {
+                margin-top: $lgNavbar + $mainTopMargin;
+            }
+        } 
+    } @else if $screenSize == $screen-xl {
+        @media (min-width: $screenSize) {
+            nav {
+                height: $xlNavbar;
+                img {
+                    height: $xlNavbar - $mainTopMargin;
+                }
+            }
+            main:first-of-type {
+                margin-top: $xlNavbar + $mainTopMargin;
+            }
+        } 
+    } @else {
+        @media (min-width: $screenSize) {
+            nav {
+                height: $xsNavbar;
+                img {
+                    height: $xsNavbar - $mainTopMargin;
+                }
+            }
+            main:first-of-type {
+                margin-top: $xsNavbar + $mainTopMargin;
+            }
+        } 
     }
-}
+};
+
+    @include resizeNav(0px);
+    @include resizeNav($screen-sm);
+    @include resizeNav($screen-mm);
+    @include resizeNav($screen-md);
+    @include resizeNav($screen-lg);
+    @include resizeNav($screen-xl);
 
 // Home Page
 .welcome_text {

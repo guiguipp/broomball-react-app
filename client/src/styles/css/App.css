@@ -756,6 +756,20 @@ input {
   display: inline-block;
 }
 
+.set_picks_col {
+  -ms-grid-row: 2;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 2;
+  grid-area: unpicked;
+}
+
+.ranks_col {
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 2;
+  grid-area: picked;
+}
+
 .universal_picker {
   display: -ms-grid;
   display: grid;
@@ -775,20 +789,6 @@ input {
   .universal_picker .pick_arrow {
     display: unset;
   }
-}
-
-.set_picks_col {
-  -ms-grid-row: 2;
-  -ms-grid-column: 1;
-  -ms-grid-column-span: 2;
-  grid-area: unpicked;
-}
-
-.ranks_col {
-  -ms-grid-row: 1;
-  -ms-grid-column: 1;
-  -ms-grid-column-span: 2;
-  grid-area: picked;
 }
 
 .player_picking_div {
@@ -2297,104 +2297,84 @@ nav {
   top: 0;
   width: 100%;
   z-index: 1;
-  margin-bottom: 3%;
+  position: fixed;
 }
 
 nav img {
-  width: 70px;
   position: relative;
   float: right;
   margin-right: 5%;
   vertical-align: middle;
 }
 
-@media (min-width: 480px) {
+@media (min-width: 1024px) {
   nav img {
-    width: 15%;
-    max-width: 170px;
+    margin-right: 10%;
   }
+}
+
+nav.showMenu {
+  height: 400px;
+  -webkit-box-shadow: 0px 5px 10px grey;
+          box-shadow: 0px 5px 10px grey;
 }
 
 .stickyNav {
   position: fixed;
   -webkit-box-shadow: 0px 5px 10px grey;
           box-shadow: 0px 5px 10px grey;
+  /* This is where the fixed Nav should resize smoothly*/
+  height: 80px;
+  -webkit-transition: all 20ms ease-in-out;
+  transition: all 20ms ease-in-out;
 }
 
 .stickyNav img {
-  width: 70px;
-  width: 70px;
+  height: 70px;
   position: relative;
   float: right;
   margin-right: 5%;
   vertical-align: middle;
 }
 
-.noShowMenu.stickyNav {
-  height: 80px;
+.showMenu > .navbar > img {
+  height: 70px;
 }
 
-.noShowMenu.stickyNav .navbar.bg > img {
-  margin-right: 10%;
-  width: 70px;
-}
-
-.showMenu.stickyNav {
-  height: 450px;
-  padding: unset;
-}
-
-.darkNavBar {
+.showMenu.stickyNav .showMenu.darkNavBar, .showMenu.nonStickyNav .showMenu.darkNavBar {
   background: #343a40;
 }
 
-.darkNavBar a {
+.showMenu.stickyNav .showMenu.darkNavBar a, .showMenu.nonStickyNav .showMenu.darkNavBar a {
   text-decoration: none;
   background-color: transparent;
 }
 
-.darkNavBar .hidden {
-  -webkit-transition: visibility 0s linear 40ms, opacity 300ms;
-  transition: visibility 0s linear 40ms, opacity 300ms;
-}
-
-.noShowMenu {
-  -webkit-transition: all 200ms ease-in-out;
-  transition: all 200ms ease-in-out;
-}
-
-.noShowMenu.darkNavBar {
-  height: 0px;
-}
-
-.showMenu {
-  padding: 1.5rem;
-  height: 310px;
-  -webkit-transition: all 200ms ease-in-out;
-  transition: all 200ms ease-in-out;
-}
-
-.nav-item .nav-link {
+.showMenu.stickyNav .showMenu.darkNavBar .nav-item .nav-link, .showMenu.nonStickyNav .showMenu.darkNavBar .nav-item .nav-link {
   padding-right: 0;
   padding-left: 0;
 }
 
-.nav-item {
+.showMenu.stickyNav .showMenu.darkNavBar .nav-item, .showMenu.nonStickyNav .showMenu.darkNavBar .nav-item {
   display: block;
   padding: .5rem 1rem;
 }
 
-.nav-link {
+.showMenu.stickyNav .showMenu.darkNavBar .nav-link, .showMenu.nonStickyNav .showMenu.darkNavBar .nav-link {
   font-family: boogaloo, Impact, Charcoal, sans-serif;
   font-size: 125%;
   color: #ffbe75;
 }
 
-.nav-link:hover {
+.showMenu.stickyNav .showMenu.darkNavBar .nav-link:hover, .showMenu.nonStickyNav .showMenu.darkNavBar .nav-link:hover {
   color: #17a2b8;
 }
 
-.nav_title {
+.showMenu.stickyNav .showMenu.darkNavBar .nav-link:last-of-type, .showMenu.nonStickyNav .showMenu.darkNavBar .nav-link:last-of-type {
+  margin-bottom: 10px;
+}
+
+.showMenu.stickyNav .showMenu.darkNavBar .nav_title, .showMenu.nonStickyNav .showMenu.darkNavBar .nav_title {
   font-family: Yellowtail, Brush Script MT, Brush Script Std, cursive;
   font-size: 200%;
   color: #FFFFFF;
@@ -2404,7 +2384,7 @@ nav img {
   font-weight: unset;
 }
 
-.navbar-nav {
+.showMenu.stickyNav .showMenu.darkNavBar .navbar-nav, .showMenu.nonStickyNav .showMenu.darkNavBar .navbar-nav {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2417,19 +2397,75 @@ nav img {
   list-style: none;
 }
 
-img {
-  width: 80%;
+@media (min-width: 0px) {
+  nav {
+    height: 80px;
+  }
+  nav img {
+    height: 65px;
+  }
+  main:first-of-type {
+    margin-top: 95px;
+  }
+}
+
+@media (min-width: 480px) {
+  nav {
+    height: 120px;
+  }
+  nav img {
+    height: 105px;
+  }
+  main:first-of-type {
+    margin-top: 135px;
+  }
+}
+
+@media (min-width: 670px) {
+  nav {
+    height: 140px;
+  }
+  nav img {
+    height: 125px;
+  }
+  main:first-of-type {
+    margin-top: 155px;
+  }
 }
 
 @media (min-width: 768px) {
-  img {
-    width: 115px;
+  nav {
+    height: 150px;
+  }
+  nav img {
+    height: 135px;
+  }
+  main:first-of-type {
+    margin-top: 165px;
+  }
+}
+
+@media (min-width: 992px) {
+  nav {
+    height: 155px;
+  }
+  nav img {
+    height: 140px;
+  }
+  main:first-of-type {
+    margin-top: 170px;
   }
 }
 
 @media (min-width: 1024px) {
-  img {
-    width: 130px;
+  nav {
+    height: 160px;
+  }
+  nav img {
+    height: 145px;
+  }
+  main:first-of-type {
+    margin-top: 175px;
   }
 }
 

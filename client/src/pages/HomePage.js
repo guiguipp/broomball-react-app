@@ -4,7 +4,7 @@ import NavBar from "../components/NavBar.js";
 const Home = () => (
     <div>
         <NavBar />
-        <div className="main_main"> 
+        <main className="main_main"> 
             <h1 className="h1_main">Summit Broomball</h1>
             <div className="instructions_div">
                 <div className="page_div">
@@ -55,7 +55,7 @@ const Home = () => (
                         </p>
                     </div>
                 </div>
-            </div>        
+            </main>        
         </div>
 
 )

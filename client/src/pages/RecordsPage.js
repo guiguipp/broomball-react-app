@@ -15,7 +15,7 @@ render() {
     return (
     <div>
         <NavBar />
-        <div className="main_main main_padded"> 
+        <main className="main_main main_padded"> 
             <h1 className="h1_main">League Records</h1>
             
             <section>
@@ -41,7 +41,7 @@ render() {
             <section>
                 < Filters />
             </section>
-        </div>
+        </main>
     </div>
     )
     }
