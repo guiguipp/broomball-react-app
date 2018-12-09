@@ -2320,10 +2320,8 @@ nav.showMenu {
 }
 
 .stickyNav {
-  position: fixed;
   -webkit-box-shadow: 0px 5px 10px grey;
           box-shadow: 0px 5px 10px grey;
-  /* This is where the fixed Nav should resize smoothly*/
   height: 80px;
   -webkit-transition: all 20ms ease-in-out;
   transition: all 20ms ease-in-out;
@@ -2331,10 +2329,6 @@ nav.showMenu {
 
 .stickyNav img {
   height: 70px;
-  position: relative;
-  float: right;
-  margin-right: 5%;
-  vertical-align: middle;
 }
 
 .showMenu > .navbar > img {
@@ -2343,6 +2337,7 @@ nav.showMenu {
 
 .showMenu.stickyNav .showMenu.darkNavBar, .showMenu.nonStickyNav .showMenu.darkNavBar {
   background: #343a40;
+  padding: 1% 2%;
 }
 
 .showMenu.stickyNav .showMenu.darkNavBar a, .showMenu.nonStickyNav .showMenu.darkNavBar a {
