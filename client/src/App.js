@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React from "react";
 // React router
 import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
 
@@ -10,36 +9,56 @@ import Player from "./pages/PlayerPage.js";
 import Stats from "./pages/StatsPage.js";
 import Records from "./pages/RecordsPage.js";
 import Login from "./pages/LoginPage.js";
-import './styles/css/App.css';
+import "./styles/css/App.css";
 
-// Redux 
-import { Provider } from 'react-redux'
-import store from "./js/store"
+// Redux
+import { Provider } from "react-redux";
+import store from "./js/store";
 // Font-Awesome
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faArrowAltCircleRight } from '@fortawesome/free-regular-svg-icons'
-import { 
-  faChevronUp, 
-  faChevronDown, 
-  faMinusCircle, 
-  faTimesCircle, 
-  faArrowCircleLeft, 
-  faAngleRight, 
-  faPlusCircle, 
-  faTimes, 
-  faPlus, 
-  faCaretDown, 
-  faCaretRight, 
-  faLongArrowAltUp, 
-  faLongArrowAltDown, 
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faArrowAltCircleRight } from "@fortawesome/free-regular-svg-icons";
+import {
+  faChevronUp,
+  faChevronDown,
+  faMinusCircle,
+  faTimesCircle,
+  faArrowCircleLeft,
+  faAngleRight,
+  faPlusCircle,
+  faTimes,
+  faPlus,
+  faCaretDown,
+  faCaretRight,
+  faLongArrowAltUp,
+  faLongArrowAltDown,
   faCircle,
   faLock,
   faUnlockAlt,
   // faSquare,
   faCheckSquare
-  } from '@fortawesome/free-solid-svg-icons'
+} from "@fortawesome/free-solid-svg-icons";
 
-library.add(faChevronUp, faChevronDown, faMinusCircle, faTimesCircle, faArrowAltCircleRight, faArrowCircleLeft, faAngleRight, faPlusCircle, faMinusCircle, faTimes, faPlus, faCaretDown, faCaretRight, faLongArrowAltUp, faLongArrowAltDown, faCircle, faLock, faUnlockAlt, /* faSquare,*/ faCheckSquare)
+library.add(
+  faChevronUp,
+  faChevronDown,
+  faMinusCircle,
+  faTimesCircle,
+  faArrowAltCircleRight,
+  faArrowCircleLeft,
+  faAngleRight,
+  faPlusCircle,
+  faMinusCircle,
+  faTimes,
+  faPlus,
+  faCaretDown,
+  faCaretRight,
+  faLongArrowAltUp,
+  faLongArrowAltDown,
+  faCircle,
+  faLock,
+  faUnlockAlt,
+  /* faSquare,*/ faCheckSquare
+);
 // const Records = React.lazy(() => import('./pages/Records'));
 
 const App = () => (
@@ -59,7 +78,6 @@ const App = () => (
       </div>
     </Router>
   </Provider>
-
 );
 
 export default App;

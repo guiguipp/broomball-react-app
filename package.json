@@ -1,37 +1,37 @@
 {
-    "name": "broomball-react-app",
-    "version": "1.0.0",
-    "engines": {
-        "node": "9.5.x"
-    },
-    "scripts": {
-        "client": "cd client && npm start",
-        "server": "nodemon server.js",
-        "build": "webpack --config ./config/webpack.config.js --progress --colors",
-        "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
-        "start": "concurrently \"nodemon server.js\" \"npm run client\""
-    },
-    "dependencies": {
-        "axios": "^0.18.0",
-        "bcryptjs": "^2.4.3",
-        "body-parser": "^1.18.3",
-        "concurrently": "^3.5.0",
-        "connect-flash": "^0.1.1",
-        "connect-mongo": "^2.0.1",
-        "express": "^4.16.2",
-        "express-session": "^1.15.6",
-        "moment": "^2.22.2",
-        "mongoose": "^5.2.4",
-        "morgan": "^1.9.1",
-        "nodemon": "^1.18.4",
-        "passport": "^0.4.0",
-        "passport-google-oauth": "^1.0.0",
-        "passport-local": "^1.0.0",
-        "path": "^0.12.7"
-    },
-    "devDependencies": {
-        "concurrently": "^3.5.0",
-        "cors": "^2.8.4",
-        "dotenv": "^6.0.0"
-    }
+  "name": "broomball-react-app",
+  "version": "1.0.0",
+  "engines": {
+    "node": "9.5.x"
+  },
+  "scripts": {
+    "client": "cd client && npm start",
+    "server": "nodemon server.js",
+    "build": "webpack --config ./config/webpack.config.js --progress --colors",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
+    "start": "concurrently \"nodemon server.js\" \"npm run client\""
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "concurrently": "^3.5.0",
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^2.0.1",
+    "express": "^4.16.2",
+    "express-session": "^1.15.6",
+    "moment": "^2.22.2",
+    "mongoose": "^5.2.4",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.18.4",
+    "passport": "^0.4.0",
+    "passport-google-oauth": "^1.0.0",
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.0",
+    "cors": "^2.8.4",
+    "dotenv": "^6.0.0"
+  }
 }
