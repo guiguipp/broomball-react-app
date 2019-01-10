@@ -926,6 +926,15 @@ input {
     }
   }
 }
+.container.button_container {
+  margin: 1%;
+  :first-child {
+    justify-self: center;
+  }
+  :last-child {
+    justify-self: center;
+  }
+}
 .game_toggle_container {
   display: flex;
   align-items: center;

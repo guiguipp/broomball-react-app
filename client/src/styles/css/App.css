@@ -1134,6 +1134,20 @@ input {
   }
 }
 
+.container.button_container {
+  margin: 1%;
+}
+
+.container.button_container :first-child {
+  -ms-grid-column-align: center;
+      justify-self: center;
+}
+
+.container.button_container :last-child {
+  -ms-grid-column-align: center;
+      justify-self: center;
+}
+
 .game_toggle_container {
   display: -webkit-box;
   display: -ms-flexbox;

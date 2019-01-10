@@ -7,13 +7,14 @@ import { fetchPlayers } from "../../js/actions/playerActions";
 import DatePicker from "react-datepicker";
 import { loadState } from "../sessionStorage";
 import "react-datepicker/dist/react-datepicker.css";
+import _ from "underscore";
 
 const moment = require("moment");
 // for each game created, we add a "fake" player that allows to adjust the stats in case players are traded
 const zombiePlayers = [
   {
     _id: "Dark",
-    name: "Dark Team",
+    name: "– Dark Team",
     playerLevel: "N/A",
     preferredPosition: "N/A",
     membershipStatus: "variable",
@@ -26,7 +27,7 @@ const zombiePlayers = [
   },
   {
     _id: "White",
-    name: "White Team",
+    name: "– White Team",
     playerLevel: "N/A",
     preferredPosition: "N/A",
     membershipStatus: "variable",
@@ -53,7 +54,6 @@ class Calendar extends Component {
     this.props.fetchPlayers();
     const privileges = loadState();
     console.log("Data from SessionStorage: ", privileges);
-
     this.setState(...this.state.date, privileges);
   }
 
