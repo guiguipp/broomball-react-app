@@ -246,7 +246,8 @@ body {
 
 h1,
 h2,
-h3 {
+h3,
+h4 {
   font-weight: 500;
   line-height: 1.2;
 }
@@ -294,6 +295,28 @@ h2 {
 @media screen and (min-width: 1024px) {
   h2 {
     font-size: 35px;
+  }
+}
+
+h4 {
+  font-size: 20px;
+}
+
+@media screen and (min-width: 480px) {
+  h4 {
+    font-size: 22px;
+  }
+}
+
+@media screen and (min-width: 640px) {
+  h4 {
+    font-size: 26px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  h4 {
+    font-size: 30px;
   }
 }
 
@@ -1525,11 +1548,13 @@ td [class*="circle"] {
   }
 }
 
-.games_per_year {
-  border-style: solid;
-  border-width: 1px;
-  border-color: #acadb2;
-  padding-top: 2%;
+.games_per_year h4 {
+  text-align: left;
+}
+
+.games_per_month {
+  width: 90%;
+  margin: auto;
 }
 
 .hide_year_button {
@@ -1913,6 +1938,8 @@ td [class*="circle"] {
 .record_game_button {
   margin: 3%;
   min-width: 150px;
+  max-width: 200px;
+  width: 80%;
   border-radius: 20px;
 }
 
@@ -1936,6 +1963,8 @@ td [class*="circle"] {
 .record_list_of_games {
   text-align: center;
   padding: 0 3% 4%;
+  width: 90%;
+  margin: auto;
 }
 
 .button_options_third_set {
