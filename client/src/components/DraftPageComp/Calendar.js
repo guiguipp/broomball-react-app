@@ -7,7 +7,6 @@ import { fetchPlayers } from "../../js/actions/playerActions";
 import DatePicker from "react-datepicker";
 import { loadState } from "../sessionStorage";
 import "react-datepicker/dist/react-datepicker.css";
-import _ from "underscore";
 
 const moment = require("moment");
 // for each game created, we add a "fake" player that allows to adjust the stats in case players are traded

@@ -276,6 +276,13 @@ $h2-font-sizes: (
   1024px: 35px
 );
 
+$h4-font-sizes: (
+  null: 20px,
+  480px: 22px,
+  640px: 26px,
+  1024px: 30px
+);
+
 $p-font-sizes: (
   null: 20px,
   1024px: 35px
@@ -343,7 +350,8 @@ $p-font-sizes: (
 
 h1,
 h2,
-h3 {
+h3,
+h4 {
   font-weight: 500;
   line-height: 1.2;
 }
@@ -356,6 +364,10 @@ h1 {
 
 h2 {
   @include font-size($h2-font-sizes);
+}
+
+h4 {
+  @include font-size($h4-font-sizes);
 }
 
 button {
@@ -1226,10 +1238,13 @@ td [class*="circle"] {
   }
 }
 .games_per_year {
-  border-style: solid;
-  border-width: $border-regular * 2;
-  border-color: color(grey);
-  padding-top: 2%;
+  h4 {
+    text-align: left;
+  }
+}
+.games_per_month {
+  width: 90%;
+  margin: auto;
 }
 
 .hide_year_button {
@@ -1573,6 +1588,8 @@ td [class*="circle"] {
 .record_game_button {
   margin: 3%;
   min-width: 150px;
+  max-width: 200px;
+  width: 80%;
   border-radius: 20px;
 }
 
@@ -1591,6 +1608,8 @@ td [class*="circle"] {
 .record_list_of_games {
   text-align: center;
   padding: 0 3% 4%;
+  width: 90%;
+  margin: auto;
 }
 
 .button_options_third_set {
