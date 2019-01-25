@@ -135,6 +135,88 @@ body {
   color: #ffecb3;
 }
 
+.comparable_forward {
+  -webkit-animation: showComparableF 1s linear infinite alternate;
+          animation: showComparableF 1s linear infinite alternate;
+}
+
+@-webkit-keyframes showComparableF {
+  0% {
+    outline: none;
+  }
+  65% {
+    outline: 1px solid #dcedc8;
+    outline-offset: 1px;
+  }
+  75% {
+    outline: 4px solid #dcedc8;
+    outline-offset: 4px;
+  }
+  100% {
+    outline: 5px solid #dcedc8;
+    outline-offset: 5px;
+  }
+}
+
+@keyframes showComparableF {
+  0% {
+    outline: none;
+  }
+  65% {
+    outline: 1px solid #dcedc8;
+    outline-offset: 1px;
+  }
+  75% {
+    outline: 4px solid #dcedc8;
+    outline-offset: 4px;
+  }
+  100% {
+    outline: 5px solid #dcedc8;
+    outline-offset: 5px;
+  }
+}
+
+.comparable_defense {
+  -webkit-animation: showComparableD 1s linear infinite alternate;
+          animation: showComparableD 1s linear infinite alternate;
+}
+
+@-webkit-keyframes showComparableD {
+  0% {
+    outline: none;
+  }
+  65% {
+    outline: 1px solid #b2ebf2;
+    outline-offset: 1px;
+  }
+  75% {
+    outline: 4px solid #b2ebf2;
+    outline-offset: 4px;
+  }
+  100% {
+    outline: 5px solid #b2ebf2;
+    outline-offset: 5px;
+  }
+}
+
+@keyframes showComparableD {
+  0% {
+    outline: none;
+  }
+  65% {
+    outline: 1px solid #b2ebf2;
+    outline-offset: 1px;
+  }
+  75% {
+    outline: 4px solid #b2ebf2;
+    outline-offset: 4px;
+  }
+  100% {
+    outline: 5px solid #b2ebf2;
+    outline-offset: 5px;
+  }
+}
+
 /* "Main" Theme */
 .main_main {
   background: #ffffff;

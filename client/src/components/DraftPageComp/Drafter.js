@@ -17,7 +17,11 @@ class Drafter extends Component {
     super(props);
     this.state = {
       draftTeams: true,
-      changeAvailability: true
+      changeAvailability: true,
+      comparableForward: [],
+      comparableDefense: [],
+      initialPlayer: {},
+      glowing: false
     };
   }
   componentDidMount() {
@@ -90,6 +94,77 @@ class Drafter extends Component {
     }
   }
 
+  comparablePlayers(player) {
+    const comparableForward = this.props.draft.players
+      .filter(
+        participant =>
+          participant.gameInfo.team !== player.gameInfo.team &&
+          participant._id !== player._id &&
+          participant.playerLevel === player.playerLevel &&
+          participant.preferredPosition === "Forward"
+      )
+      .map(broomballer => broomballer._id);
+
+    const comparableDefense = this.props.draft.players
+      .filter(
+        participant =>
+          participant.gameInfo.team !== player.gameInfo.team &&
+          participant._id !== player._id &&
+          participant.playerLevel === player.playerLevel &&
+          participant.preferredPosition === "Defense"
+      )
+      .map(broomballer => broomballer._id);
+
+    this.setState({
+      initialPlayer: player,
+      comparableForward: comparableForward,
+      comparableDefense: comparableDefense,
+      glowing: true
+    });
+  }
+
+  tradeOptions(player) {
+    // if the app is set to "trade" mode, and player clicked is glowing => initiate trade, else: show possible trades
+    if (this.state.glowing === true) {
+      if (
+        this.state.comparableDefense.includes(player._id) ||
+        this.state.comparableForward.includes(player._id)
+      ) {
+        if (this.state.initialPlayer.gameInfo.team === "White") {
+          this.assignTeam(this.state.initialPlayer._id, "Dark");
+          this.assignTeam(player._id, "White");
+          this.setState({
+            comparableForward: [],
+            comparableDefense: [],
+            initialPlayer: {},
+            glowing: false
+          });
+        } else {
+          this.assignTeam(this.state.initialPlayer._id, "White");
+          this.assignTeam(player._id, "Dark");
+          this.setState({
+            comparableForward: [],
+            comparableDefense: [],
+            initialPlayer: {},
+            glowing: false
+          });
+        }
+      } else if (player._id === this.state.initialPlayer._id) {
+        // clicking on same player removes glowing
+        this.setState({
+          comparableForward: [],
+          comparableDefense: [],
+          initialPlayer: {},
+          glowing: false
+        });
+      } else {
+        this.comparablePlayers(player);
+      }
+    } else {
+      this.comparablePlayers(player);
+    }
+  }
+
   render() {
     return (
       <div className="universal_drafter">
@@ -112,7 +187,18 @@ class Drafter extends Component {
               .map(player => {
                 return (
                   <div className="player_div" key={player._id}>
-                    <button className="player_button">{player.name}</button>
+                    <button
+                      className={
+                        this.state.comparableForward.includes(player._id)
+                          ? "player_button comparable_forward"
+                          : this.state.comparableDefense.includes(player._id)
+                          ? "player_button comparable_defense"
+                          : "player_button"
+                      }
+                      onClick={() => this.tradeOptions(player)}
+                    >
+                      {player.name}
+                    </button>
                     {this.state.changeAvailability === true ? (
                       <FontAwesomeIcon
                         icon="times-circle"
@@ -289,7 +375,18 @@ class Drafter extends Component {
                         onClick={() => this.assignTeam(player._id, "N/A")}
                       />
                     ) : null}
-                    <button className={"player_button"}>{player.name}</button>
+                    <button
+                      className={
+                        this.state.comparableForward.includes(player._id)
+                          ? "player_button comparable_forward"
+                          : this.state.comparableDefense.includes(player._id)
+                          ? "player_button comparable_defense"
+                          : "player_button"
+                      }
+                      onClick={() => this.tradeOptions(player)}
+                    >
+                      {player.name}
+                    </button>
                     {this.state.changeAvailability === true ? (
                       <FontAwesomeIcon
                         icon="times-circle"
