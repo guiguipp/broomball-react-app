@@ -64,10 +64,9 @@ export const getGamesForRecords = () => dispatch => {
       );
       let reducedGames = beautifyGames(pastGames);
       // setting the visibility of each year's games. We only want the current year's games to be visible
-      // let years = Object.keys(Object.values(reducedGames)).map(year => ([year] = "visible"))
       let years = [];
       for (let i = 0; i < reducedGames.length; i++) {
-        if (i == 0) {
+        if (i === 0) {
           years.push("visible");
         } else {
           years.push("hidden");

@@ -197,6 +197,50 @@ $screen-xl: 1024px;
   color: color(goalie);
 }
 
+.comparable_forward {
+  animation: showComparableF 1s linear infinite alternate;
+}
+
+@keyframes showComparableF {
+  0% {
+    outline: none;
+  }
+  65% {
+    outline: 1px solid color(forward);
+    outline-offset: 1px;
+  }
+  75% {
+    outline: 4px solid color(forward);
+    outline-offset: 4px;
+  }
+  100% {
+    outline: 5px solid color(forward);
+    outline-offset: 5px;
+  }
+}
+
+.comparable_defense {
+  animation: showComparableD 1s linear infinite alternate;
+}
+
+@keyframes showComparableD {
+  0% {
+    outline: none;
+  }
+  65% {
+    outline: 1px solid color(defense);
+    outline-offset: 1px;
+  }
+  75% {
+    outline: 4px solid color(defense);
+    outline-offset: 4px;
+  }
+  100% {
+    outline: 5px solid color(defense);
+    outline-offset: 5px;
+  }
+}
+
 /* "Main" Theme */
 .main_main {
   background: color(white);
