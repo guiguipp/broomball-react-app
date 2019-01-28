@@ -12,6 +12,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowAltCircleRight } from "@fortawesome/free-regular-svg-icons";
 import { loadState } from "../sessionStorage";
 
+const initialState = {
+  comparableForward: [],
+  comparableDefense: [],
+  initialPlayer: {},
+  glowing: false
+};
 class Drafter extends Component {
   constructor(props) {
     super(props);
@@ -124,7 +130,7 @@ class Drafter extends Component {
   }
 
   tradeOptions(player) {
-    // if the app is set to "trade" mode, and player clicked is glowing => initiate trade, else: show possible trades
+    // if the app is set to "trade" mode, and player clicked is glowing => initiate trade, else: initiates trade process
     if (this.state.glowing === true) {
       if (
         this.state.comparableDefense.includes(player._id) ||
@@ -133,34 +139,21 @@ class Drafter extends Component {
         if (this.state.initialPlayer.gameInfo.team === "White") {
           this.assignTeam(this.state.initialPlayer._id, "Dark");
           this.assignTeam(player._id, "White");
-          this.setState({
-            comparableForward: [],
-            comparableDefense: [],
-            initialPlayer: {},
-            glowing: false
-          });
+          this.setState(initialState);
         } else {
           this.assignTeam(this.state.initialPlayer._id, "White");
           this.assignTeam(player._id, "Dark");
-          this.setState({
-            comparableForward: [],
-            comparableDefense: [],
-            initialPlayer: {},
-            glowing: false
-          });
+          this.setState(initialState);
         }
       } else if (player._id === this.state.initialPlayer._id) {
-        // clicking on same player removes glowing
-        this.setState({
-          comparableForward: [],
-          comparableDefense: [],
-          initialPlayer: {},
-          glowing: false
-        });
+        // clicking on same player resets the process
+        this.setState(initialState);
       } else {
+        // clicking on a non-suggested player resets the process
         this.comparablePlayers(player);
       }
     } else {
+      // clicking on a player launches the process
       this.comparablePlayers(player);
     }
   }
