@@ -606,6 +606,21 @@ input {
     grid-gap: 10px;
         grid-template-areas: "drafted_dark undrafted drafted_white";
   }
+  .universal_drafter .dark_drafted_players {
+    -ms-grid-row: 1;
+    -ms-grid-column: 1;
+    grid-area: drafted_dark;
+  }
+  .universal_drafter .undrafted_players {
+    -ms-grid-row: 1;
+    -ms-grid-column: 2;
+    grid-area: undrafted;
+  }
+  .universal_drafter .white_drafted_players {
+    -ms-grid-row: 1;
+    -ms-grid-column: 3;
+    grid-area: drafted_white;
+  }
   .universal_drafter .small_screen_team_names_header {
     display: none;
   }
@@ -894,6 +909,16 @@ input {
 @media (min-width: 480px) {
   .universal_picker {
         grid-template-areas: "unpicked picked";
+  }
+  .universal_picker .set_picks_col {
+    -ms-grid-row: 1;
+    -ms-grid-column: 1;
+    grid-area: unpicked;
+  }
+  .universal_picker .ranks_col {
+    -ms-grid-row: 1;
+    -ms-grid-column: 2;
+    grid-area: picked;
   }
   .universal_picker .pick_arrow {
     display: unset;

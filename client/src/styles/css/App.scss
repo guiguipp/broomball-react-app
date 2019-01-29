@@ -576,6 +576,16 @@ input {
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 10px;
     grid-template-areas: "drafted_dark undrafted drafted_white";
+    // repeating because of Autoprefixer error with media queries
+    .dark_drafted_players {
+      grid-area: drafted_dark;
+    }
+    .undrafted_players {
+      grid-area: undrafted;
+    }
+    .white_drafted_players {
+      grid-area: drafted_white;
+    }
     .small_screen_team_names_header {
       display: none;
     }
@@ -749,6 +759,13 @@ input {
   }
   @include sm {
     grid-template-areas: "unpicked picked";
+    // repeating, because of prefixer error with media queries
+    .set_picks_col {
+      grid-area: unpicked;
+    }
+    .ranks_col {
+      grid-area: picked;
+    }
     .pick_arrow {
       display: unset;
     }
