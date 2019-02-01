@@ -199,33 +199,37 @@ $screen-xl: 1024px;
 
 .comparable_forward {
   animation: showComparableF 1s linear infinite alternate;
+  outline: 1px solid white;
 }
 
 @keyframes showComparableF {
   0% {
-    outline: none;
+    outline: solid 0px color(forward);
+    outline-offset: 0px;
   }
   65% {
-    outline: 1px solid color(forward);
+    outline: solid 1px color(forward);
     outline-offset: 1px;
   }
   75% {
-    outline: 4px solid color(forward);
+    outline: solid 4px color(forward);
     outline-offset: 4px;
   }
   100% {
-    outline: 5px solid color(forward);
+    outline: solid 5px color(forward);
     outline-offset: 5px;
   }
 }
 
 .comparable_defense {
   animation: showComparableD 1s linear infinite alternate;
+  outline: 1px solid white;
 }
 
 @keyframes showComparableD {
   0% {
-    outline: none;
+    outline: 1px solid color(defense);
+    outline-offset: 0px;
   }
   65% {
     outline: 1px solid color(defense);
@@ -2012,16 +2016,11 @@ nav.showMenu {
 }
 
 .stickyNav {
-  // position: fixed;
   box-shadow: 0px 5px 10px grey;
-  height: 80px;
+  height: 50px;
   transition: all 20ms ease-in-out;
   img {
-    height: 70px;
-    // position: relative;
-    // float: right;
-    // margin-right: 5%;
-    // vertical-align: middle;
+    height: 40px;
   }
 }
 // if the menu shows, the img should resize

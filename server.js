@@ -48,6 +48,10 @@ db.once("open", () =>
   console.log("connected to the DB collection 'summit_broomball'")
 );
 
+// serve compressed files
+const compression = require("compression");
+app.use(compression());
+
 // setting up passport:
 const passport = require("./passport");
 app.use(passport.initialize());
