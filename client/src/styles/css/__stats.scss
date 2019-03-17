@@ -1,0 +1,619 @@
+@import "__variables";
+
+// Stats
+.table_container {
+  padding: 0 15px;
+}
+.tables_container {
+  @include lg {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.stats_name,
+.player_table_name {
+  font-variant: small-caps;
+  font-size: 115%;
+  padding-left: 10%;
+  @include md {
+    font-size: 145%;
+  }
+  @include lg {
+    font-size: 115%;
+  }
+}
+.darker_icon,
+.lighter_icon {
+  font-size: 155%;
+  @include sm {
+    font-size: 185%;
+  }
+  @include md {
+    font-size: 200%;
+  }
+  @include lg {
+    font-size: 185%;
+  }
+}
+.score_header_tr {
+  text-align: center;
+}
+
+.darker_icon {
+  color: color(orange);
+}
+
+.lighter_icon {
+  color: color(light-orange);
+}
+
+.data {
+  border-style: solid;
+  border-width: $border-regular * 2;
+  background: color(white);
+  height: 50px;
+  margin: 0 3%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+thead > tr,
+.stats_row {
+  height: 60px;
+  display: grid;
+  grid-template-columns: minmax(100px, 300px) minmax(100px, 170px) minmax(
+      100px,
+      170px
+    );
+  align-items: center;
+}
+
+.stats {
+  text-align: center;
+  display: grid;
+  grid-template-columns: 30% 40% 30%;
+  align-items: center;
+}
+
+.nice,
+.good {
+  border-width: $border-regular * 4;
+  font-weight: bold;
+  background: color(white);
+  border-color: color(orange);
+}
+
+td [class*="circle"] {
+  justify-self: center;
+}
+
+.full {
+  width: 100%;
+}
+
+.no_stats_message {
+  margin: auto;
+}
+
+// Past Game List
+.list_of_games {
+  // width: 100%;
+  padding: 0 5% 0 5%;
+  margin-top: -5%;
+}
+.past_game_button {
+  width: 15%;
+  min-width: 130px;
+  margin: 5% 0% 3% 5%;
+  font-size: 14px;
+  height: 35px;
+}
+.past_game_button:last-child {
+  margin-bottom: 15%;
+}
+
+.month_game_played {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  button {
+    justify-self: center;
+  }
+  @include sm {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  @include mm {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+  @include lg {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  }
+}
+.games_per_year {
+  h4 {
+    text-align: left;
+  }
+}
+.games_per_month {
+  width: 90%;
+  margin: auto;
+}
+
+.hide_year_button {
+  text-align: right;
+  position: relative;
+  top: -50px;
+  color: color(orange);
+}
+
+// Records
+.header {
+  margin-bottom: 5%;
+  padding-left: 2%;
+}
+.header_icon {
+  margin-right: 3%;
+}
+.header_h3 {
+  font-family: boogaloo;
+  font-size: 170%;
+}
+// Data Chart
+.chart {
+  width: 75%;
+  margin: auto;
+}
+
+.chart_button {
+  margin: 2%;
+  height: 40px;
+  min-width: 150px;
+  border-radius: 20px;
+}
+
+.selected_chart_goals {
+  /* background: linear-gradient(70deg, #DE733A,#EA8D47); */
+  background: rgba(255, 99, 132, 0.6);
+  color: white;
+}
+
+.unselected_chart_goals {
+  color: rgba(255, 99, 132, 0.6);
+  border-style: solid;
+  border-color: rgba(255, 99, 132, 0.6);
+  border-width: 2px;
+  background-color: white;
+}
+
+.selected_chart_assists {
+  /* background: linear-gradient(70deg, #DE733A,#EA8D47); */
+  background: rgba(54, 162, 235, 0.6);
+  color: white;
+}
+
+.unselected_chart_assists {
+  color: rgba(54, 162, 235, 0.6);
+  border-style: solid;
+  border-color: rgba(54, 162, 235, 0.6);
+  border-width: 2px;
+  background-color: white;
+}
+
+.selected_chart_games {
+  /* background: linear-gradient(70deg, #DE733A,#EA8D47); */
+  background: rgba(255, 206, 86, 0.6);
+  color: white;
+}
+
+.unselected_chart_games {
+  color: rgba(255, 206, 86, 0.6);
+  border-style: solid;
+  border-color: rgba(255, 206, 86, 0.6);
+  border-width: 2px;
+  background-color: white;
+}
+
+.selected_chart_wins {
+  /* background: linear-gradient(70deg, #DE733A,#EA8D47); */
+  background: rgba(75, 192, 192, 0.6);
+  color: white;
+}
+
+.unselected_chart_wins {
+  color: rgba(75, 192, 192, 0.6);
+  border-style: solid;
+  border-color: rgba(75, 192, 192, 0.6);
+  border-width: 2px;
+  background-color: white;
+}
+
+.selected_chart_gpg {
+  /* background: linear-gradient(70deg, #DE733A,#EA8D47); */
+  background: rgba(153, 102, 255, 0.6);
+  color: white;
+}
+
+.unselected_chart_gpg {
+  color: rgba(153, 102, 255, 0.6);
+  border-style: solid;
+  border-color: rgba(153, 102, 255, 0.6);
+  border-width: 2px;
+  background-color: white;
+}
+
+.selected_chart_apg {
+  /* background: linear-gradient(70deg, #DE733A,#EA8D47); */
+  background: rgba(255, 159, 64, 0.6);
+  color: white;
+}
+
+.unselected_chart_apg {
+  color: rgba(255, 159, 64, 0.6);
+  border-style: solid;
+  border-color: rgba(255, 159, 64, 0.6);
+  border-width: 2px;
+  background-color: white;
+}
+
+.chart {
+  position: relative;
+}
+
+.chart > canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+}
+.chartAreaWrapper {
+  width: 100%;
+  min-height: 300px;
+  overflow-y: scroll;
+}
+
+// Showcase
+@mixin unselected($mainCol, $bkCol) {
+  color: $mainCol;
+  border-color: $mainCol;
+  border-style: solid;
+  border-width: $border-regular * 2;
+  background-color: $bkCol;
+}
+
+@mixin selected($mainCol, $fontCol) {
+  background: $mainCol;
+  color: $fontCol;
+}
+
+.records {
+  width: 90%;
+  margin: auto;
+}
+
+.records {
+  display: grid;
+  grid-template-columns: 1fr;
+  button {
+    justify-self: center;
+  }
+  @include sm {
+    grid-template-columns: 1fr 1fr;
+  }
+  @include mm {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  @include lg {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+.wrapping_card_div {
+  justify-self: center;
+  width: 70%;
+  @include sm {
+    width: 95%;
+  }
+}
+
+.player_card {
+  border-style: solid;
+  border-width: $border-regular * 2;
+  border-radius: $small-radius * 4;
+  justify-self: center;
+  padding: 2%;
+  margin: 2%;
+  &:last-child {
+    margin-bottom: 20%;
+  }
+  @include sm {
+    height: 200px;
+    overflow-y: scroll;
+  }
+}
+
+.player_name {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  width: 70%;
+  padding-bottom: 4%;
+  margin-bottom: 10%;
+  text-align: center;
+  margin: 0 auto 2%;
+  font-weight: bold;
+  font-variant: small-caps;
+  font-size: 125%;
+}
+
+.player_data {
+  padding-top: 8%;
+}
+
+.member_record {
+  color: color(blue);
+  border-color: color(blue);
+}
+
+.non_member_record {
+  color: color(orange);
+  border-color: color(orange);
+}
+
+.entry {
+  font-variant: small-caps;
+}
+
+.addendum {
+  padding-left: 5%;
+  font-size: 85%;
+}
+
+.value {
+  font-weight: bold;
+}
+
+.unselected_tab {
+  @include unselected(color(blue), color(white));
+}
+
+.list_of_options {
+  margin-bottom: 7%;
+  padding: 0 5% 0 5%;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  button {
+    margin: 1% auto;
+    min-width: 130px;
+    @include sm {
+      min-width: 151px;
+    }
+  }
+}
+
+.list_of_options.hidden {
+  margin-bottom: 0px;
+}
+
+.tab_button {
+  border-radius: 20px;
+  padding: 10px 1% 10px 2%;
+  max-height: 50px;
+}
+
+.selected_tab {
+  @include selected(color(blue-gradient), color(white));
+}
+
+.sort_action_icon {
+  margin-left: 15px;
+}
+.sorting_arrow {
+  font-size: 130%;
+}
+.active {
+  color: color(orange);
+}
+
+.inactive {
+  color: color(blue);
+}
+
+.position_dot {
+  font-size: 50%;
+  position: relative;
+  bottom: 20%;
+  left: 5%;
+}
+
+.button_options_second_set {
+  margin: 7% auto;
+  text-align: center;
+}
+
+.hidden_card {
+  display: none;
+}
+
+.hide_button {
+  text-align: center;
+}
+
+// Player selector
+.list_of_players {
+  width: 100%;
+  padding: 0 5% 0 5%;
+  margin-top: -5%;
+  text-align: center;
+}
+
+.record_player_button {
+  margin: 3%;
+  min-width: 150px;
+  border-radius: 20px;
+}
+
+.selected_member {
+  @include selected(color(blue-gradient), color(white));
+}
+.selected_non_member {
+  @include selected(color(plain_orange-gradient), color(white));
+}
+
+.unselected_member {
+  @include unselected(color(blue), color(white));
+}
+
+.unselected_non_member {
+  @include unselected(color(orange), color(white));
+}
+
+.player_action_icon {
+  margin-left: 10px;
+}
+
+.button_options_first_set {
+  text-align: center;
+  margin: 0% auto 7%;
+  padding-left: 15px;
+}
+
+// Game Selector
+.record_game_button {
+  margin: 3%;
+  min-width: 150px;
+  max-width: 200px;
+  width: 80%;
+  border-radius: 20px;
+}
+
+.selected_game {
+  @include selected(color(blue-gradient), color(white));
+}
+
+.unselected_game {
+  @include unselected(color(blue), color(white));
+}
+
+.game_action_icon {
+  margin-left: 10px;
+}
+
+.record_list_of_games {
+  text-align: center;
+  padding: 0 3% 4%;
+  width: 90%;
+  margin: auto;
+}
+
+.button_options_third_set {
+  text-align: center;
+  margin: 0% auto 1%;
+  padding-left: 15px;
+}
+
+// Filters
+.check_list {
+  list-style-type: none;
+  font-size: larger;
+}
+.filter_panel {
+  width: 40%;
+  border-radius: 20px;
+  padding: 1%;
+  color: color(blue);
+  display: inline-grid;
+}
+
+.filter_name {
+  text-align: center;
+  font-family: boogaloo, cursive;
+  margin-bottom: 5%;
+}
+
+.filter_item {
+  margin: 5% 0;
+  min-height: 35px;
+  padding: 3%;
+  border-radius: 10px;
+}
+
+/* custom select menu */
+/* See: https://www.w3schools.com/howto/howto_custom_select.asp */
+.custom-select {
+  position: relative;
+  font-family: Arial;
+  width: unset;
+  font-size: smaller;
+  margin: 0 2px;
+}
+.custom-select select {
+  display: none; /*hide original SELECT element:*/
+}
+.select-selected {
+  background-color: DodgerBlue;
+}
+/*style the arrow inside the select element:*/
+.select-selected:after {
+  position: absolute;
+  content: "";
+  top: 14px;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-color: #fff transparent transparent transparent;
+}
+/*point the arrow upwards when the select box is open (active):*/
+.select-selected.select-arrow-active:after {
+  border-color: transparent transparent #fff transparent;
+  top: 7px;
+}
+/*style the items (options), including the selected item:*/
+.select-items div,
+.select-selected {
+  color: #ffffff;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  cursor: pointer;
+}
+/*style items (options):*/
+.select-items {
+  position: absolute;
+  background-color: DodgerBlue;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+/*hide the items when the select box is closed:*/
+.select-hide {
+  display: none;
+}
+.select-items div:hover,
+.same-as-selected {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+// Date Selector
+.date_pickers {
+  display: inline;
+}
+// Date Range
+#range_submit {
+  margin: 5% 0% 0% 91%;
+}
+
+.records_calendar {
+  width: 100%;
+  display: inline-flex;
+  margin: 1% 0% 5% 0%;
+}
+.calendar_alignment {
+  margin: 0 0 0 10%;
+  width: 25%;
+}
+.react-datepicker__close-icon {
+  position: absolute;
+  top: 50%;
+  left: 150%;
+}

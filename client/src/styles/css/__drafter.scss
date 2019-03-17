@@ -1,0 +1,744 @@
+@import "__variables";
+
+@mixin showComparable($animation-name, $animation-color) {
+  animation: $animation-name 1s linear infinite alternate;
+  outline: 0px solid white;
+
+  @keyframes #{$animation-name} {
+    0% {
+      outline: solid 0px $animation-color;
+      outline-offset: 0px;
+    }
+    15% {
+      outline: solid 1px $animation-color;
+      outline-offset: 1px;
+    }
+    65% {
+      outline: solid 3px $animation-color;
+      outline-offset: 3px;
+    }
+    100% {
+      outline: solid 5px $animation-color;
+      outline-offset: 5px;
+    }
+  }
+}
+
+.comparable_forward {
+  @include showComparable(comparableF, color(forward));
+}
+
+.comparable_defense {
+  @include showComparable(comparableD, color(defense));
+}
+
+// Lock
+.lock_icons_container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  div:nth-of-type(1) {
+    justify-self: right;
+  }
+  div:nth-of-type(2) {
+    justify-self: left;
+  }
+}
+
+.lock {
+  width: 35%;
+  min-width: 55px;
+  max-width: 100px;
+  min-height: 40px;
+  margin: 60px 10px 0px 10px;
+}
+
+.locked {
+  justify-self: right;
+  background: color(light-gradient);
+  color: color(white);
+}
+.unlocked {
+  border-style: solid;
+  border-color: color(light-orange);
+  border-width: $border-regular;
+  background: color(white);
+  color: color(light-orange);
+}
+
+// Draft Page
+// Calendar
+#in-line {
+  margin: 0 auto 10%;
+  padding: 0 12%;
+}
+
+input {
+  color: color(orange);
+  text-align: center;
+  font-weight: lighter;
+  width: 150%;
+  max-width: 200px;
+  padding: 3%;
+  border-style: solid;
+  border-color: grey;
+  border-width: 1px;
+  background-color: beige;
+  box-shadow: 3px 4px 8px 0px rgba(0, 0, 0, 0.2);
+  @include mm {
+    max-width: 300px;
+  }
+  @include md {
+    max-width: 400px;
+  }
+  @include lg {
+    font-size: 16px;
+  }
+}
+#date_submit {
+  margin-top: 2%;
+  padding: 2%;
+}
+
+.calendar_component {
+  margin-left: -2%;
+  padding-top: 3%;
+}
+
+.organizer {
+  display: grid;
+  grid-template-columns: 1fr;
+  @include md {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.game_options_bottom {
+  margin-top: 3%;
+}
+
+// drafter
+.universal_drafter {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-areas:
+    "undrafted undrafted undrafted undrafted undrafted undrafted undrafted undrafted undrafted"
+    "drafted_dark drafted_dark drafted_dark drafted_dark   ...... drafted_white drafted_white drafted_white drafted_white";
+  h1 {
+    margin: 2%;
+  }
+  br {
+    display: none;
+  }
+  .game_date,
+  .col_header {
+    color: color(white);
+    text-shadow: $dark-font-shadow;
+    text-align: center;
+    position: relative;
+    font-family: font(primary);
+  }
+  .arrows,
+  .remove {
+    font-size: 100%;
+  }
+  @include sm {
+    .arrows {
+      font-size: 150%;
+    }
+  }
+  @include mm {
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    grid-template-areas: "drafted_dark undrafted drafted_white";
+    // repeating because of Autoprefixer error with media queries
+    .dark_drafted_players {
+      grid-area: drafted_dark;
+    }
+    .undrafted_players {
+      grid-area: undrafted;
+    }
+    .white_drafted_players {
+      grid-area: drafted_white;
+    }
+    .small_screen_team_names_header {
+      display: none;
+    }
+    br {
+      display: unset;
+    }
+    h1 {
+      margin: 2% auto 7%;
+    }
+    .col_header {
+      color: color(brown);
+      text-shadow: $orange-font-shadow;
+      text-align: center;
+      position: relative;
+      font-family: font(primary);
+    }
+  }
+}
+.undrafted_players {
+  grid-area: undrafted;
+}
+.dark_drafted_players {
+  grid-area: drafted_dark;
+  button {
+    @include theme(color(dark-grey), color(white), color(dark-grey));
+    @include mm {
+      @include theme(
+        color(leaning_right_orange_gradient),
+        color(white),
+        color(orange)
+      );
+    }
+  }
+  .fa-arrow-alt-circle-right {
+    transform: rotate(270deg);
+    animation: upanddown 1.2s ease-in-out 4 alternate;
+    @include mm {
+      animation: unset;
+      transform: unset;
+    }
+  }
+}
+.white_drafted_players {
+  grid-area: drafted_white;
+  button {
+    @include theme(color(light-grey), color(black), color(light-grey));
+    border-style: solid;
+    border-color: color(dark-grey);
+    @include mm {
+      @include theme(
+        color(leaning_left_orange_gradient),
+        color(white),
+        color(orange)
+      );
+      border-style: unset;
+    }
+  }
+  .fa-arrow-circle-left {
+    transform: rotate(90deg);
+    animation: upanddown 1.2s ease-in-out 4 alternate;
+    @include mm {
+      animation: unset;
+      transform: unset;
+    }
+  }
+}
+@keyframes upanddown {
+  from {
+    top: -15px;
+  }
+  to {
+    top: 5px;
+  }
+}
+
+.player_div {
+  text-align: center;
+  animation: slideBothArrows 0.7s 0ms ease-in-out 4 alternate;
+}
+
+.fa-arrow-circle-left {
+  animation: slideright 0.7s 0ms ease-in-out 4 alternate;
+  &:hover {
+    animation-play-state: paused;
+  }
+}
+
+.fa-arrow-alt-circle-right {
+  animation: slideleft 0.7s 0ms ease-in-out 4 alternate;
+  &:hover {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes slideright {
+  from {
+    left: 0%;
+  }
+  to {
+    left: -11%;
+  }
+}
+
+@keyframes slideleft {
+  from {
+    left: 0%;
+  }
+  to {
+    left: 11%;
+  }
+}
+
+.player_button {
+  min-width: $small-width;
+  max-width: 200px;
+  margin: 10px -8px 10px 8px;
+  // height: 2.75em;
+}
+
+.arrows {
+  font-size: 200%;
+  position: relative;
+  top: 0.2em;
+  color: color(brown);
+}
+
+.arrows:hover {
+  color: color(blueish);
+}
+
+.remove_player {
+  position: relative;
+  top: -17px;
+  left: -3px;
+  font-size: 130%;
+  color: color(brown);
+  &:hover {
+    color: red;
+  }
+}
+
+.unavailable {
+  margin-left: -15px;
+  @include theme(color(grey), color(white), color(dark-grey));
+}
+
+.negative_color {
+  margin-left: -15px;
+}
+
+.sorter {
+  display: inline-block;
+}
+
+// Picker Module
+.set_picks_col {
+  grid-area: unpicked;
+}
+.ranks_col {
+  grid-area: picked;
+}
+
+.universal_picker {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas:
+    "picked picked"
+    "unpicked unpicked";
+  .pick_arrow {
+    display: none;
+  }
+  @include sm {
+    grid-template-areas: "unpicked picked";
+    // repeating, because of prefixer error with media queries
+    .set_picks_col {
+      grid-area: unpicked;
+    }
+    .ranks_col {
+      grid-area: picked;
+    }
+    .pick_arrow {
+      display: unset;
+    }
+  }
+}
+
+.player_picking_div {
+  margin: 2%;
+}
+
+.list_of_picked_players > .player_picking_div {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 60px;
+  .player_button {
+    order: 3;
+    flex: auto;
+    justify-self: flex-end;
+    @include sm {
+      order: unset;
+    }
+  }
+  .remove {
+    order: 4;
+    @include sm {
+      order: unset;
+    }
+  }
+  @include sm {
+    justify-content: flex-end;
+  }
+  @include mm {
+    justify-content: center;
+  }
+}
+
+.pick_number {
+  order: 1;
+  color: color(brown);
+  background: color(white);
+  width: 20px;
+  height: 20px;
+  padding: 3px 2px 0px;
+  border-radius: 50%;
+  font-weight: bold;
+  font-variant: small-caps;
+  text-align: center;
+  opacity: 0.3;
+  &:hover,
+  &:active {
+    background: color(brown);
+    color: color(white);
+  }
+  @include sm {
+    display: none;
+  }
+}
+
+.up_arrow {
+  order: 5;
+  color: color(blueish);
+  font-size: 200%;
+  align-self: flex-start;
+  &:hover {
+    color: color(light-orange);
+    animation: arrowup 1s 200ms ease-in-out 4 alternate;
+  }
+  @include sm {
+    order: unset;
+    position: relative;
+    left: 5px;
+    top: 0px;
+  }
+}
+
+.down_arrow {
+  order: 2;
+  color: color(brown);
+  font-size: 200%;
+  align-self: flex-end;
+  &:hover {
+    color: color(light-orange);
+    animation: arrowdown 1s 200ms ease-in-out 4 alternate;
+  }
+  @include sm {
+    order: unset;
+    position: relative;
+    left: -23px;
+    top: 0px;
+  }
+}
+
+@keyframes arrowup {
+  from {
+    top: 0px;
+  }
+  to {
+    top: -15px;
+  }
+}
+
+@keyframes arrowdown {
+  from {
+    top: 0px;
+  }
+  to {
+    top: 15px;
+  }
+}
+
+.pick_col_header {
+  @include md {
+    height: 100px;
+  }
+}
+
+.player_picking {
+  width: 55%;
+  max-width: 250px;
+  margin: 10px 0% 10px 8px;
+  min-width: 150px;
+  height: 2.75em;
+  &:hover {
+    animation: slidearrow 0.9s 200ms ease-in-out 4 alternate;
+  }
+}
+
+@keyframes slidearrow {
+  from {
+    margin: 10px 0% 10px 8px;
+  }
+
+  to {
+    margin: 10px 11% 10px 12%;
+  }
+}
+
+.pick_arrow {
+  position: relative;
+  right: -4%;
+}
+
+.remove_pick {
+  align-self: flex-start;
+  &:hover {
+    color: red;
+  }
+}
+
+.pick_name_button {
+  justify-self: center;
+}
+
+.list_of_unpicked_players {
+  @include md {
+    margin-left: 15%;
+  }
+}
+
+.player_picking_div:first-child {
+  .up_arrow {
+    color: color(white);
+    animation: unset;
+  }
+}
+.player_picking_div:last-child {
+  .down_arrow {
+    color: color(white);
+    animation: unset;
+  }
+}
+
+.player_to_pick_div {
+  width: 80%;
+  margin: auto;
+}
+.pick_arrow_plus {
+  margin-left: 3%;
+  font-size: 160%;
+  align-self: baseline;
+  @include sm {
+    display: none;
+  }
+}
+
+// general aspect
+.change_list_display {
+  margin: 7% auto 3% auto;
+  padding: 1% 2%;
+  border-style: unset;
+  border-radius: $small-radius;
+  min-height: 30px;
+  min-width: 150px;
+}
+.game_options {
+  min-width: 150px;
+  width: 55%;
+}
+
+.game_options_container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  button {
+    min-width: $button-min-width-xs * 0.75;
+    max-width: $button-max-width-xs;
+    @include md {
+      width: 75%;
+      max-width: $button-max-width-md;
+    }
+  }
+}
+
+.button_container {
+  display: grid;
+  margin: 10% auto;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 5%;
+  :first-child {
+    justify-self: end;
+  }
+  :last-child {
+    justify-self: start;
+  }
+  button {
+    min-width: 100px;
+    height: 40px;
+    justify-self: center;
+    @include md {
+      height: 60px;
+    }
+  }
+}
+.container.button_container {
+  margin: 1%;
+  :first-child {
+    justify-self: center;
+  }
+  :last-child {
+    justify-self: center;
+  }
+}
+.game_toggle_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// GameList
+.game_button {
+  font-weight: bold;
+  margin: 2% 0% 6%;
+  @include md {
+    font-weight: unset;
+    margin: 5% 0% 10%;
+  }
+}
+
+.show_games {
+  min-width: 50px;
+  text-align: center;
+}
+
+.remove_game {
+  position: relative;
+  font-size: 125%;
+  top: -12px;
+  left: -12px;
+  @include md {
+    top: -20px;
+  }
+  &:hover {
+    color: red;
+  }
+}
+
+.list-management {
+  overflow: scroll;
+  max-height: 200px;
+  padding: 3% 0%;
+  margin: auto;
+  width: 70%;
+}
+.no_game {
+  border-style: solid;
+  text-align: center;
+  border-width: $border-regular * 2;
+  border-color: color(light-orange);
+  opacity: 0.7;
+  color: color(light-orange);
+  font-family: font(secondary);
+  font-size: 130%;
+  margin: 0px 10% 0% 10%;
+  padding: 3% 2% 3% 2%;
+  @include md {
+    margin: 0%;
+  }
+}
+/* for the date picker */
+.react-datepicker {
+  button {
+    min-height: unset;
+    min-width: unset;
+  }
+}
+.react-datepicker__navigation--next {
+  right: 0px;
+  border-left-color: #ccc;
+  top: 0px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.react-datepicker__navigation--previous {
+  left: 0px;
+  border-right-color: #ccc;
+  top: 0px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.react-datepicker__input-container {
+  input {
+    width: 100%;
+    min-width: 200px;
+    min-height: 25px;
+
+    @include sm {
+      width: 130%;
+      max-width: 260px;
+    }
+
+    @include md {
+      width: 150%;
+      max-width: 300px;
+    }
+
+    @include lg {
+      width: 175%;
+      max-width: 350px;
+    }
+  }
+}
+// GameOptionsBottom
+.buffer {
+  width: 33%;
+}
+.pick_option {
+  width: 13%;
+  margin: auto;
+}
+.draft_option {
+  width: 17%;
+  margin: auto;
+}
+.reduced_container {
+  width: 90%;
+  margin: auto;
+  padding: 0px;
+  text-align: center;
+}
+
+// SmallScreenDrafter
+.small_screen_team_names_header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  .arrows {
+    font-size: 80%;
+    position: unset;
+    padding: 0 2%;
+    color: color(brown);
+  }
+}
+.sstnhd h1 {
+  text-align: left;
+}
+
+.sstnhw h1 {
+  text-align: right;
+}
+
+.small_teams {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.sm_dark {
+  transform: rotate(90deg);
+}
+.sm_white {
+  transform: rotate(270deg);
+}
+.small_screen_arrows {
+  font-size: 150%;
+  position: relative;
+  animation: upanddown 1.2s ease-in-out 4 alternate;
+}
+
+// Picker
+/*
+.ranks_col {
+    margin-bottom: 7%;
+}
+*/
