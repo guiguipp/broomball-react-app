@@ -1,0 +1,442 @@
+@import "__variables";
+
+// Player Page
+$table-width: 90%;
+$table-width-bg: 80%;
+$table-width-max: 700px;
+
+.tab_centering {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: end;
+  // position: relative;
+  // top: 10px;
+}
+.two_tab_centering {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 90%;
+  margin: auto;
+  span {
+    width: 100%;
+    height: 35px;
+    display: inherit;
+    align-items: center;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    text-align: center;
+    box-sizing: border-box;
+    @include sm {
+      height: 40px;
+    }
+    @include mm {
+      height: 45px;
+    }
+  }
+  @include sm {
+    width: 80%;
+    max-width: 700px;
+  }
+}
+
+.tab {
+  height: 40px;
+  padding: 1%;
+  text-align: center;
+  display: inherit;
+  align-items: center;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.player_table_head {
+  width: $table-width;
+  margin: auto;
+  @include sm {
+    width: $table-width-bg;
+  }
+  @include md {
+    max-width: $table-width-max;
+  }
+}
+
+.show_tab {
+  background: color(white);
+  color: color(black);
+  border-style: solid solid none solid;
+  border-width: $border-regular * 2;
+  border-color: color(black) color(black) color(white) color(black);
+}
+
+.hide_tab {
+  background: color(light-orange);
+  color: color(dark-grey);
+  border-color: color(orange) color(orange) color(black) color(orange);
+  border-style: none solid solid solid;
+  border-width: $border-regular * 2;
+}
+
+.passive_tab {
+  border-bottom-style: solid;
+  border-bottom-width: $border-regular * 2;
+  border-bottom-color: color(black);
+  color: color(orange);
+}
+
+.main_for_tab {
+  background: color(white);
+  box-sizing: border-box;
+  border-style: none solid solid solid;
+  border-color: color(black);
+  border-width: $border-regular * 2;
+  margin: 0px auto;
+  width: $table-width;
+  @include sm {
+    width: $table-width-bg;
+  }
+
+  @include md {
+    max-width: $table-width-max;
+  }
+}
+
+.full_size {
+  width: 100%;
+}
+
+#range_submit {
+  margin: 5% 0% 0% 91%;
+}
+// form
+label,
+select {
+  font-size: 14px;
+  @include sm {
+    font-size: 16px;
+  }
+  @include mm {
+    font-size: 17px;
+  }
+
+  @include md {
+    font-size: 18px;
+  }
+}
+label {
+  color: color(dark-orange);
+  text-shadow: $black-box-shadow;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  margin: 3% 16% 3% 1%;
+}
+.form_container {
+  width: 100%;
+  margin: auto;
+  padding: 1%;
+
+  input {
+    display: block;
+    margin: auto;
+    width: 100%;
+  }
+}
+.field {
+  margin: 2% 0% 5%;
+}
+
+// List
+/* table formatting */
+table {
+  border-collapse: collapse;
+  display: table;
+  tr:nth-child(even) {
+    background-color: color(light-grey);
+  }
+}
+.player_table {
+  width: 100%;
+}
+.player_table_name {
+  display: flex;
+  align-items: center;
+}
+.player_table_row {
+  padding: 5% 0%;
+  display: grid;
+  grid-template-columns: 30% 70%;
+  &:first-child {
+    padding-top: 7%;
+  }
+  @include md {
+    padding: 3% 0%;
+  }
+
+  @include lg {
+    &:first-child {
+      padding: 5% 0 2%;
+    }
+    padding: 2% 0%;
+  }
+  .player_manage_buttons {
+    display: grid;
+    justify-self: center;
+    @include sm {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    button {
+      margin: 0 2%;
+    }
+  }
+}
+
+.hidden.full_tab_size {
+  display: none;
+}
+// Custom collapsing NavBar
+nav {
+  background: color(grey);
+  overflow: hidden;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+  position: fixed;
+  img {
+    position: relative;
+    float: right;
+    margin-right: 5%;
+    vertical-align: middle;
+    @include xl {
+      margin-right: 10%;
+    }
+  }
+}
+// Regardless of the nav sticking or not, when opened, should be big enough to show options
+nav.showMenu {
+  height: 385px;
+  box-shadow: 0px 5px 10px grey;
+  @include mm {
+    height: 400px;
+  }
+
+  @include lg {
+    height: 425px;
+  }
+}
+
+.stickyNav {
+  box-shadow: 0px 5px 10px grey;
+  height: 50px;
+  transition: all 20ms ease-in-out;
+  img {
+    height: 40px;
+  }
+}
+// if the menu shows, the img should resize
+.showMenu > .navbar > img {
+  height: 70px;
+}
+.showMenu.stickyNav,
+.showMenu.nonStickyNav {
+  .showMenu.darkNavBar {
+    background: #343a40;
+    padding: 1% 2%;
+    a {
+      text-decoration: none;
+      background-color: transparent;
+    }
+    .nav-item .nav-link {
+      padding-right: 0;
+      padding-left: 0;
+    }
+    .nav-item {
+      display: block;
+      padding: 0.5rem 1rem;
+    }
+    .nav-link {
+      font-family: font(secondary);
+      font-size: 125%;
+      color: color(light-orange);
+      &:hover {
+        color: #17a2b8;
+      }
+      &:last-of-type {
+        margin-bottom: 10px;
+      }
+    }
+    .nav_title {
+      font-family: font(primary);
+      font-size: 200%;
+      color: color(white);
+      text-shadow: $orange-title-shadow;
+      margin-top: unset;
+      margin-bottom: 1%;
+      font-weight: unset;
+    }
+    .navbar-nav {
+      display: flex;
+      flex-direction: column;
+      padding-left: 0;
+      margin-bottom: 0;
+      list-style: none;
+    }
+  }
+}
+// Navbar size
+$xsNavbar: 80px;
+$smNavbar: 120px;
+$mmNavbar: 140px;
+$mdNavbar: 150px;
+$lgNavbar: 155px;
+$xlNavbar: 160px;
+$mainTopMargin: 15px;
+
+@mixin resizeNav($screenSize) {
+  @if $screenSize == $screen-sm {
+    @media (min-width: $screenSize) {
+      nav {
+        height: $smNavbar;
+        img {
+          height: $smNavbar - $mainTopMargin;
+        }
+      }
+      main:first-of-type {
+        margin-top: $smNavbar + $mainTopMargin;
+      }
+    }
+  } @else if $screenSize == $screen-mm {
+    @media (min-width: $screenSize) {
+      nav {
+        height: $mmNavbar;
+        img {
+          height: $mmNavbar - $mainTopMargin;
+        }
+      }
+      main:first-of-type {
+        margin-top: $mmNavbar + $mainTopMargin;
+      }
+    }
+  } @else if $screenSize == $screen-md {
+    @media (min-width: $screenSize) {
+      nav {
+        height: $mdNavbar;
+        img {
+          height: $mdNavbar - $mainTopMargin;
+        }
+      }
+      main:first-of-type {
+        margin-top: $mdNavbar + $mainTopMargin;
+      }
+    }
+  } @else if $screenSize == $screen-lg {
+    @media (min-width: $screenSize) {
+      nav {
+        height: $lgNavbar;
+        img {
+          height: $lgNavbar - $mainTopMargin;
+        }
+      }
+      main:first-of-type {
+        margin-top: $lgNavbar + $mainTopMargin;
+      }
+    }
+  } @else if $screenSize == $screen-xl {
+    @media (min-width: $screenSize) {
+      nav {
+        height: $xlNavbar;
+        img {
+          height: $xlNavbar - $mainTopMargin;
+        }
+      }
+      main:first-of-type {
+        margin-top: $xlNavbar + $mainTopMargin;
+      }
+    }
+  } @else {
+    @media (min-width: $screenSize) {
+      nav {
+        height: $xsNavbar;
+        img {
+          height: $xsNavbar - $mainTopMargin;
+        }
+      }
+      main:first-of-type {
+        margin-top: $xsNavbar + $mainTopMargin;
+      }
+    }
+  }
+}
+
+@include resizeNav(0px);
+@include resizeNav($screen-sm);
+@include resizeNav($screen-mm);
+@include resizeNav($screen-md);
+@include resizeNav($screen-lg);
+@include resizeNav($screen-xl);
+
+// Home Page
+.welcome_text {
+  text-align: justify;
+  font-family: "Yellowtail", cursive;
+  color: #ea8d47;
+  font-size: 125%;
+}
+.text_center {
+  text-align: center;
+  margin-top: 15%;
+}
+.menu_button {
+  width: 40%;
+  /* min-width: 120px; */
+  /* height: 45px; */
+  border-radius: 20px;
+}
+.instructions_div {
+  width: 100%;
+  margin-top: 3%;
+  text-align: center;
+}
+.page_div {
+  margin: 2% 2.5%;
+  width: 40%;
+  display: inline-grid;
+}
+.instruction {
+  text-align: center;
+}
+.instructions_text {
+  font-family: boogaloo;
+  font-size: 125%;
+  margin-bottom: 20%;
+}
+// Login
+.auth_tab {
+  width: 50%;
+  min-width: 100px;
+  height: 10%;
+  min-height: 30px;
+  padding: 1%;
+  text-align: center;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+.show {
+  background: white;
+  border-left-style: solid;
+  border-top-style: solid;
+  border-right-style: solid;
+  border-width: 1px;
+}
+.hide {
+  background: #ffbe75;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  color: rgb(86, 86, 86);
+  border-left-color: #ea8d47;
+  border-left-style: solid;
+  border-left-width: 1px;
+  border-right-color: #ea8d47;
+  border-right-style: solid;
+  border-right-width: 1px;
+  border-top-color: #ea8d47;
+}

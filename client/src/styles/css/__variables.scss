@@ -1,0 +1,184 @@
+// Colors
+$colors: (
+  white: #ffffff,
+  blue: teal,
+  blueish: #007bff,
+  black: #000000,
+  defense: #b2ebf2,
+  forward: #dcedc8,
+  goalie: #ffecb3,
+  default-gradient: linear-gradient(70deg, #de733a, #ea8d47),
+  contrast-gradient: linear-gradient(160deg, teal, #17a2b8),
+  dark-gradient: linear-gradient(70deg, #ff5d00, #de733a),
+  light-gradient: linear-gradient(70deg, #ea8d47, #ffbe75),
+  blue-gradient: linear-gradient(160deg, teal, #17a2b8),
+  negative-border: rgb(151, 111, 80),
+  leaning_right_orange_gradient: linear-gradient(70deg, #de733a, #ea8d47),
+  leaning_left_orange_gradient: linear-gradient(70deg, #ea8d47, #de733a),
+  plain_orange-gradient: linear-gradient(0deg, #ea8d47, #de733a),
+  orange: #de733a,
+  light-orange: #ffbe75,
+  dark-orange: darken(#de733a, 20%),
+  brown: #260e04,
+  light-brown: lighten(#260e04, 20%),
+  dark-brown: darken(#260e04, 20%),
+  grey: #acadb2,
+  light-grey: lighten(#acadb2, 20%),
+  dark-grey: rgb(86, 86, 86)
+);
+
+@function color($color-name) {
+  @return map-get($colors, $color-name);
+}
+
+// variables
+$black-box-shadow: 3px 4px 8px 0px rgba(0, 0, 0, 0.2);
+$grey-box-shadow: 0px 3px 3px color(grey);
+$dark-font-shadow: (
+  -1px -1px 0 color(brown),
+  1px -1px 0 color(brown),
+  -1px 1px 0 color(brown),
+  1px 1px 0 color(brown)
+);
+$orange-font-shadow: (
+  -1px -1px 0 color(orange),
+  1px -1px 0 color(orange),
+  -1px 1px 0 color(orange),
+  1px 1px 0 color(orange)
+);
+$orange-title-shadow: (
+  -0.5px -0.5px 0 color(orange),
+  0.5px -0.5px 0 color(orange),
+  -0.5px 0.5px 0 color(orange),
+  0.5px 0.5px 0 color(orange)
+);
+$orange-subtle: (
+  -0.1px -0.1px 0 color(orange),
+  0.1px -0.1px 0 color(orange),
+  -0.1px 0.1px 0 color(orange),
+  0.1px 0.1px 0 color(orange)
+);
+$orange-box: (0 0 15px rgba(222, 115, 58, 0.9));
+
+$small-width: 100px;
+$small-height: 30px;
+$small-radius: 5px;
+$border-regular: 0.5px;
+$light-blur: 0.1px;
+$button-min-width-xs: 120px;
+$button-max-width-xs: 120px;
+$button-max-width-sm: 180px;
+$button-max-width-md: 220px;
+
+// THEMES
+@mixin theme($gradient, $accent, $fallback) {
+  background: $gradient;
+  color: $accent;
+  &:active,
+  &:focus {
+    background: $accent;
+    color: $fallback;
+    border-style: solid;
+    border-color: $fallback;
+    border-width: $border-regular;
+    @content;
+  }
+}
+
+// Screen Resizing
+$screen-sm: 480px;
+$screen-mm: 670px;
+$screen-md: 768px;
+$screen-lg: 992px;
+$screen-xl: 1024px;
+
+// Small devices
+@mixin sm {
+  @media (min-width: #{$screen-sm}) {
+    @content;
+  }
+}
+// Mid-medium devices
+@mixin mm {
+  @media (min-width: #{$screen-mm}) {
+    @content;
+  }
+}
+
+// Medium devices
+@mixin md {
+  @media (min-width: #{$screen-md}) {
+    @content;
+  }
+}
+
+// larger devices
+@mixin lg {
+  @media (min-width: #{$screen-lg}) {
+    @content;
+  }
+}
+// desktop
+@mixin xl {
+  @media (min-width: #{$screen-xl}) {
+    @content;
+  }
+}
+
+// Fonts
+$font-stack: (
+  primary: #{"Yellowtail",
+  "Brush Script MT",
+  "Brush Script Std",
+  cursive},
+  secondary: #{"boogaloo",
+  Impact,
+  Charcoal,
+  sans-serif,
+  },
+  button: #{"Roboto",
+  "Helvetica Neue",
+  }
+);
+
+@function font($font-name) {
+  @return map-get($font-stack, $font-name);
+}
+
+$h1-font-sizes: (
+  null: 40px,
+  480px: 40px,
+  640px: 45px,
+  1024px: 60px
+);
+
+$h2-font-sizes: (
+  null: 25px,
+  480px: 27px,
+  640px: 31px,
+  1024px: 35px
+);
+
+$h4-font-sizes: (
+  null: 20px,
+  480px: 22px,
+  640px: 26px,
+  1024px: 30px
+);
+
+$p-font-sizes: (
+  null: 20px,
+  1024px: 35px
+);
+
+@mixin font-size($fs-map) {
+  @each $fs-breakpoint, $fs-font-size in $fs-map {
+    @if $fs-breakpoint == null {
+      font-size: $fs-font-size;
+    } @else {
+      @media screen and (min-width: $fs-breakpoint) {
+        font-size: $fs-font-size;
+      }
+    }
+  }
+}
